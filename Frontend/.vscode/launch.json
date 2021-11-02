@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "command": "npm run-script serve",
+      "name": "Run npm serve",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "npm dev",
+      "name": "Run npm dev",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "npm run-script build",
+      "name": "Run npm build",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "Launch Program",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${file}"
+    }
+  ]
+}

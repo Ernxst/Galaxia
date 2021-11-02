@@ -1,0 +1,35 @@
+{
+  "name": "trois-js",
+  "description": "Troisjs boilerplate project",
+  "author": "Ernest Nkansah-Badu",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "homepage": "https://www.ernestbadu.me",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview",
+    "watch": "tsc -b tsconfig.json -w",
+    "test": "",
+    "deploy": ""
+  },
+  "dependencies": {
+    "autoprefixer": "^10.3.4",
+    "gsap": "^3.7.1",
+    "three": "^0.127.0",
+    "troisjs": "^0.3.2",
+    "vue": "^3.2.6",
+    "vue-router": "^4.0.11"
+  },
+  "devDependencies": {
+    "@types/three": "^0.127.1",
+    "@vitejs/plugin-vue": "^1.6.1",
+    "@vue/compiler-sfc": "^3.2.6",
+    "typescript": "^4.3.2",
+    "vite": "^2.5.4",
+    "vue-tsc": "^0.2.2",
+    "vuex": "^4.0.2",
+    "vuex-persistedstate": "^4.0.0-beta.4"
+  }
+}

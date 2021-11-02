@@ -1,0 +1,151 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,700?display=swap");
+
+:root {
+  --text-colour: #fff;
+  --page-bg: #000;
+  --orange: #f39041;
+  --red: #EA2027;
+  --green: #2ed573;
+
+  --main: var(--orange);
+  --accent: var(--red);
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+body {
+  text-rendering: optimizeSpeed;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  color: var(--text-colour);
+  background: var(--page-bg);
+}
+
+body,
+#app {
+  min-height: 100vh;
+  min-width: 100vw;
+  max-height: 100vh;
+  max-width: 100vw;
+  overflow: hidden;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 100;
+  display: inline-block;
+}
+
+h1 {
+  letter-spacing: 16px;
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 16px;
+}
+
+p,
+b {
+  line-height: 1.5;
+}
+
+a {
+  text-decoration: none;
+  background: transparent;
+}
+
+input,
+button,
+textarea,
+select {
+  font-family: inherit;
+}
+
+.image {
+  width: inherit;
+  height: inherit;
+}
+
+.image img,
+.background-img {
+  max-width: 100%;
+  margin: auto;
+  display: block;
+}
+
+.background-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  object-fit: cover;
+  max-height: 100%;
+  height: 100%;
+  width: 100%;
+  filter: grayscale(100%);
+  z-index: -2;
+}
+
+.noselect,
+a {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.centred,
+.image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.full-page {
+  min-width: 100%;
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--main);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  filter: brightness(1.4);
+}

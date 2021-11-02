@@ -1,0 +1,21 @@
+name: Validate OpenAPI specification
+
+on: [push]
+
+jobs:
+    validate:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Use Node.js 15.x
+              uses: actions/setup-node@v1
+              with:
+                  node-version: 15.x
+            - name: Install Swagger CLI
+              run: npm install -g @apidevtools/swagger-cli
+            - name: Generate spec file
+              run: swagger-cli bundle -t yaml -r -o docs/spec.yml docs/openapi.yaml
+              working-directory: .
+            - name: Validate OpenAPI specification
+              run: swagger-cli validate --no-schema docs/spec.yml
+              working-directory: .

@@ -1,0 +1,37 @@
+{
+    "[markdown]": {
+        "editor.quickSuggestions": true
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.tabSize": 2
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.tabSize": 2
+    },
+    "cssCustomProperties.files": [
+        "src/assets/global.css"
+    ],
+    "path-intellisense.mappings": {
+        "@": "${workspaceRoot}/src"
+    },
+    "tsimporter.doubleQuotes": true,
+    "tsimporter.filesToScan": [
+        "src/**/*.ts",
+        "src/**/*.vue",
+        "src/**/*.d.ts",
+        "src/**/*.tsx",
+        "tests/**/*.ts",
+        "tests/**/*.tsx"
+    ],
+    "tsimporter.noStatusBar": true,
+    "tsimporter.preferRelative": true,
+    "todo-tree.tree.scanMode": "workspace only",
+    "todo-tree.tree.showBadges": true,
+    "todo-tree.tree.showCountsInTree": true,
+    "volar.codeLens.scriptSetupTools": false,
+    "volar.icon.finder": true,
+    "volar.icon.preview": true,
+    "volar.preferredTagNameCase": "kebab"
+}
