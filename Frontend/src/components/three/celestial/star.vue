@@ -15,8 +15,7 @@
 </template>
 
 <script lang="ts">
-  // TODO: Lighting
-  import { RADIUS_SCALE } from "@/assets/util/sim.constants";
+  import { DISTANCE_SCALE, RADIUS_SCALE } from "@/assets/util/sim.constants";
   import { Group, PointLight } from "troisjs";
   import { defineComponent } from "vue";
   import Sphere, { SphereProps } from "../util/Sphere.vue";
@@ -28,14 +27,14 @@
     props: {
       ...SphereProps,
       starLightColour: { type: String, default: "#FFFFFF" },
-      luminosity: { type: Number, default: 1 },
+      luminosity: { type: Number, default: 3e27 },
     },
     computed: {
       scaledRadius(): number {
         return this.radius * RADIUS_SCALE;
       },
       intensity(): number {
-        return this.luminosity * 300; // Converted to Candela (cd)
+        return this.luminosity * DISTANCE_SCALE;
       },
     },
   });
