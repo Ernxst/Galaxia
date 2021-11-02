@@ -14,13 +14,17 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build app
+        working-directory: ./Backend
         run: make build
 
       - name: Start app
+        working-directory: ./Backend
         run: make up silent=1
 
       - name: Wait for server to respond
+        working-directory: ./Backend
         run: make wait
 
       - name: Run tests
+        working-directory: ./Backend
         run: make rspec tty=1

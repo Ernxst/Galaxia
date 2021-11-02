@@ -15,7 +15,7 @@ jobs:
               run: npm install -g @apidevtools/swagger-cli
             - name: Generate spec file
               run: swagger-cli bundle -t yaml -r -o docs/spec.yml docs/openapi.yaml
-              working-directory: .
+              working-directory: ./Backend
             - name: Validate OpenAPI specification
               run: swagger-cli validate --no-schema docs/spec.yml
-              working-directory: .
+              working-directory: ./Backend
