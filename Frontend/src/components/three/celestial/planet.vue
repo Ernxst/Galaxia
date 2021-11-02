@@ -61,7 +61,7 @@
         return this.radius * RADIUS_SCALE;
       },
       initialPos(): Vector3 {
-        return new Vector3(0, 0, this.semiMajor);
+        return this.computeNewPos(this.angle);
       },
     },
     methods: {

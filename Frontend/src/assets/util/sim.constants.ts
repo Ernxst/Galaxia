@@ -1,8 +1,8 @@
 import { EARTH_RADIUS } from "./celestial.constants";
 
 export const MIN_SPEED = 1;
-export const MAX_SPEED = 50;
-export const BASE_SPEED = (MIN_SPEED + MAX_SPEED) / 2;
+export const MAX_SPEED = 100;
+export const BASE_SPEED = 1;
 export const SPEED_SCALE = 1e3; // Speed is measured in km/s so multiply by 1000
 
 // 0.01 Earth Days between each frame

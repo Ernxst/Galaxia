@@ -22,7 +22,7 @@
     },
     data() {
       return {
-        angle: 0 as number,
+        angle: Math.random() * 2 * Math.PI,
       };
     },
     computed: {
