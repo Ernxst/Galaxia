@@ -54,7 +54,22 @@
         // renderer.value.renderFn = () => {
         //   controller.value.render();
         // };
-        renderer.value.onBeforeRender(controller.value.render);
+        let i = 0;
+        renderer.value.onBeforeRender(() => {
+          controller.value.render();
+          if (i < 2) {
+            const glRenderer: WebGLRenderer = renderer.value.renderer;
+            console.log(glRenderer.info);
+            console.log("Scene polycount:", glRenderer.info.render.triangles);
+            console.log("Active Drawcalls:", glRenderer.info.render.calls);
+            console.log("Textures in Memory", glRenderer.info.memory.textures);
+            console.log(
+              "Geometries in Memory",
+              glRenderer.info.memory.geometries
+            );
+            i++;
+          }
+        });
       }
 
       onMounted(() => {

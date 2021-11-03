@@ -1,12 +1,13 @@
 import { Asteroid } from "../asteroid";
-import { OrbittingBody } from "../base/orbitting-body";
+import { CelestialBody } from "../base/celestial-body";
 
-export interface AsteroidBelt extends OrbittingBody {
+export interface AsteroidBelt extends CelestialBody {
   numOfAsteroids: number;
   asteroids?: Asteroid[];
-  models?: string[];
-  height: number;
+  depth?: number; // in KM
   innerRadius: number;
   outerRadius: number;
-  fill: boolean;
+  fill?: boolean;
+  minSize?: number; // in KM
+  maxSize?: number; // in KM
 }

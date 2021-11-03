@@ -26,20 +26,16 @@
       :name="belt.name"
       :asteroids="belt.asteroids"
       :num-of-asteroids="belt.numOfAsteroids"
-      :models="belt.models"
-      :height="belt.height"
+      :depth="belt.depth"
       :inner-radius="belt.innerRadius"
       :outer-radius="belt.outerRadius"
-      :semi-major="belt.semiMajor"
-      :semi-minor="belt.semiMinor"
-      :eccentricity="belt.eccentricity"
-      :axial-tilt="belt.axialTilt"
       :mass="belt.mass"
-      :mean-velocity="0"
-      :orbital-period="belt.orbitalPeriod"
-      :inclination="belt.inclination"
+      :axial-tilt="belt.axialTilt"
       :day-length="belt.dayLength"
       :fill="belt.fill"
+      :min-size="belt.minSize"
+      :max-size="belt.maxSize"
+      :mean-velocity="0"
       :star-radius="systemData.star.radius"
     />
   </Group>
@@ -77,7 +73,7 @@
       evolve(speed: number) {
         const dt = speed * TIME_STEP;
         for (const planet of this.planets) planet.orbit(dt);
-        for (const belt of this.asteroidBelts) belt.spinOnAxis(dt);
+        for (const belt of this.asteroidBelts) belt.animate(dt);
       },
     },
   });

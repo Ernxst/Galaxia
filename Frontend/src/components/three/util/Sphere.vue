@@ -8,7 +8,7 @@
     :cast-shadow="castShadow"
     :receive-shadow="receiveShadow"
   >
-    <PhongMaterial :color="colour" :props="materialProperties" />
+    <LambertMaterial :color="colour" :props="materialProperties" />
     <slot></slot>
   </TroisSphere>
 </template>
@@ -18,7 +18,7 @@
   import { getTexture } from "@/assets/three/loaders";
   import { SPHERE_SLICES } from "@/assets/three/three.constants";
   import { Texture } from "three/src/textures/Texture";
-  import { PhongMaterial, Sphere as TroisSphere } from "troisjs";
+  import { LambertMaterial, Sphere as TroisSphere } from "troisjs";
   import { defineComponent } from "vue";
   import BaseObject from "./BaseObject.vue";
 
@@ -36,7 +36,7 @@
 
   export default defineComponent({
     name: "Sphere",
-    components: { TroisSphere, PhongMaterial },
+    components: { TroisSphere, LambertMaterial },
     extends: BaseObject,
     props: SphereProps,
     computed: {

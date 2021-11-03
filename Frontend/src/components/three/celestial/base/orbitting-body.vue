@@ -1,11 +1,7 @@
 <template></template>
 
 <script lang="ts">
-  import {
-    ANGLE_INCREMENT,
-    DISTANCE_SCALE,
-    RADIUS_SCALE,
-  } from "@/assets/util/sim.constants";
+  import { DISTANCE_SCALE, RADIUS_SCALE } from "@/assets/util/sim.constants";
   import { Vector3 } from "three/src/math/Vector3";
   import { defineComponent } from "vue";
   import CelestialBody from "./celestial-body.vue";

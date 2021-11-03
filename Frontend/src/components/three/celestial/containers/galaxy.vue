@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO: Remove AmbientLight once lighting is set up -->
   <AmbientLight :intensity="0.25" />
   <Group ref="galaxy">
     <!-- <Starfield ref="starfield" /> -->

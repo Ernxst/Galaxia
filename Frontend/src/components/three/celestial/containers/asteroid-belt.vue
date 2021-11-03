@@ -1,20 +1,8 @@
 <template>
-  <Group ref="body" :position="initialPosition">
-    <Asteroid
-      v-for="index in asteroidsToDraw"
-      key="index"
-      :ref="(el) => asteroidModels.push(el)"
-      :name="`asteroid-${index}`"
-      :size="randomSize()"
-      :detail="randomDetail()"
-      :scale="randomScale()"
-      :initial-position="randomPosition()"
-      :axial-tilt="randomAxialTilt()"
-      :day-length="randomDayLength()"
-      :rotation="randomRotation()"
-    />
-    <Asteroid
-      v-for="asteroid in asteroids"
+  <Mesh ref="body">
+    <LambertMaterial />
+    <!-- <Asteroid
+      v-for="asteroid in allAsteroids"
       key="asteroid"
       :ref="(el) => asteroidModels.push(el)"
       :name="asteroid.name"
@@ -25,32 +13,35 @@
       :axial-tilt="asteroid.axialTilt"
       :day-length="asteroid.dayLength"
       :rotation="asteroid.rotation"
-    />
-  </Group>
+    /> -->
+  </Mesh>
 </template>
 
 <script lang="ts">
-  // TODO: Use 3D gLTF models as well as random geometries for asteroids
-  import { Asteroid as AstroidInterface } from "@/@types/celestial/asteroid";
-  import { randomNumber } from "@/assets/util/index";
-  import { RADIUS_SCALE } from "@/assets/util/sim.constants";
-  import { Vector3 } from "three/src/math/Vector3";
-  import { Group } from "troisjs";
+  // TODO: Axial tilt of mesh
+  import { Asteroid as AsteroidInterface } from "@/@types/celestial/asteroid";
+  import { createAsteroidGeometries } from "@/assets/three/models/index";
+  import { generateAsteroids } from "@/assets/util/index";
+  import { DISTANCE_SCALE, RADIUS_SCALE } from "@/assets/util/sim.constants";
+  import { BufferGeometryUtils } from "three/examples/jsm/utils/BufferGeometryUtils";
+  import { LambertMaterial, Mesh } from "troisjs";
   import { defineComponent, PropType } from "vue";
   import Asteroid from "../asteroid.vue";
-  import OrbittingBody from "../base/orbitting-body.vue";
+  import CelestialBody from "../base/celestial-body.vue";
   export default defineComponent({
     name: "asteroid-belt",
-    extends: OrbittingBody,
-    components: { Group, Asteroid },
+    extends: CelestialBody,
+    components: { Mesh, Asteroid, LambertMaterial },
     props: {
       numOfAsteroids: { type: Number, default: 1000 },
-      asteroids: { type: Array as PropType<AstroidInterface[]>, default: [] },
-      models: { type: Array as PropType<string[]>, default: [] },
-      height: { type: Number, default: 10 },
+      asteroids: { type: Array as PropType<AsteroidInterface[]>, default: [] },
+      depth: { type: Number, default: 3000 },
       innerRadius: Number,
       outerRadius: Number,
+      starRadius: { type: Number, default: 1 },
       fill: { type: Boolean, default: true },
+      minSize: { type: Number, default: 60 },
+      maxSize: { type: Number, default: 1000 },
     },
     data() {
       return {
@@ -58,9 +49,20 @@
       };
     },
     beforeUpdate() {
-      this.asteroidModels = [];
+      this.asteroidModels.length = 0;
     },
     computed: {
+      allAsteroids(): AsteroidInterface[] {
+        const asteroids = generateAsteroids(
+          this.asteroidsToDraw,
+          this.innerRadius * DISTANCE_SCALE + this.scaledStarRadius,
+          this.outerRadius * DISTANCE_SCALE + this.scaledStarRadius,
+          (this.depth * RADIUS_SCALE) / 2,
+          this.minSize * RADIUS_SCALE,
+          this.maxSize * RADIUS_SCALE
+        );
+        return [...this.asteroids, ...asteroids];
+      },
       asteroidsToDraw(): number {
         const num = this.numOfAsteroids - this.asteroids.length;
         return this.fill ? Math.max(num, 0) : 0;
@@ -68,47 +70,16 @@
       scaledStarRadius(): number {
         return this.starRadius * RADIUS_SCALE;
       },
-      initialPos(): Vector3 {
-        return this.computeNewPos(this.angle);
-      },
     },
     methods: {
-      // TODO: Move methods to util class
-      randomSize(): number {
-        return randomNumber(0.03, 0.1);
+      animate(dt: number) {
+        this.spinOnAxis(dt);
       },
-      randomDetail(): number {
-        return Math.ceil(randomNumber(1, 12));
-      },
-      randomScale(): Vector3 {
-        return new Vector3(
-          1 + Math.random() * 0.4,
-          1 + Math.random() * 0.8,
-          1 + Math.random() * 0.4
-        );
-      },
-      randomRotation(): Vector3 {
-        return new Vector3();
-      },
-      randomPosition(): Vector3 {
-        const x =
-          randomNumber(this.innerRadius, this.outerRadius) +
-          this.scaledStarRadius;
-        const y = randomNumber(-this.height / 2, this.height / 2);
-        const z =
-          randomNumber(this.innerRadius, this.outerRadius) +
-          this.scaledStarRadius;
-        return new Vector3(x, y, z);
-      },
-      randomDayLength(): number {
-        return randomNumber(0, 1_000_000);
-      },
-      randomAxialTilt(): number {
-        return randomNumber(0, 90);
-      },
-      afterOrbit(dt: number) {
-        for (const asteroid of this.asteroidModels) asteroid.rotate(dt);
-      },
+    },
+    mounted() {
+      const geometries = createAsteroidGeometries(this.allAsteroids);
+      const mesh = this.$refs.body.o3d;
+      mesh.geometry = BufferGeometryUtils.mergeBufferGeometries(geometries);
     },
   });
 </script>

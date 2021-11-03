@@ -12,7 +12,6 @@
 </template>
 
 <script lang="ts">
-  // TODO: Scale moon radius up?
   import { RADIUS_SCALE } from "@/assets/util/sim.constants";
   import { Vector3 } from "three/src/math/Vector3";
   import { Group } from "troisjs";

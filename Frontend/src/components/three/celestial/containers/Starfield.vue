@@ -17,6 +17,7 @@
 
 <script lang="ts">
   // TODO: Ensure stars are not generated within a star system
+  // TODO: Use single buffer geometry for all
   import { getTexture } from "@/assets/three/loaders";
   import {
     NUM_OF_BRIGHT_STARS,

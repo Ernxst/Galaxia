@@ -6,6 +6,7 @@
 </template>
 
 <script lang="ts">
+  // TODO: Use one buffer geometry for all trails and apply transformation to clone
   import { MAX_TRAIL_POINTS } from "@/assets/util/sim.constants";
   import { BufferGeometry as ThreeBufferGeometry } from "three/src/core/BufferGeometry";
   import { EllipseCurve } from "three/src/extras/curves/EllipseCurve";

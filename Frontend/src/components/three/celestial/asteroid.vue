@@ -8,30 +8,28 @@
     :rotation="rotation"
   >
     <DodecahedronGeometry ref="geometry" :radius="size" :detail="detail" />
-    <StandardMaterial :props="materialProps"></StandardMaterial>
+    <LambertMaterial :props="materialProps"></LambertMaterial>
   </Mesh>
 </template>
 
 <script lang="ts">
   import { Color } from "three/src/math/Color";
-  import { DodecahedronGeometry, Mesh, StandardMaterial } from "troisjs";
+  import { DodecahedronGeometry, Mesh, LambertMaterial } from "troisjs";
   import { defineComponent } from "vue";
   import CelestialBody from "./base/celestial-body.vue";
   export default defineComponent({
     name: "asteroid",
     extends: CelestialBody,
-    components: { Mesh, DodecahedronGeometry, StandardMaterial },
+    components: { Mesh, DodecahedronGeometry, LambertMaterial },
     props: {
       size: { type: Number, default: 1 },
       detail: { type: Number, default: 0 },
+      colour: { type: String, default: "#FFFFFF" },
     },
     computed: {
       materialProps() {
-        const colour = new Color("#FFFFFF");
         return {
-          color: colour,
-          roughness: 0.8,
-          metalness: 1,
+          color: new Color(this.colour),
         };
       },
     },
