@@ -19,6 +19,29 @@
       :axial-tilt="planet.axialTilt"
       :moons="planet.moons"
     />
+    <AsteroidBelt
+      v-for="belt in systemData.asteroidBelts"
+      key="belt"
+      :ref="(el) => asteroidBelts.push(el)"
+      :name="belt.name"
+      :asteroids="belt.asteroids"
+      :num-of-asteroids="belt.numOfAsteroids"
+      :models="belt.models"
+      :height="belt.height"
+      :inner-radius="belt.innerRadius"
+      :outer-radius="belt.outerRadius"
+      :semi-major="belt.semiMajor"
+      :semi-minor="belt.semiMinor"
+      :eccentricity="belt.eccentricity"
+      :axial-tilt="belt.axialTilt"
+      :mass="belt.mass"
+      :mean-velocity="0"
+      :orbital-period="belt.orbitalPeriod"
+      :inclination="belt.inclination"
+      :day-length="belt.dayLength"
+      :fill="belt.fill"
+      :star-radius="systemData.star.radius"
+    />
   </Group>
 </template>
 
@@ -29,10 +52,11 @@
   import { defineComponent } from "vue";
   import Planet from "../planet.vue";
   import Star from "../star.vue";
+  import AsteroidBelt from "./asteroid-belt.vue";
 
   export default defineComponent({
     name: "star-system",
-    components: { Group, Planet, Star },
+    components: { Group, Planet, Star, AsteroidBelt },
     props: { name: String },
     computed: {
       systemData(): StarSystemInterface {
@@ -42,15 +66,18 @@
     data() {
       return {
         planets: [],
+        asteroidBelts: [],
       };
     },
     beforeUpdate() {
       this.planets = [];
+      this.asteroidBelts = [];
     },
     methods: {
       evolve(speed: number) {
         const dt = speed * TIME_STEP;
         for (const planet of this.planets) planet.orbit(dt);
+        for (const belt of this.asteroidBelts) belt.spinOnAxis(dt);
       },
     },
   });

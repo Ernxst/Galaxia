@@ -1,6 +1,6 @@
 <template>
   <TroisSphere
-    :radius="scaledRadius"
+    :radius="radius"
     :width-segments="slices"
     :height-segments="slices"
     :scale="scale"
@@ -40,10 +40,6 @@
     extends: BaseObject,
     props: SphereProps,
     computed: {
-      scaledRadius() {
-        // return this.radius * RADIUS_SCALE;
-        return this.radius;
-      },
       materialProperties() {
         const props = { ...this.materialProps };
 
