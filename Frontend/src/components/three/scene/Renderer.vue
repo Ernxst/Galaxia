@@ -3,7 +3,7 @@
     ref="renderer"
     :orbit-ctrl="true"
     :alpha="true"
-    :antialias="true"
+    :antialias="false"
     :resize="true"
     shadow
   >
@@ -28,7 +28,17 @@
   } from "three/src/constants";
   import { WebGLRenderer } from "three/src/renderers/WebGLRenderer";
   import { Renderer as TroisRenderer } from "troisjs";
-  import { computed, defineComponent, onMounted, ref } from "vue";
+  import {
+    computed,
+    defineComponent,
+    getCurrentInstance,
+    onMounted,
+    ref,
+  } from "vue";
+  import {
+    setComposerSize,
+    setupPostprocessing,
+  } from "./postprocessing/postprocessing";
 
   export default defineComponent({
     name: "Renderer",
@@ -43,6 +53,7 @@
       function onResize(e) {
         width.value = e.size.width;
         height.value = e.size.height;
+        setComposerSize(width.value, height.value);
       }
 
       const renderer = ref<typeof TroisRenderer>(null);
@@ -50,16 +61,17 @@
       const controller = ref<typeof SceneController>(null);
 
       function onLoad() {
-        // TODO: Use when implementing postprocessing
-        // renderer.value.renderFn = () => {
-        //   controller.value.render();
-        // };
+        renderer.value.renderFn = setupPostprocessing(
+          renderer.value.renderer,
+          renderer.value.scene,
+          renderer.value.camera
+        );
         let i = 0;
         renderer.value.onBeforeRender(() => {
           controller.value.render();
+
           if (i < 2) {
             const glRenderer: WebGLRenderer = renderer.value.renderer;
-            console.log(glRenderer.info);
             console.log("Scene polycount:", glRenderer.info.render.triangles);
             console.log("Active Drawcalls:", glRenderer.info.render.calls);
             console.log("Textures in Memory", glRenderer.info.memory.textures);
@@ -76,6 +88,11 @@
         renderer.value.onResize = onResize;
         orbitControls.value = renderer.value.three.cameraCtrl;
         orbitControls.value.listenToKeyEvents(window);
+
+        const parentElement: HTMLElement =
+          getCurrentInstance().proxy.$el.parentNode;
+        width.value = parentElement.clientWidth;
+        height.value = parentElement.clientHeight;
 
         const glRenderer: WebGLRenderer = renderer.value.renderer;
         glRenderer.capabilities.logarithmicDepthBuffer = true;

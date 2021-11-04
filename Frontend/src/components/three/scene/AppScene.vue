@@ -56,12 +56,12 @@
       const assetsLoaded = ref(false);
       const galaxy = ref<typeof Galaxy>(null);
 
-      function render(paused: boolean, speed: number) {
+      function animate(paused: boolean, speed: number) {
         if (!paused) galaxy.value.evolve(speed);
       }
 
       return {
-        render,
+        animate,
         assets,
         assetsLoaded,
         galaxy,

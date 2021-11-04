@@ -39,11 +39,13 @@
         const camera: PerspectiveCamera = this.$refs.camera.camera;
         camera.position.set(700, 0, 700);
         camera.rotation.order = "YXZ";
+        camera.lookAt(0, 0, 0);
+        this.orbitControls.target.set(0, 0, 0);
       },
       reset() {
         this.setDefaultCamPos(); // TODO: Animate reset
       },
-      render(paused: boolean, speed: number) {
+      animate(paused: boolean, speed: number) {
         this.orbitControls.update();
       },
     },

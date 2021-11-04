@@ -1,5 +1,6 @@
 <template>
   <TroisSphere
+    ref="sphere"
     :radius="radius"
     :width-segments="slices"
     :height-segments="slices"
@@ -8,7 +9,7 @@
     :cast-shadow="castShadow"
     :receive-shadow="receiveShadow"
   >
-    <LambertMaterial :color="colour" :props="materialProperties" />
+    <PhongMaterial :props="materialProperties" />
     <slot></slot>
   </TroisSphere>
 </template>
@@ -17,8 +18,13 @@
   // TODO: When creating atmosphere shell, make it a new component that extends this sphere component
   import { getTexture } from "@/assets/three/loaders";
   import { SPHERE_SLICES } from "@/assets/three/three.constants";
+  import { Color } from "three/src/math/Color";
   import { Texture } from "three/src/textures/Texture";
-  import { LambertMaterial, Sphere as TroisSphere } from "troisjs";
+  import {
+    LambertMaterial,
+    PhongMaterial,
+    Sphere as TroisSphere,
+  } from "troisjs";
   import { defineComponent } from "vue";
   import BaseObject from "./BaseObject.vue";
 
@@ -36,12 +42,20 @@
 
   export default defineComponent({
     name: "Sphere",
-    components: { TroisSphere, LambertMaterial },
+    components: { TroisSphere, LambertMaterial, PhongMaterial },
     extends: BaseObject,
     props: SphereProps,
     computed: {
       materialProperties() {
-        const props = { ...this.materialProps };
+        const props = {
+          ...this.materialProps,
+          name: `${this.name}-material`,
+          color: new Color(this.colour),
+          emissive: new Color(this.colour),
+          emissiveIntensity: 0.2,
+          depthTest: true,
+          shininess: 0,
+        };
 
         if (this.texture)
           props.map = getTexture(this.texture).then((tex: Texture) => {
@@ -59,6 +73,11 @@
           );
 
         return props;
+      },
+    },
+    methods: {
+      mesh() {
+        return this.$refs.sphere.mesh;
       },
     },
   });

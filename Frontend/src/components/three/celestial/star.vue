@@ -9,13 +9,16 @@
     :decay="2"
   />
   <Group ref="body" :position="initialPosition">
-    <Sphere :name="`${name}-sphere`" :radius="scaledRadius" colour="#FFFF00">
+    <Sphere :name="`${name}-sphere`" :radius="scaledRadius" colour="#FF6600">
     </Sphere>
   </Group>
 </template>
 
 <script lang="ts">
+  import { BLOOM_LAYER } from "@/assets/three/three.constants";
   import { DISTANCE_SCALE, RADIUS_SCALE } from "@/assets/util/sim.constants";
+  import { Object3D } from "three/src/core/Object3D";
+  import { Mesh } from "three/src/objects/Mesh";
   import { Group, PointLight } from "troisjs";
   import { defineComponent } from "vue";
   import Sphere, { SphereProps } from "../util/Sphere.vue";
@@ -36,6 +39,13 @@
       intensity(): number {
         return this.luminosity * DISTANCE_SCALE;
       },
+    },
+    mounted() {
+      const mesh: Mesh = this.$refs.body.o3d;
+      mesh.layers.enable(BLOOM_LAYER);
+      mesh.traverse((object: Object3D) => {
+        object.layers.enable(BLOOM_LAYER);
+      });
     },
   });
 </script>

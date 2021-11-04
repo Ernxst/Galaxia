@@ -18,6 +18,10 @@
     PropType,
     ref,
   } from "vue";
+  import {
+    setupPostprocessing,
+    setComposerSize,
+  } from "./postprocessing/postprocessing";
   import AppCamera from "./AppCamera.vue";
   import AppScene from "./AppScene.vue";
   export default defineComponent({
@@ -29,9 +33,9 @@
     },
     emits: ["loaded"],
     setup(props) {
-      const speed = ref(BASE_SPEED);
-      const paused = ref(false);
-      const animating = ref(false);
+      const speed = ref<number>(BASE_SPEED);
+      const paused = ref<boolean>(false);
+      const animating = ref<boolean>(false);
       const lastPause = { by: undefined };
 
       function pause() {
@@ -63,8 +67,8 @@
       }
 
       function render() {
-        scene.value.render(paused.value, speed.value);
-        camera.value.render(paused.value, speed.value);
+        scene.value.animate(paused.value, speed.value);
+        camera.value.animate(paused.value, speed.value);
       }
 
       function startAnimation() {
