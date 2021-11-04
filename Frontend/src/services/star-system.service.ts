@@ -1,5 +1,5 @@
 import { StarSystem } from "@/@types/celestial/containers/star-system";
-import { EARTH_MASS, SOLAR_MASS } from "@/assets/util/celestial.constants";
+import { AU, EARTH_MASS, SOLAR_MASS } from "@/assets/util/celestial.constants";
 
 // TODO: Store in backend
 export const solarSystem: StarSystem = {
@@ -146,8 +146,8 @@ export const solarSystem: StarSystem = {
   asteroidBelts: [
     {
       name: "Asteroid Belt",
-      numOfAsteroids: 10_000,
-      depth: 48_000,
+      numOfAsteroids: 15_000,
+      depth: 1,
       innerRadius: 2.06,
       outerRadius: 3.27,
       mass: 2.39e21,

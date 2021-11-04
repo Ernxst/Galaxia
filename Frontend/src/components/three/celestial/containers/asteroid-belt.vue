@@ -57,7 +57,7 @@
           this.asteroidsToDraw,
           this.innerRadius * DISTANCE_SCALE + this.scaledStarRadius,
           this.outerRadius * DISTANCE_SCALE + this.scaledStarRadius,
-          (this.depth * RADIUS_SCALE) / 2,
+          (this.depth * DISTANCE_SCALE) / 2,
           this.minSize * RADIUS_SCALE,
           this.maxSize * RADIUS_SCALE
         );

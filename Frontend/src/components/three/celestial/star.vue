@@ -9,15 +9,17 @@
     :decay="2"
   />
   <Group ref="body" :position="initialPosition">
-    <Sphere :name="`${name}-sphere`" :radius="scaledRadius" colour="#FF6600">
+    <Sphere ref="sphere" :name="`${name}-sphere`" :radius="scaledRadius">
     </Sphere>
   </Group>
 </template>
 
 <script lang="ts">
   import { BLOOM_LAYER } from "@/assets/three/three.constants";
-  import { DISTANCE_SCALE, RADIUS_SCALE } from "@/assets/util/sim.constants";
+  import { LIGHTING_SCALE, RADIUS_SCALE } from "@/assets/util/sim.constants";
   import { Object3D } from "three/src/core/Object3D";
+  import { MeshBasicMaterial } from "three/src/materials/MeshBasicMaterial";
+  import { Color } from "three/src/math/Color";
   import { Mesh } from "three/src/objects/Mesh";
   import { Group, PointLight } from "troisjs";
   import { defineComponent } from "vue";
@@ -37,7 +39,7 @@
         return this.radius * RADIUS_SCALE;
       },
       intensity(): number {
-        return this.luminosity * DISTANCE_SCALE;
+        return this.luminosity * LIGHTING_SCALE;
       },
     },
     mounted() {
@@ -46,6 +48,14 @@
       mesh.traverse((object: Object3D) => {
         object.layers.enable(BLOOM_LAYER);
       });
+
+      const sphere: Mesh = this.$refs.sphere.mesh();
+      const oldMat = sphere.material;
+      sphere.material = new MeshBasicMaterial();
+      sphere.material.map = oldMat.map;
+      sphere.material.bumpMap = oldMat.bumpMap;
+      sphere.material.specularMap = oldMat.specularMap;
+      sphere.material.color = new Color(0xff6600);
     },
   });
 </script>

@@ -1,5 +1,4 @@
 <template>
-  <AmbientLight :intensity="0.25" />
   <Group ref="galaxy">
     <!-- <Starfield ref="starfield" /> -->
     <StarSystem ref="starSystem" :name="currentSystem" />
@@ -7,14 +6,14 @@
 </template>
 
 <script lang="ts">
-  import { AmbientLight, Group } from "troisjs";
+  import { Group } from "troisjs";
   import { defineComponent } from "vue";
   import StarSystem from "./star-system.vue";
   import Starfield from "./Starfield.vue";
   export default defineComponent({
     name: "Galaxy",
     emits: ["sceneLoaded"],
-    components: { AmbientLight, Group, StarSystem, Starfield },
+    components: { Group, StarSystem, Starfield },
     props: { name: String },
     computed: {
       currentSystem() {

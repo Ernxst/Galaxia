@@ -2,7 +2,7 @@
   <Group ref="system">
     <Star ref="star" v-bind="systemData.star" />
     <Planet
-      v-for="planet in systemData.planets"
+      v-for="(planet, index) in systemData.planets"
       key="planet"
       :ref="(el) => planets.push(el)"
       :name="planet.name"
@@ -18,6 +18,7 @@
       :day-length="planet.dayLength"
       :axial-tilt="planet.axialTilt"
       :moons="planet.moons"
+      :render-order="systemData.planets.length - index"
     />
     <AsteroidBelt
       v-for="belt in systemData.asteroidBelts"

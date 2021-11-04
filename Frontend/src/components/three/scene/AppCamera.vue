@@ -5,6 +5,7 @@
 <script lang="ts">
   import { zoomIn, zoomOut } from "@/assets/three/camera";
   import { FAR, FOV, NEAR } from "@/assets/three/camera/camera.constants";
+  import { SCENE_SCALE } from "@/assets/util/sim.constants";
   import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
   import { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
   import { Vector3 } from "three/src/math/Vector3";
@@ -36,11 +37,12 @@
         zoomOut(this.$refs.camera.camera, 1);
       },
       setDefaultCamPos() {
+        // TODO: set default values based on scene
         const camera: PerspectiveCamera = this.$refs.camera.camera;
-        camera.position.set(700, 0, 700);
+        camera.position.set(1400, 1400, 1400);
         camera.rotation.order = "YXZ";
-        camera.lookAt(0, 0, 0);
-        this.orbitControls.target.set(0, 0, 0);
+        camera.position.multiplyScalar(SCENE_SCALE);
+        this.orbitControls.maxDistance = 350;
       },
       reset() {
         this.setDefaultCamPos(); // TODO: Animate reset

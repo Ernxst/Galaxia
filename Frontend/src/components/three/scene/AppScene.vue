@@ -1,5 +1,5 @@
 <template>
-  <Scene>
+  <Scene ref="scene">
     <loader
       v-if="!assetsLoaded"
       :assets="assets"
@@ -7,18 +7,16 @@
     />
 
     <template v-else>
-      <Galaxy
-        ref="galaxy"
-        name="Milky Way"
-        @scene-loaded="$emit('loaded')"
-      />
+      <Galaxy ref="galaxy" name="Milky Way" @scene-loaded="onLoad" />
     </template>
   </Scene>
 </template>
 
 <script lang="ts">
+  import { SCENE_SCALE } from "@/assets/util/sim.constants";
+  import { Scene as ThreeScene } from "three/src/scenes/Scene";
   import { Scene } from "troisjs";
-  import { defineComponent, ref } from "vue";
+  import { defineComponent, getCurrentInstance, ref } from "vue";
   import Galaxy from "../celestial/containers/galaxy.vue";
   import Loader from "./loader.vue";
 
@@ -54,17 +52,27 @@
         // "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/saturn%2Fsaturn-ring.webp?alt=media&token=76117245-5be7-4c23-aee1-f33696f0d256",
       ]);
       const assetsLoaded = ref(false);
+      const scene = ref<typeof Scene>(null);
       const galaxy = ref<typeof Galaxy>(null);
 
       function animate(paused: boolean, speed: number) {
         if (!paused) galaxy.value.evolve(speed);
       }
 
+      function onLoad() {
+        const { emit } = getCurrentInstance().parent.parent;
+        const threeScene: ThreeScene = scene.value.scene;
+        threeScene.scale.multiplyScalar(SCENE_SCALE);
+        emit("loaded");
+      }
+
       return {
         animate,
+        onLoad,
         assets,
         assetsLoaded,
         galaxy,
+        scene,
       };
     },
   });

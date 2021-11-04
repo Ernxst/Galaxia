@@ -21,6 +21,7 @@
         type: Object as PropType<Vector3>,
         default: new Vector3(1, 1, 1),
       },
+      renderOrder: { type: Number, default: 0 },
     },
     data() {
       return {
@@ -48,6 +49,12 @@
         const mesh: Mesh = this.$refs.body.o3d;
         mesh.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z);
       },
+    },
+    mounted() {
+      if (this.renderOrder > 0) {
+        const mesh: Mesh = this.$refs.body.o3d;
+        mesh.renderOrder = this.renderOrder;
+      }
     },
   });
 </script>

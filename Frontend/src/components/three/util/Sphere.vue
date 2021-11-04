@@ -20,11 +20,7 @@
   import { SPHERE_SLICES } from "@/assets/three/three.constants";
   import { Color } from "three/src/math/Color";
   import { Texture } from "three/src/textures/Texture";
-  import {
-    LambertMaterial,
-    PhongMaterial,
-    Sphere as TroisSphere,
-  } from "troisjs";
+  import { PhongMaterial, Sphere as TroisSphere } from "troisjs";
   import { defineComponent } from "vue";
   import BaseObject from "./BaseObject.vue";
 
@@ -42,7 +38,7 @@
 
   export default defineComponent({
     name: "Sphere",
-    components: { TroisSphere, LambertMaterial, PhongMaterial },
+    components: { TroisSphere, PhongMaterial },
     extends: BaseObject,
     props: SphereProps,
     computed: {
@@ -51,9 +47,6 @@
           ...this.materialProps,
           name: `${this.name}-material`,
           color: new Color(this.colour),
-          emissive: new Color(this.colour),
-          emissiveIntensity: 0.2,
-          depthTest: true,
           shininess: 0,
         };
 

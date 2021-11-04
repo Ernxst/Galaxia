@@ -3,8 +3,8 @@ import { ShaderMaterial } from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass";
+import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
-import { FXAAShader } from "three/examples/jsm/shaders/FXAAShader.js";
 import { Camera } from "three/src/cameras/Camera";
 import { Layers } from "three/src/core/Layers";
 import { Material } from "three/src/materials/Material";
@@ -20,7 +20,9 @@ const darkMaterial = new MeshBasicMaterial({ color: "black" });
 const bloomLayer = new Layers();
 bloomLayer.set(BLOOM_LAYER);
 const materials: { [key: string]: Material } = {};
+
 let bloomComposer: EffectComposer, finalComposer: EffectComposer;
+let smaaPass: SMAAPass;
 
 export function setupPostprocessing(
   renderer: WebGLRenderer,
@@ -30,7 +32,12 @@ export function setupPostprocessing(
   const renderScene = new RenderPass(scene, camera);
   const width = renderer.domElement.clientWidth;
   const height = renderer.domElement.clientHeight;
-  const bloomPass = new UnrealBloomPass(new Vector2(width, height), 4.5, 0.55, 0);
+  const bloomPass = new UnrealBloomPass(
+    new Vector2(width, height),
+    1.5,
+    0.5,
+    0
+  );
 
   bloomComposer = new EffectComposer(renderer);
   bloomComposer.renderToScreen = false;
@@ -51,15 +58,13 @@ export function setupPostprocessing(
   );
   finalPass.needsSwap = true;
 
-  const fxaaPass = new ShaderPass(FXAAShader);
   const pixelRatio = renderer.getPixelRatio();
-  fxaaPass.material.uniforms["resolution"].value.x = 1 / (width * pixelRatio);
-  fxaaPass.material.uniforms["resolution"].value.y = 1 / (height * pixelRatio);
+  smaaPass = new SMAAPass(width * pixelRatio, height * pixelRatio);
 
   finalComposer = new EffectComposer(renderer);
   finalComposer.addPass(renderScene);
   finalComposer.addPass(finalPass);
-  finalComposer.addPass(fxaaPass);
+  finalComposer.addPass(smaaPass);
 
   return () => {
     scene.traverse(darkenNonBloomed);
@@ -72,6 +77,7 @@ export function setupPostprocessing(
 export function setComposerSize(width: number, height: number) {
   bloomComposer.setSize(width, height);
   finalComposer.setSize(width, height);
+  smaaPass.setSize(width, height);
 }
 
 function darkenNonBloomed(obj: Mesh) {

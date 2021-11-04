@@ -1,36 +1,23 @@
 <template>
-  <Points ref="trail">
-    <BufferGeometry ref="geometry" />
-    <PointsMaterial :props="materialProps" />
-  </Points>
+  <Group ref="group"></Group>
 </template>
 
 <script lang="ts">
-  // TODO: Use one buffer geometry for all trails and apply transformation to clone
+  import { GeometryManager } from "@/assets/three/index";
   import { MAX_TRAIL_POINTS } from "@/assets/util/sim.constants";
-  import { BufferGeometry as ThreeBufferGeometry } from "three/src/core/BufferGeometry";
   import { EllipseCurve } from "three/src/extras/curves/EllipseCurve";
+  import { LineBasicMaterial } from "three/src/materials/LineBasicMaterial";
+  import { LineLoop } from "three/src/objects/LineLoop";
   import { Mesh } from "three/src/objects/Mesh";
-  import { BufferGeometry, Points, PointsMaterial } from "troisjs";
+  import { Group } from "troisjs";
   import { defineComponent } from "vue";
   export default defineComponent({
     name: "Trail",
-    components: { Points, BufferGeometry, PointsMaterial },
+    components: { Group },
     props: {
-      meanVelocity: Number,
       semiMajor: Number,
       semiMinor: Number,
       inclination: Number,
-    },
-    computed: {
-      materialProps() {
-        return {
-          size: 0.05,
-          depthTest: true,
-          sizeAttenuation: false,
-          color: "#FFFFFF",
-        };
-      },
     },
     mounted() {
       const curve = new EllipseCurve(
@@ -43,13 +30,20 @@
         false,
         0
       );
-      const geometry: ThreeBufferGeometry = this.$refs.geometry.geometry;
+      curve.arcLengthDivisions = MAX_TRAIL_POINTS;
+
+      const geometry = GeometryManager.bufferGeometry();
       geometry.setFromPoints(curve.getPoints(MAX_TRAIL_POINTS));
       geometry.setDrawRange(0, MAX_TRAIL_POINTS);
-      const trail: Mesh = this.$refs.trail.mesh;
-      trail.frustumCulled = false;
+
+      const material = new LineBasicMaterial();
+      const trail = new LineLoop(geometry, material);
       trail.rotateX(Math.PI / 2);
       trail.rotateY(this.inclination);
+      trail.renderOrder = 1;
+
+      const group: Mesh = this.$refs.group.o3d;
+      group.add(trail);
     },
   });
 </script>

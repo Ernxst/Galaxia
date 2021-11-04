@@ -3,7 +3,7 @@
     <Sphere :name="`${name}-sphere`" :radius="scaledRadius"></Sphere>
     <slot></slot>
     <Moon
-      v-for="moon in moons"
+      v-for="(moon, index) in moons"
       v-bind="moon"
       :ref="(el) => moonComponents.push(el)"
       :name="moon.name"
@@ -18,13 +18,13 @@
       :star-radius="radius"
       :day-length="moon.dayLength"
       :axial-tilt="moon.axialTilt"
+      :render-order="moons.length - index"
     />
   </Group>
   <Trail
     :semi-major="scaledX"
     :semi-minor="scaledZ"
     :inclination="inclinationRad"
-    :mean-velocity="meanVelocity"
   />
 </template>
 

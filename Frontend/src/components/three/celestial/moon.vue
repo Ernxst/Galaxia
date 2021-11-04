@@ -7,7 +7,6 @@
     :semi-major="scaledX"
     :semi-minor="scaledZ"
     :inclination="inclinationRad"
-    :mean-velocity="meanVelocity"
   />
 </template>
 
