@@ -64,7 +64,7 @@
         renderer.value.onBeforeRender(() => {
           controller.value.render();
 
-          if (i < 2) {
+          if (i < 3) {
             const glRenderer: WebGLRenderer = renderer.value.renderer;
             console.log("Scene polycount:", glRenderer.info.render.triangles);
             console.log("Active Drawcalls:", glRenderer.info.render.calls);
@@ -83,6 +83,8 @@
         window.addEventListener("resize", (e) => {
           width.value = dom.clientWidth;
           height.value = dom.clientHeight;
+          controller.value.resize(width.value, height.value);
+          renderer.value.renderer.setSize(width.value, height.value);
           setComposerSize(width.value, height.value);
         });
         orbitControls.value = renderer.value.three.cameraCtrl;

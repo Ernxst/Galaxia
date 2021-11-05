@@ -1,37 +1,27 @@
 <template>
-  <Mesh ref="body">
+  <InstancedMesh ref="body" :count="numOfAsteroids">
+    <DodecahedronGeometry />
     <LambertMaterial />
-    <!-- <Asteroid
-      v-for="asteroid in allAsteroids"
-      key="asteroid"
-      :ref="(el) => asteroidModels.push(el)"
-      :name="asteroid.name"
-      :size="asteroid.size"
-      :detail="asteroid.detail"
-      :scale="asteroid.scale"
-      :initial-position="asteroid.initialPosition"
-      :axial-tilt="asteroid.axialTilt"
-      :day-length="asteroid.dayLength"
-      :rotation="asteroid.rotation"
-    /> -->
-  </Mesh>
+  </InstancedMesh>
 </template>
 
 <script lang="ts">
   // TODO: Axial tilt of mesh
   import { Asteroid as AsteroidInterface } from "@/@types/celestial/asteroid";
-  import { createAsteroidGeometries } from "@/assets/three/models/index";
   import { generateAsteroids } from "@/assets/util/index";
   import { DISTANCE_SCALE, RADIUS_SCALE } from "@/assets/util/sim.constants";
-  import { BufferGeometryUtils } from "three/examples/jsm/utils/BufferGeometryUtils";
-  import { LambertMaterial, Mesh } from "troisjs";
+  import { Object3D } from "three/src/core/Object3D";
+  import {
+    DodecahedronGeometry,
+    InstancedMesh,
+    LambertMaterial,
+  } from "troisjs";
   import { defineComponent, PropType } from "vue";
-  import Asteroid from "../asteroid.vue";
   import CelestialBody from "../base/celestial-body.vue";
   export default defineComponent({
     name: "asteroid-belt",
     extends: CelestialBody,
-    components: { Mesh, Asteroid, LambertMaterial },
+    components: { InstancedMesh, LambertMaterial, DodecahedronGeometry },
     props: {
       numOfAsteroids: { type: Number, default: 1000 },
       asteroids: { type: Array as PropType<AsteroidInterface[]>, default: [] },
@@ -42,14 +32,6 @@
       fill: { type: Boolean, default: true },
       minSize: { type: Number, default: 60 },
       maxSize: { type: Number, default: 1000 },
-    },
-    data() {
-      return {
-        asteroidModels: [],
-      };
-    },
-    beforeUpdate() {
-      this.asteroidModels.length = 0;
     },
     computed: {
       allAsteroids(): AsteroidInterface[] {
@@ -77,9 +59,22 @@
       },
     },
     mounted() {
-      const geometries = createAsteroidGeometries(this.allAsteroids);
       const mesh = this.$refs.body.o3d;
-      mesh.geometry = BufferGeometryUtils.mergeBufferGeometries(geometries);
+      const dummy = new Object3D();
+
+      for (let [index, asteroid] of this.allAsteroids.entries()) {
+        const rotation = asteroid.rotation;
+        if (rotation) dummy.rotation.set(rotation.x, rotation.y, rotation.z);
+        const position = asteroid.initialPosition;
+        if (position) dummy.position.set(position.x, position.y, position.z);
+
+        const scale = asteroid.scale.multiplyScalar(asteroid.size);
+        dummy.scale.set(scale.x, scale.y, scale.z);
+        dummy.updateMatrix();
+        mesh.setMatrixAt(index, dummy.matrix);
+      }
+
+      mesh.instanceMatrix.needsUpdate = true;
     },
   });
 </script>

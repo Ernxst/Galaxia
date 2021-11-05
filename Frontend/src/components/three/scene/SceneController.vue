@@ -93,6 +93,10 @@
         });
       });
 
+      function resize(width: number, height: number) {
+        camera.value.update(width / height);
+      }
+
       const scene = ref<typeof AppScene>(null);
       const camera = ref<typeof AppCamera>(null);
       const { emit } = getCurrentInstance();
@@ -140,6 +144,7 @@
         decreaseSpeed,
         togglePause,
         onLoad,
+        resize,
       };
     },
   });
