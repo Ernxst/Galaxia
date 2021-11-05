@@ -50,12 +50,6 @@
         return width.value / height.value;
       });
 
-      function onResize(e) {
-        width.value = e.size.width;
-        height.value = e.size.height;
-        setComposerSize(width.value, height.value);
-      }
-
       const renderer = ref<typeof TroisRenderer>(null);
       const orbitControls = ref<OrbitControls>(null);
       const controller = ref<typeof SceneController>(null);
@@ -85,7 +79,12 @@
       }
 
       onMounted(() => {
-        renderer.value.onResize = onResize;
+        const dom: HTMLElement = renderer.value.renderer.domElement;
+        window.addEventListener("resize", (e) => {
+          width.value = dom.clientWidth;
+          height.value = dom.clientHeight;
+          setComposerSize(width.value, height.value);
+        });
         orbitControls.value = renderer.value.three.cameraCtrl;
         orbitControls.value.listenToKeyEvents(window);
 
