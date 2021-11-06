@@ -1,7 +1,7 @@
 import { Asteroid } from "../asteroid";
 import { CelestialBody } from "../base/celestial-body";
 
-export interface AsteroidBelt extends CelestialBody {
+export interface AsteroidBelt extends Omit<CelestialBody, "axialTilt"> {
   numOfAsteroids: number;
   asteroids?: Asteroid[];
   depth?: number; // in AU
@@ -10,4 +10,5 @@ export interface AsteroidBelt extends CelestialBody {
   fill?: boolean;
   minSize?: number; // in KM
   maxSize?: number; // in KM
+  inclination?: number; // Degrees
 }

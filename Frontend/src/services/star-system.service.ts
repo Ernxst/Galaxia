@@ -153,7 +153,7 @@ export const solarSystem: StarSystem = {
       mass: 2.39e21,
       meanVelocity: 0,
       dayLength: 1_000_000,
-      axialTilt: 45,
+      inclination: 20,
     },
     {
       name: "Kuiper Belt",
@@ -164,7 +164,7 @@ export const solarSystem: StarSystem = {
       mass: 0,
       meanVelocity: 0,
       dayLength: 1_000_000,
-      axialTilt: 45,
+      inclination: 1.86,
       maxSize: 3000,
     },
   ],

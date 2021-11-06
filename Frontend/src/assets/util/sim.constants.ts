@@ -1,6 +1,7 @@
 import { AU, EARTH_RADIUS } from "./celestial.constants";
 
 export const SCENE_SCALE = 0.1;
+export const BUMP_SCALE = 0.05;
 
 export const MIN_SPEED = 1;
 export const MAX_SPEED = 100;
@@ -12,7 +13,7 @@ export const TIME_STEP = 0.01;
 
 export const RADIUS_SCALE = 1 / EARTH_RADIUS;
 export const DISTANCE_SCALE = 23.49; // 1 AU = 23.49 metres
-export const LIGHTING_SCALE = DISTANCE_SCALE / (AU * 8e12);
+export const LIGHTING_SCALE = DISTANCE_SCALE / (AU * 5e13);
 
 export const NUM_OF_DIM_STARS = 20_000;
 export const NUM_OF_MEDIUM_STARS = 20_000;

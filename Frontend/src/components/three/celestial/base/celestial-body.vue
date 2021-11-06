@@ -35,11 +35,13 @@
         const radians = speed * this.rotationSpeed;
         const rotation = new Vector3(0, radians, 0);
         this.rotate(rotation);
+        const mesh: Mesh = this.$refs.body.o3d;
+        mesh.rotation.x = this.axialTiltRads;
       },
     },
     mounted() {
       const mesh: Mesh = this.$refs.body.o3d;
-      mesh.rotateY(this.axialTiltRads);
+      mesh.rotateX(this.axialTiltRads);
     },
   });
 </script>

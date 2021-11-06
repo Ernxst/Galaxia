@@ -18,6 +18,7 @@
   // TODO: When creating atmosphere shell, make it a new component that extends this sphere component
   import { getTexture } from "@/assets/three/loaders";
   import { SPHERE_SLICES } from "@/assets/three/three.constants";
+  import { BUMP_SCALE } from "@/assets/util/sim.constants";
   import { Color } from "three/src/math/Color";
   import { Texture } from "three/src/textures/Texture";
   import { PhongMaterial, Sphere as TroisSphere } from "troisjs";
@@ -48,6 +49,7 @@
           name: `${this.name}-material`,
           color: new Color(this.colour),
           shininess: 0,
+          bumpScale: BUMP_SCALE,
         };
 
         if (this.texture)

@@ -31,7 +31,7 @@
       :inner-radius="belt.innerRadius"
       :outer-radius="belt.outerRadius"
       :mass="belt.mass"
-      :axial-tilt="belt.axialTilt"
+      :axial-tilt="belt.inclination"
       :day-length="belt.dayLength"
       :fill="belt.fill"
       :min-size="belt.minSize"

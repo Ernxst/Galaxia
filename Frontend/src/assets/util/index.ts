@@ -28,6 +28,7 @@ export function generateAsteroids(
   return asteroids;
 }
 
+// TODO: Elliptical ring
 function randomAsteroidPosition(
   squaredDifference: number,
   innerSquared: number,

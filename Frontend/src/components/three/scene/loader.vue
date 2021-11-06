@@ -10,6 +10,7 @@
 </template>
 
 <script lang="ts">
+  // TODO: Wormhole loading screen
   import { loadAssets } from "@/assets/three/loaders";
   import { defineComponent } from "vue";
   export default defineComponent({
