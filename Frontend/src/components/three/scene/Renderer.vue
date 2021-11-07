@@ -55,11 +55,6 @@
       const controller = ref<typeof SceneController>(null);
 
       function onLoad() {
-        renderer.value.renderFn = setupPostprocessing(
-          renderer.value.renderer,
-          renderer.value.scene,
-          renderer.value.camera
-        );
         let i = 0;
         renderer.value.onBeforeRender(() => {
           controller.value.render();
@@ -103,6 +98,12 @@
         glRenderer.physicallyCorrectLights = true;
         glRenderer.toneMappingExposure = TONE_MAPPING_EXPOSURE;
         glRenderer.toneMapping = ReinhardToneMapping;
+
+        renderer.value.renderFn = setupPostprocessing(
+          renderer.value.renderer,
+          renderer.value.scene,
+          renderer.value.camera
+        );
       });
 
       return {

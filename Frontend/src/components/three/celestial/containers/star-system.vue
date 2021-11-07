@@ -19,6 +19,7 @@
       :axial-tilt="planet.axialTilt"
       :moons="planet.moons"
       :render-order="systemData.planets.length - index"
+      :texture="planet.texture"
     />
     <AsteroidBelt
       v-for="belt in systemData.asteroidBelts"
@@ -46,6 +47,9 @@
 
 <script lang="ts">
   import { StarSystem as StarSystemInterface } from "@/@types/celestial/containers/star-system";
+  import { Moon } from "@/@types/celestial/moon";
+  import { Planet as PlanetInterface } from "@/@types/celestial/planet";
+  import { Star as StarInterface } from "@/@types/celestial/star";
   import { TIME_STEP } from "@/assets/util/sim.constants";
   import { Group } from "troisjs";
   import { defineComponent } from "vue";
@@ -60,6 +64,29 @@
     computed: {
       systemData(): StarSystemInterface {
         return this.$store.getters["starSystem/starSystem"](this.name);
+      },
+      assets(): string[] {
+        const assets = [];
+        const starData = this.systemData.star;
+        const planetData: PlanetInterface[] = this.systemData.planets;
+        const simData: Array<StarInterface | PlanetInterface | Moon> = [
+          starData,
+          ...planetData,
+        ];
+        for (const planet of simData) {
+          if (planet.texture) assets.push(planet.texture);
+          if (planet.bumpMap) assets.push(planet.bumpMap);
+          if (planet.specularMap) assets.push(planet.specularMap);
+          if (planet.moons) {
+            for (const moon of planet.moons) {
+              if (moon.texture) assets.push(moon.texture);
+              if (moon.bumpMap) assets.push(moon.bumpMap);
+              if (moon.specularMap) assets.push(moon.specularMap);
+            }
+          }
+        }
+        console.log(assets);
+        return assets;
       },
     },
     data() {

@@ -1,6 +1,6 @@
 <template>
   <Group ref="body" :position="initialPos">
-    <Sphere :name="`${name}-sphere`" :radius="scaledRadius"></Sphere>
+    <Sphere :name="`${name}-sphere`" :radius="scaledRadius" :texture="texture" :material-props="{ transparent: true }" />
     <slot></slot>
     <Moon
       v-for="(moon, index) in moons"
@@ -19,6 +19,7 @@
       :day-length="moon.dayLength"
       :axial-tilt="moon.axialTilt"
       :render-order="moons.length - index"
+      :texture="moon.texture"
     />
   </Group>
   <Trail

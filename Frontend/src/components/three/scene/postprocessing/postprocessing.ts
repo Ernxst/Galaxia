@@ -34,7 +34,7 @@ export function setupPostprocessing(
   const height = renderer.domElement.clientHeight;
   const bloomPass = new UnrealBloomPass(
     new Vector2(width, height),
-    1.5,
+    3,
     0.5,
     0
   );

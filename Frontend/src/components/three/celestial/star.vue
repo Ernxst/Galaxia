@@ -9,8 +9,13 @@
     :decay="2"
   />
   <Group ref="body" :position="initialPosition">
-    <Sphere ref="sphere" :name="`${name}-sphere`" :radius="scaledRadius">
-    </Sphere>
+    <Sphere
+      ref="sphere"
+      :name="`${name}-sphere`"
+      :radius="scaledRadius"
+      :texture="texture"
+      @sphere-loaded="setupSphere"
+    />
   </Group>
 </template>
 
@@ -28,6 +33,7 @@
   export default defineComponent({
     name: "star",
     extends: OrbittingBody,
+    emits: ["starLoaded"],
     components: { Group, Sphere, PointLight },
     props: {
       ...SphereProps,
@@ -42,20 +48,26 @@
         return this.luminosity * LIGHTING_SCALE;
       },
     },
+    methods: {
+      setupSphere() {
+        const sphere: Mesh = this.$refs.sphere.mesh();
+        const oldMat = sphere.material;
+        sphere.material = new MeshBasicMaterial();
+        sphere.material.name = oldMat.name;
+        sphere.material.map = oldMat.map;
+        sphere.material.bumpMap = oldMat.bumpMap;
+        sphere.material.specularMap = oldMat.specularMap;
+        sphere.material.color = new Color(0xff6600);
+        sphere.material.needsUpdate = true;
+        this.$emit("starLoaded")
+      },
+    },
     mounted() {
       const mesh: Mesh = this.$refs.body.o3d;
       mesh.layers.enable(BLOOM_LAYER);
       mesh.traverse((object: Object3D) => {
         object.layers.enable(BLOOM_LAYER);
       });
-
-      const sphere: Mesh = this.$refs.sphere.mesh();
-      const oldMat = sphere.material;
-      sphere.material = new MeshBasicMaterial();
-      sphere.material.map = oldMat.map;
-      sphere.material.bumpMap = oldMat.bumpMap;
-      sphere.material.specularMap = oldMat.specularMap;
-      sphere.material.color = new Color(0xff6600);
     },
   });
 </script>

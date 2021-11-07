@@ -19,7 +19,8 @@ export const solarSystem: StarSystem = {
     meanVelocity: 220,
     axialTilt: 7.25,
     dayLength: 0,
-    texture: "",
+    texture:
+      "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/sun%2Fsun.webp?alt=media&token=addfe03f-ecd7-4d25-b30f-2b0dceefd61c",
   },
   planets: [
     {
@@ -34,7 +35,8 @@ export const solarSystem: StarSystem = {
       meanVelocity: 47,
       axialTilt: 0.034,
       dayLength: 5067000,
-      texture: "",
+      texture:
+        "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/mercury%2Fmercury.webp?alt=media&token=dbc3c54f-8adf-4d0b-b23f-19b783e3405f",
     },
     {
       name: "Venus",
@@ -48,7 +50,8 @@ export const solarSystem: StarSystem = {
       meanVelocity: 35.02,
       axialTilt: 10087200,
       dayLength: 2.64,
-      texture: "",
+      texture:
+        "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/venus%2Fvenus.webp?alt=media&token=5c329833-5897-47d8-ba54-81296b653af4",
     },
     {
       name: "Earth",
@@ -62,7 +65,8 @@ export const solarSystem: StarSystem = {
       meanVelocity: 29.78,
       axialTilt: 23.44,
       dayLength: 86400,
-      texture: "",
+      texture:
+        "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/earth%2Fearth.webp?alt=media&token=ac1c0e2f-612a-4264-8f5a-57534ad83bd5",
       moons: [
         {
           name: "Moon",
@@ -76,7 +80,8 @@ export const solarSystem: StarSystem = {
           meanVelocity: 1.02,
           axialTilt: 1.5,
           dayLength: 2551392,
-          texture: "",
+          texture:
+            "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/moon%2Fmoon.webp?alt=media&token=ff210133-ac5f-4f1c-bb93-59632d9c2471",
         },
       ],
     },
@@ -92,7 +97,8 @@ export const solarSystem: StarSystem = {
       meanVelocity: 24.07,
       axialTilt: 25.19,
       dayLength: 88620,
-      texture: "",
+      texture:
+        "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/mars%2Fmars.webp?alt=media&token=8a79998b-7d3e-4524-bfbf-4407735aeccf",
     },
     {
       name: "Jupiter",
@@ -106,7 +112,8 @@ export const solarSystem: StarSystem = {
       meanVelocity: 13.06,
       axialTilt: 3.13,
       dayLength: 35760,
-      texture: "",
+      texture:
+        "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/jupiter%2Fjupiter.webp?alt=media&token=1db48894-992c-49e6-b763-fbc50e83e031",
     },
     {
       name: "Saturn",
@@ -120,7 +127,8 @@ export const solarSystem: StarSystem = {
       meanVelocity: 9.68,
       axialTilt: 26.73,
       dayLength: 38520,
-      texture: "",
+      texture:
+        "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/saturn%2Fsaturn.webp?alt=media&token=cb1458a4-0e30-48f0-b5a5-ec51548723d0",
     },
     {
       name: "Uranus",
@@ -134,7 +142,8 @@ export const solarSystem: StarSystem = {
       meanVelocity: 6.8,
       axialTilt: 97.77,
       dayLength: 62040,
-      texture: "",
+      texture:
+        "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/uranus%2Furanus.webp?alt=media&token=34248914-8684-4432-9004-f12201c645c1",
     },
     {
       name: "Neptune",
@@ -148,7 +157,8 @@ export const solarSystem: StarSystem = {
       meanVelocity: 5.43,
       axialTilt: 28.32,
       dayLength: 57960,
-      texture: "",
+      texture:
+        "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/neptune%2Fneptune.webp?alt=media&token=7bc8f1a0-957f-4bc1-a659-ae73f0287311",
     },
   ],
   asteroidBelts: [

@@ -9,7 +9,14 @@
     :cast-shadow="castShadow"
     :receive-shadow="receiveShadow"
   >
-    <PhongMaterial :props="materialProperties" />
+    <PhongMaterial
+      :props="{
+        ...materialProps,
+        name: `${name}-material`,
+        shininess: 0,
+        bumpScale: bumpScale,
+      }"
+    />
     <slot></slot>
   </TroisSphere>
 </template>
@@ -19,8 +26,7 @@
   import { getTexture } from "@/assets/three/loaders";
   import { SPHERE_SLICES } from "@/assets/three/three.constants";
   import { BUMP_SCALE } from "@/assets/util/sim.constants";
-  import { Color } from "three/src/math/Color";
-  import { Texture } from "three/src/textures/Texture";
+  import { MeshPhongMaterial } from "three/src/materials/MeshPhongMaterial";
   import { PhongMaterial, Sphere as TroisSphere } from "troisjs";
   import { defineComponent } from "vue";
   import BaseObject from "./BaseObject.vue";
@@ -31,7 +37,6 @@
     texture: { type: String, default: "" },
     bumpMap: { type: String },
     specularMap: { type: String },
-    colour: { type: String, default: "#FFFFFF" },
     castShadow: { type: Boolean, default: false },
     receiveShadow: { type: Boolean, default: true },
     materialProps: Object,
@@ -42,38 +47,29 @@
     components: { TroisSphere, PhongMaterial },
     extends: BaseObject,
     props: SphereProps,
-    computed: {
-      materialProperties() {
-        const props = {
-          ...this.materialProps,
-          name: `${this.name}-material`,
-          color: new Color(this.colour),
-          shininess: 0,
-          bumpScale: BUMP_SCALE,
-        };
-
-        if (this.texture)
-          props.map = getTexture(this.texture).then((tex: Texture) => {
-            return tex;
-          });
-        if (this.bumpMap)
-          props.bumpMap = getTexture(this.bumpMap).then((tex: Texture) => {
-            return tex;
-          });
-        if (this.specularMap)
-          props.specularMap = getTexture(this.specularMap).then(
-            (tex: Texture) => {
-              return tex;
-            }
-          );
-
-        return props;
-      },
+    emits: ["sphereLoaded"],
+    data() {
+      return {
+        bumpScale: BUMP_SCALE,
+      };
     },
     methods: {
       mesh() {
         return this.$refs.sphere.mesh;
       },
+      async setTextures(material: MeshPhongMaterial) {
+        if (this.texture) material.map = await getTexture(this.texture);
+        if (this.bumpMap) material.bumpMap = await getTexture(this.bumpMap);
+        if (this.specularMap)
+          material.specularMap = await getTexture(this.specularMap);
+        material.needsUpdate = true;
+      },
+    },
+    mounted() {
+      const material: MeshPhongMaterial = this.$refs.sphere.mesh.material;
+      this.setTextures(material).then((_) => {
+        this.$emit("sphereLoaded");
+      });
     },
   });
 </script>
