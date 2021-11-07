@@ -15,9 +15,9 @@ export const RADIUS_SCALE = 1 / EARTH_RADIUS;
 export const DISTANCE_SCALE = 23.49; // 1 AU = 23.49 metres
 export const LIGHTING_SCALE = DISTANCE_SCALE / (AU * 5e13);
 
-export const NUM_OF_DIM_STARS = 20_000;
-export const NUM_OF_MEDIUM_STARS = 20_000;
-export const NUM_OF_BRIGHT_STARS = 20_000;
+export const NUM_OF_DIM_STARS = 400;
+export const NUM_OF_MEDIUM_STARS = 300;
+export const NUM_OF_BRIGHT_STARS = 250;
 
 export const STARFIELD_DIAMETER = 2_000;
 export const STARFIELD_RADIUS = STARFIELD_DIAMETER / 2;

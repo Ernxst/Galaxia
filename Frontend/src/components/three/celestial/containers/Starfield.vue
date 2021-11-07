@@ -1,87 +1,71 @@
 <template>
-  <Group ref="starfield">
-    <Points ref="dim-stars">
-      <BufferGeometry ref="dim-geo" />
-      <PointsMaterial ref="dim-mat" :props="materialProps(0.2)" />
-    </Points>
-    <Points ref="medium-stars">
-      <BufferGeometry ref="med-geo" />
-      <PointsMaterial ref="med-mat" :props="materialProps(0.6)" />
-    </Points>
-    <Points ref="bright-stars">
-      <BufferGeometry ref="bright-geo" />
-      <PointsMaterial ref="bright-mat" :props="materialProps(1)" />
-    </Points>
+  <Group>
+    <InstancedMesh ref="dim-stars" :count="numOfDimStars">
+      <SphereGeometry :width-segments="slices" :height-segments="slices" />
+      <BasicMaterial :props="{ opacity: 0.2 }" />
+    </InstancedMesh>
+    <InstancedMesh ref="medium-stars" :count="numOfMediumStars">
+      <SphereGeometry :width-segments="slices" :height-segments="slices" />
+      <BasicMaterial :props="{ opacity: 0.6 }" />
+    </InstancedMesh>
+    <InstancedMesh ref="bright-stars" :count="numOfBrightStars">
+      <SphereGeometry :width-segments="slices" :height-segments="slices" />
+      <BasicMaterial :props="{ opacity: 1 }" />
+    </InstancedMesh>
   </Group>
 </template>
 
 <script lang="ts">
   // TODO: Ensure stars are not generated within a star system
-  // TODO: Use (3x) instanced mesh for all
-  import { getTexture } from "@/assets/three/loaders";
+  import { BLOOM_LAYER, SPHERE_SLICES } from "@/assets/three/three.constants";
   import {
-    NUM_OF_BRIGHT_STARS,
-    NUM_OF_DIM_STARS,
-    NUM_OF_MEDIUM_STARS,
     STARFIELD_DIAMETER,
     STARFIELD_RADIUS,
   } from "@/assets/util/sim.constants";
-  import { AdditiveBlending } from "three/src/constants";
-  import { Float32BufferAttribute } from "three/src/core/BufferAttribute";
-  import { BufferGeometry as ThreeBufferGeometry } from "three/src/core/BufferGeometry";
-  import { Points as ThreePoints } from "three/src/objects/Points";
-  import { BufferGeometry, Group, Points, PointsMaterial } from "troisjs";
+  import { Object3D } from "three/src/core/Object3D";
+  import { InstancedMesh as ThreeInstancedMesh } from "three/src/objects/InstancedMesh";
+  import { Group, BasicMaterial, InstancedMesh, SphereGeometry } from "troisjs";
   import { defineComponent } from "vue";
   export default defineComponent({
     name: "Starfield",
-    components: { Group, Points, BufferGeometry, PointsMaterial },
+    components: { Group, InstancedMesh, BasicMaterial, SphereGeometry },
+    data() {
+      return {
+        numOfDimStars: 1_000,
+        numOfMediumStars: 1_000,
+        numOfBrightStars: 1_000,
+        slices: SPHERE_SLICES,
+      };
+    },
     methods: {
-      geoVertices(numOfPoints: number): number[] {
-        const vertices = [];
-        for (let i = 0; i < numOfPoints; i++) {
+      drawStars(mesh: ThreeInstancedMesh, numOfPoints: number) {
+        const dummy = new Object3D();
+        for (let index = 0; index < numOfPoints; index++) {
           const x = STARFIELD_DIAMETER * Math.random() - STARFIELD_RADIUS;
           const y = STARFIELD_DIAMETER * Math.random() - STARFIELD_RADIUS;
           const z = STARFIELD_DIAMETER * Math.random() - STARFIELD_RADIUS;
-          vertices.push(x, y, z);
+          dummy.position.set(x, y, z);
+          const scale = Math.random();
+          dummy.scale.set(scale, scale, scale);
+          dummy.updateMatrix();
+          mesh.setMatrixAt(index, dummy.matrix);
         }
-        return vertices;
-      },
-      async materialProps(opacity: number) {
-        const map = await getTexture(
-          "https://images.unsplash.com/photo-1602614023179-25a315daf1a6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2940&q=80"
-        );
-        return {
-          size: 5,
-          sizeAttenuation: true,
-          depthWrite: false,
-          transparent: true,
-          blending: AdditiveBlending,
-          map,
-          opacity,
-        };
-      },
-      generatePoints(component: typeof BufferGeometry, numOfPoints: number) {
-        const geometry: ThreeBufferGeometry = component.geometry;
-        const vertices: number[] = this.geoVertices(numOfPoints);
-        geometry.setAttribute(
-          "position",
-          new Float32BufferAttribute(vertices, 3)
-        );
-        geometry.setDrawRange(0, numOfPoints);
+        mesh.layers.enable(BLOOM_LAYER);
+        mesh.instanceMatrix.needsUpdate = true;
       },
       animate(force: number) {
-        const dimStars: ThreePoints = this.$refs["dim-stars"].mesh;
-        const mediumStars: ThreePoints = this.$refs["medium-stars"].mesh;
-        const brightStars: ThreePoints = this.$refs["bright-stars"].mesh;
+        const dimStars: ThreeInstancedMesh = this.$refs["dim-stars"].mesh;
+        const mediumStars: ThreeInstancedMesh = this.$refs["medium-stars"].mesh;
+        const brightStars: ThreeInstancedMesh = this.$refs["bright-stars"].mesh;
         dimStars.rotation.y += force;
         mediumStars.rotation.y += force;
         brightStars.rotation.y += force;
       },
     },
     mounted() {
-      this.generatePoints(this.$refs["dim-geo"], NUM_OF_DIM_STARS);
-      this.generatePoints(this.$refs["med-geo"], NUM_OF_MEDIUM_STARS);
-      this.generatePoints(this.$refs["bright-geo"], NUM_OF_BRIGHT_STARS);
+      this.drawStars(this.$refs["dim-stars"].mesh, this.numOfDimStars);
+      this.drawStars(this.$refs["medium-stars"].mesh, this.numOfMediumStars);
+      this.drawStars(this.$refs["bright-stars"].mesh, this.numOfBrightStars);
     },
   });
 </script>
