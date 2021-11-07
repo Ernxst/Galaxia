@@ -1,6 +1,14 @@
 import { StarSystem } from "@/@types/celestial/containers/star-system";
 import { EARTH_MASS, SOLAR_MASS } from "@/assets/util/celestial.constants";
 
+const kuiperBeltBase = {
+  depth: 1,
+  mass: 0,
+  meanVelocity: 0,
+  dayLength: 1_000_000,
+  maxSize: 3000,
+};
+
 // TODO: Store in backend
 export const solarSystem: StarSystem = {
   name: "Solar System",
@@ -148,23 +156,35 @@ export const solarSystem: StarSystem = {
       name: "Asteroid Belt",
       numOfAsteroids: 10_000,
       depth: 1,
-      innerRadius: 2.06,
-      outerRadius: 3.27,
+      innerSemiMajor: 2.06,
+      innerEccentricity: 0.33,
+      outerSemiMajor: 3.27,
+      outerEccentricity: 0.33,
       mass: 2.39e21,
       meanVelocity: 0,
       dayLength: 1_000_000,
       inclination: 20,
     },
     {
-      name: "Kuiper Belt",
-      numOfAsteroids: 150_000,
-      depth: 1,
-      innerRadius: 30,
-      outerRadius: 55,
-      mass: 0,
-      meanVelocity: 0,
-      dayLength: 1_000_000,
-      inclination: 1.86,
+      name: "Kuiper Belt: Dynamically Cold",
+      ...kuiperBeltBase,
+      numOfAsteroids: 145_000,
+      innerSemiMajor: 30,
+      innerEccentricity: 0.1,
+      outerSemiMajor: 55,
+      outerEccentricity: 0.1,
+      inclination: 10,
+      maxSize: 3000,
+    },
+    {
+      name: "Kuiper Belt: Dynamically Holt",
+      ...kuiperBeltBase,
+      numOfAsteroids: 5_000,
+      innerSemiMajor: 30,
+      innerEccentricity: 0.1,
+      outerSemiMajor: 55,
+      outerEccentricity: 0.1,
+      inclination: 30,
       maxSize: 3000,
     },
   ],

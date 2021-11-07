@@ -26,8 +26,10 @@
       numOfAsteroids: { type: Number, default: 1000 },
       asteroids: { type: Array as PropType<AsteroidInterface[]>, default: [] },
       depth: { type: Number, default: 3000 },
-      innerRadius: Number,
-      outerRadius: Number,
+      innerSemiMajor: Number,
+      innerEccentricity: Number,
+      outerSemiMajor: Number,
+      outerEccentricity: Number,
       starRadius: { type: Number, default: 1 },
       fill: { type: Boolean, default: true },
       minSize: { type: Number, default: 60 },
@@ -37,8 +39,10 @@
       allAsteroids(): AsteroidInterface[] {
         const asteroids = generateAsteroids(
           this.asteroidsToDraw,
-          this.innerRadius * DISTANCE_SCALE + this.scaledStarRadius,
-          this.outerRadius * DISTANCE_SCALE + this.scaledStarRadius,
+          this.innerSemiMajor * DISTANCE_SCALE + this.scaledStarRadius,
+          this.innerEccentricity,
+          this.outerSemiMajor * DISTANCE_SCALE + this.scaledStarRadius,
+          this.outerEccentricity,
           (this.depth * DISTANCE_SCALE) / 2,
           this.minSize * RADIUS_SCALE,
           this.maxSize * RADIUS_SCALE

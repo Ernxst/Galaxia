@@ -7,19 +7,26 @@ export function randomNumber(min: number, max: number): number {
 
 export function generateAsteroids(
   numOfAsteroids: number,
-  inner: number,
-  outer: number,
+  innerSemiMajor: number,
+  innerEccentricity: number,
+  outerSemiMajor: number,
+  outerEccentricity: number,
   depth: number,
   minSize: number,
   maxSize: number
 ): Asteroid[] {
-  const innerSquared = inner ** 2;
-  const squaredDifference = outer ** 2 - innerSquared;
   const asteroids: Asteroid[] = [];
+  const innerEccentricitySquared = innerEccentricity ** 2.0;
+  const outerEccentricitySquared = outerEccentricity ** 2.0;
+  const innerSemiMinor = innerSemiMajor ** 2.0 * (1 - innerEccentricitySquared);
+  const outerSemiMinor = outerSemiMajor ** 2.0 * (1 - outerEccentricitySquared);
+
   for (let i = 0; i < numOfAsteroids; i++) {
     const position = randomAsteroidPosition(
-      squaredDifference,
-      innerSquared,
+      innerSemiMinor,
+      innerEccentricitySquared,
+      outerSemiMinor,
+      outerEccentricitySquared,
       depth
     );
     const asteroid = randomAsteroid(i, position, minSize, maxSize);
@@ -28,15 +35,28 @@ export function generateAsteroids(
   return asteroids;
 }
 
-// TODO: Elliptical ring
 function randomAsteroidPosition(
-  squaredDifference: number,
-  innerSquared: number,
+  innerSemiMinor: number,
+  innerEccentricitySquared: number,
+  outerSemiMinor: number,
+  outerEccentricitySquared: number,
   depth: number
 ): Vector3 {
   const theta = 2 * Math.PI * Math.random();
-  const dist = Math.sqrt(Math.random() * squaredDifference + innerSquared);
-  const x = dist * Math.cos(theta);
+  const cosTheta = Math.cos(theta);
+  const cosThetaSquared = cosTheta ** 2.0;
+
+  const innerDistSquared =
+    innerSemiMinor / (1 - innerEccentricitySquared * cosThetaSquared);
+  const outerDistSquared =
+    outerSemiMinor / (1 - outerEccentricitySquared * cosThetaSquared);
+
+  const dist = randomNumber(
+    Math.sqrt(innerDistSquared),
+    Math.sqrt(outerDistSquared)
+  );
+
+  const x = dist * cosTheta;
   const y = randomNumber(-depth, depth);
   const z = dist * Math.sin(theta);
   return new Vector3(x, y, z);
@@ -66,9 +86,7 @@ export function randomAsteroid(
     dayLength: randomNumber(0, 1_000_000),
     axialTilt: randomNumber(0, 90),
     initialPosition: position,
-    // TODO: Random mass
     mass: 0,
-    // TODO: Random velocity
     meanVelocity: 0,
   };
 }
