@@ -30,6 +30,7 @@
   import { defineComponent } from "vue";
   import Sphere, { SphereProps } from "../util/Sphere.vue";
   import OrbittingBody from "./base/orbitting-body.vue";
+  import { dispatchLoadedEvent } from "@/assets/three/loaders";
   export default defineComponent({
     name: "star",
     extends: OrbittingBody,
@@ -59,7 +60,8 @@
         sphere.material.specularMap = oldMat.specularMap;
         sphere.material.color = new Color(0xff6600);
         sphere.material.needsUpdate = true;
-        this.$emit("starLoaded")
+        dispatchLoadedEvent();
+        this.$emit("starLoaded");
       },
     },
     mounted() {

@@ -1,6 +1,6 @@
 <template>
   <Group ref="system">
-    <Star ref="star" v-bind="systemData.star" />
+    <Star ref="star" v-bind="systemData.star" @star-loaded="assetsLoaded++" />
     <Planet
       v-for="(planet, index) in systemData.planets"
       key="planet"
@@ -20,6 +20,7 @@
       :moons="planet.moons"
       :render-order="systemData.planets.length - index"
       :texture="planet.texture"
+      @planet-loaded="assetsLoaded++"
     />
     <AsteroidBelt
       v-for="belt in systemData.asteroidBelts"
@@ -41,15 +42,13 @@
       :max-size="belt.maxSize"
       :mean-velocity="0"
       :star-radius="systemData.star.radius"
+      @asteroid-belt-loaded="assetsLoaded++"
     />
   </Group>
 </template>
 
 <script lang="ts">
   import { StarSystem as StarSystemInterface } from "@/@types/celestial/containers/star-system";
-  import { Moon } from "@/@types/celestial/moon";
-  import { Planet as PlanetInterface } from "@/@types/celestial/planet";
-  import { Star as StarInterface } from "@/@types/celestial/star";
   import { TIME_STEP } from "@/assets/util/sim.constants";
   import { Group } from "troisjs";
   import { defineComponent } from "vue";
@@ -60,39 +59,33 @@
   export default defineComponent({
     name: "star-system",
     components: { Group, Planet, Star, AsteroidBelt },
+    emits: ["starSystemLoaded"],
     props: { name: String },
+    watch: {
+      loaded() {
+        this.$emit("starSystemLoaded");
+      },
+    },
     computed: {
       systemData(): StarSystemInterface {
         return this.$store.getters["starSystem/starSystem"](this.name);
       },
-      assets(): string[] {
-        const assets = [];
-        const starData = this.systemData.star;
-        const planetData: PlanetInterface[] = this.systemData.planets;
-        const simData: Array<StarInterface | PlanetInterface | Moon> = [
-          starData,
-          ...planetData,
-        ];
-        for (const planet of simData) {
-          if (planet.texture) assets.push(planet.texture);
-          if (planet.bumpMap) assets.push(planet.bumpMap);
-          if (planet.specularMap) assets.push(planet.specularMap);
-          if (planet.moons) {
-            for (const moon of planet.moons) {
-              if (moon.texture) assets.push(moon.texture);
-              if (moon.bumpMap) assets.push(moon.bumpMap);
-              if (moon.specularMap) assets.push(moon.specularMap);
-            }
-          }
-        }
-        console.log(assets);
-        return assets;
+      modelsToLoad(): number {
+        return (
+          this.systemData.planets.length +
+          1 +
+          this.systemData.asteroidBelts.length
+        );
+      },
+      loaded(): boolean {
+        return this.assetsLoaded === this.modelsToLoad;
       },
     },
     data() {
       return {
         planets: [],
         asteroidBelts: [],
+        assetsLoaded: 0,
       };
     },
     beforeUpdate() {

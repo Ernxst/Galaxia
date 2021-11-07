@@ -18,9 +18,12 @@
   } from "troisjs";
   import { defineComponent, PropType } from "vue";
   import CelestialBody from "../base/celestial-body.vue";
+  import { dispatchLoadedEvent } from "@/assets/three/loaders";
+
   export default defineComponent({
     name: "asteroid-belt",
     extends: CelestialBody,
+    emits: ["asteroidBeltLoaded"],
     components: { InstancedMesh, LambertMaterial, DodecahedronGeometry },
     props: {
       numOfAsteroids: { type: Number, default: 1000 },
@@ -79,6 +82,8 @@
       }
 
       mesh.instanceMatrix.needsUpdate = true;
+      dispatchLoadedEvent();
+      this.$emit("asteroidBeltLoaded");
     },
   });
 </script>

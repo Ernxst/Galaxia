@@ -11,64 +11,43 @@
 
 <script lang="ts">
   // TODO: Wormhole loading screen
-  import { loadAssets } from "@/assets/three/loaders";
   import { defineComponent } from "vue";
+
   export default defineComponent({
     name: "loader",
-    props: {
-      assets: Array,
-    },
+    props: { assetsToLoad: Number },
     emits: ["assetsLoaded"],
-    computed: {
-      currentPercentage() {
-        return Math.min(100, Math.round(this.percentage));
-      },
-    },
-    data() {
-      return {
-        percentage: 0 as number,
-        message: "Building Galaxy" as string,
-      };
-    },
     watch: {
-      assets: {
-        handler(newVal: string[], oldVal: string[]) {
-          this.load();
-        },
-        deep: true,
-      },
-    },
-    methods: {
-      load() {
-        this.reset();
-        loadAssets({
-          imageURLs: this.assets,
-          onProgress: this.update,
-          onComplete: this.onComplete,
-        });
-      },
-      update(percentage: number) {
-        this.percentage = percentage;
-      },
-      onComplete() {
+      loaded() {
         this.message = "Ready";
-        this.percentage = 100;
+        this.assetsLoaded = this.assetsToLoad;
         this.$refs.container.classList.add("complete");
         setTimeout(() => {
           this.$emit("assetsLoaded");
         }, 1300);
       },
-      reset() {
-        this.percentage = 0;
-        this.message = "Loading Assets";
-        this.$refs.container.classList.remove("complete");
+    },
+    computed: {
+      percentage(): number {
+        return Math.round((this.assetsLoaded * 100) / this.assetsToLoad);
+      },
+      currentPercentage(): number {
+        return Math.min(100, this.percentage);
+      },
+      loaded(): boolean {
+        return this.assetsLoaded === this.assetsToLoad;
       },
     },
-    mounted() {
-      this.load();
+    data() {
+      return {
+        assetsLoaded: 0,
+        message: "Building Galaxy",
+      };
     },
-    beforeUnmount() {
-      this.reset();
+    mounted() {
+      window.addEventListener("assetLoaded", () => {
+        this.assetsLoaded += 1;
+      });
     },
   });
 </script>
@@ -81,6 +60,7 @@
     z-index: 2;
     position: absolute;
     top: 0;
+    background: var(--page-bg);
   }
 
   .loader.complete {

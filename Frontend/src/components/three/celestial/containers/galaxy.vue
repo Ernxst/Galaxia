@@ -1,7 +1,11 @@
 <template>
   <Group ref="galaxy">
     <!-- <Starfield ref="starfield" /> -->
-    <StarSystem ref="starSystem" :name="currentSystem" />
+    <StarSystem
+      ref="starSystem"
+      :name="starSystem"
+      @star-system-loaded="$emit('sceneLoaded')"
+    />
   </Group>
 </template>
 
@@ -14,20 +18,12 @@
     name: "Galaxy",
     emits: ["sceneLoaded"],
     components: { Group, StarSystem, Starfield },
-    props: { name: String },
-    computed: {
-      currentSystem() {
-        return "Solar System";
-      },
-    },
+    props: { name: String, starSystem: String },
     methods: {
       evolve(speed: number) {
         // this.$refs.starfield.animate(0.00005 * speed);
         this.$refs.starSystem.evolve(speed);
       },
-    },
-    mounted() {
-      this.$emit("sceneLoaded");
     },
   });
 </script>

@@ -18,12 +18,9 @@
     PropType,
     ref,
   } from "vue";
-  import {
-    setupPostprocessing,
-    setComposerSize,
-  } from "./postprocessing/postprocessing";
   import AppCamera from "./AppCamera.vue";
   import AppScene from "./AppScene.vue";
+
   export default defineComponent({
     name: "SceneController",
     components: { AppScene, AppCamera },

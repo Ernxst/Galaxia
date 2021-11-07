@@ -1,37 +1,10 @@
+import { StarSystem } from "@/@types/celestial/containers/star-system";
 import { sRGBEncoding } from "three/src/constants";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { Texture } from "three/src/textures/Texture";
 
-/**
- * * Custom loader emits event after each asset is loaded.
- * * Alternatively, provide onProgress() callback.
- * * Same goes for loading complete.
- */
-
-let assetTotal = 0;
-let assetCount: number = 0;
 const loader = new TextureLoader();
 const textures: { [key: string]: Texture } = {};
-
-interface LoadArgs {
-  imageURLs: string[];
-  onProgress?: Function;
-  onComplete?: Function;
-}
-
-export async function loadAssets({
-  imageURLs,
-  onProgress = () => {},
-  onComplete = () => {},
-}: LoadArgs) {
-  assetTotal = imageURLs.length;
-  for (let i = 0; i < assetTotal; i++) {
-    await getTexture(imageURLs[i]);
-    assetCount++;
-    dispatch(onProgress);
-  }
-  loadingComplete(onComplete);
-}
 
 export async function getTexture(src: string): Promise<Texture> {
   if (textures[src]) return textures[src];
@@ -41,22 +14,16 @@ export async function getTexture(src: string): Promise<Texture> {
   return texture;
 }
 
-export function getProgress(): number {
-  if (assetTotal === 0) return 0;
-  return (assetCount / assetTotal) * 100;
+export function dispatchLoadedEvent() {
+  const event = new CustomEvent("assetLoaded", {});
+  window.dispatchEvent(event);
 }
 
-function loadingComplete(onComplete: Function) {
-  const event = new CustomEvent("loaded");
-  window.dispatchEvent(event);
-  onComplete();
-}
-
-function dispatch(onProgress: Function) {
-  const percentage = getProgress();
-  const event = new CustomEvent("loading", {
-    detail: { percentage },
-  });
-  window.dispatchEvent(event);
-  onProgress(percentage);
+export function getAssetsInSystem(starSystem: StarSystem): number {
+  let count = 1;
+  for (const planet of starSystem.planets) {
+    count += 1;
+    if (planet.moons) count += planet.moons.length;
+  }
+  return count + starSystem.asteroidBelts.length;
 }
