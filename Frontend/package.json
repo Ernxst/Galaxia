@@ -15,6 +15,7 @@
     "deploy": ""
   },
   "dependencies": {
+    "@types/node": "^16.11.6",
     "autoprefixer": "^10.3.4",
     "gsap": "^3.7.1",
     "three": "^0.127.0",

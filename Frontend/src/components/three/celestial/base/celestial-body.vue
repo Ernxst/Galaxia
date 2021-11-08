@@ -21,7 +21,7 @@
         return (this.meanVelocity * DISTANCE_SCALE * SPEED_SCALE) / AU;
       },
       tidallyLocked() {
-        return this.dayLength === 0 || this.dayLength === undefined;
+        return this.dayLength === 0;
       },
       rotationSpeed() {
         return this.tidallyLocked ? 0 : (2 * Math.PI) / this.dayLength;

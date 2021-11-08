@@ -16,6 +16,7 @@ import { Scene } from "three/src/scenes/Scene";
 import bloomFragment from "./shaders/bloomFragment.glsl";
 import bloomVertex from "./shaders/bloomVertex.glsl";
 
+
 const darkMaterial = new MeshBasicMaterial({ color: "black" });
 const bloomLayer = new Layers();
 bloomLayer.set(BLOOM_LAYER);
@@ -81,7 +82,7 @@ export function setComposerSize(width: number, height: number) {
 }
 
 function darkenNonBloomed(obj: Mesh) {
-  if (obj.isMesh && bloomLayer.test(obj.layers) === false) {
+  if (obj.isMesh && !bloomLayer.test(obj.layers)) {
     materials[obj.uuid] = obj.material;
     obj.material = darkMaterial;
   }

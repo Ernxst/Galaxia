@@ -24,7 +24,7 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-router.afterEach((to, from) => {
+router.afterEach((to, _) => {
   nextTick(() => {
     const meta: any = to.meta;
     document.title = meta.title(to) + " — " + APP_TITLE;

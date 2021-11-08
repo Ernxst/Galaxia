@@ -68,7 +68,6 @@ export function randomAsteroid(
   minSize: number,
   maxSize: number
 ): Asteroid {
-  // TODO: Extract constants
   return {
     name: `asteroid-${id}`,
     size: randomNumber(minSize, maxSize),

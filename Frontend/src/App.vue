@@ -9,7 +9,7 @@
   export default defineComponent({
     name: "App",
     watch: {
-      $route(to, from) {
+      $route(to, _) {
         if (to.hash) {
           this.$nextTick(() => {
             this.scrollToId(to.hash.slice(1));

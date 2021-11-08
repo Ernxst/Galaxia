@@ -33,7 +33,7 @@
       const speed = ref<number>(BASE_SPEED);
       const paused = ref<boolean>(false);
       const animating = ref<boolean>(false);
-      const lastPause = { by: undefined };
+      const lastPause : { by: string | undefined } = { by: undefined };
 
       function pause() {
         paused.value = true;

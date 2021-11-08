@@ -7,7 +7,7 @@
 
 <script lang="ts">
   import { Asteroid as AsteroidInterface } from "@/@types/celestial/asteroid";
-  import { generateAsteroids } from "@/assets/util/index";
+  import { generateAsteroids } from "@/assets/util";
   import { DISTANCE_SCALE, RADIUS_SCALE } from "@/assets/util/sim.constants";
   import { Object3D } from "three/src/core/Object3D";
   import { InstancedMesh as ThreeInstancedMesh } from "three/src/objects/InstancedMesh";
@@ -19,6 +19,7 @@
   import { defineComponent, PropType } from "vue";
   import CelestialBody from "../base/celestial-body.vue";
   import { dispatchLoadedEvent } from "@/assets/three/loaders";
+  import { Vector3 } from "three/src/math/Vector3";
 
   export default defineComponent({
     name: "asteroid-belt",
@@ -70,10 +71,12 @@
       const dummy = new Object3D();
 
       for (let [index, asteroid] of this.allAsteroids.entries()) {
-        const rotation = asteroid.rotation;
-        if (rotation) dummy.rotation.set(rotation.x, rotation.y, rotation.z);
-        const position = asteroid.initialPosition;
-        if (position) dummy.position.set(position.x, position.y, position.z);
+        const rotation = asteroid.rotation || new Vector3();
+        rotation.add(new Vector3(asteroid.axialTilt, 0, 0));
+        dummy.rotation.set(rotation.x, rotation.y, rotation.z);
+
+        const position = asteroid.initialPosition || new Vector3();
+        dummy.position.set(position.x, position.y, position.z);
 
         const scale = asteroid.scale.multiplyScalar(asteroid.size);
         dummy.scale.set(scale.x, scale.y, scale.z);

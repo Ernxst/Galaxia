@@ -22,7 +22,7 @@
   import { defineComponent, getCurrentInstance, ref } from "vue";
   import Galaxy from "../celestial/containers/galaxy.vue";
   import Loader from "./loader.vue";
-  import { getAssetsInSystem } from "@/assets/three/loaders/index";
+  import { getAssetsInSystem } from "@/assets/three/loaders";
 
   export default defineComponent({
     name: "AppScene",
