@@ -22,6 +22,7 @@
       :texture="planet.texture"
       :bump-map="planet.bumpMap"
       :specular-map="planet.specularMap"
+      :atmosphere="planet.atmosphere"
       @planet-loaded="assetsLoaded++"
     />
     <AsteroidBelt

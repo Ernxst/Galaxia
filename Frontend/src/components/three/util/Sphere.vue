@@ -1,6 +1,6 @@
 <template>
   <TroisSphere
-    ref="sphere"
+    ref="body"
     :radius="radius"
     :width-segments="slices"
     :height-segments="slices"
@@ -55,7 +55,7 @@
     },
     methods: {
       mesh() {
-        return this.$refs.sphere.mesh;
+        return this.$refs.body.mesh;
       },
       async setTextures(material: MeshPhongMaterial) {
         if (this.texture) material.map = await getTexture(this.texture);
@@ -66,7 +66,7 @@
       },
     },
     mounted() {
-      const material: MeshPhongMaterial = this.$refs.sphere.mesh.material;
+      const material: MeshPhongMaterial = this.mesh().material;
       this.setTextures(material).then((_) => {
         this.$emit("sphereLoaded");
       });

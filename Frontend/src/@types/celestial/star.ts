@@ -1,4 +1,6 @@
-import { Sphere } from "../three/sphere";
-import { CelestialBody } from "./base/celestial-body";
+import { SphericalBody } from "@/@types/celestial/base/spherical-body";
 
-export interface Star extends CelestialBody, Sphere {}
+
+export interface Star extends SphericalBody {
+  luminosity: number;
+}

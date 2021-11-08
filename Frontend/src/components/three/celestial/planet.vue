@@ -9,6 +9,16 @@
       :material-props="{ transparent: true }"
       @sphere-loaded="assetsLoaded++"
     />
+    <Atmosphere
+      ref="atmosphere"
+      v-if="hasAtmosphere"
+      :name="`${name}-atmosphere`"
+      :parent-radius="scaledRadius"
+      :scale="atmosphere.scale"
+      :texture="atmosphere.texture"
+      :opacity="atmosphere.opacity"
+      @atmosphere-loaded="assetsLoaded++"
+    />
     <slot></slot>
     <Moon
       v-for="(moon, index) in moons"
@@ -41,62 +51,71 @@
 </template>
 
 <script lang="ts">
-  // TODO: Planetshine (Google) & Planetlight
-  import { Moon as MoonInterface } from "@/@types/celestial/moon";
-  import { RADIUS_SCALE } from "@/assets/util/sim.constants";
-  import { Vector3 } from "three/src/math/Vector3";
-  import { Group } from "troisjs";
-  import { defineComponent, PropType } from "vue";
-  import Sphere, { SphereProps } from "../util/Sphere.vue";
-  import Trail from "../util/trail.vue";
-  import OrbittingBody from "./base/orbitting-body.vue";
-  import Moon from "./moon.vue";
-  import { dispatchLoadedEvent } from "@/assets/three/loaders";
+import AtmosphereProps from "@/@types/celestial/atmosphere-props";
 
-  export default defineComponent({
-    name: "planet",
-    emits: ["planetLoaded"],
-    extends: OrbittingBody,
-    components: { Group, Sphere, Trail, Moon },
-    props: {
-      ...SphereProps,
-      moons: { type: Array as PropType<MoonInterface[]>, default: [] },
+// TODO: Planetshine (Google) & Planetlight
+import { Moon as MoonInterface } from "@/@types/celestial/moon";
+import { dispatchLoadedEvent } from "@/assets/three/loaders";
+import { RADIUS_SCALE } from "@/assets/util/sim.constants";
+import Atmosphere from "@/components/three/util/Atmosphere.vue";
+import { Vector3 } from "three/src/math/Vector3";
+import { Group } from "troisjs";
+import { defineComponent, PropType } from "vue";
+import Sphere, { SphereProps } from "../util/Sphere.vue";
+import Trail from "../util/trail.vue";
+import OrbittingBody from "./base/orbitting-body.vue";
+import Moon from "./moon.vue";
+
+
+export default defineComponent({
+  name: "planet",
+  emits: ["planetLoaded"],
+  extends: OrbittingBody,
+  components: { Atmosphere, Group, Sphere, Trail, Moon },
+  props: {
+    ...SphereProps,
+    atmosphere: Object as PropType<AtmosphereProps>,
+    moons: { type: Array as PropType<MoonInterface[]>, default: [] },
+  },
+  data() {
+    return {
+      moonComponents: [] as typeof Moon[],
+      assetsLoaded: 0,
+    };
+  },
+  beforeUpdate() {
+    this.moonComponents = [];
+  },
+  watch: {
+    loaded() {
+      dispatchLoadedEvent();
+      this.$emit("planetLoaded");
     },
-    data() {
-      return {
-        moonComponents: [] as typeof Moon[],
-        assetsLoaded: 0,
-      };
+  },
+  computed: {
+    hasAtmosphere(): boolean {
+      return this.atmosphere !== undefined;
     },
-    beforeUpdate() {
-      this.moonComponents = [];
+    scaledRadius(): number {
+      return this.radius * RADIUS_SCALE;
     },
-    watch: {
-      loaded() {
-        dispatchLoadedEvent();
-        this.$emit("planetLoaded");
-      },
+    initialPos(): Vector3 {
+      return this.computeNewPos(this.angle);
     },
-    computed: {
-      scaledRadius(): number {
-        return this.radius * RADIUS_SCALE;
-      },
-      initialPos(): Vector3 {
-        return this.computeNewPos(this.angle);
-      },
-      modelsToLoad(): number {
-        return this.moons.length + 1;
-      },
-      loaded(): boolean {
-        return this.assetsLoaded === this.modelsToLoad;
-      },
+    modelsToLoad(): number {
+      const num = this.moons.length + 1;
+      return this.hasAtmosphere ? num + 1 : num;
     },
-    methods: {
-      afterOrbit(dt: number) {
-        for (const moon of this.moonComponents) moon.orbit(dt);
-      },
+    loaded(): boolean {
+      return this.assetsLoaded === this.modelsToLoad;
     },
-  });
+  },
+  methods: {
+    afterOrbit(dt: number) {
+      for (const moon of this.moonComponents) moon.orbit(dt);
+    },
+  },
+});
 </script>
 
 <style scoped></style>

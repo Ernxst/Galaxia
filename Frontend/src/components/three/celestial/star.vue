@@ -18,62 +18,96 @@
       :specular-map="specularMap"
       @sphere-loaded="setupSphere"
     />
+    <Atmosphere
+      ref="atmosphere"
+      v-if="hasAtmosphere"
+      :name="`${name}-atmosphere`"
+      :parent-radius="scaledRadius"
+      :scale="atmosphere.scale"
+      :texture="atmosphere.texture"
+      :opacity="atmosphere.opacity"
+      @atmosphere-loaded="assetsLoaded++"
+    />
   </Group>
 </template>
 
 <script lang="ts">
-  import { BLOOM_LAYER } from "@/assets/three/three.constants";
-  import { LIGHTING_SCALE, RADIUS_SCALE } from "@/assets/util/sim.constants";
-  import { Object3D } from "three/src/core/Object3D";
-  import { MeshBasicMaterial } from "three/src/materials/MeshBasicMaterial";
-  import { Color } from "three/src/math/Color";
-  import { Mesh } from "three/src/objects/Mesh";
-  import { Group, PointLight } from "troisjs";
-  import { defineComponent } from "vue";
-  import Sphere, { SphereProps } from "../util/Sphere.vue";
-  import OrbittingBody from "./base/orbitting-body.vue";
-  import { dispatchLoadedEvent } from "@/assets/three/loaders";
-  export default defineComponent({
-    name: "star",
-    extends: OrbittingBody,
-    emits: ["starLoaded"],
-    components: { Group, Sphere, PointLight },
-    props: {
-      ...SphereProps,
-      starLightColour: { type: String, default: "#FFFFFF" },
-      luminosity: { type: Number, default: 3e27 },
+import AtmosphereProps from "@/@types/celestial/atmosphere-props";
+import { dispatchLoadedEvent } from "@/assets/three/loaders";
+import { BLOOM_LAYER } from "@/assets/three/three.constants";
+import { LIGHTING_SCALE, RADIUS_SCALE } from "@/assets/util/sim.constants";
+import Atmosphere from "@/components/three/util/Atmosphere.vue";
+import { Object3D } from "three/src/core/Object3D";
+import { MeshBasicMaterial } from "three/src/materials/MeshBasicMaterial";
+import { Color } from "three/src/math/Color";
+import { Mesh } from "three/src/objects/Mesh";
+import { Group, PointLight } from "troisjs";
+import { defineComponent, PropType } from "vue";
+import Sphere, { SphereProps } from "../util/Sphere.vue";
+import OrbittingBody from "./base/orbitting-body.vue";
+
+
+export default defineComponent({
+  name: "star",
+  extends: OrbittingBody,
+  emits: ["starLoaded"],
+  components: { Atmosphere, Group, Sphere, PointLight },
+  props: {
+    ...SphereProps,
+    starLightColour: { type: String, default: "#FFFFFF" },
+    luminosity: { type: Number, default: 3e27 },
+    atmosphere: Object as PropType<AtmosphereProps>,
+  },
+  data() {
+    return {
+      assetsLoaded: 0,
+    };
+  },
+  watch: {
+    loaded() {
+      this.setupSphere();
     },
-    computed: {
-      scaledRadius(): number {
-        return this.radius * RADIUS_SCALE;
-      },
-      intensity(): number {
-        return this.luminosity * LIGHTING_SCALE;
-      },
+  },
+  computed: {
+    hasAtmosphere(): boolean {
+      return this.atmosphere !== undefined;
     },
-    methods: {
-      setupSphere() {
-        const sphere: Mesh = this.$refs.sphere.mesh();
-        const oldMat = sphere.material;
-        sphere.material = new MeshBasicMaterial();
-        sphere.material.name = oldMat.name;
-        sphere.material.map = oldMat.map;
-        sphere.material.bumpMap = oldMat.bumpMap;
-        sphere.material.specularMap = oldMat.specularMap;
-        sphere.material.color = new Color(0xff6600);
-        sphere.material.needsUpdate = true;
-        dispatchLoadedEvent();
-        this.$emit("starLoaded");
-      },
+    scaledRadius(): number {
+      return this.radius * RADIUS_SCALE;
     },
-    mounted() {
-      const mesh: Mesh = this.$refs.body.o3d;
-      mesh.layers.enable(BLOOM_LAYER);
-      mesh.traverse((object: Object3D) => {
-        object.layers.enable(BLOOM_LAYER);
-      });
+    intensity(): number {
+      return this.luminosity * LIGHTING_SCALE;
     },
-  });
+    modelsToLoad(): number {
+      return this.hasAtmosphere ? 2 : 1;
+    },
+    loaded(): boolean {
+      return this.assetsLoaded === this.modelsToLoad;
+    },
+  },
+  methods: {
+    setupSphere() {
+      const sphere: Mesh = this.$refs.sphere.mesh();
+      const oldMat = sphere.material;
+      sphere.material = new MeshBasicMaterial();
+      sphere.material.name = oldMat.name;
+      sphere.material.map = oldMat.map;
+      sphere.material.bumpMap = oldMat.bumpMap;
+      sphere.material.specularMap = oldMat.specularMap;
+      sphere.material.color = new Color(0xff6600);
+      sphere.material.needsUpdate = true;
+      dispatchLoadedEvent();
+      this.$emit("starLoaded");
+    },
+  },
+  mounted() {
+    const mesh: Mesh = this.$refs.body.o3d;
+    mesh.layers.enable(BLOOM_LAYER);
+    mesh.traverse((object: Object3D) => {
+      object.layers.enable(BLOOM_LAYER);
+    });
+  },
+});
 </script>
 
 <style scoped></style>

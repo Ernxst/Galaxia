@@ -2,7 +2,7 @@
 
 <script lang="ts">
   import { AU } from "@/assets/util/celestial.constants";
-  import { DISTANCE_SCALE, SPEED_SCALE } from "@/assets/util/sim.constants";
+  import { ATMOSPHERE_ROTATION_SPEED_SCALE, DISTANCE_SCALE, SPEED_SCALE } from "@/assets/util/sim.constants";
   import { Vector3 } from "three/src/math/Vector3";
   import { Mesh } from "three/src/objects/Mesh";
   import { defineComponent } from "vue";
@@ -35,6 +35,10 @@
         const radians = speed * this.rotationSpeed;
         const rotation = new Vector3(0, radians, 0);
         this.rotate(rotation);
+        if (this.hasAtmosphere) {
+          const rotation = new Vector3(0, radians * ATMOSPHERE_ROTATION_SPEED_SCALE, 0);
+          this.$refs.atmosphere.rotate(rotation);
+        }
         const mesh: Mesh = this.$refs.body.o3d;
         mesh.rotation.x = this.axialTiltRads;
       },

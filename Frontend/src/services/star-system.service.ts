@@ -1,5 +1,6 @@
 import { StarSystem } from "@/@types/celestial/containers/star-system";
 import { EARTH_MASS, SOLAR_MASS } from "@/assets/util/celestial.constants";
+import { ATMOSPHERE_OPACITY, ATMOSPHERE_SCALE } from "@/assets/util/sim.constants";
 
 
 const kuiperBeltBase = {
@@ -20,8 +21,14 @@ export const solarSystem: StarSystem = {
     meanVelocity: 220,
     axialTilt: 7.25,
     dayLength: 0,
+    luminosity: 3e27,
     texture:
       "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/sun%2Fsun.webp?alt=media&token=addfe03f-ecd7-4d25-b30f-2b0dceefd61c",
+    atmosphere: {
+      scale: ATMOSPHERE_SCALE,
+      texture: "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/sun%2Fsun-shell.webp?alt=media&token=0bfb38bb-cab3-444b-9c4d-34fa0c7faf4b",
+      opacity: ATMOSPHERE_OPACITY,
+    }
   },
   planets: [
     {
@@ -54,7 +61,12 @@ export const solarSystem: StarSystem = {
       dayLength: 2.64,
       texture:
         "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/venus%2Fvenus.webp?alt=media&token=5c329833-5897-47d8-ba54-81296b653af4",
-      bumpMap: "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/venus%2Fvenus-bump-map.webp?alt=media&token=410380bd-ca78-40aa-8319-e021dd9bb0f0"
+      bumpMap: "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/venus%2Fvenus-bump-map.webp?alt=media&token=410380bd-ca78-40aa-8319-e021dd9bb0f0",
+      atmosphere: {
+        scale: ATMOSPHERE_SCALE,
+        texture: "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/venus%2Fvenus-shell.webp?alt=media&token=c6a56979-e64d-4984-9c9f-3fdff907d8b6",
+        opacity: ATMOSPHERE_OPACITY
+      },
     },
     {
       name: "Earth",
@@ -72,6 +84,11 @@ export const solarSystem: StarSystem = {
         "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/earth%2Fearth.webp?alt=media&token=ac1c0e2f-612a-4264-8f5a-57534ad83bd5",
       bumpMap: "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/earth%2Fearth-bump-map.webp?alt=media&token=c23b2b96-5ad7-4b3d-8c74-7937276ed70d",
       specularMap: "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/earth%2Fearth-specular-map.webp?alt=media&token=15119bf9-8ac1-4643-9b18-fd9d706d7239",
+      atmosphere: {
+        scale: ATMOSPHERE_SCALE,
+        texture: "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/earth%2Fearth-shell.webp?alt=media&token=a1fe9b61-7d24-4498-b4d0-915be58bb743",
+        opacity: ATMOSPHERE_OPACITY
+      },
       moons: [
         {
           name: "Moon",

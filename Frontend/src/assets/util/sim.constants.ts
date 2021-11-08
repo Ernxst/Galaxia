@@ -1,5 +1,6 @@
 import { AU, EARTH_RADIUS } from "./celestial.constants";
 
+
 export const SCENE_SCALE = 0.1;
 export const BUMP_SCALE = 0.05;
 
@@ -23,3 +24,7 @@ export const STARFIELD_DIAMETER = 2_000;
 export const STARFIELD_RADIUS = STARFIELD_DIAMETER / 2;
 
 export const MAX_TRAIL_POINTS = 7500;
+
+export const ATMOSPHERE_OPACITY = 0.8;
+export const ATMOSPHERE_SCALE = 1.03;
+export const ATMOSPHERE_ROTATION_SPEED_SCALE = 1.25;
