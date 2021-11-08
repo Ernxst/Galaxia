@@ -33,11 +33,13 @@
 
 <script lang="ts">
 import AtmosphereProps from "@/@types/celestial/atmosphere-props";
+import { NEAR } from "@/assets/three/camera/camera.constants";
 import { dispatchLoadedEvent } from "@/assets/three/loaders";
 import { BLOOM_LAYER } from "@/assets/three/three.constants";
-import { LIGHTING_SCALE, RADIUS_SCALE } from "@/assets/util/sim.constants";
+import { LIGHTING_SCALE, NORMAL_BIAS, RADIUS_SCALE, SHADOW_BIAS } from "@/assets/util/sim.constants";
 import Atmosphere from "@/components/three/util/Atmosphere.vue";
 import { Object3D } from "three/src/core/Object3D";
+import { PointLight as ThreePointLight } from "three/src/lights/PointLight";
 import { MeshBasicMaterial } from "three/src/materials/MeshBasicMaterial";
 import { Color } from "three/src/math/Color";
 import { Mesh } from "three/src/objects/Mesh";
@@ -106,6 +108,11 @@ export default defineComponent({
     mesh.traverse((object: Object3D) => {
       object.layers.enable(BLOOM_LAYER);
     });
+
+    const light: ThreePointLight = this.$refs.light.light;
+    light.shadow.bias = SHADOW_BIAS;
+    light.shadow.normalBias = NORMAL_BIAS;
+    light.shadow.camera.near = NEAR;
   },
 });
 </script>

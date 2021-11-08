@@ -152,6 +152,13 @@ export const solarSystem: StarSystem = {
       dayLength: 38520,
       texture:
         "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/saturn%2Fsaturn.webp?alt=media&token=cb1458a4-0e30-48f0-b5a5-ec51548723d0",
+      ring: {
+        tilt: 0,
+        texture: "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/saturn%2Fsaturn-ring.webp?alt=media&token=76117245-5be7-4c23-aee1-f33696f0d256",
+        innerRadius: 66900,
+        outerRadius: 136775,
+        circular: true,
+      }
     },
     {
       name: "Uranus",

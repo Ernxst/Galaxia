@@ -14,7 +14,9 @@ export const TIME_STEP = 0.01;
 
 export const RADIUS_SCALE = 1 / EARTH_RADIUS;
 export const DISTANCE_SCALE = 23.49; // 1 AU = 23.49 metres
-export const LIGHTING_SCALE = DISTANCE_SCALE / (AU * 5e16);
+export const LIGHTING_SCALE = DISTANCE_SCALE / (AU * 3e16);
+export const SHADOW_BIAS = -0.0001;
+export const NORMAL_BIAS = 0.3;
 
 export const NUM_OF_DIM_STARS = 400;
 export const NUM_OF_MEDIUM_STARS = 300;

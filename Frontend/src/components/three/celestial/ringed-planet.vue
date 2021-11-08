@@ -7,6 +7,7 @@
       :bump-map="bumpMap"
       :specular-map="specularMap"
       :material-props="{ transparent: true }"
+      :cast-shadow="true"
       @sphere-loaded="assetsLoaded++"
     />
     <Atmosphere
@@ -42,6 +43,13 @@
       :specular-map="moon.specularMap"
       @moon-loaded="assetsLoaded++"
     />
+    <ring ref="ring" :name="`${name}-ring`"
+          :inner-radius="ring.innerRadius"
+          :outer-radius="ring.outerRadius"
+          :texture="ring.texture"
+          :circular="ring.circular"
+          :tilt="ring.tilt"
+          @ring-loaded="assetsLoaded++"/>
   </Group>
   <Trail
     :semi-major="scaledX"
@@ -51,73 +59,36 @@
 </template>
 
 <script lang="ts">
-// TODO: Planetshine (Google) & Planetlight
-
-import AtmosphereProps from "@/@types/celestial/atmosphere-props";
-import { Moon as MoonInterface } from "@/@types/celestial/moon";
-import { dispatchLoadedEvent } from "@/assets/three/loaders";
-import { RADIUS_SCALE } from "@/assets/util/sim.constants";
+import RingProps from "@/@types/celestial/ring-props";
+import Moon from "@/components/three/celestial/moon.vue";
 import Atmosphere from "@/components/three/util/Atmosphere.vue";
-import { Vector3 } from "three/src/math/Vector3";
+import Ring from "@/components/three/util/ring.vue";
+import Sphere from "@/components/three/util/Sphere.vue";
+import Trail from "@/components/three/util/trail.vue";
 import { Group } from "troisjs";
 import { defineComponent, PropType } from "vue";
-import Sphere, { SphereProps } from "../util/Sphere.vue";
-import Trail from "../util/trail.vue";
-import OrbittingBody from "./base/orbitting-body.vue";
-import Moon from "./moon.vue";
+import Planet, { PlanetProps } from "./planet.vue";
 
-
-export const PlanetProps = {
-  ...SphereProps,
-  atmosphere: Object as PropType<AtmosphereProps>,
-  moons: { type: Array as PropType<MoonInterface[]>, default: [] },
-};
 
 export default defineComponent({
-  name: "planet",
-  emits: ["planetLoaded"],
-  extends: OrbittingBody,
-  components: { Atmosphere, Group, Sphere, Trail, Moon },
-  props: PlanetProps,
-  data() {
-    return {
-      moonComponents: [] as typeof Moon[],
-      assetsLoaded: 0,
-    };
-  },
-  beforeUpdate() {
-    this.moonComponents = [];
-  },
-  watch: {
-    loaded() {
-      dispatchLoadedEvent();
-      this.$emit("planetLoaded");
-    },
+  name: "ringed-planet",
+  components: { Ring, Atmosphere, Group, Sphere, Trail, Moon },
+  extends: Planet,
+  props: {
+    ...PlanetProps,
+    ring: Object as PropType<RingProps>,
   },
   computed: {
-    hasAtmosphere(): boolean {
-      return this.atmosphere !== undefined;
-    },
-    scaledRadius(): number {
-      return this.radius * RADIUS_SCALE;
-    },
-    initialPos(): Vector3 {
-      return this.computeNewPos(this.angle);
-    },
     modelsToLoad(): number {
-      const num = this.moons.length + 1;
+      const num = this.moons.length + 2;
       return this.hasAtmosphere ? num + 1 : num;
     },
-    loaded(): boolean {
-      return this.assetsLoaded === this.modelsToLoad;
-    },
-  },
-  methods: {
-    afterOrbit(dt: number) {
-      for (const moon of this.moonComponents) moon.orbit(dt);
-    },
-  },
+    hasRing(): boolean {
+      return true;
+    }
+  }
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>

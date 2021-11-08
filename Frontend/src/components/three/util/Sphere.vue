@@ -22,7 +22,6 @@
 </template>
 
 <script lang="ts">
-  // TODO: When creating atmosphere shell, make it a new component that extends this sphere component
   import { getTexture } from "@/assets/three/loaders";
   import { SPHERE_SLICES } from "@/assets/three/three.constants";
   import { BUMP_SCALE } from "@/assets/util/sim.constants";
