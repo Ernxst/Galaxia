@@ -1,6 +1,7 @@
 import { StarSystem } from "@/@types/celestial/containers/star-system";
 import { EARTH_MASS, SOLAR_MASS } from "@/assets/util/celestial.constants";
 
+
 const kuiperBeltBase = {
   depth: 1,
   mass: 0,
@@ -37,6 +38,7 @@ export const solarSystem: StarSystem = {
       dayLength: 5067000,
       texture:
         "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/mercury%2Fmercury.webp?alt=media&token=dbc3c54f-8adf-4d0b-b23f-19b783e3405f",
+      bumpMap: "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/mercury%2Fmercury-bump-map.webp?alt=media&token=071732ca-6f75-4cc3-bf27-dc641c58f725",
     },
     {
       name: "Venus",
@@ -52,6 +54,7 @@ export const solarSystem: StarSystem = {
       dayLength: 2.64,
       texture:
         "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/venus%2Fvenus.webp?alt=media&token=5c329833-5897-47d8-ba54-81296b653af4",
+      bumpMap: "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/venus%2Fvenus-bump-map.webp?alt=media&token=410380bd-ca78-40aa-8319-e021dd9bb0f0"
     },
     {
       name: "Earth",
@@ -67,6 +70,8 @@ export const solarSystem: StarSystem = {
       dayLength: 86400,
       texture:
         "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/earth%2Fearth.webp?alt=media&token=ac1c0e2f-612a-4264-8f5a-57534ad83bd5",
+      bumpMap: "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/earth%2Fearth-bump-map.webp?alt=media&token=c23b2b96-5ad7-4b3d-8c74-7937276ed70d",
+      specularMap: "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/earth%2Fearth-specular-map.webp?alt=media&token=15119bf9-8ac1-4643-9b18-fd9d706d7239",
       moons: [
         {
           name: "Moon",
@@ -114,6 +119,7 @@ export const solarSystem: StarSystem = {
       dayLength: 35760,
       texture:
         "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/jupiter%2Fjupiter.webp?alt=media&token=1db48894-992c-49e6-b763-fbc50e83e031",
+      bumpMap: "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/mars%2Fmars-bump-map.webp?alt=media&token=f33241c9-fa1a-448d-b060-514cdc43614c"
     },
     {
       name: "Saturn",

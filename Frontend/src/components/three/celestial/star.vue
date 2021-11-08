@@ -14,6 +14,8 @@
       :name="`${name}-sphere`"
       :radius="scaledRadius"
       :texture="texture"
+      :bump-map="bumpMap"
+      :specular-map="specularMap"
       @sphere-loaded="setupSphere"
     />
   </Group>

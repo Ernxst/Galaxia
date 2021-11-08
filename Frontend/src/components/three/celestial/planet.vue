@@ -4,6 +4,8 @@
       :name="`${name}-sphere`"
       :radius="scaledRadius"
       :texture="texture"
+      :bump-map="bumpMap"
+      :specular-map="specularMap"
       :material-props="{ transparent: true }"
       @sphere-loaded="assetsLoaded++"
     />
@@ -26,6 +28,8 @@
       :axial-tilt="moon.axialTilt"
       :render-order="moons.length - index"
       :texture="moon.texture"
+      :bump-map="moon.bumpMap"
+      :specular-map="moon.specularMap"
       @moon-loaded="assetsLoaded++"
     />
   </Group>
