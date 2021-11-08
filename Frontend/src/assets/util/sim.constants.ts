@@ -18,6 +18,8 @@ export const LIGHTING_SCALE = DISTANCE_SCALE / (AU * 3e16);
 export const SHADOW_BIAS = -0.0001;
 export const NORMAL_BIAS = 0.3;
 
+export const SHADOW_MAP_SIZE = 1024;
+
 export const NUM_OF_DIM_STARS = 400;
 export const NUM_OF_MEDIUM_STARS = 300;
 export const NUM_OF_BRIGHT_STARS = 250;

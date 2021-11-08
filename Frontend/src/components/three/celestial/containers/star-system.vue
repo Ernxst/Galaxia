@@ -41,6 +41,7 @@ import { StarSystem as StarSystemInterface } from "@/@types/celestial/containers
 import { Planet as PlanetInterface } from "@/@types/celestial/planet";
 import { RingedPlanet as RingedPlanetInterface } from "@/@types/celestial/ringed-planet";
 import { TIME_STEP } from "@/assets/util/sim.constants";
+import { Vector3 } from "three/src/math/Vector3";
 import { Group } from "troisjs";
 import { defineComponent } from "vue";
 import Planet from "../planet.vue";
@@ -56,7 +57,11 @@ export default defineComponent({
   props: { name: String },
   watch: {
     loaded() {
-      this.$emit("starSystemLoaded");
+      const sceneData = {
+        largestObjectSize: this.largestObjectSize(),
+        furthestObjectDistance: this.furthestObjectDistance()
+      };
+      this.$emit("starSystemLoaded", sceneData);
     },
   },
   computed: {
@@ -95,6 +100,21 @@ export default defineComponent({
       for (const planet of this.planets) planet.orbit(dt);
       for (const belt of this.asteroidBelts) belt.animate(dt);
     },
+    largestObjectSize(): number {
+      return this.$refs.star.scaledRadius * 2.0;
+    },
+    furthestObjectDistance(): number {
+      const starPos: Vector3 = this.$refs.star.position;
+      const furthestObject = this.planets.reduce(
+        (prevPlanet, currentPlanet) => {
+          const prevPos: Vector3 = prevPlanet.initialPos;
+          const currPos: Vector3 = currentPlanet.initialPos;
+          const min = prevPos.distanceTo(starPos) > currPos.distanceTo(starPos);
+          return min ? prevPlanet : currentPlanet;
+        }
+      );
+      return furthestObject.initialPos.length();
+    }
   },
 });
 </script>

@@ -1,5 +1,5 @@
 export const NEAR = 0.1;
-export const FAR = 470;
+export const FAR = 480;
 export const FOV = 40;
 
 export const ZOOM_FACTOR = 0.25;

@@ -4,28 +4,36 @@
     <StarSystem
       ref="starSystem"
       :name="starSystem"
-      @star-system-loaded="$emit('sceneLoaded')"
+      @star-system-loaded="$emit('sceneLoaded', $event)"
     />
   </Group>
 </template>
 
 <script lang="ts">
-  import { Group } from "troisjs";
-  import { defineComponent } from "vue";
-  import StarSystem from "./star-system.vue";
-  import Starfield from "./Starfield.vue";
-  export default defineComponent({
-    name: "Galaxy",
-    emits: ["sceneLoaded"],
-    components: { Group, StarSystem, Starfield },
-    props: { name: String, starSystem: String },
-    methods: {
-      evolve(speed: number) {
-        // this.$refs.starfield.animate(0.00005 * speed);
-        this.$refs.starSystem.evolve(speed);
-      },
+import { Group } from "troisjs";
+import { defineComponent } from "vue";
+import StarSystem from "./star-system.vue";
+import Starfield from "./Starfield.vue";
+
+
+export default defineComponent({
+  name: "Galaxy",
+  emits: ["sceneLoaded"],
+  components: { Group, StarSystem, Starfield },
+  props: { name: String, starSystem: String },
+  methods: {
+    evolve(speed: number) {
+      // this.$refs.starfield.animate(0.00005 * speed);
+      this.$refs.starSystem.evolve(speed);
     },
-  });
+    largestObjectSize(): number {
+      return this.$refs.starSystem.largestObjectSize();
+    },
+    furthestObjectDistance(): number {
+      return this.$refs.starSystem.furthestObjectDistance();
+    }
+  },
+});
 </script>
 
 <style scoped></style>

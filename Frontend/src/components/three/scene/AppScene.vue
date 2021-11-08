@@ -49,10 +49,10 @@
 
       const { emit } = getCurrentInstance();
 
-      function onLoad() {
+      function onLoad(sceneData) {
         const threeScene: ThreeScene = scene.value.scene;
         threeScene.scale.multiplyScalar(SCENE_SCALE);
-        emit("loaded");
+        emit("loaded", sceneData);
       }
 
       return {

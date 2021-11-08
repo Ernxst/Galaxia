@@ -25,6 +25,7 @@
 
 <script lang="ts">
 // TODO: Ring rotation
+// TODO: Cannot see upper ring depending on position of parent
 import { getTexture } from "@/assets/three/loaders";
 import { SPHERE_SLICES } from "@/assets/three/three.constants";
 import { RADIUS_SCALE } from "@/assets/util/sim.constants";

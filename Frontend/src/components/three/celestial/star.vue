@@ -36,12 +36,13 @@ import AtmosphereProps from "@/@types/celestial/atmosphere-props";
 import { NEAR } from "@/assets/three/camera/camera.constants";
 import { dispatchLoadedEvent } from "@/assets/three/loaders";
 import { BLOOM_LAYER } from "@/assets/three/three.constants";
-import { LIGHTING_SCALE, NORMAL_BIAS, RADIUS_SCALE, SHADOW_BIAS } from "@/assets/util/sim.constants";
+import { LIGHTING_SCALE, NORMAL_BIAS, RADIUS_SCALE, SHADOW_BIAS, SHADOW_MAP_SIZE } from "@/assets/util/sim.constants";
 import Atmosphere from "@/components/three/util/Atmosphere.vue";
 import { Object3D } from "three/src/core/Object3D";
 import { PointLight as ThreePointLight } from "three/src/lights/PointLight";
 import { MeshBasicMaterial } from "three/src/materials/MeshBasicMaterial";
 import { Color } from "three/src/math/Color";
+import { Vector2 } from "three/src/math/Vector2";
 import { Mesh } from "three/src/objects/Mesh";
 import { Group, PointLight } from "troisjs";
 import { defineComponent, PropType } from "vue";
@@ -113,6 +114,7 @@ export default defineComponent({
     light.shadow.bias = SHADOW_BIAS;
     light.shadow.normalBias = NORMAL_BIAS;
     light.shadow.camera.near = NEAR;
+    light.shadow.mapSize = new Vector2(SHADOW_MAP_SIZE, SHADOW_MAP_SIZE);
   },
 });
 </script>
