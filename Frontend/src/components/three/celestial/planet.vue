@@ -33,7 +33,7 @@
       :eccentricity="moon.eccentricity"
       :orbital-period="moon.orbitalPeriod"
       :mean-velocity="moon.meanVelocity"
-      :star-radius="radius"
+      :star-radius="maxRadius"
       :day-length="moon.dayLength"
       :axial-tilt="moon.axialTilt"
       :render-order="moons.length - index"
@@ -97,6 +97,11 @@ export default defineComponent({
   computed: {
     hasAtmosphere(): boolean {
       return this.atmosphere !== undefined;
+    },
+    maxRadius(): number {
+      if (this.hasAtmosphere)
+        return this.radius * this.atmosphere.scale;
+      return this.radius;
     },
     scaledRadius(): number {
       return this.radius * RADIUS_SCALE;

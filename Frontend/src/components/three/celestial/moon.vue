@@ -60,9 +60,8 @@ export default defineComponent({
     },
   },
   computed: {
-    // TODO: Atmosphere scale should be derived from parent (or set to 1 if no atmosphere)
     offset(): number {
-      return this.starRadius * RADIUS_SCALE * ATMOSPHERE_SCALE + this.scaledRadius;
+      return this.starRadius * RADIUS_SCALE + this.scaledRadius * 2.0;
     },
     hasAtmosphere(): boolean {
       return this.atmosphere !== undefined;
