@@ -67,7 +67,7 @@
       },
     },
     mounted() {
-      const mesh: ThreeInstancedMesh = this.$refs.body.o3d;
+      const mesh: ThreeInstancedMesh = this.mesh();
       const dummy = new Object3D();
 
       for (let [index, asteroid] of this.allAsteroids.entries()) {

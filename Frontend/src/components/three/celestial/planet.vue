@@ -1,5 +1,9 @@
 <template>
   <Group ref="body" :position="initialPos">
+    <template v-if="hasMoons">
+      <SpotLight ref="planetlight" :cast-shadow="true" :decay="2" :distance="lightDistance" :intensity="0.05"
+                 :position="{x:0, y:0, z:0}" :shadow-map-size="{width: lightDistance, height: lightDistance }"/>
+    </template>
     <Sphere
       :name="`${name}-sphere`"
       :radius="scaledRadius"
@@ -51,15 +55,15 @@
 </template>
 
 <script lang="ts">
-// TODO: Planetshine (Google) & Planetlight
-
 import AtmosphereProps from "@/@types/celestial/atmosphere-props";
 import { Moon as MoonInterface } from "@/@types/celestial/moon";
 import { dispatchLoadedEvent } from "@/assets/three/loaders";
 import { RADIUS_SCALE } from "@/assets/util/sim.constants";
 import Atmosphere from "@/components/three/util/Atmosphere.vue";
+import { SpotLight as ThreeSpotLight } from "three/src/lights/SpotLight";
 import { Vector3 } from "three/src/math/Vector3";
-import { Group } from "troisjs";
+import { Mesh } from "three/src/objects/Mesh";
+import { Group, SpotLight } from "troisjs";
 import { defineComponent, PropType } from "vue";
 import Sphere, { SphereProps } from "../util/Sphere.vue";
 import Trail from "../util/trail.vue";
@@ -77,7 +81,7 @@ export default defineComponent({
   name: "planet",
   emits: ["planetLoaded"],
   extends: OrbittingBody,
-  components: { Atmosphere, Group, Sphere, Trail, Moon },
+  components: { Atmosphere, Group, Sphere, Trail, Moon, SpotLight },
   props: PlanetProps,
   data() {
     return {
@@ -95,6 +99,12 @@ export default defineComponent({
     },
   },
   computed: {
+    lightDistance(): number {
+      return this.scaledRadius * 4.0;
+    },
+    hasMoons(): boolean {
+      return this.moons && this.moons.length > 0;
+    },
     hasAtmosphere(): boolean {
       return this.atmosphere !== undefined;
     },
@@ -121,7 +131,25 @@ export default defineComponent({
     afterOrbit(dt: number) {
       for (const moon of this.moonComponents) moon.orbit(dt);
     },
+    rotate(rotation: Vector3) {
+      this.rotation.add(rotation);
+      const mesh: Mesh = this.mesh();
+      mesh.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z);
+      if (this.hasMoons) {
+        const planetLight: ThreeSpotLight = this.$refs.planetlight.light;
+        planetLight.rotation.x -= rotation.x;
+        planetLight.rotation.y -= rotation.y;
+        planetLight.rotation.z -= rotation.z;
+      }
+    }
   },
+  mounted() {
+    if (this.hasMoons) {
+      const planetLight: ThreeSpotLight = this.$refs.planetlight.light;
+      planetLight.target.position.set(-1, 0, 0);
+      planetLight.target.updateMatrixWorld();
+    }
+  }
 });
 </script>
 

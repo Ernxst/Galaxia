@@ -104,7 +104,7 @@ export default defineComponent({
     },
   },
   mounted() {
-    const mesh: Mesh = this.$refs.body.o3d;
+    const mesh: Mesh = this.mesh();
     mesh.layers.enable(BLOOM_LAYER);
     mesh.traverse((object: Object3D) => {
       object.layers.enable(BLOOM_LAYER);

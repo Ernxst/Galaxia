@@ -42,12 +42,12 @@ export default defineComponent({
         this.$refs.atmosphere.rotate(rotation);
       }
       if (this.hasRing) this.$refs.ring.rotate(radians);
-      const mesh: Mesh = this.$refs.body.o3d;
+      const mesh: Mesh = this.mesh();
       mesh.rotation.x = this.axialTiltRads;
     },
   },
   mounted() {
-    const mesh: Mesh = this.$refs.body.o3d;
+    const mesh: Mesh = this.mesh();
     mesh.rotateZ(this.axialTiltRads);
   },
 });

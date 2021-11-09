@@ -25,7 +25,6 @@ import { getTexture } from "@/assets/three/loaders";
 import { ATMOSPHERE_OPACITY, ATMOSPHERE_SCALE } from "@/assets/util/sim.constants";
 import Sphere from "@/components/three/util/Sphere.vue";
 import { MeshPhongMaterial } from "three/src/materials/MeshPhongMaterial";
-import { Mesh } from "three/src/objects/Mesh";
 import { PhongMaterial, Sphere as TroisSphere } from "troisjs";
 import { defineComponent } from "vue";
 
@@ -41,9 +40,6 @@ export default defineComponent({
   },
   emits: ["atmosphereLoaded"],
   methods: {
-    mesh() : Mesh {
-      return this.$refs.body.mesh;
-    },
     async setTextures(material: MeshPhongMaterial) {
       if (this.texture) material.map = await getTexture(this.texture);
       material.userData.isAtmosphere = true;

@@ -53,9 +53,6 @@
       };
     },
     methods: {
-      mesh() {
-        return this.$refs.body.mesh;
-      },
       async setTextures(material: MeshPhongMaterial) {
         if (this.texture) material.map = await getTexture(this.texture);
         if (this.bumpMap) material.bumpMap = await getTexture(this.bumpMap);
