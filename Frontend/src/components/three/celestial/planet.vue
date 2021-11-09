@@ -1,7 +1,7 @@
 <template>
   <Group ref="body" :position="initialPos">
     <template v-if="hasMoons">
-      <SpotLight ref="planetlight" :cast-shadow="true" :decay="2" :distance="lightDistance" :intensity="0.05"
+      <SpotLight ref="planetlight" :cast-shadow="true" :decay="2" :distance="lightDistance" :intensity="0.1"
                  :position="{x:0, y:0, z:0}" :shadow-map-size="{width: lightDistance, height: lightDistance }"/>
     </template>
     <Sphere
@@ -135,12 +135,17 @@ export default defineComponent({
       this.rotation.add(rotation);
       const mesh: Mesh = this.mesh();
       mesh.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z);
-      if (this.hasMoons) {
-        const planetLight: ThreeSpotLight = this.$refs.planetlight.light;
-        planetLight.rotation.x -= rotation.x;
-        planetLight.rotation.y -= rotation.y;
-        planetLight.rotation.z -= rotation.z;
-      }
+      if (this.hasMoons) this.rotateLight(rotation);
+    },
+    rotateLight(rotation: Vector3) {
+      const doubled = rotation.clone().multiplyScalar(2.0);
+      const planetLight: ThreeSpotLight = this.$refs.planetlight.light;
+      planetLight.rotation.x -= doubled.x;
+      planetLight.rotation.y -= doubled.y;
+      planetLight.rotation.z -= doubled.z;
+      const newPos = planetLight.position.clone().sub(doubled)
+      planetLight.target.position.set(newPos.x, newPos.y, newPos.Z);
+      planetLight.target.updateMatrixWorld();
     }
   },
   mounted() {
