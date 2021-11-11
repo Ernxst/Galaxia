@@ -117,7 +117,8 @@ export default defineComponent({
       return this.radius * RADIUS_SCALE;
     },
     initialPos(): Vector3 {
-      return this.computeNewPos(this.angle);
+      this.computeNewPos(this.angle);
+      return this.newPos;
     },
     modelsToLoad(): number {
       const num = this.moons.length + 1;

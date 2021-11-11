@@ -18,6 +18,11 @@ export default defineComponent({
     dayLength: { type: Number, default: 0 },
     axialTilt: { type: Number, default: 0 },
   },
+  data() {
+    return {
+      currentRotation: new Vector3(),
+    };
+  },
   computed: {
     scaledVelocity(): number {
       return (this.meanVelocity * DISTANCE_SCALE * SPEED_SCALE) / AU;
@@ -35,11 +40,11 @@ export default defineComponent({
   methods: {
     spinOnAxis(speed: number) {
       const radians = speed * this.rotationSpeed;
-      const rotation = new Vector3(0, radians, 0);
-      this.rotate(rotation);
+      this.currentRotation.set(0, radians, 0);
+      this.rotate(this.currentRotation);
       if (this.hasAtmosphere) {
-        const rotation = new Vector3(0, radians * ATMOSPHERE_ROTATION_SPEED_SCALE, 0);
-        this.$refs.atmosphere.rotate(rotation);
+        this.currentRotation.set(0, radians * ATMOSPHERE_ROTATION_SPEED_SCALE, 0);
+        this.$refs.atmosphere.rotate(this.currentRotation);
       }
       if (this.hasRing) this.$refs.ring.rotate(radians);
       const mesh: Mesh = this.mesh();

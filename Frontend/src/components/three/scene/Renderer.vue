@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-// TODO: Use FPS controls instead of OrbitControls
+// TODO: Use FPS controls instead of OrbitControls - swap between FPS & OrbitControls dynamically
 import { TONE_MAPPING_EXPOSURE } from "@/assets/three/three.constants";
 
 import SceneController from "@/components/three/scene/SceneController.vue";

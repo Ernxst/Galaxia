@@ -19,6 +19,7 @@
     data() {
       return {
         angle: Math.random() * 2 * Math.PI,
+        newPos: new Vector3(),
       };
     },
     computed: {
@@ -41,17 +42,17 @@
     methods: {
       orbit(dt: number) {
         this.angle += dt * this.scaledVelocity;
-        const newPos: Vector3 = this.computeNewPos(this.angle);
-        this.moveTo(newPos);
+        this.computeNewPos(this.angle);
+        this.moveTo(this.newPos);
         this.spinOnAxis(dt);
         this.afterOrbit(dt);
       },
-      computeNewPos(angle: number): Vector3 {
+      computeNewPos(angle: number) {
         const cosAngle = Math.cos(angle);
         const x = this.scaledX * cosAngle;
         const y = this.scaledInclination * cosAngle;
         const z = this.scaledZ * Math.sin(angle);
-        return new Vector3(x, y, z);
+        this.newPos.set(x, y, z);
       },
       afterOrbit(dt: number) {},
     },

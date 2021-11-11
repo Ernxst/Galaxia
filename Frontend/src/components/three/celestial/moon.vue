@@ -29,7 +29,7 @@
 <script lang="ts">
 import AtmosphereProps from "@/@types/celestial/atmosphere-props";
 import { dispatchLoadedEvent } from "@/assets/three/loaders";
-import { ATMOSPHERE_SCALE, RADIUS_SCALE } from "@/assets/util/sim.constants";
+import { RADIUS_SCALE } from "@/assets/util/sim.constants";
 import Atmosphere from "@/components/three/util/Atmosphere.vue";
 import { Vector3 } from "three/src/math/Vector3";
 import { Group } from "troisjs";
@@ -70,7 +70,8 @@ export default defineComponent({
       return this.radius * RADIUS_SCALE;
     },
     initialPos(): Vector3 {
-      return this.computeNewPos(this.angle);
+      this.computeNewPos(this.angle);
+      return this.newPos;
     },
     modelsToLoad(): number {
       return this.hasAtmosphere ? 2 : 1;
