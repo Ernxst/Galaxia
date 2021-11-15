@@ -28,6 +28,7 @@
 <script>
 export default {
   name: "circle-button",
+  emits: ["click"],
   props: {
     text: String,
     radius: {
@@ -47,7 +48,7 @@ export default {
   methods: {
     onClick(event) {
       // TODO: Play button click sound here
-      this.$emit(event);
+      this.$emit("click", event);
     },
     onMouseEnter() {
       // TODO: Play button hover sound here

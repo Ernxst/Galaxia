@@ -70,7 +70,14 @@ export default defineComponent({
       camera.position.set(camPos.x, camPos.y, camPos.z);
       camera.position.multiplyScalar(SCENE_SCALE);
       camera.rotation.order = "YXZ";
-      this.orbitControls.maxDistance = camPos.x / 5.0;
+      this.setupControls(camPos.x);
+    },
+    setupControls(camX: number) {
+      this.orbitControls.enableDamping = true;
+      this.orbitControls.enablePan = true;
+      this.orbitControls.enableRotate = true;
+      this.orbitControls.enableZoom = true;
+      this.orbitControls.maxDistance = camX / 5.0;
     },
     reset() {
       this.$refs.animator.reset();

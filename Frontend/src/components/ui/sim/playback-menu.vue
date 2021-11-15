@@ -2,7 +2,7 @@
   <nav class="playback-container centred">
     <circle-button
       :class="speedDownClass"
-      @click="$emit('speedDown', $event)"
+      @click="$emit('speedDown')"
       :radius="buttonRadius"
     >
       <span class="icon centred material-icons">fast_rewind</span>
@@ -18,7 +18,7 @@
     </circle-button>
     <circle-button
       :class="speedUpClass"
-      @click="$emit('speedUp', $event)"
+      @click="$emit('speedUp')"
       :radius="buttonRadius"
     >
       <span class="icon centred material-icons">fast_forward</span>
@@ -27,6 +27,7 @@
 </template>
 
 <script lang="ts">
+// TODO: Need some speed label indicator
 import { MAX_SPEED, MIN_SPEED } from "@/assets/util/sim.constants";
 import CircleButton from "@/components/ui/widgets/buttons/circle-button.vue";
 import { defineComponent } from "vue";
@@ -35,6 +36,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "playback-menu",
   components: { CircleButton },
+  emits: ["togglePause", "speedUp", "speedDown"],
   props: {
     paused: Boolean,
     speed: Number,

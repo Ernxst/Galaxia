@@ -50,7 +50,6 @@ export default defineComponent({
         duration,
         onStart: () => {
           this.$emit("animStart");
-          this.$emit("adjustZoom", BASE_ZOOM);
           this.orbitControls.minDistance = 0;
           onStart?.();
         },
@@ -69,7 +68,7 @@ export default defineComponent({
       const { centre, size } = computeCentreAndSize(mesh);
       this.moveCamera({
         object: { position: centre },
-        offset: new Vector3(0, 0, 1.25 * size.length()),
+        offset: new Vector3(0, 0, size.length()),
         onComplete: () => {
           this.target = body;
         },
@@ -107,7 +106,7 @@ export default defineComponent({
           const mesh: Mesh = this.target.mesh();
           const { centre, size } = computeCentreAndSize(mesh);
           controls.target = centre;
-          controls.minDistance = 1.25 * size.length();
+          controls.minDistance = size.length();
           setZoom(cam, BASE_ZOOM);
         }
       }

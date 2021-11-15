@@ -1,153 +1,97 @@
 <template>
   <app-camera ref="camera" :orbit-controls="orbitControls" :aspect="aspect"
               @anim-start="startAnimation" @anim-done="stopAnimation"
-              @adjust-zoom="zoomCamera($event)"/>
+              @adjust-zoom="zoomCamera"/>
   <app-scene ref="scene" @loaded="onLoad" @focus="focusPlanet"/>
-  <div class="sim-ui" v-if="loaded">
-    <playback-menu
-      :speed="speed"
-      :paused="paused"
-      @toggle-pause="togglePause"
-      @speed-down="decreaseSpeed"
-      @speed-up="increaseSpeed"
-    />
-    <zoom-controller ref="zoomer" @adjust-zoom="zoomCamera($event)"/>
-  </div>
+  <template v-if="loaded">
+    <simulation-ui ref="gui" @zoom-update="zoomCamera"/>
+  </template>
 </template>
 
 <script lang="ts">
 import { MeshMouseEvent } from "@/@types/three/mesh-mouse-event";
-import { BASE_SPEED, MAX_SPEED, MIN_SPEED, } from "@/assets/util/sim.constants";
-import PlaybackMenu from "@/components/ui/sim/playback-menu.vue";
-import ZoomController from "@/components/ui/sim/zoom-controller.vue";
-import { nextTick } from "@vue/runtime-core";
+import SimulationUi from "@/components/ui/sim/simulation-ui.vue";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Vector3 } from "three/src/math/Vector3";
-import { defineComponent, getCurrentInstance, onMounted, PropType, ref, } from "vue";
+import { defineComponent, getCurrentInstance, PropType, ref, } from "vue";
 import AppCamera from "./AppCamera.vue";
 import AppScene from "./AppScene.vue";
 
 
 export default defineComponent({
   name: "SceneController",
-  components: { ZoomController, PlaybackMenu, AppScene, AppCamera },
+  components: { SimulationUi, AppScene, AppCamera },
   props: {
     orbitControls: Object as PropType<OrbitControls>,
     aspect: Number,
   },
   emits: ["loaded"],
-  setup(props) {
+  setup() {
+    const scene = ref<typeof AppScene>(null);
+    const camera = ref<typeof AppCamera>(null);
+    const gui = ref<typeof SimulationUi>(null);
+    const { emit } = getCurrentInstance();
     const loaded = ref<boolean>(false);
-    const speed = ref<number>(BASE_SPEED);
-    const paused = ref<boolean>(false);
-    const animating = ref<boolean>(false);
-    const lastPause: { by: string | undefined } = { by: undefined };
 
-    function pause() {
-      paused.value = true;
-    }
-
-    function unpause() {
-      paused.value = false;
-    }
-
-    function togglePause(event: Event) {
-      // Wait for animation to finish and unpause naturally
-      if (paused.value === true && lastPause.by === "animation") return;
-      if (event instanceof KeyboardEvent) lastPause.by = "keyboard";
-      else if (event instanceof MouseEvent) lastPause.by = "mouse";
-      paused.value = !paused.value;
-    }
-
-    function increaseSpeed() {
-      if (speed.value < MAX_SPEED) speed.value += 1;
-    }
-
-    function decreaseSpeed() {
-      if (speed.value > MIN_SPEED) speed.value -= 1;
-    }
-
-    function zoomCamera(zoom: number) {
-      camera.value.setZoom(zoom);
-      zoomer.value.update(zoom);
-    }
-
-    function setupCamera(sceneData) {
+    function onLoad(sceneData) {
       const width = sceneData.furthestObjectDistance * 2.0;
       const height = sceneData.largestObjectSize * 1.5;
-      const camPos = new Vector3(width, height, width);
-      camera.value.setupCamera(camPos);
+      camera.value.setupCamera(new Vector3(width, height, width));
+      loaded.value = true;
+      emit("loaded");
     }
-
-    function render() {
-      scene.value.animate(paused.value, speed.value);
-      camera.value.animate(paused.value, speed.value);
-    }
-
-    function focusPlanet(event: MeshMouseEvent) {
-      zoomer.value.disable();
-      camera.value?.focus(event.component);
-    }
-
-    function startAnimation() {
-      animating.value = true;
-      if (paused.value === false) {
-        lastPause.by = "animation";
-        pause();
-      }
-    }
-
-    function stopAnimation() {
-      animating.value = false;
-      if (paused.value === true && lastPause.by === "animation") unpause();
-    }
-
-    onMounted(() => {
-      nextTick(() => {
-        props.orbitControls.enableDamping = true;
-        props.orbitControls.enablePan = true;
-        props.orbitControls.enableRotate = true;
-        props.orbitControls.enableZoom = true;
-      });
-    });
 
     function resize(width: number, height: number) {
       camera.value.update(width / height);
     }
 
-    const scene = ref<typeof AppScene>(null);
-    const camera = ref<typeof AppCamera>(null);
-    const zoomer = ref<typeof ZoomController>(null);
-    const { emit } = getCurrentInstance();
+    function focusPlanet(event: MeshMouseEvent) {
+      gui.value.disableZoom();
+      camera.value.focus(event.component);
+    }
 
-    function onLoad(sceneData) {
-      loaded.value = true;
-      setupCamera(sceneData);
-      emit("loaded");
+    function zoomCamera(zoom: number) {
+      camera.value.setZoom(zoom);
+      gui.value.setZoom(zoom);
+    }
+
+    function startAnimation() {
+      gui.value.startAnimation();
+    }
+
+    function stopAnimation() {
+      gui.value.stopAnimation();
+    }
+
+    function render() {
+      const paused = gui.value.paused;
+      const speed = gui.value.speed;
+      scene.value.animate(paused, speed);
+      camera.value.animate(paused, speed);
     }
 
     window.addEventListener("keydown", (e) => {
-      if (animating.value === true) return;
+      if (gui.value.animating) return;
       switch (e.key) {
         case "r":
           camera.value.reset();
           scene.value.reset();
-          zoomer.value.reset();
+          gui.value.reset();
           return;
         case "p":
-          togglePause(e);
+          gui.value.togglePause(e);
           return;
         case "<":
-          decreaseSpeed();
+          gui.value.decreaseSpeed();
           return;
         case ">":
-          increaseSpeed();
+          gui.value.increaseSpeed();
           return;
         case "+":
-          camera.value.zoomIn();
+          gui.value.zoomIn();
           return;
         case "-":
-          camera.value.zoomOut();
+          gui.value.zoomOut();
           return;
       }
     });
@@ -155,16 +99,11 @@ export default defineComponent({
     return {
       scene,
       camera,
-      zoomer,
-      speed,
-      paused,
+      gui,
       loaded,
       startAnimation,
       stopAnimation,
       render,
-      increaseSpeed,
-      decreaseSpeed,
-      togglePause,
       zoomCamera,
       focusPlanet,
       onLoad,
@@ -174,12 +113,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-.sim-ui {
-  animation-duration: 1.67s;
-  animation-name: fadeIn;
-  animation-fill-mode: forwards;
-  opacity: 0;
-  animation-delay: 1.33s;
-}
-</style>
+<style scoped></style>

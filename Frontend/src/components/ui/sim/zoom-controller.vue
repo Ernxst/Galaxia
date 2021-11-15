@@ -51,6 +51,15 @@ export default defineComponent({
     enable() {
       this.disabled = false;
     },
+    zoomIn() {
+      if (this.zoom < this.maxZoom) this.zoom += 1;
+      this.$emit("adjustZoom", this.zoom);
+    },
+    zoomOut() {
+      if (this.zoom < this.minZoom) this.zoom -= 1;
+      this.$emit("adjustZoom", this.zoom);
+
+    },
     reset() {
       this.zoom = BASE_ZOOM;
       this.enable();
