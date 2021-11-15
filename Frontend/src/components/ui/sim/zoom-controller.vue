@@ -39,6 +39,9 @@ export default defineComponent({
       this.$emit("adjustZoom", value);
       this.zoom = value;
     },
+    update(value: number) {
+      this.zoom = value;
+    },
     reset() {
       this.zoom = BASE_ZOOM;
     }

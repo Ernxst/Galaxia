@@ -22,7 +22,7 @@ interface MoveCameraParams {
 
 export default defineComponent({
   name: "CameraAnimator",
-  emits: ["animStart", "animDone"],
+  emits: ["animStart", "animDone", "adjustZoom"],
   props: {
     orbitControls: Object as PropType<OrbitControls>,
   },
@@ -41,7 +41,7 @@ export default defineComponent({
 
       this.orbitControls.target = object.position;
       const camera: PerspectiveCamera = this.$parent.camera;
-      setZoom(camera, BASE_ZOOM);
+      this.$emit("adjustZoom", BASE_ZOOM)
       const { x, y, z } = object.position.clone().add(offset);
       camera.position.set(x, y, z);
       camera.position.multiplyScalar(SCENE_SCALE);

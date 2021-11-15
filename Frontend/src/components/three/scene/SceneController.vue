@@ -1,6 +1,7 @@
 <template>
   <app-camera ref="camera" :orbit-controls="orbitControls" :aspect="aspect"
-              @anim-start="startAnimation" @anim-done="stopAnimation"/>
+              @anim-start="startAnimation" @anim-done="stopAnimation"
+              @adjust-zoom="zoomCamera($event)"/>
   <app-scene ref="scene" @loaded="onLoad" @focus="focusPlanet"/>
   <div class="sim-ui" v-if="loaded">
     <playback-menu
@@ -67,6 +68,7 @@ export default defineComponent({
 
     function zoomCamera(zoom: number) {
       camera.value.setZoom(zoom);
+      zoomer.value.update(zoom);
     }
 
     function setupCamera(sceneData) {

@@ -1,11 +1,11 @@
 <template>
-  <Camera ref="camera" :aspect="aspect" :near="near" :far="far" :fov="fov"
-          @anim-start="$emit('animStart')" @anim-done="$emit('animDone')">
+  <Camera ref="camera" :aspect="aspect" :near="near" :far="far" :fov="fov">
     <camera-animator
       ref="animator"
       :orbit-controls="orbitControls"
-      @anim-start="$emit('animStart')"
-      @anim-done="$emit('animDone')"
+      @anim-start="startAnimation"
+      @anim-done="stopAnimation"
+      @adjust-zoom="adjustZoom"
     />
   </Camera>
 </template>
@@ -26,7 +26,7 @@ import { defineComponent, PropType } from "vue";
 export default defineComponent({
   name: "AppCamera",
   components: { CameraAnimator, Camera },
-  emits: ["animStart", "animDone"],
+  emits: ["animStart", "animDone", "adjustZoom"],
   props: {
     aspect: { type: Number, default: 1 },
     orbitControls: Object as PropType<OrbitControls>,
@@ -40,6 +40,15 @@ export default defineComponent({
     };
   },
   methods: {
+    startAnimation() {
+      this.$emit("animStart");
+    },
+    stopAnimation() {
+      this.$emit("animDone");
+    },
+    adjustZoom(event) {
+      this.$emit("adjustZoom", event);
+    },
     moveTo(pos: Vector3) {
       this.$refs.camera.camera.position.set(pos.x, pos.y, pos.z);
     },
