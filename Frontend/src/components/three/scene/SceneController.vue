@@ -1,6 +1,7 @@
 <template>
-  <app-camera ref="camera" :orbit-controls="orbitControls" :aspect="aspect"/>
-  <app-scene ref="scene" @loaded="onLoad" @focus="focusPlanet" />
+  <app-camera ref="camera" :orbit-controls="orbitControls" :aspect="aspect"
+              @anim-start="startAnimation" @anim-done="stopAnimation"/>
+  <app-scene ref="scene" @loaded="onLoad" @focus="focusPlanet"/>
   <div class="sim-ui" v-if="loaded">
     <playback-menu
       :speed="speed"

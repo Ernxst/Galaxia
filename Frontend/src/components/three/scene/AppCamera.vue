@@ -1,5 +1,6 @@
 <template>
-  <Camera ref="camera" :aspect="aspect" :near="near" :far="far" :fov="fov">
+  <Camera ref="camera" :aspect="aspect" :near="near" :far="far" :fov="fov"
+          @anim-start="$emit('animStart')" @anim-done="$emit('animDone')">
     <camera-animator
       ref="animator"
       :orbit-controls="orbitControls"
@@ -25,6 +26,7 @@ import { defineComponent, PropType } from "vue";
 export default defineComponent({
   name: "AppCamera",
   components: { CameraAnimator, Camera },
+  emits: ["animStart", "animDone"],
   props: {
     aspect: { type: Number, default: 1 },
     orbitControls: Object as PropType<OrbitControls>,
