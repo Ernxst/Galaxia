@@ -1,5 +1,4 @@
 <template>
-  <!--  TODO: Move navbar here -->
   <div class="simulation-ui">
     <playback-menu
       :speed="speed"
@@ -8,14 +7,26 @@
       @speed-down="decreaseSpeed"
       @speed-up="increaseSpeed"
     />
+    <template v-if="starSystem !== null">
+      <navbar
+        ref="navbar"
+        :stars="[starSystem.star]"
+        :planets="starSystem.planets"
+        @follow="$emit('followBody', $event)"
+      />
+    </template>
     <zoom-controller ref="zoomer" @adjust-zoom="$emit('zoomUpdate', $event)"/>
+    <info-hub ref="hub" @reset="$emit('reset')"/>
   </div>
 </template>
 
 <script lang="ts">
 // TODO: Create component tracking object positions and overlay
+import { StarSystem } from "@/@types/celestial/containers/star-system";
 import { BASE_ZOOM } from "@/assets/three/camera/camera.constants";
 import { BASE_SPEED, MAX_SPEED, MIN_SPEED } from "@/assets/util/sim.constants";
+import InfoHub from "@/components/ui/sim/info-hub.vue";
+import Navbar from "@/components/ui/sim/navbar/Navbar.vue";
 import PlaybackMenu from "@/components/ui/sim/playback-menu.vue";
 import ZoomController from "@/components/ui/sim/zoom-controller.vue";
 import { defineComponent } from "vue";
@@ -23,10 +34,11 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "simulation-ui",
-  components: { ZoomController, PlaybackMenu },
-  emits: ["zoomUpdate", "followBody"],
+  components: { Navbar, InfoHub, ZoomController, PlaybackMenu },
+  emits: ["zoomUpdate", "followBody", "reset"],
   data() {
     return {
+      starSystem: null as StarSystem,
       speed: BASE_SPEED,
       paused: false,
       animating: false,
@@ -34,6 +46,9 @@ export default defineComponent({
     };
   },
   methods: {
+    setStarSystem(system: StarSystem) {
+      this.starSystem = system;
+    },
     togglePause(event: Event) {
       // Wait for animation to finish and unpause naturally
       if (this.paused && this.lastPausedBy === "animation") return;
@@ -79,8 +94,33 @@ export default defineComponent({
     disableZoom() {
       this.$refs.zoomer.disable();
     },
+    followBody(name: string, isStar: boolean, isMoon: boolean) {
+      let body;
+      let type;
+      if (isStar) {
+        body = this.starSystem.star;
+        type = "Star";
+      } else if (!isMoon) {
+        body = this.starSystem.planets.find((component) => component.name === name);
+        type = "Planet";
+      } else {
+        for (const planet of this.starSystem.planets) {
+          if (planet.moons !== undefined) {
+            const moon = planet.moons.find(moon => moon.name === name);
+            if (moon) {
+              body = moon;
+              type = "Moon";
+              break;
+            }
+          }
+        }
+      }
+      this.$refs.hub.setActiveBody(body, type);
+    },
     reset() {
+      this.$refs.navbar.toggle(undefined);
       this.$refs.zoomer.reset();
+      this.$refs.hub.resetBody();
     },
   }
 });

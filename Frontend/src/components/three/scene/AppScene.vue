@@ -10,25 +10,15 @@
       name="Milky Way"
       :star-system="currentSystemName"
       @scene-loaded="onLoad"
-      @focus-on-body="focus"
+      @focus-on-body="$emit('focus', $event)"
     />
-    <template v-if="assetsLoaded">
-      <navbar
-        ref="navbar"
-        :stars="[currentSystem.star]"
-        :planets="currentSystem.planets"
-        @follow="followPlanet"
-      />
-    </template>
   </Scene>
 </template>
 
 <script lang="ts">
 import { StarSystem } from "@/@types/celestial/containers/star-system";
-import { MeshMouseEvent } from "@/@types/three/mesh-mouse-event";
 import { getAssetsInSystem } from "@/assets/three/loaders";
 import { SCENE_SCALE } from "@/assets/util/sim.constants";
-import Navbar from "@/components/ui/sim/navbar/Navbar.vue";
 import { useStore } from "@/store/store";
 import { Scene as ThreeScene } from "three/src/scenes/Scene";
 import { Scene } from "troisjs";
@@ -39,7 +29,7 @@ import Loader from "./loader.vue";
 
 export default defineComponent({
   name: "AppScene",
-  components: { Navbar, Scene, Loader, Galaxy },
+  components: { Scene, Loader, Galaxy },
   emits: ["loaded", "focus"],
   created() {
     this.$store.dispatch("starSystem/fetchAllStarSystems");
@@ -55,7 +45,6 @@ export default defineComponent({
     const assetsLoaded = ref(false);
     const scene = ref<typeof Scene>(null);
     const galaxy = ref<typeof Galaxy>(null);
-    const navbar = ref<typeof Navbar>(null);
 
     function animate(paused: boolean, speed: number) {
       if (!paused) galaxy.value.evolve(speed);
@@ -70,32 +59,21 @@ export default defineComponent({
     }
 
     function reset() {
-      navbar.value.toggle(undefined);
     }
 
-    function focus(event: MeshMouseEvent) {
-      const name = event.component.name;
-      navbar.value.toggle(name);
-      emit("focus", event);
-    }
-
-    function followPlanet(event) {
-      const { name, isStar, isMoon } = event;
-      const component = galaxy.value.getComponentByName(name, isStar, isMoon);
-      emit("focus", { component });
+    function findComponent(name: string, isStar: boolean, isMoon: boolean) {
+      return galaxy.value.getComponentByName(name, isStar, isMoon);
     }
 
     return {
       animate,
       onLoad,
-      focus,
-      followPlanet,
+      findComponent,
       reset,
       assetsToLoad,
       assetsLoaded,
       galaxy,
       scene,
-      navbar,
       currentSystemName,
       currentSystem,
     };

@@ -80,6 +80,9 @@ export default defineComponent({
     loaded(): boolean {
       return this.assetsLoaded === this.modelsToLoad;
     },
+    isMoon(): boolean {
+      return true;
+    }
   },
 });
 </script>

@@ -5,4 +5,5 @@ export interface CelestialBody extends BaseObject {
   meanVelocity: number; // in km/s
   dayLength: number; // in seconds
   axialTilt: number; // in degrees
+  shortDescription: string;
 }

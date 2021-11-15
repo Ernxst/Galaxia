@@ -88,6 +88,9 @@ export default defineComponent({
     loaded(): boolean {
       return this.assetsLoaded === this.modelsToLoad;
     },
+    isStar(): boolean {
+      return true;
+    }
   },
   methods: {
     setupSphere() {

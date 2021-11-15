@@ -74,6 +74,7 @@ export default defineComponent({
   flex-direction: column;
   position: absolute;
   height: 100%;
+  top: 0;
   left: 16px;
   margin-top: auto;
   margin-bottom: auto;

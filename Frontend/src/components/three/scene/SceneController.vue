@@ -4,13 +4,14 @@
               @adjust-zoom="zoomCamera"/>
   <app-scene ref="scene" @loaded="onLoad" @focus="focusPlanet"/>
   <template v-if="loaded">
-    <simulation-ui ref="gui" @zoom-update="zoomCamera"/>
+    <simulation-ui ref="gui" @zoom-update="zoomCamera" @follow-body="followBody" @reset="reset" />
   </template>
 </template>
 
 <script lang="ts">
 import { MeshMouseEvent } from "@/@types/three/mesh-mouse-event";
 import SimulationUi from "@/components/ui/sim/simulation-ui.vue";
+import { nextTick } from "@vue/runtime-core";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Vector3 } from "three/src/math/Vector3";
 import { defineComponent, getCurrentInstance, PropType, ref, } from "vue";
@@ -38,6 +39,9 @@ export default defineComponent({
       const height = sceneData.largestObjectSize * 1.5;
       camera.value.setupCamera(new Vector3(width, height, width));
       loaded.value = true;
+      nextTick(() => {
+        gui.value.setStarSystem(scene.value.currentSystem);
+      });
       emit("loaded");
     }
 
@@ -46,8 +50,17 @@ export default defineComponent({
     }
 
     function focusPlanet(event: MeshMouseEvent) {
+      if (gui.value.animating) return;
       gui.value.disableZoom();
+      const { name, isStar, isMoon } = event.component;
+      gui.value.followBody(name, isStar, isMoon);
       camera.value.focus(event.component);
+    }
+
+    function followBody(event) {
+      const { name, isStar, isMoon } = event;
+      const component = scene.value.findComponent(name, isStar, isMoon);
+      focusPlanet({ component });
     }
 
     function zoomCamera(zoom: number) {
@@ -63,6 +76,12 @@ export default defineComponent({
       gui.value.stopAnimation();
     }
 
+    function reset() {
+      camera.value.reset();
+      scene.value.reset();
+      gui.value.reset();
+    }
+
     function render() {
       const paused = gui.value.paused;
       const speed = gui.value.speed;
@@ -74,9 +93,7 @@ export default defineComponent({
       if (gui.value.animating) return;
       switch (e.key) {
         case "r":
-          camera.value.reset();
-          scene.value.reset();
-          gui.value.reset();
+          reset();
           return;
         case "p":
           gui.value.togglePause(e);
@@ -106,8 +123,10 @@ export default defineComponent({
       render,
       zoomCamera,
       focusPlanet,
+      followBody,
       onLoad,
       resize,
+      reset,
     };
   },
 });
