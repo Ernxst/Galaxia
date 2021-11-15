@@ -4,7 +4,6 @@
 import { computeCentreAndSize } from "@/assets/three";
 import { setZoom } from "@/assets/three/camera";
 import { BASE_ZOOM } from "@/assets/three/camera/camera.constants";
-import { SCENE_SCALE } from "@/assets/util/sim.constants";
 import CelestialBody from "@/components/three/celestial/base/celestial-body.vue";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
@@ -41,23 +40,23 @@ export default defineComponent({
 
       this.orbitControls.target = object.position;
       const camera: PerspectiveCamera = this.$parent.camera;
-      this.$emit("adjustZoom", BASE_ZOOM)
+      this.$emit("adjustZoom", BASE_ZOOM);
       const { x, y, z } = object.position.clone().add(offset);
       camera.position.set(x, y, z);
-      camera.position.multiplyScalar(SCENE_SCALE);
 
       this.$emit("animDone");
       onComplete();
     },
     focus(body: typeof CelestialBody) {
+      // TODO: When animating, body.position (and mesh.position) does not take scene scale into account
       if (this.target !== null &&
         body.position.equals(this.target.position))
         return;
       const mesh: Mesh = body.mesh();
       const { centre, size } = computeCentreAndSize(mesh);
       this.moveCamera({
-        object: mesh,
-        offset: new Vector3(0, 0, 1.25 * size.length() / SCENE_SCALE),
+        object: { position: centre },
+        offset: new Vector3(0, 0, 1.25 * size.length()),
         onComplete: () => {
           this.target = body;
         },
