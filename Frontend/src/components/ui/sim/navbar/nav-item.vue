@@ -104,6 +104,7 @@ export default defineComponent({
 .nav-item {
   flex-direction: column;
   align-items: flex-start;
+  overflow-x: visible;
 }
 
 .button-container {
@@ -121,9 +122,7 @@ button {
 }
 
 button {
-  padding: 6px;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding: 6px 12px;
   cursor: pointer;
   margin: 4px;
 }
@@ -133,11 +132,11 @@ button:hover {
 }
 
 button:hover .image {
-  border-color: var(--orange);
+  border-color: var(--main);
 }
 
 button:hover .content > * {
-  color: var(--orange);
+  color: var(--main);
 }
 
 .active {
@@ -146,17 +145,17 @@ button:hover .content > * {
 }
 
 .active .image {
-  border: 2px solid var(--orange);
+  border: 2px solid var(--main);
   transform: scale(1.15);
 }
 
 .active .content h3 {
-  border-left: 36px solid var(--orange);
+  border-left: 36px solid var(--main);
   padding-left: 12px;
 }
 
 .active .content > * {
-  color: var(--orange);
+  color: var(--main);
   font-weight: 600;
 }
 
@@ -209,7 +208,7 @@ button:hover .content > * {
 
 .toggler.toggled {
   transform: rotate(180deg);
-  color: var(--orange);
+  color: var(--main);
 }
 
 .moon-container {

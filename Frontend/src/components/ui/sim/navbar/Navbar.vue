@@ -82,6 +82,7 @@ export default defineComponent({
   animation-name: fadeIn;
   animation-fill-mode: forwards;
   opacity: 0;
+  overflow-x: visible;
 }
 
 .nav-buttons {

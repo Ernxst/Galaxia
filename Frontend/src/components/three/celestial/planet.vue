@@ -1,9 +1,5 @@
 <template>
   <Group ref="body" :position="initialPos">
-    <template v-if="hasMoons">
-      <SpotLight ref="planetlight" :cast-shadow="true" :decay="2" :distance="lightDistance" :intensity="0.1"
-                 :position="{x:0, y:0, z:0}" :shadow-map-size="{width: lightDistance, height: lightDistance }"/>
-    </template>
     <Sphere
       :name="`${name}-sphere`"
       :radius="scaledRadius"
@@ -62,10 +58,8 @@ import { Moon as MoonInterface } from "@/@types/celestial/moon";
 import { dispatchLoadedEvent } from "@/assets/three/loaders";
 import { RADIUS_SCALE } from "@/assets/util/sim.constants";
 import Atmosphere from "@/components/three/util/Atmosphere.vue";
-import { SpotLight as ThreeSpotLight } from "three/src/lights/SpotLight";
 import { Vector3 } from "three/src/math/Vector3";
-import { Mesh } from "three/src/objects/Mesh";
-import { Group, SpotLight } from "troisjs";
+import { Group } from "troisjs";
 import { defineComponent, PropType } from "vue";
 import Sphere, { SphereProps } from "../util/Sphere.vue";
 import Trail from "../util/trail.vue";
@@ -83,7 +77,7 @@ export default defineComponent({
   name: "planet",
   emits: ["planetLoaded"],
   extends: OrbittingBody,
-  components: { Atmosphere, Group, Sphere, Trail, Moon, SpotLight },
+  components: { Atmosphere, Group, Sphere, Trail, Moon },
   props: PlanetProps,
   data() {
     return {
@@ -103,9 +97,6 @@ export default defineComponent({
     },
   },
   computed: {
-    lightDistance(): number {
-      return this.scaledRadius * 4.0;
-    },
     hasMoons(): boolean {
       return this.moons && this.moons.length > 0;
     },
@@ -136,37 +127,14 @@ export default defineComponent({
     afterOrbit(dt: number) {
       for (const moon of this.models) moon.orbit(dt);
     },
-    rotate(rotation: Vector3) {
-      this.rotation.add(rotation);
-      const mesh: Mesh = this.mesh();
-      mesh.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z);
-      if (this.hasMoons) this.rotateLight(rotation);
-    },
-    rotateLight(rotation: Vector3) {
-      const doubled = rotation.clone().multiplyScalar(2.0);
-      const planetLight: ThreeSpotLight = this.$refs.planetlight.light;
-      planetLight.rotation.x -= doubled.x;
-      planetLight.rotation.y -= doubled.y;
-      planetLight.rotation.z -= doubled.z;
-      const newPos = planetLight.position.clone().sub(doubled);
-      planetLight.target.position.set(newPos.x, newPos.y, newPos.z);
-      planetLight.target.updateMatrixWorld();
-    },
     addMoon(el: typeof Moon) {
       this.moonComponents[el.name] = el;
       this.models.push(el);
     },
-    getMoon(name: string) : typeof Moon | undefined {
+    getMoon(name: string): typeof Moon | undefined {
       return this.moonComponents[name];
     },
   },
-  mounted() {
-    if (this.hasMoons) {
-      const planetLight: ThreeSpotLight = this.$refs.planetlight.light;
-      planetLight.target.position.set(-1, 0, 0);
-      planetLight.target.updateMatrixWorld();
-    }
-  }
 });
 </script>
 

@@ -1,9 +1,5 @@
 <template>
   <Group ref="body" :position="initialPos">
-    <template v-if="hasMoons">
-      <SpotLight ref="planetlight" :cast-shadow="true" :decay="2" :distance="lightDistance" :intensity="0.05"
-                 :position="{x:0, y:0, z:0}" :shadow-map-size="{width: lightDistance, height: lightDistance }"/>
-    </template>
     <Sphere
       :name="`${name}-sphere`"
       :radius="scaledRadius"
@@ -71,14 +67,14 @@ import Atmosphere from "@/components/three/util/Atmosphere.vue";
 import Ring from "@/components/three/util/ring.vue";
 import Sphere from "@/components/three/util/Sphere.vue";
 import Trail from "@/components/three/util/trail.vue";
-import { Group, SpotLight } from "troisjs";
+import { Group } from "troisjs";
 import { defineComponent, PropType } from "vue";
 import Planet, { PlanetProps } from "./planet.vue";
 
 
 export default defineComponent({
   name: "ringed-planet",
-  components: { Ring, Atmosphere, Group, Sphere, Trail, Moon, SpotLight },
+  components: { Ring, Atmosphere, Group, Sphere, Trail, Moon },
   extends: Planet,
   props: {
     ...PlanetProps,
