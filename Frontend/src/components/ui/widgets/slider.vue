@@ -274,7 +274,7 @@ input[type="range"]:focus::-ms-fill-upper {
   letter-spacing: 0;
   z-index: 2;
   font-weight: 700;
-  background: var(--page-bg);
+  background: #212121;
 }
 
 .slider-container[orient=vertical] .current-value {

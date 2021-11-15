@@ -1,6 +1,8 @@
 <template></template>
 
 <script lang="ts">
+import { animateCamera, calcDuration } from "@/assets/gsap";
+import { isAnimating } from "@/assets/gsap/camera.animate";
 import { computeCentreAndSize } from "@/assets/three";
 import { setZoom } from "@/assets/three/camera";
 import { BASE_ZOOM } from "@/assets/three/camera/camera.constants";
@@ -34,18 +36,29 @@ export default defineComponent({
   methods: {
     // TODO: Camera does not properly zoom into the moon, uranus and neptune
     moveCamera({ object, offset, onStart, onComplete }: MoveCameraParams) {
-      this.$emit("animStart");
-      this.orbitControls.minDistance = 0;
-      onStart?.();
-
-      this.orbitControls.target = object.position;
-      const camera: PerspectiveCamera = this.$parent.camera;
-      this.$emit("adjustZoom", BASE_ZOOM);
-      const { x, y, z } = object.position.clone().add(offset);
-      camera.position.set(x, y, z);
-
-      this.$emit("animDone");
-      onComplete();
+      const duration = calcDuration(
+        this.orbitControls.target,
+        object.position,
+        this.$parent.camera.position,
+        offset
+      );
+      animateCamera({
+        camera: this.$parent.camera,
+        controls: this.orbitControls,
+        object,
+        offset,
+        duration,
+        onStart: () => {
+          this.$emit("animStart");
+          this.$emit("adjustZoom", BASE_ZOOM);
+          this.orbitControls.minDistance = 0;
+          onStart?.();
+        },
+        onComplete: () => {
+          this.$emit("animDone");
+          onComplete();
+        },
+      });
     },
     focus(body: typeof CelestialBody) {
       // TODO: When animating, body.position (and mesh.position) does not take scene scale into account
@@ -84,6 +97,8 @@ export default defineComponent({
       this.orbitControls.minDistance = 0;
     },
     render(paused: boolean, speed: number) {
+      if (isAnimating()) return;
+
       const cam: PerspectiveCamera = this.$parent.camera;
       const controls: OrbitControls = this.orbitControls;
       if (this.target !== null) {
@@ -92,7 +107,7 @@ export default defineComponent({
           const mesh: Mesh = this.target.mesh();
           const { centre, size } = computeCentreAndSize(mesh);
           controls.target = centre;
-          controls.minDistance = size.length();
+          controls.minDistance = 1.25 * size.length();
           setZoom(cam, BASE_ZOOM);
         }
       }
