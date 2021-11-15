@@ -34,7 +34,6 @@ export default defineComponent({
     };
   },
   methods: {
-    // TODO: Camera does not properly zoom into the moon, uranus and neptune
     moveCamera({ object, offset, onStart, onComplete }: MoveCameraParams) {
       const duration = calcDuration(
         this.orbitControls.target,
@@ -60,7 +59,6 @@ export default defineComponent({
       });
     },
     focus(body: typeof CelestialBody) {
-      // TODO: When animating, body.position (and mesh.position) does not take scene scale into account
       if (this.target !== null &&
         body.position.equals(this.target.position))
         return;

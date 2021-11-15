@@ -1,34 +1,38 @@
 <template>
   <nav class="playback-container centred">
-    <circle-button
-      :class="speedDownClass"
-      @click="$emit('speedDown')"
-      :radius="buttonRadius"
-    >
-      <span class="icon centred material-icons">fast_rewind</span>
-    </circle-button>
-    <circle-button
-      class="playback-button"
-      @click="$emit('togglePause', $event)"
-      :radius="buttonRadius"
-    >
+    <div class="row centred">
+      <p class="sim-speed">Simulation Speed: <strong>{{ scaledSpeed }}x</strong></p>
+    </div>
+    <div class="row centred">
+      <circle-button
+        :class="speedDownClass"
+        @click="$emit('speedDown')"
+        :radius="buttonRadius"
+      >
+        <span class="icon centred material-icons">fast_rewind</span>
+      </circle-button>
+      <circle-button
+        class="playback-button"
+        @click="$emit('togglePause', $event)"
+        :radius="buttonRadius"
+      >
       <span class="icon centred material-icons">{{
           paused ? "play_arrow" : "pause"
         }}</span>
-    </circle-button>
-    <circle-button
-      :class="speedUpClass"
-      @click="$emit('speedUp')"
-      :radius="buttonRadius"
-    >
-      <span class="icon centred material-icons">fast_forward</span>
-    </circle-button>
+      </circle-button>
+      <circle-button
+        :class="speedUpClass"
+        @click="$emit('speedUp')"
+        :radius="buttonRadius"
+      >
+        <span class="icon centred material-icons">fast_forward</span>
+      </circle-button>
+    </div>
   </nav>
 </template>
 
 <script lang="ts">
-// TODO: Need some speed label indicator
-import { MAX_SPEED, MIN_SPEED } from "@/assets/util/sim.constants";
+import { BASE_SPEED, MAX_SPEED, MIN_SPEED } from "@/assets/util/sim.constants";
 import CircleButton from "@/components/ui/widgets/buttons/circle-button.vue";
 import { defineComponent } from "vue";
 
@@ -42,15 +46,18 @@ export default defineComponent({
     speed: Number,
   },
   computed: {
-    buttonRadius() {
+    buttonRadius(): number {
       return 16;
     },
-    speedDownClass() {
+    speedDownClass(): string {
       return `playback-button ${this.speed === MIN_SPEED ? "disabled" : ""}`;
     },
-    speedUpClass() {
+    speedUpClass(): string {
       return `playback-button ${this.speed === MAX_SPEED ? "disabled" : ""}`;
     },
+    scaledSpeed(): number {
+      return Math.round(this.speed / BASE_SPEED);
+    }
   },
 });
 </script>
@@ -61,10 +68,25 @@ export default defineComponent({
   top: 16px;
   left: 0;
   right: 0;
+  flex-direction: column;
+}
+
+.playback-container .sim-speed {
+  margin-top: 0;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.playback-container .sim-speed strong {
+  color: var(--main);
 }
 
 .playback-container .playback-button {
   margin-right: 6px;
+}
+
+.playback-container .playback-button:last-child {
+  margin-right: 0;
 }
 
 .playback-container .playback-button .icon {
