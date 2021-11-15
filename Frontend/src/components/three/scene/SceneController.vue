@@ -1,10 +1,19 @@
 <template>
   <app-camera ref="camera" :orbit-controls="orbitControls" :aspect="aspect"/>
   <app-scene ref="scene" @loaded="onLoad"/>
+  <playback-menu
+    v-if="loaded"
+    :speed="speed"
+    :paused="paused"
+    @toggle-pause="togglePause"
+    @speed-down="decreaseSpeed"
+    @speed-up="increaseSpeed"
+  />
 </template>
 
 <script lang="ts">
 import { BASE_SPEED, MAX_SPEED, MIN_SPEED, } from "@/assets/util/sim.constants";
+import PlaybackMenu from "@/components/ui/sim/playback-menu.vue";
 import { nextTick } from "@vue/runtime-core";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Vector3 } from "three/src/math/Vector3";
@@ -15,13 +24,14 @@ import AppScene from "./AppScene.vue";
 
 export default defineComponent({
   name: "SceneController",
-  components: { AppScene, AppCamera },
+  components: { PlaybackMenu, AppScene, AppCamera },
   props: {
     orbitControls: Object as PropType<OrbitControls>,
     aspect: Number,
   },
   emits: ["loaded"],
   setup(props) {
+    const loaded = ref<boolean>(false);
     const speed = ref<number>(BASE_SPEED);
     const paused = ref<boolean>(false);
     const animating = ref<boolean>(false);
@@ -94,6 +104,7 @@ export default defineComponent({
     const { emit } = getCurrentInstance();
 
     function onLoad(sceneData) {
+      loaded.value = true;
       setupCamera(sceneData);
       emit("loaded");
     }
@@ -127,6 +138,7 @@ export default defineComponent({
       camera,
       speed,
       paused,
+      loaded,
       startAnimation,
       stopAnimation,
       render,
