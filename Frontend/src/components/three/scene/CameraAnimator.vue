@@ -57,7 +57,7 @@ export default defineComponent({
       const { centre, size } = computeCentreAndSize(mesh);
       this.moveCamera({
         object: mesh,
-        offset: new Vector3(0, 0, size.length()),
+        offset: new Vector3(0, 0, 1.25 * size.length() / SCENE_SCALE),
         onComplete: () => {
           this.target = body;
         },
