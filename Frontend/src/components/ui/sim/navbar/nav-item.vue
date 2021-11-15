@@ -11,7 +11,7 @@
         </div>
         <div class="content centred">
           <h3>{{ name }}</h3>
-          <p>{{ isStar ? "star" : `${Math.round(distance * 100) / 100} AU` }}</p>
+          <p>{{ isStar ? "star" : `${Math.round(distance * 1000) / 1000} AU` }}</p>
         </div>
       </button>
       <span

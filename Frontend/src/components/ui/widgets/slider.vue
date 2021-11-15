@@ -270,10 +270,11 @@ input[type="range"]:focus::-ms-fill-upper {
   top: calc(100% + 14px);
   color: var(--bg);
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.22);
-  padding: 5px;
+  padding: 4px 8px;
+  letter-spacing: 0;
   z-index: 2;
   font-weight: 700;
-  -webkit-text-stroke: 1px var(--page-bg);
+  background: var(--page-bg);
 }
 
 .slider-container[orient=vertical] .current-value {

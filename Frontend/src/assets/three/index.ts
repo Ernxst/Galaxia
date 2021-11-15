@@ -1,11 +1,10 @@
 import { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
 import { BufferGeometry } from "three/src/core/BufferGeometry";
 import { Object3D } from "three/src/core/Object3D";
-import { SphereGeometry } from "three/src/geometries/SphereGeometry";
 import { Box3 } from "three/src/math/Box3";
 import { Vector2 } from "three/src/math/Vector2";
 import { Vector3 } from "three/src/math/Vector3";
-import { SPHERE_SLICES } from "./three.constants";
+
 
 export function getScreenPos(
   object: Object3D,
@@ -28,16 +27,9 @@ export function computeCentreAndSize(object: Object3D): {
 }
 
 const bufferGeo = new BufferGeometry();
-const sphereGeo = new SphereGeometry(1, SPHERE_SLICES, SPHERE_SLICES);
 
 export const GeometryManager = {
   bufferGeometry(): BufferGeometry {
     return bufferGeo.clone();
-  },
-
-  sphereGeometry(radius: number): SphereGeometry {
-    const geo = sphereGeo.clone();
-    geo.scale(radius, radius, radius);
-    return geo;
   },
 };
