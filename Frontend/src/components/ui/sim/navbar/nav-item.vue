@@ -90,6 +90,7 @@ export default defineComponent({
     activate() {
       this.open = true;
       this.following = true;
+      for (const button of this.moonButtons) button.deactivate();
     },
     deactivate() {
       this.following = false;

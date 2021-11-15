@@ -60,6 +60,7 @@ export default defineComponent({
       this.$emit("follow", event);
     },
     toggle(objectName: string) {
+      console.log(objectName)
       for (const [name, button] of Object.entries(this.buttons)) {
         if (name === objectName) button.activate();
         else button.deactivate();

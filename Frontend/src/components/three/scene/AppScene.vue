@@ -10,6 +10,7 @@
       name="Milky Way"
       :star-system="currentSystemName"
       @scene-loaded="onLoad"
+      @focus-on-body="focus"
     />
     <template v-if="assetsLoaded">
       <navbar
@@ -24,6 +25,7 @@
 
 <script lang="ts">
 import { StarSystem } from "@/@types/celestial/containers/star-system";
+import { MeshMouseEvent } from "@/@types/three/mesh-mouse-event";
 import { getAssetsInSystem } from "@/assets/three/loaders";
 import { SCENE_SCALE } from "@/assets/util/sim.constants";
 import Navbar from "@/components/ui/sim/navbar/Navbar.vue";
@@ -71,6 +73,12 @@ export default defineComponent({
       navbar.value.toggle(undefined);
     }
 
+    function focus(event: MeshMouseEvent) {
+      const name = event.component.name;
+      navbar.value.toggle(name);
+      emit("focus", event);
+    }
+
     function followPlanet(event) {
       const { name, isStar, isMoon } = event;
       const component = galaxy.value.getComponentByName(name, isStar, isMoon);
@@ -80,6 +88,7 @@ export default defineComponent({
     return {
       animate,
       onLoad,
+      focus,
       followPlanet,
       reset,
       assetsToLoad,

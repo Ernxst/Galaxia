@@ -17,6 +17,7 @@
       :bump-map="bumpMap"
       :specular-map="specularMap"
       @sphere-loaded="setupSphere"
+      @click="onClick"
     />
     <Atmosphere
       ref="atmosphere"

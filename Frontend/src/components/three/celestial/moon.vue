@@ -6,6 +6,7 @@
       :texture="texture"
       :material-props="{ transparent: true }"
       @sphere-loaded="assetsLoaded++"
+      @click="onClick"
     />
     <Atmosphere
       ref="atmosphere"

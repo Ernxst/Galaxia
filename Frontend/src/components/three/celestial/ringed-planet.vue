@@ -13,6 +13,7 @@
       :material-props="{ transparent: true }"
       :cast-shadow="true"
       @sphere-loaded="assetsLoaded++"
+      @click="onClick"
     />
     <Atmosphere
       ref="atmosphere"
@@ -46,6 +47,7 @@
       :bump-map="moon.bumpMap"
       :specular-map="moon.specularMap"
       @moon-loaded="assetsLoaded++"
+      @click="$emit('click', $event)"
     />
     <ring ref="ring" :name="`${name}-ring`"
           :inner-radius="ring.innerRadius"

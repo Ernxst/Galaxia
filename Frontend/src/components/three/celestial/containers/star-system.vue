@@ -1,6 +1,7 @@
 <template>
   <Group ref="system">
-    <Star ref="star" v-bind="systemData.star" @star-loaded="assetsLoaded++"/>
+    <Star ref="star" v-bind="systemData.star" @star-loaded="assetsLoaded++"
+          @click="$emit('focusOnBody', $event)" />
     <component
       :is="planetComponent(planet)"
       v-for="(planet, index) in systemData.planets"
@@ -10,6 +11,7 @@
       :star-radius="systemData.star.radius"
       :render-order="systemData.planets.length - index"
       @planet-loaded="assetsLoaded++"
+      @click="$emit('focusOnBody', $event)"
     />
     <AsteroidBelt
       v-for="belt in systemData.asteroidBelts"
@@ -54,7 +56,7 @@ import AsteroidBelt from "./asteroid-belt.vue";
 export default defineComponent({
   name: "star-system",
   components: { Group, Star, AsteroidBelt },
-  emits: ["starSystemLoaded"],
+  emits: ["starSystemLoaded", "focusOnBody"],
   props: { name: String },
   watch: {
     loaded() {

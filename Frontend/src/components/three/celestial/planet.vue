@@ -12,6 +12,7 @@
       :specular-map="specularMap"
       :material-props="{ transparent: true }"
       @sphere-loaded="assetsLoaded++"
+      @click="onClick"
     />
     <Atmosphere
       ref="atmosphere"
@@ -45,6 +46,7 @@
       :bump-map="moon.bumpMap"
       :specular-map="moon.specularMap"
       @moon-loaded="assetsLoaded++"
+      @click="$emit('click', $event)"
     />
   </Group>
   <Trail

@@ -5,11 +5,13 @@
       ref="starSystem"
       :name="starSystem"
       @star-system-loaded="$emit('sceneLoaded', $event)"
+      @focus-on-body="focusOnBody"
     />
   </Group>
 </template>
 
 <script lang="ts">
+import { MeshMouseEvent } from "@/@types/three/mesh-mouse-event";
 import CelestialBody from "@/components/three/celestial/base/celestial-body.vue";
 import { Group } from "troisjs";
 import { defineComponent } from "vue";
@@ -19,10 +21,13 @@ import Starfield from "./Starfield.vue";
 
 export default defineComponent({
   name: "Galaxy",
-  emits: ["sceneLoaded"],
+  emits: ["sceneLoaded", "focusOnBody"],
   components: { Group, StarSystem, Starfield },
   props: { name: String, starSystem: String },
   methods: {
+    focusOnBody(event: MeshMouseEvent) {
+      this.$emit("focusOnBody", event);
+    },
     evolve(speed: number) {
       // this.$refs.starfield.animate(0.00005 * speed);
       this.$refs.starSystem.evolve(speed);

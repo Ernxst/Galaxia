@@ -1,6 +1,7 @@
 <template></template>
 
 <script lang="ts">
+import { MeshMouseEvent } from "@/@types/three/mesh-mouse-event";
 import { AU } from "@/assets/util/celestial.constants";
 import { ATMOSPHERE_ROTATION_SPEED_SCALE, DISTANCE_SCALE, SPEED_SCALE } from "@/assets/util/sim.constants";
 import { Vector3 } from "three/src/math/Vector3";
@@ -12,6 +13,7 @@ import BaseObject from "../../util/BaseObject.vue";
 export default defineComponent({
   name: "celestial-body",
   extends: BaseObject,
+  emits: ["click"],
   props: {
     mass: Number,
     meanVelocity: Number,
@@ -50,6 +52,10 @@ export default defineComponent({
       const mesh: Mesh = this.mesh();
       mesh.rotation.x = this.axialTiltRads;
     },
+    onClick(event: MeshMouseEvent) {
+      event.component = this;
+      this.$emit("click", event);
+    }
   },
   mounted() {
     const mesh: Mesh = this.mesh();
