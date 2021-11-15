@@ -3,8 +3,8 @@
 </template>
 
 <script lang="ts">
-import { zoomIn, zoomOut } from "@/assets/three/camera";
-import { FAR, FOV, NEAR } from "@/assets/three/camera/camera.constants";
+import { setZoom, zoomIn, zoomOut } from "@/assets/three/camera";
+import { BASE_ZOOM, FAR, FOV, NEAR } from "@/assets/three/camera/camera.constants";
 import { SCENE_SCALE } from "@/assets/util/sim.constants";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
@@ -32,6 +32,9 @@ export default defineComponent({
     moveTo(pos: Vector3) {
       this.$refs.camera.camera.position.set(pos.x, pos.y, pos.z);
     },
+    setZoom(zoom: number) {
+      setZoom(this.$refs.camera.camera, zoom);
+    },
     zoomIn() {
       zoomIn(this.$refs.camera.camera, 1);
     },
@@ -54,6 +57,7 @@ export default defineComponent({
       camera.position.multiplyScalar(SCENE_SCALE);
       camera.rotation.order = "YXZ";
       this.orbitControls.maxDistance = x / 5.0;
+      this.setZoom(BASE_ZOOM);
     },
     update(aspect: number) {
       // TODO: Fix camera looking at when resizing window to be larger

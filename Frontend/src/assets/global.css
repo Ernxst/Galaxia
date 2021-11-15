@@ -9,6 +9,8 @@
 
   --main: var(--orange);
   --accent: var(--red);
+
+  --button-radius: 0;
 }
 
 html {
@@ -148,4 +150,13 @@ a {
 
 ::-webkit-scrollbar-thumb:hover {
   filter: brightness(1.4);
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

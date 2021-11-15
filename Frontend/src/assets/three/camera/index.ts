@@ -3,6 +3,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
 import { ROLL_FACTOR, ROTATE_FACTOR, ZOOM_FACTOR } from "./camera.constants";
 
+
 export function rotate(camera: PerspectiveCamera, radians: number) {
   camera.position.y *= Math.sin(radians) * ROTATE_FACTOR;
   camera.position.z *= Math.cos(radians) * ROTATE_FACTOR;
@@ -10,6 +11,11 @@ export function rotate(camera: PerspectiveCamera, radians: number) {
 
 export function tilt(camera: PerspectiveCamera, radians: number) {
   camera.rotation.z += Math.cos(radians) * ROLL_FACTOR;
+}
+
+export function setZoom(camera: PerspectiveCamera, zoom: number) {
+  const finalZoom = zoom * ZOOM_FACTOR;
+  animateZoom(finalZoom, camera);
 }
 
 export function zoomIn(camera: PerspectiveCamera, times: number) {

@@ -54,21 +54,11 @@ export default defineComponent({
 </script>
 
 <style>
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
 .playback-container {
   position: fixed;
   top: 16px;
-  z-index: 2;
-  animation-duration: 1.67s;
-  animation-name: fadeIn;
+  left: 0;
+  right: 0;
 }
 
 .playback-container .playback-button {

@@ -1,19 +1,22 @@
 <template>
   <app-camera ref="camera" :orbit-controls="orbitControls" :aspect="aspect"/>
   <app-scene ref="scene" @loaded="onLoad"/>
-  <playback-menu
-    v-if="loaded"
-    :speed="speed"
-    :paused="paused"
-    @toggle-pause="togglePause"
-    @speed-down="decreaseSpeed"
-    @speed-up="increaseSpeed"
-  />
+  <div class="sim-ui" v-if="loaded">
+    <playback-menu
+      :speed="speed"
+      :paused="paused"
+      @toggle-pause="togglePause"
+      @speed-down="decreaseSpeed"
+      @speed-up="increaseSpeed"
+    />
+    <zoom-controller ref="zoomer" @adjust-zoom="zoomCamera($event)"/>
+  </div>
 </template>
 
 <script lang="ts">
 import { BASE_SPEED, MAX_SPEED, MIN_SPEED, } from "@/assets/util/sim.constants";
 import PlaybackMenu from "@/components/ui/sim/playback-menu.vue";
+import ZoomController from "@/components/ui/sim/zoom-controller.vue";
 import { nextTick } from "@vue/runtime-core";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Vector3 } from "three/src/math/Vector3";
@@ -24,7 +27,7 @@ import AppScene from "./AppScene.vue";
 
 export default defineComponent({
   name: "SceneController",
-  components: { PlaybackMenu, AppScene, AppCamera },
+  components: { ZoomController, PlaybackMenu, AppScene, AppCamera },
   props: {
     orbitControls: Object as PropType<OrbitControls>,
     aspect: Number,
@@ -59,6 +62,10 @@ export default defineComponent({
 
     function decreaseSpeed() {
       if (speed.value > MIN_SPEED) speed.value -= 1;
+    }
+
+    function zoomCamera(zoom: number) {
+      camera.value.setZoom(zoom);
     }
 
     function setupCamera(sceneData) {
@@ -101,6 +108,7 @@ export default defineComponent({
 
     const scene = ref<typeof AppScene>(null);
     const camera = ref<typeof AppCamera>(null);
+    const zoomer = ref<typeof ZoomController>(null);
     const { emit } = getCurrentInstance();
 
     function onLoad(sceneData) {
@@ -114,6 +122,7 @@ export default defineComponent({
       switch (e.key) {
         case "r":
           camera.value.reset();
+          zoomer.value.reset();
           return;
         case "p":
           togglePause(e);
@@ -136,6 +145,7 @@ export default defineComponent({
     return {
       scene,
       camera,
+      zoomer,
       speed,
       paused,
       loaded,
@@ -145,6 +155,7 @@ export default defineComponent({
       increaseSpeed,
       decreaseSpeed,
       togglePause,
+      zoomCamera,
       onLoad,
       resize,
     };
@@ -152,4 +163,12 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.sim-ui {
+  animation-duration: 1.67s;
+  animation-name: fadeIn;
+  animation-fill-mode: forwards;
+  opacity: 0;
+  animation-delay: 1.33s;
+}
+</style>
