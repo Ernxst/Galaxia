@@ -78,6 +78,10 @@ export default defineComponent({
   margin-top: auto;
   margin-bottom: auto;
   z-index: 2;
+  animation-duration: 1.67s;
+  animation-name: fadeIn;
+  animation-fill-mode: forwards;
+  opacity: 0;
 }
 
 .nav-buttons {

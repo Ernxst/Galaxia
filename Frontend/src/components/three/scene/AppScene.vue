@@ -11,12 +11,14 @@
       :star-system="currentSystemName"
       @scene-loaded="onLoad"
     />
-    <navbar
-      ref="navbar"
-      :stars="[currentSystem.star]"
-      :planets="currentSystem.planets"
-      @follow="followPlanet"
-    />
+    <template v-if="assetsLoaded">
+      <navbar
+        ref="navbar"
+        :stars="[currentSystem.star]"
+        :planets="currentSystem.planets"
+        @follow="followPlanet"
+      />
+    </template>
   </Scene>
 </template>
 
