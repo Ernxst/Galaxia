@@ -17,6 +17,7 @@ export const solarSystem: StarSystem = {
   star: {
     name: "Sun",
     radius: 696_340,
+    shortDescription: "",
     mass: SOLAR_MASS,
     meanVelocity: 220,
     axialTilt: 7.25,
@@ -34,6 +35,7 @@ export const solarSystem: StarSystem = {
     {
       name: "Mercury",
       radius: 2439.7,
+      shortDescription: "",
       mass: 3.3e23,
       semiMajor: 0.387,
       semiMinor: 0.3787,
@@ -50,6 +52,7 @@ export const solarSystem: StarSystem = {
     {
       name: "Venus",
       radius: 6051.8,
+      shortDescription: "",
       mass: 4.87e24,
       semiMajor: 0.723,
       semiMinor: 0.72298,
@@ -71,6 +74,7 @@ export const solarSystem: StarSystem = {
     {
       name: "Earth",
       radius: 6371,
+      shortDescription: "Our home. The only known planet in the Universe to support sentient life. We may have made a mess of it, but it's still ours.",
       mass: EARTH_MASS,
       semiMajor: 1,
       semiMinor: 0.99986,
@@ -93,6 +97,7 @@ export const solarSystem: StarSystem = {
         {
           name: "Moon",
           radius: 1737.4,
+          shortDescription: "",
           mass: 7.34767309e22,
           semiMajor: 2.5832e-3,
           semiMinor: 0.00256554454,
@@ -110,6 +115,7 @@ export const solarSystem: StarSystem = {
     {
       name: "Mars",
       radius: 3389.5,
+      shortDescription: "",
       mass: 6.42e23,
       semiMajor: 1.524,
       semiMinor: 1.5174,
@@ -125,6 +131,7 @@ export const solarSystem: StarSystem = {
     {
       name: "Jupiter",
       radius: 69911,
+      shortDescription: "",
       mass: 1.9e27,
       semiMajor: 5.2044,
       semiMinor: 5.1982,
@@ -141,6 +148,7 @@ export const solarSystem: StarSystem = {
     {
       name: "Saturn",
       radius: 58232,
+      shortDescription: "",
       mass: 5.68e26,
       semiMajor: 9.5826,
       semiMinor: 9.5673,
@@ -163,6 +171,7 @@ export const solarSystem: StarSystem = {
     {
       name: "Uranus",
       radius: 25362,
+      shortDescription: "",
       mass: 8.68e25,
       semiMajor: 19.2185,
       semiMinor: 19.1977,
@@ -178,6 +187,7 @@ export const solarSystem: StarSystem = {
     {
       name: "Neptune",
       radius: 24622,
+      shortDescription: "",
       mass: 1.02e26,
       semiMajor: 30.07,
       semiMinor: 30.1087,
@@ -195,6 +205,7 @@ export const solarSystem: StarSystem = {
     {
       name: "Asteroid Belt",
       numOfAsteroids: 10_000,
+      shortDescription: "",
       depth: 1,
       innerSemiMajor: 2.06,
       innerEccentricity: 0.33,
@@ -209,6 +220,7 @@ export const solarSystem: StarSystem = {
       name: "Kuiper Belt: Dynamically Cold",
       ...kuiperBeltBase,
       numOfAsteroids: 145_000,
+      shortDescription: "",
       innerSemiMajor: 30,
       innerEccentricity: 0.1,
       outerSemiMajor: 55,
@@ -220,6 +232,7 @@ export const solarSystem: StarSystem = {
       name: "Kuiper Belt: Dynamically Holt",
       ...kuiperBeltBase,
       numOfAsteroids: 5_000,
+      shortDescription: "",
       innerSemiMajor: 30,
       innerEccentricity: 0.1,
       outerSemiMajor: 55,
