@@ -7,6 +7,8 @@
             :model-value="zoom"
             orient="vertical"
             @update:model-value="onUpdate"
+            ref="slider"
+            v-bind:disabled="disabled"
     />
   </div>
 </template>
@@ -31,7 +33,8 @@ export default defineComponent({
   },
   data() {
     return {
-      zoom: BASE_ZOOM
+      zoom: BASE_ZOOM,
+      disabled: false,
     };
   },
   methods: {
@@ -42,8 +45,15 @@ export default defineComponent({
     update(value: number) {
       this.zoom = value;
     },
+    disable() {
+      this.disabled = true;
+    },
+    enable() {
+      this.disabled = false;
+    },
     reset() {
       this.zoom = BASE_ZOOM;
+      this.enable();
     }
   }
 });

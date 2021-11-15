@@ -16,6 +16,7 @@
 </template>
 
 <script lang="ts">
+import { MeshMouseEvent } from "@/@types/three/mesh-mouse-event";
 import { BASE_SPEED, MAX_SPEED, MIN_SPEED, } from "@/assets/util/sim.constants";
 import PlaybackMenu from "@/components/ui/sim/playback-menu.vue";
 import ZoomController from "@/components/ui/sim/zoom-controller.vue";
@@ -84,6 +85,7 @@ export default defineComponent({
     }
 
     function focusPlanet(event: MeshMouseEvent) {
+      zoomer.value.disable();
       camera.value?.focus(event.component);
     }
 

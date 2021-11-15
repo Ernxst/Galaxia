@@ -152,6 +152,7 @@ export default defineComponent({
 
 .slider input[type="range"] {
   --thumb-size: 24px;
+  --bg: var(--main);
   -webkit-appearance: none;
   height: 4px;
   border-radius: var(--button-radius);
@@ -162,13 +163,13 @@ export default defineComponent({
     linear,
     20% 0%,
     20% 100%,
-    color-stop(0%, var(--main)),
-    color-stop(100%, var(--main))
+    color-stop(0%, var(--bg)),
+    color-stop(100%, var(--bg))
   );
-  background-image: -webkit-linear-gradient(left, var(--main) 0%, var(--main) 100%);
-  background-image: -moz-linear-gradient(left, var(--main) 0%, var(--main) 100%);
-  background-image: -o-linear-gradient(to right, var(--main) 0%, var(--main) 100%);
-  background-image: linear-gradient(to right, var(--main) 0%, var(--main) 100%);
+  background-image: -webkit-linear-gradient(left, var(--bg) 0%, var(--bg) 100%);
+  background-image: -moz-linear-gradient(left, var(--bg) 0%, var(--bg) 100%);
+  background-image: -o-linear-gradient(to right, var(--bg) 0%, var(--bg) 100%);
+  background-image: linear-gradient(to right, var(--bg) 0%, var(--bg) 100%);
   background-repeat: no-repeat;
 }
 
@@ -188,7 +189,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 input[type="range"]::-webkit-slider-thumb {
   box-shadow: none;
-  border: 4px solid var(--main);
+  border: 4px solid var(--bg);
   height: var(--thumb-size);
   width: var(--thumb-size);
   border-radius: 2px;
@@ -214,7 +215,7 @@ input[type="range"]::-moz-range-track {
 
 input[type="range"]::-moz-range-thumb {
   box-shadow: none;
-  border: 4px solid var(--main);
+  border: 4px solid var(--bg);
   height: var(--thumb-size);
   width: var(--thumb-size);
   border-radius: 2px;
@@ -247,7 +248,7 @@ input[type="range"]::-ms-fill-upper {
 
 input[type="range"]::-ms-thumb {
   box-shadow: none;
-  border: 4px solid var(--main);
+  border: 4px solid var(--bg);
   height: var(--thumb-size);
   width: var(--thumb-size);
   border-radius: 2px;
@@ -267,7 +268,7 @@ input[type="range"]:focus::-ms-fill-upper {
   position: absolute;
   left: 0;
   top: calc(100% + 14px);
-  color: var(--main);
+  color: var(--bg);
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.22);
   padding: 5px;
   z-index: 2;
@@ -277,5 +278,14 @@ input[type="range"]:focus::-ms-fill-upper {
 
 .slider-container[orient=vertical] .current-value {
   transform: rotate(-270deg);
+}
+
+.slider-container[disabled=true] input[type=range] {
+  --bg: grey;
+  pointer-events: none;
+}
+
+.slider-container[disabled=true] .slider-label {
+  color: grey;
 }
 </style>
