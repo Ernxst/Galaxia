@@ -27,7 +27,7 @@
     <Moon
       v-for="(moon, index) in moons"
       v-bind="moon"
-      :ref="(el) => moonComponents.push(el)"
+      :ref="addMoon"
       :name="moon.name"
       :mass="moon.mass"
       :radius="moon.radius"
@@ -85,12 +85,14 @@ export default defineComponent({
   props: PlanetProps,
   data() {
     return {
-      moonComponents: [] as typeof Moon[],
+      moonComponents: {} as { [key: string]: typeof Moon },
+      models: [] as typeof Moon[],
       assetsLoaded: 0,
     };
   },
   beforeUpdate() {
-    this.moonComponents = [];
+    this.moonComponents = {};
+    this.models = [];
   },
   watch: {
     loaded() {
@@ -130,7 +132,7 @@ export default defineComponent({
   },
   methods: {
     afterOrbit(dt: number) {
-      for (const moon of this.moonComponents) moon.orbit(dt);
+      for (const moon of this.models) moon.orbit(dt);
     },
     rotate(rotation: Vector3) {
       this.rotation.add(rotation);
@@ -144,10 +146,17 @@ export default defineComponent({
       planetLight.rotation.x -= doubled.x;
       planetLight.rotation.y -= doubled.y;
       planetLight.rotation.z -= doubled.z;
-      const newPos = planetLight.position.clone().sub(doubled)
-      planetLight.target.position.set(newPos.x, newPos.y, newPos.Z);
+      const newPos = planetLight.position.clone().sub(doubled);
+      planetLight.target.position.set(newPos.x, newPos.y, newPos.z);
       planetLight.target.updateMatrixWorld();
-    }
+    },
+    addMoon(el: typeof Moon) {
+      this.moonComponents[el.name] = el;
+      this.models.push(el);
+    },
+    getMoon(name: string) : typeof Moon | undefined {
+      return this.moonComponents[name];
+    },
   },
   mounted() {
     if (this.hasMoons) {

@@ -1,6 +1,6 @@
 <template>
   <app-camera ref="camera" :orbit-controls="orbitControls" :aspect="aspect"/>
-  <app-scene ref="scene" @loaded="onLoad"/>
+  <app-scene ref="scene" @loaded="onLoad" @focus="focusPlanet" />
   <div class="sim-ui" v-if="loaded">
     <playback-menu
       :speed="speed"
@@ -80,6 +80,10 @@ export default defineComponent({
       camera.value.animate(paused.value, speed.value);
     }
 
+    function focusPlanet(event: MeshMouseEvent) {
+      camera.value?.focus(event.component);
+    }
+
     function startAnimation() {
       animating.value = true;
       if (paused.value === false) {
@@ -122,6 +126,7 @@ export default defineComponent({
       switch (e.key) {
         case "r":
           camera.value.reset();
+          scene.value.reset();
           zoomer.value.reset();
           return;
         case "p":
@@ -156,6 +161,7 @@ export default defineComponent({
       decreaseSpeed,
       togglePause,
       zoomCamera,
+      focusPlanet,
       onLoad,
       resize,
     };

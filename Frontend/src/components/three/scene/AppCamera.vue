@@ -1,11 +1,20 @@
 <template>
-  <Camera ref="camera" :aspect="aspect" :near="near" :far="far" :fov="fov"/>
+  <Camera ref="camera" :aspect="aspect" :near="near" :far="far" :fov="fov">
+    <camera-animator
+      ref="animator"
+      :orbit-controls="orbitControls"
+      @anim-start="$emit('animStart')"
+      @anim-done="$emit('animDone')"
+    />
+  </Camera>
 </template>
 
 <script lang="ts">
 import { setZoom, zoomIn, zoomOut } from "@/assets/three/camera";
-import { BASE_ZOOM, FAR, FOV, NEAR } from "@/assets/three/camera/camera.constants";
+import { FAR, FOV, NEAR } from "@/assets/three/camera/camera.constants";
 import { SCENE_SCALE } from "@/assets/util/sim.constants";
+import CelestialBody from "@/components/three/celestial/base/celestial-body.vue";
+import CameraAnimator from "@/components/three/scene/CameraAnimator.vue";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
 import { Vector3 } from "three/src/math/Vector3";
@@ -15,7 +24,7 @@ import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
   name: "AppCamera",
-  components: { Camera },
+  components: { CameraAnimator, Camera },
   props: {
     aspect: { type: Number, default: 1 },
     orbitControls: Object as PropType<OrbitControls>,
@@ -31,6 +40,9 @@ export default defineComponent({
   methods: {
     moveTo(pos: Vector3) {
       this.$refs.camera.camera.position.set(pos.x, pos.y, pos.z);
+    },
+    focus(object: typeof CelestialBody) {
+      this.$refs.animator.focus(object);
     },
     setZoom(zoom: number) {
       setZoom(this.$refs.camera.camera, zoom);
@@ -49,15 +61,8 @@ export default defineComponent({
       camera.rotation.order = "YXZ";
       this.orbitControls.maxDistance = camPos.x / 5.0;
     },
-    // TODO: Animate reset
     reset() {
-      const camera: PerspectiveCamera = this.$refs.camera.camera;
-      const { x, y, z } = this.defaultPos;
-      camera.position.set(x, y, z);
-      camera.position.multiplyScalar(SCENE_SCALE);
-      camera.rotation.order = "YXZ";
-      this.orbitControls.maxDistance = x / 5.0;
-      this.setZoom(BASE_ZOOM);
+      this.$refs.animator.reset();
     },
     update(aspect: number) {
       // TODO: Fix camera looking at when resizing window to be larger
@@ -68,6 +73,7 @@ export default defineComponent({
     },
     animate(paused: boolean, speed: number) {
       this.orbitControls.update();
+      this.$refs.animator.render(paused, speed);
     },
   },
 });

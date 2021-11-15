@@ -5,7 +5,7 @@
       :is="planetComponent(planet)"
       v-for="(planet, index) in systemData.planets"
       key="planet"
-      :ref="(el) => planets.push(el)"
+      :ref="addPlanet"
       v-bind="planet"
       :star-radius="systemData.star.radius"
       :render-order="systemData.planets.length - index"
@@ -41,6 +41,7 @@ import { StarSystem as StarSystemInterface } from "@/@types/celestial/containers
 import { Planet as PlanetInterface } from "@/@types/celestial/planet";
 import { RingedPlanet as RingedPlanetInterface } from "@/@types/celestial/ringed-planet";
 import { TIME_STEP } from "@/assets/util/sim.constants";
+import CelestialBody from "@/components/three/celestial/base/celestial-body.vue";
 import { Vector3 } from "three/src/math/Vector3";
 import { Group } from "troisjs";
 import { defineComponent } from "vue";
@@ -82,6 +83,7 @@ export default defineComponent({
   data() {
     return {
       planets: [],
+      planetComponents: {} as { [key: string]: typeof Planet | typeof RingedPlanet },
       asteroidBelts: [],
       assetsLoaded: 0,
     };
@@ -91,6 +93,10 @@ export default defineComponent({
     this.asteroidBelts = [];
   },
   methods: {
+    addPlanet(el: typeof Planet | typeof RingedPlanet) {
+      this.planetComponents[el.name] = el;
+      this.planets.push(el);
+    },
     planetComponent(props: PlanetInterface | RingedPlanetInterface):
       typeof Planet | typeof RingedPlanet {
       return props.ring === undefined ? Planet : RingedPlanet;
@@ -114,6 +120,17 @@ export default defineComponent({
         }
       );
       return furthestObject.initialPos.length();
+    },
+    getComponentByName(name: string, isStar: boolean, isMoon: boolean): typeof CelestialBody {
+      if (isStar) return this.$refs.star;
+      if (!isMoon) return this.planetComponents[name];
+      for (const planet of this.planets) {
+        if (planet.hasMoons) {
+          const moon = planet.getMoon(name);
+          if (moon) return moon;
+        }
+      }
+      return null;
     }
   },
 });
