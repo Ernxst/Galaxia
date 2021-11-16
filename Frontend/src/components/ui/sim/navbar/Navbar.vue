@@ -56,7 +56,6 @@ export default defineComponent({
     this.buttons = {};
   },
   methods: {
-    // TODO: Need to check if currently animating and ignore if it is
     followPlanet(event) {
       this.toggle(event.name);
       this.$emit("follow", event);

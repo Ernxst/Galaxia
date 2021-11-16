@@ -80,6 +80,7 @@ export default defineComponent({
   },
   methods: {
     go() {
+      if (this.$parent.$parent.animating) return;
       this.$emit("follow", {
         name: this.name,
         isStar: this.isStar,
