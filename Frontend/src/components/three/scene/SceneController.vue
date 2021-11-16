@@ -1,7 +1,7 @@
 <template>
   <app-camera ref="camera" :orbit-controls="orbitControls" :aspect="aspect"
               @anim-start="startAnimation" @anim-done="stopAnimation"
-              @adjust-zoom="zoomCamera"/>
+              @adjust-zoom="zoomCamera" @pause="pause" @play="play" />
   <app-scene ref="scene" @loaded="onLoad" @focus="focusPlanet"/>
   <template v-if="loaded">
     <simulation-ui ref="gui" @zoom-update="zoomCamera" @follow-body="followBody" @reset="reset" />
@@ -76,6 +76,14 @@ export default defineComponent({
       gui.value.stopAnimation();
     }
 
+    function pause() {
+      gui.value.pause();
+    }
+
+    function play() {
+      gui.value.unpause();
+    }
+
     function reset() {
       camera.value.reset();
       scene.value.reset();
@@ -127,6 +135,8 @@ export default defineComponent({
       onLoad,
       resize,
       reset,
+      pause,
+      play,
     };
   },
 });

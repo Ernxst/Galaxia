@@ -7,6 +7,7 @@
       @anim-done="stopAnimation"
       @adjust-zoom="adjustZoom"
     />
+    <gesture-controller ref="controller" @loaded="" @pause="pause" @play="play"/>
   </Camera>
 </template>
 
@@ -16,6 +17,7 @@ import { FAR, FOV, NEAR } from "@/assets/three/camera/camera.constants";
 import { SCENE_SCALE } from "@/assets/util/sim.constants";
 import CelestialBody from "@/components/three/celestial/base/celestial-body.vue";
 import CameraAnimator from "@/components/three/scene/CameraAnimator.vue";
+import GestureController from "@/components/three/scene/gesture-controller.vue";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
 import { Vector3 } from "three/src/math/Vector3";
@@ -25,8 +27,8 @@ import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
   name: "AppCamera",
-  components: { CameraAnimator, Camera },
-  emits: ["animStart", "animDone", "adjustZoom"],
+  components: { GestureController, CameraAnimator, Camera },
+  emits: ["animStart", "animDone", "adjustZoom", "pause", "play"],
   props: {
     aspect: { type: Number, default: 1 },
     orbitControls: Object as PropType<OrbitControls>,
@@ -48,6 +50,12 @@ export default defineComponent({
     },
     adjustZoom(event) {
       this.$emit("adjustZoom", event);
+    },
+    pause() {
+      this.$emit("pause");
+    },
+    play() {
+      this.$emit('play');
     },
     moveTo(pos: Vector3) {
       this.$refs.camera.camera.position.set(pos.x, pos.y, pos.z);
@@ -92,6 +100,7 @@ export default defineComponent({
     animate(paused: boolean, speed: number) {
       this.orbitControls.update();
       this.$refs.animator.render(paused, speed);
+      this.$refs.controller.detectVideo();
     },
   },
 });
