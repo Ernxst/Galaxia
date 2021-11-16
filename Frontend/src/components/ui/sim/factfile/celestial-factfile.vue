@@ -40,7 +40,7 @@ export default defineComponent({
       this.closing = true;
       setTimeout(() => {
         this.$emit("close");
-      }, 1670);
+      }, 1000);
     }
   },
 });
@@ -51,7 +51,7 @@ export default defineComponent({
   position: fixed;
   z-index: 3;
   left: 128px;
-  animation-duration: 1.67s;
+  animation-duration: 1s;
   animation-name: slideDown;
   animation-fill-mode: forwards;
   height: 100vh;
@@ -61,14 +61,27 @@ export default defineComponent({
   animation-name: slideUp;
 }
 
+.factfile-container::after {
+  position: absolute;
+  left: -128px;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  background: black;
+  opacity: .33;
+  content: "";
+  width: calc(128px + 33vw);
+}
+
 .celestial-factfile {
   position: relative;
   flex-direction: column;
-  padding: 24px;
+  padding: 18px 36px;
   height: 100%;
   justify-content: flex-start;
   border-radius: 0;
   width: 33vw;
+  z-index: 4;
 }
 
 .close-icon {
@@ -83,10 +96,9 @@ header {
 }
 
 header h2 {
-  width: 100%;
-  text-align: left;
   letter-spacing: 11px;
-  font-size: 28px;
+  font-size: 2vw;
+  position: relative;
 }
 
 header p {

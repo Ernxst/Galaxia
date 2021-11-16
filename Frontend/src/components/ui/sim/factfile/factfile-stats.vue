@@ -98,6 +98,7 @@ export default defineComponent({
 
 .field, .value {
   font-size: 10px;
+  vertical-align: top;
 }
 
 .value {

@@ -1,8 +1,10 @@
 <template>
-  <button ref="button" :type="type" class="flat-button noselect centred">
-    <span>{{ text }}</span>
-    <slot></slot>
-  </button>
+  <div class="button-container">
+    <button ref="button" :type="type" class="flat-button noselect centred">
+      <span>{{ text }}</span>
+      <slot></slot>
+    </button>
+  </div>
 </template>
 
 <script lang="ts">
@@ -37,6 +39,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
+
+.button-container {
+  border: 1px solid var(--text-colour);
+  padding: 1px;
+}
+
 button {
   --button-bg: var(--main);
   background: var(--button-bg);
@@ -45,12 +53,16 @@ button {
   border: 0;
   padding: 12px 18px;
   cursor: pointer;
-  transition: 1s ease-in-out all;
+  transition: .15s ease-in-out all;
   color: var(--text-colour);
 }
 
 button:hover {
-  filter: brightness(1.75);
+  filter: brightness(1.5);
+}
+
+button span {
+  font-size: 1.25vw;
 }
 
 .disabled, button[disabled], button[disabled=true] {

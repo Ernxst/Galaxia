@@ -116,7 +116,7 @@ export default defineComponent({
   margin-top: 0;
   margin-bottom: 16px;
   line-height: 90%;
-  font-size: 16px;
+  font-size: 12px;
   color: var(--text-colour);
 }
 
@@ -274,6 +274,7 @@ input[type="range"]:focus::-ms-fill-upper {
   letter-spacing: 0;
   z-index: 2;
   font-weight: 700;
+  font-size: 12px;
   background: #212121;
 }
 

@@ -84,7 +84,7 @@ export default defineComponent({
 }
 
 .body-overview.in {
-  animation-duration: .67s;
+  animation-duration: .5s;
   animation-name: fadeIn;
   animation-fill-mode: forwards;
 }
@@ -106,7 +106,7 @@ export default defineComponent({
   margin: 0;
   font-weight: 100;
   letter-spacing: 16px;
-  font-size: 36px;
+  font-size: 2.5vw;
   text-align: center;
 }
 

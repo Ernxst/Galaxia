@@ -1,7 +1,7 @@
 <template>
   <nav class="playback-container centred">
     <div class="row centred">
-      <p class="sim-speed">Simulation Speed: <strong>{{ scaledSpeed }}x</strong></p>
+      <p class="sim-speed">Simulation Speed: <strong>{{ scaledSpeed }}×</strong></p>
     </div>
     <div class="row centred">
       <circle-button
