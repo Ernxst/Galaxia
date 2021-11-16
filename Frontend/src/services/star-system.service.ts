@@ -3,6 +3,16 @@ import { EARTH_MASS, SOLAR_MASS } from "@/assets/util/celestial.constants";
 import { ATMOSPHERE_OPACITY, ATMOSPHERE_SCALE } from "@/assets/util/sim.constants";
 
 
+const description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum ut tristique et egestas quis ipsum suspendisse ultrices gravida. Lacus suspendisse faucibus interdum posuere lorem ipsum dolor sit. Diam ut venenatis tellus in. Luctus accumsan tortor posuere ac. Varius quam quisque id diam vel quam elementum. Nam libero justo laoreet sit amet cursus sit. Vulputate ut pharetra sit amet aliquam id diam. Lacus luctus accumsan tortor posuere ac ut. Commodo ullamcorper a lacus vestibulum sed arcu non. Imperdiet sed euismod nisi porta lorem mollis aliquam ut. Sem viverra aliquet eget sit amet tellus. Lorem ipsum dolor sit amet consectetur adipiscing elit duis tristique. Tristique senectus et netus et malesuada fames ac.\n" +
+  "\n" +
+  "Aliquam eleifend mi in nulla posuere sollicitudin aliquam. Lacus vel facilisis volutpat est. Suspendisse in est ante in nibh mauris cursus mattis. Nulla pharetra diam sit amet. Quis vel eros donec ac odio tempor orci dapibus ultrices. Fermentum leo vel orci porta non pulvinar neque laoreet suspendisse. Odio morbi quis commodo odio aenean sed. Amet tellus cras adipiscing enim eu. Ante in nibh mauris cursus mattis. Orci a scelerisque purus semper eget duis at tellus. Vitae nunc sed velit dignissim sodales ut eu sem integer. Vel orci porta non pulvinar neque laoreet. Tellus orci ac auctor augue mauris augue neque gravida.\n" +
+  "\n" +
+  "Vel risus commodo viverra maecenas. Aliquam faucibus purus in massa tempor. Mi sit amet mauris commodo quis imperdiet massa. Sed egestas egestas fringilla phasellus faucibus scelerisque eleifend donec. Sagittis aliquam malesuada bibendum arcu vitae. Nam at lectus urna duis convallis convallis tellus id. Risus commodo viverra maecenas accumsan lacus vel. Tristique nulla aliquet enim tortor at auctor urna. Massa massa ultricies mi quis. Lobortis scelerisque fermentum dui faucibus in ornare. Tortor at risus viverra adipiscing at in tellus. Eget velit aliquet sagittis id. Diam quam nulla porttitor massa id neque aliquam vestibulum morbi. Leo vel fringilla est ullamcorper. Pulvinar pellentesque habitant morbi tristique senectus et.\n" +
+  "\n" +
+  "Tellus id interdum velit laoreet id. Viverra maecenas accumsan lacus vel. Leo vel fringilla est ullamcorper eget nulla. Tincidunt lobortis feugiat vivamus at augue eget arcu dictum varius. Feugiat pretium nibh ipsum consequat. Aliquam ultrices sagittis orci a scelerisque purus semper. Aliquam vestibulum morbi blandit cursus risus at ultrices mi tempus. Mauris pharetra et ultrices neque. Ornare arcu dui vivamus arcu felis bibendum. Ut consequat semper viverra nam libero justo.\n" +
+  "\n" +
+  "Est ultricies integer quis auctor elit sed vulputate mi. Tellus at urna condimentum mattis. Tempor nec feugiat nisl pretium fusce. Tristique magna sit amet purus gravida quis. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Et pharetra pharetra massa massa ultricies mi. Arcu non sodales neque sodales ut. Auctor urna nunc id cursus metus aliquam eleifend mi. Nisl nisi scelerisque eu ultrices vitae. Aliquam ut porttitor leo a diam sollicitudin. Feugiat in ante metus dictum at tempor commodo. Elit duis tristique sollicitudin nibh sit amet commodo. Nibh venenatis cras sed felis eget velit. Duis convallis convallis tellus id interdum. Sem nulla pharetra diam sit amet. Malesuada nunc vel risus commodo viverra maecenas accumsan. Elementum facilisis leo vel fringilla est ullamcorper eget nulla."
+
 const kuiperBeltBase = {
   depth: 1,
   mass: 0,
@@ -17,7 +27,9 @@ export const solarSystem: StarSystem = {
   star: {
     name: "Sun",
     radius: 696_340,
+    caption: "",
     shortDescription: "",
+    description: description,
     mass: SOLAR_MASS,
     meanVelocity: 220,
     axialTilt: 7.25,
@@ -35,7 +47,9 @@ export const solarSystem: StarSystem = {
     {
       name: "Mercury",
       radius: 2439.7,
+      caption: "",
       shortDescription: "",
+      description: description,
       mass: 3.3e23,
       semiMajor: 0.387,
       semiMinor: 0.3787,
@@ -52,7 +66,9 @@ export const solarSystem: StarSystem = {
     {
       name: "Venus",
       radius: 6051.8,
+      caption: "",
       shortDescription: "",
+      description: description,
       mass: 4.87e24,
       semiMajor: 0.723,
       semiMinor: 0.72298,
@@ -74,7 +90,9 @@ export const solarSystem: StarSystem = {
     {
       name: "Earth",
       radius: 6371,
+      caption: "Our Home",
       shortDescription: "Our home. The only known planet in the Universe to support sentient life. We may have made a mess of it, but it's still ours.",
+      description: description,
       mass: EARTH_MASS,
       semiMajor: 1,
       semiMinor: 0.99986,
@@ -97,7 +115,9 @@ export const solarSystem: StarSystem = {
         {
           name: "Moon",
           radius: 1737.4,
+          caption: "",
           shortDescription: "",
+          description: description,
           mass: 7.34767309e22,
           semiMajor: 2.5832e-3,
           semiMinor: 0.00256554454,
@@ -115,7 +135,9 @@ export const solarSystem: StarSystem = {
     {
       name: "Mars",
       radius: 3389.5,
+      caption: "",
       shortDescription: "",
+      description: description,
       mass: 6.42e23,
       semiMajor: 1.524,
       semiMinor: 1.5174,
@@ -131,7 +153,9 @@ export const solarSystem: StarSystem = {
     {
       name: "Jupiter",
       radius: 69911,
+      caption: "",
       shortDescription: "",
+      description: description,
       mass: 1.9e27,
       semiMajor: 5.2044,
       semiMinor: 5.1982,
@@ -148,7 +172,9 @@ export const solarSystem: StarSystem = {
     {
       name: "Saturn",
       radius: 58232,
+      caption: "",
       shortDescription: "",
+      description: description,
       mass: 5.68e26,
       semiMajor: 9.5826,
       semiMinor: 9.5673,
@@ -171,7 +197,9 @@ export const solarSystem: StarSystem = {
     {
       name: "Uranus",
       radius: 25362,
+      caption: "",
       shortDescription: "",
+      description: description,
       mass: 8.68e25,
       semiMajor: 19.2185,
       semiMinor: 19.1977,
@@ -187,7 +215,9 @@ export const solarSystem: StarSystem = {
     {
       name: "Neptune",
       radius: 24622,
+      caption: "",
       shortDescription: "",
+      description: description,
       mass: 1.02e26,
       semiMajor: 30.07,
       semiMinor: 30.1087,
@@ -205,7 +235,9 @@ export const solarSystem: StarSystem = {
     {
       name: "Asteroid Belt",
       numOfAsteroids: 10_000,
+      caption: "",
       shortDescription: "",
+      description: description,
       depth: 1,
       innerSemiMajor: 2.06,
       innerEccentricity: 0.33,
@@ -220,7 +252,9 @@ export const solarSystem: StarSystem = {
       name: "Kuiper Belt: Dynamically Cold",
       ...kuiperBeltBase,
       numOfAsteroids: 145_000,
+      caption: "",
       shortDescription: "",
+      description: description,
       innerSemiMajor: 30,
       innerEccentricity: 0.1,
       outerSemiMajor: 55,
@@ -232,7 +266,9 @@ export const solarSystem: StarSystem = {
       name: "Kuiper Belt: Dynamically Holt",
       ...kuiperBeltBase,
       numOfAsteroids: 5_000,
+      caption: "",
       shortDescription: "",
+      description: description,
       innerSemiMajor: 30,
       innerEccentricity: 0.1,
       outerSemiMajor: 55,

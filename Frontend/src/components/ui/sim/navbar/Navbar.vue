@@ -55,6 +55,7 @@ export default defineComponent({
     this.buttons = {};
   },
   methods: {
+    // TODO: Need to check if currently animating and ignore if it is
     followPlanet(event) {
       this.toggle(event.name);
       this.$emit("follow", event);
@@ -79,10 +80,6 @@ export default defineComponent({
   margin-top: auto;
   margin-bottom: auto;
   z-index: 2;
-  animation-duration: 1.67s;
-  animation-name: fadeIn;
-  animation-fill-mode: forwards;
-  opacity: 0;
   overflow-x: visible;
 }
 

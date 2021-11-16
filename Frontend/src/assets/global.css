@@ -161,6 +161,24 @@ a {
   }
 }
 
+@keyframes slideDown {
+  0% {
+    top: -100%;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: -100%;
+  }
+}
+
 ul {
   margin: 0;
   padding: 0;
@@ -173,4 +191,18 @@ ul {
   border-radius: 8px;
   backdrop-filter: blur(10px);
   background-clip: padding-box;
+}
+
+.close-icon {
+  padding: 6px;
+  cursor: pointer;
+  background: var(--main);
+  border-radius: 50%;
+  transition: 0.25s ease-in-out all;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.33);
+}
+
+.close-icon:hover {
+  color: var(--page-bg);
+  background: var(--main);
 }

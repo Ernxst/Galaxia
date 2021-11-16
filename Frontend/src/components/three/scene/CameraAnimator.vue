@@ -1,6 +1,7 @@
 <template></template>
 
 <script lang="ts">
+// TODO: Camera reset animation is weird
 import { animateCamera, calcDuration } from "@/assets/gsap";
 import { isAnimating } from "@/assets/gsap/camera.animate";
 import { computeCentreAndSize } from "@/assets/three";

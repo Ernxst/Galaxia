@@ -19,7 +19,9 @@ export default defineComponent({
     meanVelocity: Number,
     dayLength: { type: Number, default: 0 },
     axialTilt: { type: Number, default: 0 },
+    caption: String,
     shortDescription: String,
+    description: String,
   },
   data() {
     return {
