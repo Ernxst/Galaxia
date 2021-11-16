@@ -122,6 +122,32 @@ export default defineComponent({
       this.$refs.zoomer.reset();
       this.$refs.hub.resetBody();
     },
+  },
+  mounted() {
+    window.addEventListener("keydown", (e) => {
+      if (this.animating) return;
+      switch (e.key) {
+        case "r":
+          this.reset();
+          this.$emit("reset");
+          return;
+        case "p":
+          this.togglePause(e);
+          return;
+        case "<":
+          this.decreaseSpeed();
+          return;
+        case ">":
+          this.increaseSpeed();
+          return;
+        case "+":
+          this.zoomIn();
+          return;
+        case "-":
+          this.zoomOut();
+          return;
+      }
+    });
   }
 });
 </script>

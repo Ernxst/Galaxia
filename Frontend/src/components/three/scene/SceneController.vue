@@ -97,30 +97,6 @@ export default defineComponent({
       camera.value.animate(paused, speed);
     }
 
-    window.addEventListener("keydown", (e) => {
-      if (gui.value.animating) return;
-      switch (e.key) {
-        case "r":
-          reset();
-          return;
-        case "p":
-          gui.value.togglePause(e);
-          return;
-        case "<":
-          gui.value.decreaseSpeed();
-          return;
-        case ">":
-          gui.value.increaseSpeed();
-          return;
-        case "+":
-          gui.value.zoomIn();
-          return;
-        case "-":
-          gui.value.zoomOut();
-          return;
-      }
-    });
-
     return {
       scene,
       camera,
