@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-  // TODO: If wanting to toggle trails on or off, emit window event from scene controller and add listener here to toggle a boolean
+  // TODO: If wanting to toggle trails on or off, emit window event from engine controller and add listener here to toggle a boolean
   import { GeometryManager } from "@/assets/three";
   import { MAX_TRAIL_POINTS } from "@/assets/util/sim.constants";
   import { EllipseCurve } from "three/src/extras/curves/EllipseCurve";

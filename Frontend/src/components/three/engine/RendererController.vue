@@ -1,37 +1,37 @@
 <template>
-  <TroisRenderer
+  <Renderer
     ref="renderer"
-    :orbit-ctrl="true"
     :alpha="true"
     :antialias="false"
+    :orbit-ctrl="true"
     :resize="true"
     shadow
   >
-    <scene-controller
+    <main-controller
       ref="controller"
-      :orbit-controls="orbitControls"
       :aspect="aspect"
+      :orbit-controls="orbitControls"
       @loaded="onLoad"
     />
-  </TroisRenderer>
+  </Renderer>
 </template>
 
 <script lang="ts">
 // TODO: Use FPS controls instead of OrbitControls - swap between FPS & OrbitControls dynamically
 import { TONE_MAPPING_EXPOSURE } from "@/assets/three/three.constants";
 
-import SceneController from "@/components/three/scene/SceneController.vue";
+import MainController from "@/components/three/engine/MainController.vue";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { PCFSoftShadowMap, ReinhardToneMapping, sRGBEncoding, } from "three/src/constants";
 import { WebGLRenderer } from "three/src/renderers/WebGLRenderer";
-import { Renderer as TroisRenderer } from "troisjs";
+import { Renderer } from "troisjs";
 import { computed, defineComponent, getCurrentInstance, onMounted, ref, } from "vue";
 import { setComposerSize, setupPostprocessing, } from "./postprocessing/postprocessing";
 
 
 export default defineComponent({
-  name: "Renderer",
-  components: { TroisRenderer, SceneController },
+  name: "RendererController",
+  components: { Renderer, MainController },
   setup() {
     const width = ref<number>(1);
     const height = ref<number>(1);
@@ -39,9 +39,9 @@ export default defineComponent({
       return width.value / height.value;
     });
 
-    const renderer = ref<typeof TroisRenderer>(null);
+    const renderer = ref<typeof Renderer>(null);
     const orbitControls = ref<OrbitControls>(null);
-    const controller = ref<typeof SceneController>(null);
+    const controller = ref<typeof MainController>(null);
 
     function onLoad() {
       renderer.value.renderFn = setupPostprocessing(

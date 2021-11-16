@@ -7,8 +7,8 @@
     />
     <Galaxy
       ref="galaxy"
-      name="Milky Way"
       :star-system="currentSystemName"
+      name="Milky Way"
       @scene-loaded="onLoad"
       @focus-on-body="$emit('focus', $event)"
     />
@@ -28,7 +28,7 @@ import Loader from "./loader.vue";
 
 
 export default defineComponent({
-  name: "AppScene",
+  name: "SceneController",
   components: { Scene, Loader, Galaxy },
   emits: ["loaded", "focus"],
   created() {

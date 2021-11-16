@@ -33,7 +33,7 @@ import { defineComponent } from "vue";
 
 
 export default defineComponent({
-  name: "simulation-ui",
+  name: "UiController",
   components: { Navbar, InfoHub, ZoomController, PlaybackMenu },
   emits: ["zoomUpdate", "followBody", "reset"],
   data() {

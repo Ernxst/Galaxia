@@ -23,7 +23,7 @@ interface MoveCameraParams {
 }
 
 export default defineComponent({
-  name: "CameraAnimator",
+  name: "CamAnimationController",
   emits: ["animStart", "animDone", "adjustZoom"],
   props: {
     orbitControls: Object as PropType<OrbitControls>,

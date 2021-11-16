@@ -25,16 +25,12 @@ export default defineComponent({
 
     async function setupWebcam() {
       if (navigator.mediaDevices.getUserMedia) {
-        try {
-          const options: MediaStreamConstraints = {
-            audio: false,
-            video: { facingMode: 'user', width: { ideal: document.body.clientWidth } }
-          };
-          webcam.value.srcObject = await navigator.mediaDevices.getUserMedia(options);
-          await webcam.value.play();
-        } catch (error) {
-          alert(`\n${error.name}: ${error.message}`);
-        }
+        const options: MediaStreamConstraints = {
+          audio: false,
+          video: { facingMode: 'user', width: { ideal: document.body.clientWidth } }
+        };
+        webcam.value.srcObject = await navigator.mediaDevices.getUserMedia(options);
+        await webcam.value.play();
       }
     }
 
@@ -44,17 +40,21 @@ export default defineComponent({
     }
 
     async function load() {
-      await setupWebcam();
-      setupCanvas();
-
-      model = await handTrack.load({
-        flipHorizontal: true,
-        scoreThreshold: 0.7,
-      });
-      const { status, msg } = await handTrack.startVideo(webcam.value);
-      enabled.value = status;
-      if (!status) alert("Error");
-      emit("loaded");
+      try {
+        await setupWebcam();
+        setupCanvas();
+        model = await handTrack.load({
+          flipHorizontal: true,
+          scoreThreshold: 0.7,
+        });
+        const { status, msg } = await handTrack.startVideo(webcam.value);
+        enabled.value = status;
+        if (!status) alert("Error");
+      } catch (error) {
+        alert("Could not set up gesture controls");
+      } finally {
+        emit("loaded");
+      }
     }
 
     // TODO: Run in web worker

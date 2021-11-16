@@ -44,6 +44,7 @@
 </template>
 
 <script lang="ts">
+// TODO: Completely disable nav buttons while animating
 import { Moon } from "@/@types/celestial/moon";
 import { defineComponent, PropType } from "vue";
 

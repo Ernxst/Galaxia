@@ -1,13 +1,13 @@
 <template>
-  <Camera ref="camera" :aspect="aspect" :near="near" :far="far" :fov="fov">
-    <camera-animator
+  <Camera ref="camera" :aspect="aspect" :far="far" :fov="fov" :near="near">
+    <cam-animation-controller
       ref="animator"
       :orbit-controls="orbitControls"
       @anim-start="startAnimation"
       @anim-done="stopAnimation"
       @adjust-zoom="adjustZoom"
     />
-<!--    <gesture-controller ref="controller" @loaded="" @pause="pause" @play="play"/>-->
+    <!--    <gesture-controller ref="controller" @loaded="" @pause="pause" @play="play"/>-->
   </Camera>
 </template>
 
@@ -16,8 +16,8 @@ import { setZoom, zoomIn, zoomOut } from "@/assets/three/camera";
 import { FAR, FOV, NEAR } from "@/assets/three/camera/camera.constants";
 import { SCENE_SCALE } from "@/assets/util/sim.constants";
 import CelestialBody from "@/components/three/celestial/base/celestial-body.vue";
-import CameraAnimator from "@/components/three/scene/CameraAnimator.vue";
-import GestureController from "@/components/three/scene/gesture-controller.vue";
+import CamAnimationController from "@/components/three/engine/camera/CamAnimationController.vue";
+import GestureController from "@/components/three/engine/camera/GestureController.vue";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
 import { Vector3 } from "three/src/math/Vector3";
@@ -26,8 +26,8 @@ import { defineComponent, PropType } from "vue";
 
 
 export default defineComponent({
-  name: "AppCamera",
-  components: { GestureController, CameraAnimator, Camera },
+  name: "CameraController",
+  components: { GestureController, CamAnimationController, Camera },
   emits: ["animStart", "animDone", "adjustZoom", "pause", "play"],
   props: {
     aspect: { type: Number, default: 1 },

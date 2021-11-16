@@ -1,36 +1,36 @@
 <template>
-  <app-camera ref="camera" :orbit-controls="orbitControls" :aspect="aspect"
-              @anim-start="startAnimation" @anim-done="stopAnimation"
-              @adjust-zoom="zoomCamera" @pause="pause" @play="play" />
-  <app-scene ref="scene" @loaded="onLoad" @focus="focusPlanet"/>
+  <camera-controller ref="camera" :aspect="aspect" :orbit-controls="orbitControls"
+                     @pause="pause" @play="play"
+                     @anim-start="startAnimation" @anim-done="stopAnimation" @adjust-zoom="zoomCamera"/>
+  <scene-controller ref="scene" @focus="focusPlanet" @loaded="onLoad"/>
   <template v-if="loaded">
-    <simulation-ui ref="gui" @zoom-update="zoomCamera" @follow-body="followBody" @reset="reset" />
+    <ui-controller ref="gui" @reset="reset" @zoom-update="zoomCamera" @follow-body="followBody"/>
   </template>
 </template>
 
 <script lang="ts">
 import { MeshMouseEvent } from "@/@types/three/mesh-mouse-event";
-import SimulationUi from "@/components/ui/sim/simulation-ui.vue";
+import UiController from "@/components/ui/sim/ui-controller.vue";
 import { nextTick } from "@vue/runtime-core";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Vector3 } from "three/src/math/Vector3";
 import { defineComponent, getCurrentInstance, PropType, ref, } from "vue";
-import AppCamera from "./AppCamera.vue";
-import AppScene from "./AppScene.vue";
+import CameraController from "./camera/CameraController.vue";
+import SceneController from "./SceneController.vue";
 
 
 export default defineComponent({
-  name: "SceneController",
-  components: { SimulationUi, AppScene, AppCamera },
+  name: "MainController",
+  components: { UiController, SceneController, CameraController },
   props: {
     orbitControls: Object as PropType<OrbitControls>,
     aspect: Number,
   },
   emits: ["loaded"],
   setup() {
-    const scene = ref<typeof AppScene>(null);
-    const camera = ref<typeof AppCamera>(null);
-    const gui = ref<typeof SimulationUi>(null);
+    const scene = ref<typeof SceneController>(null);
+    const camera = ref<typeof CameraController>(null);
+    const gui = ref<typeof UiController>(null);
     const { emit } = getCurrentInstance();
     const loaded = ref<boolean>(false);
 
