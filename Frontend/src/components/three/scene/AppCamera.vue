@@ -7,7 +7,7 @@
       @anim-done="stopAnimation"
       @adjust-zoom="adjustZoom"
     />
-    <gesture-controller ref="controller" @loaded="" @pause="pause" @play="play"/>
+<!--    <gesture-controller ref="controller" @loaded="" @pause="pause" @play="play"/>-->
   </Camera>
 </template>
 
@@ -100,7 +100,7 @@ export default defineComponent({
     animate(paused: boolean, speed: number) {
       this.orbitControls.update();
       this.$refs.animator.render(paused, speed);
-      this.$refs.controller.detectVideo();
+      // this.$refs.controller.detectVideo();
     },
   },
 });

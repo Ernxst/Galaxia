@@ -31,7 +31,6 @@
 
 <script lang="ts">
 // TODO: Add asteroid belts to navbar
-// TODO: Disable navbar while factfile open
 import { Planet } from "@/@types/celestial/planet";
 import { RingedPlanet } from "@/@types/celestial/ringed-planet";
 import { Star } from "@/@types/celestial/star";
