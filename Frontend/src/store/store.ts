@@ -1,10 +1,5 @@
 import { InjectionKey } from "vue";
-import {
-  createLogger,
-  createStore,
-  Store,
-  useStore as baseUseStore,
-} from "vuex";
+import { createLogger, createStore, Store, useStore as baseUseStore, } from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import { starSystem } from "./modules/star-system.module";
 

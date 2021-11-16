@@ -5,6 +5,7 @@ import { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
 import { Quaternion } from "three/src/math/Quaternion";
 import { Vector3 } from "three/src/math/Vector3";
 
+
 interface AnimParams {
   camera: PerspectiveCamera;
   controls: OrbitControls;
@@ -40,16 +41,20 @@ function killAnimation() {
 }
 
 export function animateCamera({
-                          camera,
-                          controls,
-                          object,
-                          offset = new Vector3(),
-                          duration = 0,
-                          onStart = () => {},
-                          onInterrupt = () => {},
-                          onUpdate = () => {},
-                          onComplete = () => {},
-                        }: AnimParams) {
+                                camera,
+                                controls,
+                                object,
+                                offset = new Vector3(),
+                                duration = 0,
+                                onStart = () => {
+                                },
+                                onInterrupt = () => {
+                                },
+                                onUpdate = () => {
+                                },
+                                onComplete = () => {
+                                },
+                              }: AnimParams) {
   if (!shouldAnimate(object.position, camera.position)) return;
   killAnimation();
   animParams = {
@@ -73,10 +78,14 @@ function performAnimation({
                             object,
                             offset = new Vector3(),
                             duration = 0,
-                            onStart = () => {},
-                            onInterrupt = () => {},
-                            onUpdate = () => {},
-                            onComplete = () => {},
+                            onStart = () => {
+                            },
+                            onInterrupt = () => {
+                            },
+                            onUpdate = () => {
+                            },
+                            onComplete = () => {
+                            },
                           }: AnimParams): Tween {
   const startOrientation = camera.quaternion.clone();
   const quaternion: Quaternion = object.quaternion

@@ -1,6 +1,7 @@
-import { ActionTree, GetterTree, MutationTree } from "vuex";
-import { solarSystem } from "@/services/star-system.service";
 import { StarSystem } from "@/@types/celestial/containers/star-system";
+import { solarSystem } from "@/services/star-system.service";
+import { ActionTree, GetterTree, MutationTree } from "vuex";
+
 
 export type StarSystems = { [key: string]: StarSystem };
 
@@ -30,7 +31,8 @@ const actions = <ActionTree<StarSystemModuleState, any>>{
     const systems = { "Solar System": solarSystem };
     commit("setStarSystems", systems);
   },
-  async fetchStarSystem({ commit }, name) {},
+  async fetchStarSystem({ commit }, name) {
+  },
 };
 
 const mutations = <MutationTree<StarSystemModuleState>>{

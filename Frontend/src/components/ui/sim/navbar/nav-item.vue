@@ -2,9 +2,9 @@
   <div class="nav-item centred noselect">
     <div class="button-container centred">
       <button
+        :class="following ? 'nav-button active centred' : 'nav-button centred'"
         class="nav-button centred"
         @click="go"
-        :class="following ? 'nav-button active centred' : 'nav-button centred'"
       >
         <div class="image centred">
           <img :alt="name" :src="icon" height="32" width="32"/>
@@ -15,28 +15,28 @@
         </div>
       </button>
       <span
-        class="toggler material-icons"
-        @click="open = !open"
+        v-if="hasMoons"
         :class="
           open ? 'toggler toggled material-icons' : 'toggler material-icons'
         "
-        v-if="hasMoons"
+        class="toggler material-icons"
+        @click="open = !open"
       >expand_more</span
       >
     </div>
     <ul
-      :class="open ? 'moon-container open centred' : 'moon-container centred'"
       v-if="hasMoons"
+      :class="open ? 'moon-container open centred' : 'moon-container centred'"
     >
       <li v-for="moon in Object.values(moons)" v-bind="moon">
         <nav-item
-          :name="moon.name"
-          :isStar="false"
-          :isMoon="true"
-          :icon="moon.texture"
-          :distance="moon.semiMajor"
-          @follow="$emit('follow', $event)"
           :ref="(el) => moonButtons.push(el)"
+          :distance="moon.semiMajor"
+          :icon="moon.texture"
+          :isMoon="true"
+          :isStar="false"
+          :name="moon.name"
+          @follow="$emit('follow', $event)"
         />
       </li>
     </ul>

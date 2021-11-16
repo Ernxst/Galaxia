@@ -2,20 +2,20 @@
   <Group ref="body">
     <trois-ring
       ref="upper"
-      :receive-shadow="true"
       :cast-shadow="false"
       :innerRadius="scaledInnerRadius"
       :outerRadius="scaledOuterRadius"
+      :receive-shadow="true"
       :theta-segments="slices"
     >
       <LambertMaterial/>
     </trois-ring>
     <trois-ring
       ref="lower"
-      :receive-shadow="true"
       :cast-shadow="false"
       :innerRadius="scaledInnerRadius"
       :outerRadius="scaledOuterRadius"
+      :receive-shadow="true"
       :theta-segments="slices"
     >
       <LambertMaterial/>

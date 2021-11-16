@@ -1,8 +1,8 @@
 <template>
   <section class="info-hub">
     <celestial-factfile v-if="factfileOpen" :body="activeBody" @close="closeFactfile"/>
-    <section :class="hubClass" v-else>
-      <span class="close-icon material-icons centred" @click="reset" v-if="bodySelected">close</span>
+    <section v-else :class="hubClass">
+      <span v-if="bodySelected" class="close-icon material-icons centred" @click="reset">close</span>
       <span class="subtitle">{{ bodySelected ? type : "Galaxia" }}</span>
       <h3 class="name">{{ bodySelected ? activeBody.name : "Select a Celestial Body" }}</h3>
       <p class="short-description">{{
@@ -37,7 +37,7 @@ export default defineComponent({
   },
   computed: {
     hubClass(): string {
-      const base = "body-overview glass centred "
+      const base = "body-overview glass centred ";
       return base + ((this.bodySelected && !this.factfileOpen) ? "in" : "");
     },
     bodySelected(): boolean {

@@ -1,8 +1,8 @@
 <template>
   <div class="simulation-ui">
     <playback-menu
-      :speed="speed"
       :paused="paused"
+      :speed="speed"
       @toggle-pause="togglePause"
       @speed-down="decreaseSpeed"
       @speed-up="increaseSpeed"
@@ -10,8 +10,8 @@
     <template v-if="starSystem !== null">
       <navbar
         ref="navbar"
-        :stars="[starSystem.star]"
         :planets="starSystem.planets"
+        :stars="[starSystem.star]"
         @follow="$emit('followBody', $event)"
       />
     </template>

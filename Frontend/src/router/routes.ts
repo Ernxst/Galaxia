@@ -1,5 +1,6 @@
 import { RouteLocationNormalized } from "vue-router";
 
+
 export const routes = [
   {
     path: "/",

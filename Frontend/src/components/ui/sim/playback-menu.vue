@@ -6,15 +6,15 @@
     <div class="row centred">
       <circle-button
         :class="speedDownClass"
-        @click="$emit('speedDown')"
         :radius="buttonRadius"
+        @click="$emit('speedDown')"
       >
         <span class="icon centred material-icons">fast_rewind</span>
       </circle-button>
       <circle-button
+        :radius="buttonRadius"
         class="playback-button"
         @click="$emit('togglePause', $event)"
-        :radius="buttonRadius"
       >
       <span class="icon centred material-icons">{{
           paused ? "play_arrow" : "pause"
@@ -22,8 +22,8 @@
       </circle-button>
       <circle-button
         :class="speedUpClass"
-        @click="$emit('speedUp')"
         :radius="buttonRadius"
+        @click="$emit('speedUp')"
       >
         <span class="icon centred material-icons">fast_forward</span>
       </circle-button>

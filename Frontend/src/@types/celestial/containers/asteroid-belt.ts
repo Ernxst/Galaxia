@@ -1,6 +1,7 @@
 import { Asteroid } from "../asteroid";
 import { CelestialBody } from "../base/celestial-body";
 
+
 export interface AsteroidBelt extends Omit<CelestialBody, "axialTilt"> {
   numOfAsteroids: number;
   asteroids?: Asteroid[];

@@ -1,12 +1,12 @@
 <template>
   <TroisSphere
     ref="body"
-    :radius="scale * parentRadius"
-    :width-segments="slices"
-    :height-segments="slices"
-    :rotation="rotation"
     :cast-shadow="false"
+    :height-segments="slices"
+    :radius="scale * parentRadius"
     :receive-shadow="false"
+    :rotation="rotation"
+    :width-segments="slices"
   >
     <PhongMaterial
       :props="{

@@ -1,13 +1,13 @@
 <template>
   <TroisSphere
     ref="body"
-    :radius="radius"
-    :width-segments="slices"
-    :height-segments="slices"
-    :scale="scale"
-    :rotation="rotation"
     :cast-shadow="castShadow"
+    :height-segments="slices"
+    :radius="radius"
     :receive-shadow="receiveShadow"
+    :rotation="rotation"
+    :scale="scale"
+    :width-segments="slices"
   >
     <PhongMaterial
       :props="{
@@ -22,52 +22,53 @@
 </template>
 
 <script lang="ts">
-  import { getTexture } from "@/assets/three/loaders";
-  import { SPHERE_SLICES } from "@/assets/three/three.constants";
-  import { BUMP_SCALE } from "@/assets/util/sim.constants";
-  import { MeshPhongMaterial } from "three/src/materials/MeshPhongMaterial";
-  import { PhongMaterial, Sphere as TroisSphere } from "troisjs";
-  import { defineComponent } from "vue";
-  import BaseObject from "./BaseObject.vue";
+import { getTexture } from "@/assets/three/loaders";
+import { SPHERE_SLICES } from "@/assets/three/three.constants";
+import { BUMP_SCALE } from "@/assets/util/sim.constants";
+import { MeshPhongMaterial } from "three/src/materials/MeshPhongMaterial";
+import { PhongMaterial, Sphere as TroisSphere } from "troisjs";
+import { defineComponent } from "vue";
+import BaseObject from "./BaseObject.vue";
 
-  export const SphereProps = {
-    radius: { type: Number, default: 1 },
-    slices: { type: Number, default: SPHERE_SLICES },
-    texture: { type: String, default: "" },
-    bumpMap: { type: String },
-    specularMap: { type: String },
-    castShadow: { type: Boolean, default: false },
-    receiveShadow: { type: Boolean, default: true },
-    materialProps: Object,
-  };
 
-  export default defineComponent({
-    name: "Sphere",
-    components: { TroisSphere, PhongMaterial },
-    extends: BaseObject,
-    props: SphereProps,
-    emits: ["sphereLoaded"],
-    data() {
-      return {
-        bumpScale: BUMP_SCALE,
-      };
+export const SphereProps = {
+  radius: { type: Number, default: 1 },
+  slices: { type: Number, default: SPHERE_SLICES },
+  texture: { type: String, default: "" },
+  bumpMap: { type: String },
+  specularMap: { type: String },
+  castShadow: { type: Boolean, default: false },
+  receiveShadow: { type: Boolean, default: true },
+  materialProps: Object,
+};
+
+export default defineComponent({
+  name: "Sphere",
+  components: { TroisSphere, PhongMaterial },
+  extends: BaseObject,
+  props: SphereProps,
+  emits: ["sphereLoaded"],
+  data() {
+    return {
+      bumpScale: BUMP_SCALE,
+    };
+  },
+  methods: {
+    async setTextures(material: MeshPhongMaterial) {
+      if (this.texture) material.map = await getTexture(this.texture);
+      if (this.bumpMap) material.bumpMap = await getTexture(this.bumpMap);
+      if (this.specularMap)
+        material.specularMap = await getTexture(this.specularMap);
+      material.needsUpdate = true;
     },
-    methods: {
-      async setTextures(material: MeshPhongMaterial) {
-        if (this.texture) material.map = await getTexture(this.texture);
-        if (this.bumpMap) material.bumpMap = await getTexture(this.bumpMap);
-        if (this.specularMap)
-          material.specularMap = await getTexture(this.specularMap);
-        material.needsUpdate = true;
-      },
-    },
-    mounted() {
-      const material: MeshPhongMaterial = this.mesh().material;
-      this.setTextures(material).then((_) => {
-        this.$emit("sphereLoaded");
-      });
-    },
-  });
+  },
+  mounted() {
+    const material: MeshPhongMaterial = this.mesh().material;
+    this.setTextures(material).then((_) => {
+      this.$emit("sphereLoaded");
+    });
+  },
+});
 </script>
 
 <style scoped></style>

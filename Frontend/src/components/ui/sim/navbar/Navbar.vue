@@ -2,25 +2,25 @@
   <nav class="navbar centred noselect" role="navigation">
     <div class="nav-buttons centred">
       <ul class="stars">
-        <li class="star centred" v-for="star in stars" v-bind="star">
+        <li v-for="star in stars" v-bind="star" class="star centred">
           <nav-item
-            :name="star.name"
-            :isStar="true"
-            :icon="star.texture"
             :ref="(el) => (buttons[star.name] = el)"
+            :icon="star.texture"
+            :isStar="true"
+            :name="star.name"
             @follow="followPlanet"
           />
         </li>
       </ul>
       <ul class="planets">
-        <li class="planet centred" v-for="planet in planets" v-bind="planet">
+        <li v-for="planet in planets" v-bind="planet" class="planet centred">
           <nav-item
-            :name="planet.name"
-            :isStar="false"
-            :icon="planet.texture"
-            :moons="planet.moons"
-            :distance="planet.semiMajor"
             :ref="(el) => (buttons[planet.name] = el)"
+            :distance="planet.semiMajor"
+            :icon="planet.texture"
+            :isStar="false"
+            :moons="planet.moons"
+            :name="planet.name"
             @follow="followPlanet"
           />
         </li>

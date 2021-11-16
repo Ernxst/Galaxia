@@ -1,6 +1,7 @@
 import { Asteroid } from "@/@types/celestial/asteroid";
 import { Vector3 } from "three";
 
+
 export function randomNumber(min: number, max: number): number {
   return Math.random() * (max - min) + min;
 }

@@ -3,8 +3,8 @@
     <table>
       <tbody>
       <tr v-for="[field, value] in Object.entries($props)" :set="show = shouldShow(field, value)">
-        <td class="field" v-if="show">{{ toSentenceCase(field) }}</td>
-        <td class="value" v-if="show">
+        <td v-if="show" class="field">{{ toSentenceCase(field) }}</td>
+        <td v-if="show" class="value">
           <strong>{{ formatValue(field, value) }}<sup v-if="hasSuperscript(field)">{{
               getSuperscript(value)
             }}</sup>{{ unit(field) }}</strong>

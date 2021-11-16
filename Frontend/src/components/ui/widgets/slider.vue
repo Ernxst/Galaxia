@@ -1,25 +1,25 @@
 <template>
-  <div class="slider-container noselect centred" :orient="orient">
+  <div :orient="orient" class="slider-container noselect centred">
     <p class="slider-label">{{ label }}</p>
     <div class="slider-inner centred">
-      <span class="min value centred" v-if="show_limits">{{ minValue }}</span>
+      <span v-if="show_limits" class="min value centred">{{ minValue }}</span>
       <div class="slider centred">
         <input
-          type="range"
-          :min="minValue"
-          :max="maxValue"
-          class="slider"
           :id="id"
           ref="slider"
+          :max="maxValue"
+          :min="minValue"
           :step="step"
+          class="slider"
+          type="range"
           value.number="modelValue"
           @input="update"
         />
-        <label :for="id" class="current-value noselect centred" ref="sliderLabel">
+        <label ref="sliderLabel" :for="id" class="current-value noselect centred">
           {{ modelValue }}
         </label>
       </div>
-      <span class="max value centred" v-if="show_limits">{{ maxValue }}</span>
+      <span v-if="show_limits" class="max value centred">{{ maxValue }}</span>
     </div>
   </div>
 </template>
@@ -52,7 +52,7 @@ export default defineComponent({
 
     watch(reactiveProps.modelValue, () => {
       if (slider.value.value !== props.modelValue)
-        slider.value.value = props.modelValue
+        slider.value.value = props.modelValue;
     });
 
     const slider = ref<HTMLInputElement>();

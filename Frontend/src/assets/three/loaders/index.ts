@@ -3,6 +3,7 @@ import { sRGBEncoding } from "three/src/constants";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { Texture } from "three/src/textures/Texture";
 
+
 const loader = new TextureLoader();
 const textures: { [key: string]: Texture } = {};
 

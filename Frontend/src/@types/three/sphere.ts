@@ -1,5 +1,6 @@
 import { BaseObject } from "./base-object";
 
+
 export interface Sphere extends BaseObject {
   radius: number;
   slices?: number;

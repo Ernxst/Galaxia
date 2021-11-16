@@ -1,14 +1,14 @@
 <template>
   <div class="zoom-slider-container centred">
-    <slider label="Zoom"
-            id="zoom-slider"
-            :min="minZoom"
-            :max="maxZoom"
-            :model-value="zoom"
-            orient="vertical"
-            @update:model-value="onUpdate"
+    <slider id="zoom-slider"
             ref="slider"
+            :max="maxZoom"
+            :min="minZoom"
+            :model-value="zoom"
+            label="Zoom"
+            orient="vertical"
             v-bind:disabled="disabled"
+            @update:model-value="onUpdate"
     />
   </div>
 </template>
