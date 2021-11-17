@@ -265,4 +265,11 @@ button:hover .content > * {
     overflow-y: visible;
   }
 }
+
+@media (max-height: 480px) and (min-width: 480px) and (orientation: landscape) {
+  .content h3 {
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+}
 </style>

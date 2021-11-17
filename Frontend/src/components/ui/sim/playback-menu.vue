@@ -68,7 +68,10 @@ export default defineComponent({
   top: 16px;
   left: 0;
   right: 0;
+  width: fit-content;
+  margin: auto;
   flex-direction: column;
+  z-index: 4;
 }
 
 .playback-container .sim-speed {
@@ -119,6 +122,13 @@ export default defineComponent({
   .playback-container .sim-speed {
     margin-top: 6px;
     margin-bottom: 0;
+    letter-spacing: 1px;
+  }
+}
+
+@media (max-height: 480px) and (min-width: 480px) and (orientation: landscape) {
+  .playback-container .sim-speed {
+    letter-spacing: 1px;
   }
 }
 </style>

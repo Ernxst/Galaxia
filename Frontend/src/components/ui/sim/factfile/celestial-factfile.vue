@@ -137,49 +137,51 @@ header p {
   text-indent: 48px;
 }
 
-@media (min-width: 480px) {
-  .factfile-container {
-    --factfile-width: 75vw;
-    --margin: 32px;
+@media (min-height: 480px) and (orientation: landscape) {
+  @media (min-width: 480px) {
+    .factfile-container {
+      --factfile-width: 75vw;
+      --margin: 32px;
+    }
+
+    .factfile-container::after {
+      display: block;
+    }
+
+    .factfile {
+      overflow-y: hidden;
+    }
+
+    .content {
+      overflow-y: auto;
+      max-height: 100vh;
+    }
+
+    .close-icon {
+      right: -16px;
+      position: absolute;
+    }
   }
 
-  .factfile-container::after {
-    display: block;
+  @media (min-width: 640px) {
+    .factfile-container {
+      --factfile-width: 66.7vw;
+      --margin: 64px;
+    }
   }
 
-  .factfile {
-    overflow-y: hidden;
+  @media (min-width: 768px) {
+    .factfile-container {
+      --factfile-width: 50vw;
+      --margin: 96px;
+    }
   }
 
-  .content {
-    overflow-y: auto;
-    max-height: 100vh;
-  }
-
-  .close-icon {
-    right: -16px;
-    position: absolute;
-  }
-}
-
-@media (min-width: 640px) {
-  .factfile-container {
-    --factfile-width: 66.7vw;
-    --margin: 64px;
-  }
-}
-
-@media (min-width: 768px) {
-  .factfile-container {
-    --factfile-width: 50vw;
-    --margin: 96px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .factfile-container {
-    --factfile-width: 35vw;
-    --margin: 128px;
+  @media (min-width: 1024px) {
+    .factfile-container {
+      --factfile-width: 35vw;
+      --margin: 128px;
+    }
   }
 }
 </style>

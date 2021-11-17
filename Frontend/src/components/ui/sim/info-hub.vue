@@ -145,4 +145,33 @@ export default defineComponent({
     border-radius: 0;
   }
 }
+
+@media (max-height: 480px) and (min-width: 480px) and (orientation: landscape) {
+  .body-overview {
+    bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
+    padding: 6px 6px 10px;
+    width: 33vw;
+  }
+
+  .subtitle {
+    margin-top: 4px;
+  }
+
+  .name {
+    margin-bottom: 8px;
+    font-size: 17px;
+    letter-spacing: 2px;
+  }
+
+  .short-description {
+    display: none;
+  }
+
+  .close-icon {
+    padding: 2px;
+  }
+}
 </style>

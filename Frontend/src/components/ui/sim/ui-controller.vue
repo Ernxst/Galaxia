@@ -168,14 +168,9 @@ export default defineComponent({
 
 .mobile-menu {
   border-radius: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
 }
 
-@media (min-width: 481px) {
+@media (min-width: 480px) {
   .mobile-menu {
     background: none;
     border: none;
@@ -189,18 +184,14 @@ export default defineComponent({
 }
 
 @media (max-width: 480px) {
-  .simulation-ui {
+  .mobile-menu {
+    max-height: 75vh;
+    overflow-y: scroll;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-  }
-
-  .mobile-menu {
-    max-height: 75vh;
-    overflow-y: scroll;
-    position: relative;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;

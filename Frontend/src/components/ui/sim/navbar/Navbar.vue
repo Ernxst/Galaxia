@@ -136,4 +136,10 @@ li {
     justify-content: flex-start;
   }
 }
+
+@media (max-height: 480px) and (min-width: 480px) and (orientation: landscape)  {
+  .navbar {
+    left: 0;
+  }
+}
 </style>

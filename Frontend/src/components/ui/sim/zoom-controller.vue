@@ -71,8 +71,10 @@ export default defineComponent({
 <style scoped>
 .zoom-slider-container {
   position: fixed;
-  right: 16px;
+  right: 0;
   top: 40%;
+  height: fit-content;
+  margin: auto;
 }
 
 @media (max-width: 480px) {
@@ -80,4 +82,12 @@ export default defineComponent({
     display: none;
   }
 }
+
+@media (max-height: 480px) and (min-width: 480px) and (orientation: landscape) {
+  .zoom-slider-container {
+    top: 0;
+    bottom: 25%;
+  }
+}
+
 </style>
