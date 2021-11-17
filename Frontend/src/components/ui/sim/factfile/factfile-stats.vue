@@ -43,16 +43,17 @@ export default defineComponent({
       const result = text.replace(/([A-Z])/g, " $1");
       return result.charAt(0).toUpperCase() + result.slice(1);
     },
-    formatValue(field: string, value: number): number {
+    formatValue(field: string, value: number): number | string {
       switch (field) {
         case "dayLength":
-          return value / 3600; // Convert into Earth hours
+          return Number(value / 3600).toPrecision(3); // Convert into Earth hours
         case "mass":
         case "luminosity":
           const str = value.toExponential().toString();
           const index = str.toLowerCase().indexOf("e");
           return str.slice(0, index) + " × 10";
       }
+      if (value > 1_000_00) return Number(value).toPrecision(3);
       return value;
     },
     hasSuperscript(field: string): boolean {
@@ -97,7 +98,7 @@ export default defineComponent({
 }
 
 .field, .value {
-  font-size: 10px;
+  font-size: 9px;
   vertical-align: top;
 }
 
@@ -105,5 +106,11 @@ export default defineComponent({
   font-weight: 900;
   text-align: right;
   color: var(--main);
+}
+
+@media (min-width: 480px) {
+  .field, .value {
+    font-size: 10px;
+  }
 }
 </style>

@@ -117,4 +117,32 @@ export default defineComponent({
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 16px;
 }
+
+@media (max-width: 480px) {
+  .info-hub {
+    position: relative;
+    width: 100%;
+  }
+
+  .body-overview {
+    width: 100%;
+    border-radius: 0;
+    position: relative;
+    bottom: unset;
+    background: none;
+    border: none;
+    backdrop-filter: none;
+    background-clip: unset;
+    margin: unset;
+  }
+
+  .name {
+    font-size: 28px;
+  }
+
+  .close-icon {
+    right: 16px;
+    border-radius: 0;
+  }
+}
 </style>

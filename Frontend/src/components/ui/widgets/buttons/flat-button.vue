@@ -69,4 +69,10 @@ button span {
   pointer-events: none;
   filter: brightness(33%);
 }
+
+@media (max-width: 480px) {
+  button span {
+    font-size: 12px;
+  }
+}
 </style>

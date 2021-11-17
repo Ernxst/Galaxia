@@ -1,22 +1,17 @@
 <template>
   <div class="simulation-ui">
-    <playback-menu
-      :paused="paused"
-      :speed="speed"
-      @toggle-pause="togglePause"
-      @speed-down="decreaseSpeed"
-      @speed-up="increaseSpeed"
-    />
-    <template v-if="starSystem !== null">
-      <navbar
-        ref="navbar"
-        :planets="starSystem.planets"
-        :stars="[starSystem.star]"
-        @follow="$emit('followBody', $event)"
-      />
-    </template>
-    <zoom-controller ref="zoomer" @adjust-zoom="$emit('zoomUpdate', $event)"/>
-    <info-hub ref="hub" @reset="$emit('reset')"/>
+    <playback-menu :paused="paused" :speed="speed" @toggle-pause="togglePause"
+                   @speed-down="decreaseSpeed" @speed-up="increaseSpeed"/>
+    <span class="toggler close-icon material-icons centred" :open="menuOpen"
+          @click="menuOpen = !menuOpen">{{ menuOpen ? "close" : "menu" }}</span>
+    <section class="mobile-menu glass centred" :open="menuOpen">
+      <template v-if="starSystem !== null">
+        <navbar ref="navbar" :planets="starSystem.planets"
+                :stars="[starSystem.star]" @follow="$emit('followBody', $event)"/>
+      </template>
+      <zoom-controller ref="zoomer" @adjust-zoom="$emit('zoomUpdate', $event)"/>
+      <info-hub ref="hub" @reset="$emit('reset')"/>
+    </section>
   </div>
 </template>
 
@@ -42,7 +37,8 @@ export default defineComponent({
       speed: BASE_SPEED,
       paused: false,
       animating: false,
-      lastPausedBy: undefined as "animation" | "keyboard" | "mouse" | undefined
+      lastPausedBy: undefined as "animation" | "keyboard" | "mouse" | undefined,
+      menuOpen: false,
     };
   },
   methods: {
@@ -159,5 +155,72 @@ export default defineComponent({
   animation-fill-mode: forwards;
   opacity: 0;
   animation-delay: 1.33s;
+}
+
+.toggler {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 5;
+  border-radius: 0;
+  background: var(--green);
+}
+
+.mobile-menu {
+  border-radius: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@media (min-width: 481px) {
+  .mobile-menu {
+    background: none;
+    border: none;
+    backdrop-filter: none;
+    background-clip: unset;
+  }
+
+  .toggler {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .simulation-ui {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .mobile-menu {
+    max-height: 75vh;
+    overflow-y: scroll;
+    position: relative;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    transition-property: transform, padding-top;
+    transition-duration: .67s;
+    transition-timing-function: ease;
+  }
+
+  .mobile-menu[open=true] {
+    transform: translateY(0);
+    padding-top: 48px;
+  }
+
+  .mobile-menu[open=false] {
+    transform: translateY(-100%);
+    padding-top: 0;
+  }
+
+  .toggler[open=true] {
+    background: var(--red);
+  }
 }
 </style>

@@ -1,17 +1,21 @@
 <template>
-  <div :class="`factfile-container ${closing ? 'out': ''}`">
-    <article class="celestial-factfile glass centred">
-      <span class="close-icon material-icons centred" @click="closeFactfile">close</span>
-      <header class="header">
-        <h2>{{ body.name }}</h2>
-        <p>{{ body.caption }}</p>
-      </header>
-      <factfile-stats v-bind="body"/>
-      <section class="content">
-        <p>{{ body.description }}</p>
-      </section>
-    </article>
-  </div>
+  <teleport to="body">
+    <div :class="`factfile-container ${closing ? 'out': ''}`">
+      <article class="celestial-factfile glass centred">
+        <section class="factfile centred">
+          <header class="header">
+            <h2>{{ body.name }}</h2>
+            <p>{{ body.caption }}</p>
+          </header>
+          <factfile-stats v-bind="body"/>
+          <section class="content">
+            <p>{{ body.description }}</p>
+          </section>
+        </section>
+        <span class="close-icon material-icons centred" @click="closeFactfile">close</span>
+      </article>
+    </div>
+  </teleport>
 </template>
 
 <script lang="ts">
@@ -48,13 +52,16 @@ export default defineComponent({
 
 <style scoped>
 .factfile-container {
+  --factfile-width: 100vw;
+  --margin: 0;
   position: fixed;
   z-index: 3;
-  left: 128px;
+  left: var(--margin);
   animation-duration: 1s;
   animation-name: slideDown;
   animation-fill-mode: forwards;
   height: 100vh;
+  flex-direction: column;
 }
 
 .factfile-container.out {
@@ -63,31 +70,41 @@ export default defineComponent({
 
 .factfile-container::after {
   position: absolute;
-  left: -128px;
+  left: calc(var(--margin) * -1);
   top: 0;
   bottom: 0;
   z-index: 3;
   background: black;
   opacity: .33;
   content: "";
-  width: calc(128px + 33vw);
+  width: calc(var(--margin) + var(--factfile-width));
+  display: none;
 }
 
 .celestial-factfile {
   position: relative;
   flex-direction: column;
-  padding: 18px 36px;
   height: 100%;
   justify-content: flex-start;
   border-radius: 0;
-  width: 33vw;
+  width: var(--factfile-width);
   z-index: 4;
 }
 
+.factfile {
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  padding: 18px 36px;
+}
+
 .close-icon {
-  position: absolute;
+  position: fixed;
   top: 16px;
-  right: -16px;
+  right: 16px;
+  z-index: 5;
 }
 
 header {
@@ -97,7 +114,7 @@ header {
 
 header h2 {
   letter-spacing: 11px;
-  font-size: 2vw;
+  font-size: 30px;
   position: relative;
 }
 
@@ -109,8 +126,6 @@ header p {
 
 .content {
   margin-top: 10px;
-  max-height: 100vh;
-  overflow-y: auto;
 }
 
 .content p {
@@ -120,5 +135,51 @@ header p {
   white-space: pre-line;
   text-align: justify;
   text-indent: 48px;
+}
+
+@media (min-width: 480px) {
+  .factfile-container {
+    --factfile-width: 75vw;
+    --margin: 32px;
+  }
+
+  .factfile-container::after {
+    display: block;
+  }
+
+  .factfile {
+    overflow-y: hidden;
+  }
+
+  .content {
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+
+  .close-icon {
+    right: -16px;
+    position: absolute;
+  }
+}
+
+@media (min-width: 640px) {
+  .factfile-container {
+    --factfile-width: 66.7vw;
+    --margin: 64px;
+  }
+}
+
+@media (min-width: 768px) {
+  .factfile-container {
+    --factfile-width: 50vw;
+    --margin: 96px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .factfile-container {
+    --factfile-width: 35vw;
+    --margin: 128px;
+  }
 }
 </style>

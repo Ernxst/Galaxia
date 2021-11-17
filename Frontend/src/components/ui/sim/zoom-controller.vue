@@ -74,4 +74,10 @@ export default defineComponent({
   right: 16px;
   top: 40%;
 }
+
+@media (max-width: 480px) {
+  .zoom-slider-container {
+    display: none;
+  }
+}
 </style>

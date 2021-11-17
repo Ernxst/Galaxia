@@ -14,13 +14,10 @@
           <p>{{ isStar ? "star" : `${Math.round(distance * 1000) / 1000} AU` }}</p>
         </div>
       </button>
-      <span
-        v-if="hasMoons"
-        :class="
-          open ? 'toggler toggled material-icons' : 'toggler material-icons'
-        "
-        class="toggler material-icons"
-        @click="open = !open"
+      <span v-if="hasMoons"
+            :class="open ? 'toggler toggled material-icons' : 'toggler material-icons'"
+            class="toggler material-icons"
+            @click="open = !open"
       >expand_more</span
       >
     </div>
@@ -225,5 +222,47 @@ button:hover .content > * {
 
 .moon-container.open {
   max-height: 100vh;
+}
+
+@media (max-width: 480px) {
+  .button-container {
+    flex-direction: column;
+  }
+
+  button {
+    flex-direction: column;
+    padding: 12px 6px;
+  }
+
+  .active .content h3 {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .content h3 {
+    -webkit-text-stroke: unset;
+  }
+
+  .content {
+    margin-left: 0;
+    margin-top: 16px;
+  }
+
+  .toggler {
+    margin-left: 0;
+    margin-top: 0;
+  }
+
+  .content p {
+    text-align: center;
+    width: 100%;
+  }
+
+  .moon-container {
+    flex-direction: row;
+    margin-left: 0;
+    overflow-x: scroll;
+    overflow-y: visible;
+  }
 }
 </style>

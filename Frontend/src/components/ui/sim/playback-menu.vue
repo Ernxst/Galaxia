@@ -108,4 +108,17 @@ export default defineComponent({
 .playback-container .playback-button.disabled .circle-button {
   background: rgba(255, 255, 255, 0.75);
 }
+
+@media (max-width: 480px) {
+  .playback-container {
+    bottom: 16px;
+    top: unset;
+    flex-direction: column-reverse;
+  }
+
+  .playback-container .sim-speed {
+    margin-top: 6px;
+    margin-bottom: 0;
+  }
+}
 </style>

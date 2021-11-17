@@ -113,7 +113,7 @@ select {
 }
 
 .noselect,
-a {
+a, .material-icons {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -198,11 +198,12 @@ ul {
   cursor: pointer;
   background: var(--main);
   border-radius: 50%;
-  transition: 0.25s ease-in-out all;
+  transition-timing-function: ease-in-out;
+  transition-property: color, filter;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.33);
 }
 
 .close-icon:hover {
   color: var(--page-bg);
-  background: var(--main);
+  filter: brightness(1.25);
 }

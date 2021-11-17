@@ -45,6 +45,7 @@ export default defineComponent({
         setupCanvas();
         model = await handTrack.load({
           flipHorizontal: true,
+          imageScaleFactor: 0.7,
           scoreThreshold: 0.7,
         });
         const { status, msg } = await handTrack.startVideo(webcam.value);

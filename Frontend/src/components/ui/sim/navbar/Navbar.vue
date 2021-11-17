@@ -51,9 +51,9 @@ export default defineComponent({
       buttons: {} as { [key: string]: typeof NavItem },
     };
   },
-  beforeUpdate() {
-    this.buttons = {};
-  },
+  // beforeUpdate() {
+  //   this.buttons = {};
+  // },
   methods: {
     followPlanet(event) {
       this.toggle(event.name);
@@ -84,7 +84,6 @@ export default defineComponent({
 
 .nav-buttons {
   overflow-y: auto;
-  overflow-x: visible;
   justify-content: flex-start;
   margin-top: 36px;
   margin-bottom: 36px;
@@ -99,5 +98,42 @@ ul {
 
 li {
   justify-content: flex-start;
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    top: unset;
+    left: unset;
+    bottom: unset;
+    height: unset;
+  }
+
+  .nav-buttons {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 16px;
+  }
+
+  .nav-buttons, ul {
+    display: flex;
+    flex-direction: row;
+    overflow-y: visible;
+  }
+
+  .stars {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .planets {
+    overflow-x: scroll;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
 }
 </style>
