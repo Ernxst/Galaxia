@@ -45,7 +45,6 @@ export default defineComponent({
     },
   },
   methods: {
-    // TODO: offset camera while factfile open
     openFactfile() {
       this.factfileOpen = true;
       this.$emit("openFactfile");

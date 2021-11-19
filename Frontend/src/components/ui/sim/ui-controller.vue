@@ -10,7 +10,8 @@
                 :stars="[starSystem.star]" @follow="$emit('followBody', $event)"/>
       </template>
       <zoom-controller ref="zoomer" @adjust-zoom="$emit('zoomUpdate', $event)"/>
-      <info-hub ref="hub" @reset="$emit('reset')"/>
+      <info-hub ref="hub" @reset="$emit('reset')" @open-factfile="$emit('openFactfile')"
+                @close-factfile="$emit('closeFactfile')"/>
     </section>
   </div>
 </template>
@@ -30,7 +31,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "UiController",
   components: { Navbar, InfoHub, ZoomController, PlaybackMenu },
-  emits: ["zoomUpdate", "followBody", "reset"],
+  emits: ["zoomUpdate", "followBody", "reset", "openFactfile", "closeFactfile"],
   data() {
     return {
       starSystem: null as StarSystem,

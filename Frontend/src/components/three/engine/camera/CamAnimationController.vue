@@ -2,6 +2,7 @@
 
 <script lang="ts">
 // TODO: Camera reset animation is weird
+// TODO: Does this need to be a subcomponent or can the camera controller extend it?
 import { animateCamera, calcDuration } from "@/assets/gsap";
 import { isAnimating } from "@/assets/gsap/camera.animate";
 import { computeCentreAndSize } from "@/assets/three";
@@ -31,10 +32,34 @@ export default defineComponent({
   data() {
     return {
       target: null as typeof CelestialBody,
-      centre: new Vector3()
+      centre: new Vector3(),
+      factfileOpen: false,
     };
   },
   methods: {
+    openFactfile() {
+      const mesh: Mesh = this.target.mesh();
+      const { centre, size } = computeCentreAndSize(mesh);
+      centre.x -= size.length() / 4;
+      this.moveCamera({
+        object: { position: centre },
+        offset: new Vector3(0, 0, size.length()),
+        onComplete: () => {
+          this.factfileOpen = true;
+        },
+      });
+    },
+    closeFactfile() {
+      const mesh: Mesh = this.target.mesh();
+      const { centre, size } = computeCentreAndSize(mesh);
+      this.moveCamera({
+        object: { position: centre },
+        offset: new Vector3(0, 0, size.length()),
+        onComplete: () => {
+          this.factfileOpen = false;
+        },
+      });
+    },
     moveCamera({ object, offset, onStart, onComplete }: MoveCameraParams) {
       const duration = calcDuration(
         this.orbitControls.target,
@@ -97,16 +122,20 @@ export default defineComponent({
     render(paused: boolean, speed: number) {
       if (isAnimating()) return;
 
-      const cam: PerspectiveCamera = this.$parent.camera;
+      const camera: PerspectiveCamera = this.$parent.camera;
       const controls: OrbitControls = this.orbitControls;
       if (this.target !== null) {
         if (!paused) {
           controls.enablePan = false;
+          setZoom(camera, BASE_ZOOM);
           const mesh: Mesh = this.target.mesh();
           const { centre, size } = computeCentreAndSize(mesh);
-          controls.target = centre;
           controls.minDistance = size.length();
-          setZoom(cam, BASE_ZOOM);
+          if (this.factfileOpen) centre.setX(centre.x - controls.minDistance / 4);
+          controls.target = centre;
+          // TODO: Camera needs to follow object and still allow rotation
+          camera.position.x = centre.x;
+          camera.position.y = centre.y;
         }
       }
     },

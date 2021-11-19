@@ -42,6 +42,12 @@ export default defineComponent({
     };
   },
   methods: {
+    openFactfile() {
+      this.$refs.animator.openFactfile();
+    },
+    closeFactfile() {
+      this.$refs.animator.closeFactfile();
+    },
     startAnimation() {
       this.$emit("animStart");
     },
@@ -89,13 +95,6 @@ export default defineComponent({
     },
     reset() {
       this.$refs.animator.reset();
-    },
-    update(aspect: number) {
-      // TODO: Fix camera looking at when resizing window to be larger
-      const camera: PerspectiveCamera = this.$refs.camera.camera;
-      camera.aspect = aspect;
-      camera.updateProjectionMatrix();
-      camera.lookAt(this.orbitControls.target);
     },
     animate(paused: boolean, speed: number) {
       this.orbitControls.update();

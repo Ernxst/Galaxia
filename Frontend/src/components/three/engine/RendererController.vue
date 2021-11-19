@@ -1,31 +1,21 @@
 <template>
-  <Renderer
-    ref="renderer"
-    :alpha="true"
-    :antialias="false"
-    :orbit-ctrl="true"
-    :resize="true"
-    shadow
-  >
-    <main-controller
-      ref="controller"
-      :aspect="aspect"
-      :orbit-controls="orbitControls"
-      @loaded="onLoad"
-    />
+  <Renderer ref="renderer" :alpha="true" :antialias="false"
+            :orbit-ctrl="true" :resize="true" shadow>
+    <main-controller ref="controller" :aspect="aspect"
+                     :orbit-controls="orbitControls" @loaded="onLoad"/>
   </Renderer>
 </template>
 
 <script lang="ts">
 // TODO: Use FPS controls instead of OrbitControls - swap between FPS & OrbitControls dynamically
 import { TONE_MAPPING_EXPOSURE } from "@/assets/three/three.constants";
-
 import MainController from "@/components/three/engine/MainController.vue";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
 import { PCFSoftShadowMap, ReinhardToneMapping, sRGBEncoding, } from "three/src/constants";
 import { WebGLRenderer } from "three/src/renderers/WebGLRenderer";
 import { Renderer } from "troisjs";
-import { computed, defineComponent, getCurrentInstance, onMounted, ref, } from "vue";
+import { defineComponent, getCurrentInstance, onMounted, ref, } from "vue";
 import { setComposerSize, setupPostprocessing, } from "./postprocessing/postprocessing";
 
 
@@ -35,10 +25,6 @@ export default defineComponent({
   setup() {
     const width = ref<number>(1);
     const height = ref<number>(1);
-    const aspect = computed(() => {
-      return width.value / height.value;
-    });
-
     const renderer = ref<typeof Renderer>(null);
     const orbitControls = ref<OrbitControls>(null);
     const controller = ref<typeof MainController>(null);
@@ -67,22 +53,25 @@ export default defineComponent({
       });
     }
 
+    const { proxy } = getCurrentInstance();
+
     onMounted(() => {
-      const dom: HTMLElement = renderer.value.renderer.domElement;
-      window.addEventListener("resize", (_) => {
-        width.value = dom.clientWidth;
-        height.value = dom.clientHeight;
-        controller.value.resize(width.value, height.value);
-        renderer.value.renderer.setSize(width.value, height.value);
+      window.addEventListener("resize", () => {
+        const parentElement: HTMLElement = proxy.$el.parentNode;
+        width.value = parentElement.clientWidth;
+        height.value = parentElement.clientHeight;
+        console.log(parentElement)
+        console.log(width.value, height.value);
+        const camera: PerspectiveCamera = renderer.value.camera;
+        camera.aspect = width.value / height.value;
+        camera.updateProjectionMatrix();
+        const glRenderer: WebGLRenderer = renderer.value.renderer;
+        glRenderer.setSize(width.value, height.value);
         setComposerSize(width.value, height.value);
       });
+
       orbitControls.value = renderer.value.three.cameraCtrl;
       orbitControls.value.listenToKeyEvents(window);
-
-      const parentElement: HTMLElement =
-        getCurrentInstance().proxy.$el.parentNode;
-      width.value = parentElement.clientWidth;
-      height.value = parentElement.clientHeight;
 
       const glRenderer: WebGLRenderer = renderer.value.renderer;
       glRenderer.capabilities.logarithmicDepthBuffer = true;
@@ -95,7 +84,7 @@ export default defineComponent({
     });
 
     return {
-      aspect,
+      aspect: width / height,
       renderer,
       controller,
       orbitControls,

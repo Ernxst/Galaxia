@@ -4,7 +4,8 @@
                      @anim-start="startAnimation" @anim-done="stopAnimation" @adjust-zoom="zoomCamera"/>
   <scene-controller ref="scene" @focus="focusPlanet" @loaded="onLoad"/>
   <template v-if="loaded">
-    <ui-controller ref="gui" @reset="reset" @zoom-update="zoomCamera" @follow-body="followBody"/>
+    <ui-controller ref="gui" @reset="reset" @zoom-update="zoomCamera" @follow-body="followBody"
+                   @open-factfile="openFactfile" @close-factfile="closeFactfile"/>
   </template>
 </template>
 
@@ -45,10 +46,6 @@ export default defineComponent({
       emit("loaded");
     }
 
-    function resize(width: number, height: number) {
-      camera.value.update(width / height);
-    }
-
     function focusPlanet(event: MeshMouseEvent) {
       if (gui.value.animating) return;
       gui.value.disableZoom();
@@ -84,6 +81,14 @@ export default defineComponent({
       gui.value.unpause();
     }
 
+    function openFactfile() {
+      camera.value.openFactfile();
+    }
+
+    function closeFactfile() {
+      camera.value.closeFactfile();
+    }
+
     function reset() {
       camera.value.reset();
       scene.value.reset();
@@ -102,6 +107,8 @@ export default defineComponent({
       camera,
       gui,
       loaded,
+      openFactfile,
+      closeFactfile,
       startAnimation,
       stopAnimation,
       render,
@@ -109,7 +116,6 @@ export default defineComponent({
       focusPlanet,
       followBody,
       onLoad,
-      resize,
       reset,
       pause,
       play,
