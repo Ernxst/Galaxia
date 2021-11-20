@@ -5,6 +5,7 @@
 // TODO: Does this need to be a subcomponent or can the camera controller extend it?
 import { animateCamera, calcDuration } from "@/assets/gsap";
 import { isAnimating } from "@/assets/gsap/camera.animate";
+import { tourUniverse } from "@/assets/gsap/universe-tour.animate";
 import { computeCentreAndSize } from "@/assets/three";
 import { setZoom } from "@/assets/three/camera";
 import { BASE_ZOOM } from "@/assets/three/camera/camera.constants";
@@ -37,6 +38,18 @@ export default defineComponent({
     };
   },
   methods: {
+    universeTour(models: Array<typeof CelestialBody>) {
+      setTimeout(() => {
+        this.$emit("animStart");
+        this.orbitControls.minDistance = 0;
+        tourUniverse(models, this.$parent.camera, this.orbitControls).then(() => {
+          this.$emit("animDone");
+          setTimeout(() => {
+            this.reset();
+          }, 1500);
+        });
+      }, 2000);
+    },
     openFactfile() {
       const mesh: Mesh = this.target.mesh();
       const { centre, size } = computeCentreAndSize(mesh);
@@ -91,7 +104,7 @@ export default defineComponent({
       const mesh: Mesh = body.mesh();
       const { centre, size } = computeCentreAndSize(mesh);
       this.moveCamera({
-        object: { position: centre },
+        object: { position: centre, quaternion: mesh.quaternion },
         offset: new Vector3(0, 0, size.length()),
         onComplete: () => {
           this.target = body;

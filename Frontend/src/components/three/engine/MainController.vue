@@ -38,7 +38,7 @@ export default defineComponent({
     function onLoad(sceneData) {
       const width = sceneData.furthestObjectDistance * 2.0;
       const height = sceneData.largestObjectSize * 1.5;
-      camera.value.setupCamera(new Vector3(width, height, width));
+      camera.value.setupCamera(new Vector3(width, height, width), sceneData.models);
       loaded.value = true;
       nextTick(() => {
         gui.value.setStarSystem(scene.value.currentSystem);

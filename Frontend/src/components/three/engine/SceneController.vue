@@ -1,17 +1,21 @@
 <template>
   <Scene ref="scene">
-    <loader
-      v-if="!assetsLoaded"
-      :assets-to-load="assetsToLoad"
-      @assets-loaded="assetsLoaded = true"
-    />
-    <Galaxy
-      ref="galaxy"
-      :star-system="currentSystemName"
-      name="Milky Way"
-      @scene-loaded="onLoad"
-      @focus-on-body="$emit('focus', $event)"
-    />
+    <template v-if="dataLoaded">
+      <loader
+        v-if="!assetsLoaded"
+        :assets-to-load="assetsToLoad"
+        @assets-loaded="assetsLoaded = true"
+      />
+      <template>
+        <Galaxy
+          ref="galaxy"
+          :star-system="currentSystemName"
+          name="Milky Way"
+          @scene-loaded="onLoad"
+          @focus-on-body="$emit('focus', $event)"
+        />
+      </template>
+    </template>
   </Scene>
 </template>
 
@@ -22,7 +26,7 @@ import { SCENE_SCALE } from "@/assets/util/sim.constants";
 import { useStore } from "@/store/store";
 import { Scene as ThreeScene } from "three/src/scenes/Scene";
 import { Scene } from "troisjs";
-import { defineComponent, getCurrentInstance, ref } from "vue";
+import { defineComponent, getCurrentInstance, onMounted, ref } from "vue";
 import Galaxy from "../celestial/containers/galaxy.vue";
 import Loader from "./loader.vue";
 
@@ -32,16 +36,23 @@ export default defineComponent({
   components: { Scene, Loader, Galaxy },
   emits: ["loaded", "focus"],
   created() {
-    this.$store.dispatch("starSystem/fetchAllStarSystems");
   },
   setup() {
     const currentSystemName = ref<string>("Solar System");
-    const store = useStore();
-    const currentSystem: StarSystem = store.getters["starSystem/starSystem"](
-      currentSystemName.value
-    );
+    const currentSystem = ref<StarSystem>({});
+    const dataLoaded = ref<boolean>(false);
+    const assetsToLoad = ref<number>(0);
 
-    const assetsToLoad = getAssetsInSystem(currentSystem);
+    onMounted(async () => {
+      const store = useStore();
+      await store.dispatch("starSystem/fetchAllStarSystems");
+      currentSystem.value = store.getters["starSystem/starSystem"](
+        currentSystemName.value
+      );
+      assetsToLoad.value = getAssetsInSystem(currentSystem.value);
+      dataLoaded.value = true;
+    });
+
     const assetsLoaded = ref(false);
     const scene = ref<typeof Scene>(null);
     const galaxy = ref<typeof Galaxy>(null);
@@ -70,6 +81,7 @@ export default defineComponent({
       onLoad,
       findComponent,
       reset,
+      dataLoaded,
       assetsToLoad,
       assetsLoaded,
       galaxy,

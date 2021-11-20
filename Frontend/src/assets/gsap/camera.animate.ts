@@ -12,6 +12,7 @@ interface AnimParams {
   object: { position: Vector3 };
   offset?: Vector3;
   duration?: number;
+  delay?: number;
   onStart?: Function;
   onInterrupt?: Function;
   onUpdate?: Function;
@@ -46,6 +47,7 @@ export function animateCamera({
                                 object,
                                 offset = new Vector3(),
                                 duration = 0,
+                                delay = 0,
                                 onStart = () => {
                                 },
                                 onInterrupt = () => {
@@ -54,7 +56,7 @@ export function animateCamera({
                                 },
                                 onComplete = () => {
                                 },
-                              }: AnimParams) {
+                              }: AnimParams): Tween {
   if (!shouldAnimate(object.position, camera.position)) return;
   killAnimation();
   animParams = {
@@ -63,6 +65,7 @@ export function animateCamera({
     object,
     offset,
     duration,
+    delay,
     onStart,
     onInterrupt,
     onUpdate,
@@ -70,6 +73,7 @@ export function animateCamera({
   };
   animation = performAnimation(animParams);
   animQueue.push(animation);
+  return animation;
 }
 
 function performAnimation({
@@ -78,6 +82,7 @@ function performAnimation({
                             object,
                             offset = new Vector3(),
                             duration = 0,
+                            delay = 0,
                             onStart = () => {
                             },
                             onInterrupt = () => {
@@ -95,21 +100,22 @@ function performAnimation({
 
   const camPos = camera.position;
   const data = {
+    ...controls.target,
     camX: camPos.x,
     camY: camPos.y,
     camZ: camPos.z,
-    ...controls.target,
     zoom: camera.zoom,
   };
   return gsap.to(data, {
-    duration: duration,
+    duration,
+    delay,
     ease: EASE_TYPE,
-    camX: object.position.x + offset.x,
-    camY: object.position.y + offset.y,
-    camZ: object.position.z + offset.z,
     x: object.position.x,
     y: object.position.y,
     z: object.position.z,
+    camX: object.position.x + offset.x,
+    camY: object.position.y + offset.y,
+    camZ: object.position.z + offset.z,
     zoom: 1,
 
     onStart: function () {
@@ -122,14 +128,11 @@ function performAnimation({
       onInterrupt();
     },
     onUpdate: function () {
-      controls.target = new Vector3(data.x, data.y, data.z);
+      controls.target.set(data.x, data.y, data.z);
+      camera.position.set(data.camX, data.camY, data.camZ)
       camera.zoom = data.zoom;
-      camera.position.set(data.camX, data.camY, data.camZ);
-      camera.quaternion
-        .copy(startOrientation)
-        .slerp(targetOrientation, this.progress());
+      camera.quaternion.copy(startOrientation).slerp(targetOrientation, this.progress());
       camera.updateProjectionMatrix();
-      controls.update();
       onUpdate();
     },
     onComplete: function () {

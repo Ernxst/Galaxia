@@ -1,7 +1,7 @@
 <template>
   <Group ref="system">
     <Star ref="star" v-bind="systemData.star" @star-loaded="assetsLoaded++"
-          @click="$emit('focusOnBody', $event)" />
+          @click="$emit('focusOnBody', $event)"/>
     <component
       :is="planetComponent(planet)"
       v-for="(planet, index) in systemData.planets"
@@ -62,7 +62,8 @@ export default defineComponent({
     loaded() {
       const sceneData = {
         largestObjectSize: this.largestObjectSize(),
-        furthestObjectDistance: this.furthestObjectDistance()
+        furthestObjectDistance: this.furthestObjectDistance(),
+        models: this.models(),
       };
       this.$emit("starSystemLoaded", sceneData);
     },
@@ -133,6 +134,14 @@ export default defineComponent({
         }
       }
       return null;
+    },
+    models() {
+      let models = [this.$refs.star];
+      for (const planet of this.planets) {
+        models.push(planet);
+        models = models.concat(planet.models);
+      }
+      return models;
     }
   },
 });

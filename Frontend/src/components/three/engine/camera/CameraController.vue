@@ -78,13 +78,14 @@ export default defineComponent({
     zoomOut() {
       zoomOut(this.$refs.camera.camera, 1);
     },
-    setupCamera(camPos: Vector3) {
+    setupCamera(camPos: Vector3, models: Array<typeof CelestialBody>) {
       this.defaultPos = camPos;
       const camera: PerspectiveCamera = this.$refs.camera.camera;
       camera.position.set(camPos.x, camPos.y, camPos.z);
       camera.position.multiplyScalar(SCENE_SCALE);
       camera.rotation.order = "YXZ";
       this.setupControls(camPos.x);
+      this.$refs.animator.universeTour(models);
     },
     setupControls(camX: number) {
       this.orbitControls.enableDamping = true;
