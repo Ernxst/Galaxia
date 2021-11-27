@@ -9,29 +9,27 @@ const router = createRouter({
   routes,
 });
 
-// TODO: Check login status
 const loggedIn = (): boolean => {
   return false;
 };
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !loggedIn()) {
-    next({
-      path: "/welcome",
-      query: { redirect: to.fullPath },
-    });
-  } else {
-    next();
-  }
+router.beforeEach((to, from) => {
+  return !(to.meta.requiresAuth && !loggedIn());
 });
 
-router.afterEach((to, _) => {
+router.afterEach((to, from) => {
   nextTick(() => {
     const meta: any = to.meta;
     document.title = meta.title(to) + " — " + APP_TITLE;
     const desc = document.querySelector('head meta[name="description"]');
     const content: string = meta.description(to) || DEFAULT_DESCRIPTION;
     if (desc) desc.setAttribute("content", content);
+
+    if (window.getSelection) {
+      window.getSelection().removeAllRanges();
+    } else if (document.selection) {
+      document.selection.empty();
+    }
   });
 });
 
