@@ -12,10 +12,9 @@
           <li class="link centred">
             <span class="material-icons centred">chevron_right</span>
             <a aria-label="LinkedIn Profile"
-               href="https://www.linkedin.com/in/ernxst/"
+               href="https://www.linkedin.com/in/ernestjbadu/"
                rel="noopener"
-               target="_blank">Ernest
-              Nkansah-Badu</a>
+               target="_blank">Ernest Nkansah-Badu</a>
           </li>
           <li class="link centred">
             <span class="material-icons centred">chevron_right</span>
