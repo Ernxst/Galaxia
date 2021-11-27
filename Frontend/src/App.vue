@@ -1,6 +1,6 @@
 <template>
   <router-view v-slot="{ Component }">
-    <component :is="Component"/>
+    <component :is="Component" />
   </router-view>
 </template>
 
@@ -11,7 +11,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "App",
   watch: {
-    $route(to, _) {
+    $route(to, from) {
       if (to.hash) {
         this.$nextTick(() => {
           this.scrollToId(to.hash.slice(1));
@@ -25,7 +25,7 @@ export default defineComponent({
         const element = document.getElementById(id);
         if (!element) return;
         window.scrollTo({
-          top: element.offsetTop,
+          top: element.offsetTop - 72,
           behavior: "smooth",
         });
       } catch {
@@ -36,4 +36,29 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style>
+#app {
+  --page-padding: 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  #app {
+    --page-padding: 24px;
+  }
+}
+
+@media (min-width: 920px) {
+  #app {
+    --page-padding: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  #app {
+    --page-padding: 36px;
+  }
+}
+</style>

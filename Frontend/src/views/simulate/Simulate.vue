@@ -1,12 +1,13 @@
 <template>
   <page :bg="false"
-        fill>
+        fill
+        :footer="false">
     <renderer-controller ref="renderer"
                          :ui="true"
                          :controls="true"
                          :track-gestures="false"
                          :scene-component="sceneComponent"
-                         :scene-props="{ starSystemName: starSystem}">
+                         :scene-props="{ starSystemName: starSystem }">
     </renderer-controller>
   </page>
 </template>
