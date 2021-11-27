@@ -1,15 +1,22 @@
 <template>
   <section class="info-hub">
-    <celestial-factfile v-if="factfileOpen" :body="activeBody" @close="closeFactfile"/>
-    <section v-else :class="hubClass">
-      <span v-if="bodySelected" class="close-icon material-icons centred" @click="reset">close</span>
+    <celestial-factfile v-if="factfileOpen"
+                        :body="activeBody"
+                        @close="closeFactfile" />
+    <section v-else
+             :class="hubClass">
+      <span v-if="bodySelected"
+            class="close-icon material-icons centred"
+            @click="reset">close</span>
       <span class="subtitle">{{ bodySelected ? type : "Galaxia" }}</span>
       <h3 class="name">{{ bodySelected ? activeBody.name : "Select a Celestial Body" }}</h3>
       <p class="short-description">{{
           bodySelected ? activeBody.shortDescription :
             "Use the navbar to select a celestial body to follow through space."
         }}</p>
-      <flat-button v-if="bodySelected" text="Learn More" @click="openFactfile"/>
+      <flat-button v-if="bodySelected"
+                   text="Learn More"
+                   @click="openFactfile" />
     </section>
   </section>
 </template>

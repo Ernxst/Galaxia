@@ -9,10 +9,10 @@
                      @anim-done="stopAnimation"
                      @adjust-zoom="zoomCamera" />
   <scene-controller ref="scene"
-                    @focus="focusPlanet"
-                    @loaded="onSceneLoad"
                     :scene-component="sceneComponent"
-                    :scene-props="sceneProps" />
+                    :scene-props="sceneProps"
+                    @focus="focusPlanet"
+                    @loaded="onSceneLoad" />
 
   <template v-if="loaded && ui">
     <ui-controller ref="gui"

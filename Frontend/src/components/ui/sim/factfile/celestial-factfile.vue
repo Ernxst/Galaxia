@@ -7,12 +7,13 @@
             <h2>{{ body.name }}</h2>
             <p>{{ body.caption }}</p>
           </header>
-          <factfile-stats v-bind="body"/>
+          <factfile-stats v-bind="body" />
           <section class="content">
             <p>{{ body.description }}</p>
           </section>
         </section>
-        <span class="close-icon material-icons centred" @click="closeFactfile">close</span>
+        <span class="close-icon material-icons centred"
+              @click="closeFactfile">close</span>
       </article>
     </div>
   </teleport>

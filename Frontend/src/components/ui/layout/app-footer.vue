@@ -14,14 +14,15 @@
             <a aria-label="LinkedIn Profile"
                href="https://www.linkedin.com/in/ernxst/"
                rel="noopener"
-               target="_blank">Ernest Nkansah-Badu</a>
+               target="_blank">Ernest
+              Nkansah-Badu</a>
           </li>
           <li class="link centred">
             <span class="material-icons centred">chevron_right</span>
             <a aria-label="GitHub Source Cide Repository"
                href="https://github.com/Ernxst/Galaxia"
                rel="noopener"
-               target="_blank">View source on GitHub</a>
+               target="_blank">View on GitHub</a>
           </li>
         </ul>
       </nav>
@@ -62,7 +63,7 @@ footer {
 }
 
 .link > * {
-  font-size: 12px;
+  font-size: 11px;
   transition-duration: .2s;
   transition-timing-function: ease;
 }

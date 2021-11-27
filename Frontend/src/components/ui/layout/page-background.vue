@@ -25,6 +25,10 @@ export default defineComponent({
   z-index: -1;
 }
 
+.star-background > * {
+  border-radius: 50%;
+}
+
 #stars {
   width: 1px;
   height: 1px;

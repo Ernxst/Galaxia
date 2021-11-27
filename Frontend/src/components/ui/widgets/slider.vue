@@ -1,8 +1,10 @@
 <template>
-  <div :orient="orient" class="slider-container noselect centred">
+  <div :orient="orient"
+       class="slider-container noselect centred">
     <p class="slider-label">{{ label }}</p>
     <div class="slider-inner centred">
-      <span v-if="show_limits" class="min value centred">{{ minValue }}</span>
+      <span v-if="show_limits"
+            class="min value centred">{{ minValue }}</span>
       <div class="slider centred">
         <input
           :id="id"
@@ -15,11 +17,14 @@
           value.number="modelValue"
           @input="update"
         />
-        <label ref="sliderLabel" :for="id" class="current-value noselect centred">
+        <label ref="sliderLabel"
+               :for="id"
+               class="current-value noselect centred">
           {{ modelValue }}
         </label>
       </div>
-      <span v-if="show_limits" class="max value centred">{{ maxValue }}</span>
+      <span v-if="show_limits"
+            class="max value centred">{{ maxValue }}</span>
     </div>
   </div>
 </template>

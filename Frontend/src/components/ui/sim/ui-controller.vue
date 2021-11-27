@@ -1,17 +1,27 @@
 <template>
   <div class="simulation-ui">
-    <playback-menu :paused="paused" :speed="speed" @toggle-pause="togglePause"
-                   @speed-down="decreaseSpeed" @speed-up="increaseSpeed"/>
-    <span class="toggler close-icon material-icons centred" :open="menuOpen"
+    <playback-menu :paused="paused"
+                   :speed="speed"
+                   @toggle-pause="togglePause"
+                   @speed-down="decreaseSpeed"
+                   @speed-up="increaseSpeed" />
+    <span :open="menuOpen"
+          class="toggler close-icon material-icons centred"
           @click="menuOpen = !menuOpen">{{ menuOpen ? "close" : "menu" }}</span>
-    <section class="mobile-menu glass centred" :open="menuOpen">
+    <section :open="menuOpen"
+             class="mobile-menu glass centred">
       <template v-if="starSystem !== null">
-        <navbar ref="navbar" :planets="starSystem.planets"
-                :stars="[starSystem.star]" @follow="$emit('followBody', $event)"/>
+        <navbar ref="navbar"
+                :planets="starSystem.planets"
+                :stars="[starSystem.star]"
+                @follow="$emit('followBody', $event)" />
       </template>
-      <zoom-controller ref="zoomer" @adjust-zoom="$emit('zoomUpdate', $event)"/>
-      <info-hub ref="hub" @reset="$emit('reset')" @open-factfile="$emit('openFactfile')"
-                @close-factfile="$emit('closeFactfile')"/>
+      <zoom-controller ref="zoomer"
+                       @adjust-zoom="$emit('zoomUpdate', $event)" />
+      <info-hub ref="hub"
+                @reset="$emit('reset')"
+                @open-factfile="$emit('openFactfile')"
+                @close-factfile="$emit('closeFactfile')" />
     </section>
   </div>
 </template>

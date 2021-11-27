@@ -7,7 +7,10 @@
         @click="go"
       >
         <div class="image centred">
-          <img :alt="name" :src="icon" height="32" width="32"/>
+          <img :alt="name"
+               :src="icon"
+               height="32"
+               width="32" />
         </div>
         <div class="content centred">
           <h3>{{ name }}</h3>
@@ -25,7 +28,8 @@
       v-if="hasMoons"
       :class="open ? 'moon-container open centred' : 'moon-container centred'"
     >
-      <li v-for="moon in Object.values(moons)" v-bind="moon">
+      <li v-for="moon in Object.values(moons)"
+          v-bind="moon">
         <nav-item
           :ref="(el) => moonButtons.push(el)"
           :distance="moon.semiMajor"

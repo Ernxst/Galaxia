@@ -12,8 +12,8 @@
         :orbit-controls="orbitControls"
         :scene-component="sceneComponent"
         :scene-props="sceneProps"
-        :ui="ui"
         :track-gestures="trackGestures"
+        :ui="ui"
         @loaded="onLoad" />
     </Renderer>
   </article>

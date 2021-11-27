@@ -129,7 +129,7 @@ function performAnimation({
     },
     onUpdate: function () {
       controls.target.set(data.x, data.y, data.z);
-      camera.position.set(data.camX, data.camY, data.camZ)
+      camera.position.set(data.camX, data.camY, data.camZ);
       camera.zoom = data.zoom;
       camera.quaternion.copy(startOrientation).slerp(targetOrientation, this.progress());
       camera.updateProjectionMatrix();

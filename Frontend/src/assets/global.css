@@ -38,7 +38,7 @@ html, body {
 
 *, *:before, *:after {
   box-sizing: border-box;
-  letter-spacing: 5px;
+  letter-spacing: 3px;
   text-transform: uppercase;
 }
 

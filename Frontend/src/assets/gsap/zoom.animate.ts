@@ -3,11 +3,12 @@ import { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
 import { ZOOM_DURATION } from "./gsap.constants";
 
 // TODO: Play short sound while zooming
-export function animateZoom(finalZoom: number, camera: PerspectiveCamera) {
+export function animateZoom(finalZoom: number, camera: PerspectiveCamera,
+                            duration: number = ZOOM_DURATION) {
   const anim = { zoom: camera.zoom };
-  gsap.to(anim, {
+  return gsap.to(anim, {
     zoom: finalZoom,
-    duration: ZOOM_DURATION,
+    duration,
     onUpdate() {
       camera.zoom = anim.zoom;
       camera.updateProjectionMatrix();

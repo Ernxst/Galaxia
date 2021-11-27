@@ -2,9 +2,13 @@
   <section class="factfile-stats centred">
     <table>
       <tbody>
-      <tr v-for="[field, value] in Object.entries($props)" :set="show = shouldShow(field, value)">
-        <td v-if="show" class="field">{{ toSentenceCase(field) }}</td>
-        <td v-if="show" class="value">
+      <tr v-for="[field, value] in Object.entries($props)"
+          :set="show = shouldShow(field, value)">
+        <td v-if="show"
+            class="field">{{ toSentenceCase(field) }}
+        </td>
+        <td v-if="show"
+            class="value">
           <strong>{{ formatValue(field, value) }}<sup v-if="hasSuperscript(field)">{{
               getSuperscript(value)
             }}</sup>{{ unit(field) }}</strong>

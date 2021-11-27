@@ -50,6 +50,9 @@ export default defineComponent({
     };
   },
   methods: {
+    getCamera(): PerspectiveCamera {
+      return this.$refs.camera.camera;
+    },
     openFactfile() {
       this.$refs.animator.openFactfile();
     },

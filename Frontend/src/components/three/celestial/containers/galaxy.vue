@@ -38,7 +38,7 @@ export default defineComponent({
     furthestObjectDistance(): number {
       return this.$refs.starSystem.furthestObjectDistance();
     },
-    getComponentByName(name: string, isStar: boolean, isMoon: boolean) : typeof CelestialBody {
+    getComponentByName(name: string, isStar: boolean, isMoon: boolean): typeof CelestialBody {
       return this.$refs.starSystem.getComponentByName(name, isStar, isMoon);
     }
   },

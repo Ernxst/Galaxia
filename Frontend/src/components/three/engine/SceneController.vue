@@ -9,8 +9,8 @@
         />
       </teleport>
     </template>
-    <component ref="app"
-               :is="sceneComponent"
+    <component :is="sceneComponent"
+               ref="app"
                v-bind="sceneProps"
                @focus="$emit('focus', $event)"
                @loaded="onSceneLoad"

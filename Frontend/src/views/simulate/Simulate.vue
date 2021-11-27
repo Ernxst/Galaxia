@@ -1,13 +1,13 @@
 <template>
   <page :bg="false"
-        fill
-        :footer="false">
+        :footer="false"
+        fill>
     <renderer-controller ref="renderer"
-                         :ui="true"
                          :controls="true"
-                         :track-gestures="false"
                          :scene-component="sceneComponent"
-                         :scene-props="{ starSystemName: starSystem }">
+                         :scene-props="{ starSystemName: starSystem }"
+                         :track-gestures="false"
+                         :ui="true">
     </renderer-controller>
   </page>
 </template>
@@ -24,7 +24,7 @@ export default defineComponent({
   components: { RendererController, Page },
   computed: {
     starSystem(): string {
-      return "Solar System";
+      return "Solar System"; // TODO: Get from store by ID
     },
     sceneComponent() {
       return SimulateScene;

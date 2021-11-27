@@ -1,8 +1,11 @@
 <template>
-  <nav class="navbar centred noselect" role="navigation">
+  <nav class="navbar centred noselect"
+       role="navigation">
     <div class="nav-buttons centred">
       <ul class="stars">
-        <li v-for="star in stars" v-bind="star" class="star centred">
+        <li v-for="star in stars"
+            v-bind="star"
+            class="star centred">
           <nav-item
             :ref="(el) => (buttons[star.name] = el)"
             :icon="star.texture"
@@ -13,7 +16,9 @@
         </li>
       </ul>
       <ul class="planets">
-        <li v-for="planet in planets" v-bind="planet" class="planet centred">
+        <li v-for="planet in planets"
+            v-bind="planet"
+            class="planet centred">
           <nav-item
             :ref="(el) => (buttons[planet.name] = el)"
             :distance="planet.semiMajor"
@@ -137,7 +142,7 @@ li {
   }
 }
 
-@media (max-height: 480px) and (min-width: 480px) and (orientation: landscape)  {
+@media (max-height: 480px) and (min-width: 480px) and (orientation: landscape) {
   .navbar {
     left: 0;
   }
