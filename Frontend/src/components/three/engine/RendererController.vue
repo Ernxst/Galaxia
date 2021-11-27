@@ -1,9 +1,22 @@
 <template>
-  <Renderer ref="renderer" :alpha="true" :antialias="false"
-            :orbit-ctrl="true" :resize="true" shadow>
-    <main-controller ref="controller" :aspect="aspect"
-                     :orbit-controls="orbitControls" @loaded="onLoad"/>
-  </Renderer>
+  <article id="renderer">
+    <Renderer ref="renderer"
+              :alpha="true"
+              :antialias="false"
+              :orbit-ctrl="true"
+              :resize="true"
+              shadow>
+      <main-controller
+        ref="controller"
+        :aspect="aspect"
+        :orbit-controls="orbitControls"
+        :scene-component="sceneComponent"
+        :scene-props="sceneProps"
+        :ui="ui"
+        :track-gestures="trackGestures"
+        @loaded="onLoad" />
+    </Renderer>
+  </article>
 </template>
 
 <script lang="ts">
@@ -22,7 +35,14 @@ import { setComposerSize, setupPostprocessing, } from "./postprocessing/postproc
 export default defineComponent({
   name: "RendererController",
   components: { Renderer, MainController },
-  setup() {
+  props: {
+    controls: { type: Boolean, default: false },
+    sceneComponent: Object,
+    sceneProps: { type: Object, default: {} },
+    ui: { type: Boolean, default: false },
+    trackGestures: { type: Boolean, default: false },
+  },
+  setup(props) {
     const width = ref<number>(1);
     const height = ref<number>(1);
     const renderer = ref<typeof Renderer>(null);
@@ -60,8 +80,6 @@ export default defineComponent({
         const parentElement: HTMLElement = proxy.$el.parentNode;
         width.value = parentElement.clientWidth;
         height.value = parentElement.clientHeight;
-        console.log(parentElement)
-        console.log(width.value, height.value);
         const camera: PerspectiveCamera = renderer.value.camera;
         camera.aspect = width.value / height.value;
         camera.updateProjectionMatrix();
@@ -71,6 +89,7 @@ export default defineComponent({
       });
 
       orbitControls.value = renderer.value.three.cameraCtrl;
+      orbitControls.value.enabled = props.controls;
       orbitControls.value.listenToKeyEvents(window);
 
       const glRenderer: WebGLRenderer = renderer.value.renderer;
@@ -94,4 +113,10 @@ export default defineComponent({
 });
 </script>
 
-<style></style>
+<style scoped>
+article {
+  position: relative;
+  width: stretch;
+  height: stretch;
+}
+</style>

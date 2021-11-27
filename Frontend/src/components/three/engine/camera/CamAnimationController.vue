@@ -99,7 +99,7 @@ export default defineComponent({
     },
     focus(body: typeof CelestialBody) {
       if (this.target !== null &&
-        body.position.equals(this.target.position))
+        body.mesh().position.equals(this.target.position))
         return;
       const mesh: Mesh = body.mesh();
       const { centre, size } = computeCentreAndSize(mesh);

@@ -1,62 +1,64 @@
 <template>
-  <Group ref="body" :position="initialPos">
+  <Group ref="body"
+         :position="initialPos">
     <Sphere
+      :bump-map="bumpMap"
+      :cast-shadow="true"
+      :material-props="{ transparent: true }"
       :name="`${name}-sphere`"
       :radius="scaledRadius"
-      :texture="texture"
-      :bump-map="bumpMap"
       :specular-map="specularMap"
-      :material-props="{ transparent: true }"
-      :cast-shadow="true"
-      @sphere-loaded="assetsLoaded++"
+      :texture="texture"
       @click="onClick"
+      @sphere-loaded="assetsLoaded++"
     />
     <Atmosphere
-      ref="atmosphere"
       v-if="hasAtmosphere"
+      ref="atmosphere"
       :name="`${name}-atmosphere`"
+      :opacity="atmosphere.opacity"
       :parent-radius="scaledRadius"
       :scale="atmosphere.scale"
       :texture="atmosphere.texture"
-      :opacity="atmosphere.opacity"
       @atmosphere-loaded="assetsLoaded++"
     />
     <slot></slot>
     <Moon
       v-for="(moon, index) in moons"
-      v-bind="moon"
       :ref="(el) => moonComponents.push(el)"
-      :name="moon.name"
-      :mass="moon.mass"
-      :radius="moon.radius"
+      v-bind="moon"
+      :axial-tilt="moon.axialTilt"
+      :bump-map="moon.bumpMap"
+      :day-length="moon.dayLength"
+      :eccentricity="moon.eccentricity"
       :inclination="moon.inclination"
+      :mass="moon.mass"
+      :mean-velocity="moon.meanVelocity"
+      :name="moon.name"
+      :orbital-period="moon.orbitalPeriod"
+      :radius="moon.radius"
+      :render-order="moons.length - index"
       :semi-major="moon.semiMajor"
       :semi-minor="moon.semiMinor"
-      :eccentricity="moon.eccentricity"
-      :orbital-period="moon.orbitalPeriod"
-      :mean-velocity="moon.meanVelocity"
-      :star-radius="radius"
-      :day-length="moon.dayLength"
-      :axial-tilt="moon.axialTilt"
-      :render-order="moons.length - index"
-      :texture="moon.texture"
-      :bump-map="moon.bumpMap"
       :specular-map="moon.specularMap"
-      @moon-loaded="assetsLoaded++"
+      :star-radius="radius"
+      :texture="moon.texture"
       @click="$emit('click', $event)"
+      @moon-loaded="assetsLoaded++"
     />
-    <ring ref="ring" :name="`${name}-ring`"
+    <ring ref="ring"
+          :circular="ring.circular"
           :inner-radius="ring.innerRadius"
+          :name="`${name}-ring`"
           :outer-radius="ring.outerRadius"
           :texture="ring.texture"
-          :circular="ring.circular"
           :tilt="ring.tilt"
-          @ring-loaded="assetsLoaded++"/>
+          @ring-loaded="assetsLoaded++" />
   </Group>
   <Trail
+    :inclination="inclinationRad"
     :semi-major="scaledX"
     :semi-minor="scaledZ"
-    :inclination="inclinationRad"
   />
 </template>
 

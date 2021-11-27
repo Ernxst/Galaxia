@@ -1,5 +1,9 @@
 <template>
-  <Camera ref="camera" :aspect="aspect" :far="far" :fov="fov" :near="near">
+  <Camera ref="camera"
+          :aspect="aspect"
+          :far="far"
+          :fov="fov"
+          :near="near">
     <cam-animation-controller
       ref="animator"
       :orbit-controls="orbitControls"
@@ -7,7 +11,9 @@
       @anim-done="stopAnimation"
       @adjust-zoom="adjustZoom"
     />
-    <!--    <gesture-controller ref="controller" @loaded="" @pause="pause" @play="play"/>-->
+    <template v-if="trackGestures">
+      <gesture-controller ref="controller" />
+    </template>
   </Camera>
 </template>
 
@@ -32,6 +38,8 @@ export default defineComponent({
   props: {
     aspect: { type: Number, default: 1 },
     orbitControls: Object as PropType<OrbitControls>,
+    trackGestures: { type: Boolean, default: false },
+    showTour: { type: Boolean, default: false },
   },
   data() {
     return {
@@ -85,7 +93,8 @@ export default defineComponent({
       camera.position.multiplyScalar(SCENE_SCALE);
       camera.rotation.order = "YXZ";
       this.setupControls(camPos.x);
-      this.$refs.animator.universeTour(models);
+      if (this.showTour)
+        this.$refs.animator.universeTour(models);
     },
     setupControls(camX: number) {
       this.orbitControls.enableDamping = true;
@@ -100,7 +109,8 @@ export default defineComponent({
     animate(paused: boolean, speed: number) {
       this.orbitControls.update();
       this.$refs.animator.render(paused, speed);
-      // this.$refs.controller.detectVideo();
+      if (this.trackGestures)
+        this.$refs.controller.detectVideo();
     },
   },
 });

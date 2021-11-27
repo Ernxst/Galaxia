@@ -1,37 +1,39 @@
 <template>
   <Group ref="system">
-    <Star ref="star" v-bind="systemData.star" @star-loaded="assetsLoaded++"
-          @click="$emit('focusOnBody', $event)"/>
+    <Star ref="star"
+          v-bind="systemData.star"
+          @click="$emit('focusOnBody', $event)"
+          @star-loaded="assetsLoaded++" />
     <component
       :is="planetComponent(planet)"
       v-for="(planet, index) in systemData.planets"
-      key="planet"
       :ref="addPlanet"
+      key="planet"
       v-bind="planet"
-      :star-radius="systemData.star.radius"
       :render-order="systemData.planets.length - index"
-      @planet-loaded="assetsLoaded++"
+      :star-radius="systemData.star.radius"
       @click="$emit('focusOnBody', $event)"
+      @planet-loaded="assetsLoaded++"
     />
     <AsteroidBelt
       v-for="belt in systemData.asteroidBelts"
-      key="belt"
       :ref="(el) => asteroidBelts.push(el)"
-      :name="belt.name"
+      key="belt"
       :asteroids="belt.asteroids"
-      :num-of-asteroids="belt.numOfAsteroids"
-      :depth="belt.depth"
-      :inner-semi-major="belt.innerSemiMajor"
-      :inner-eccentricity="belt.innerEccentricity"
-      :outer-semi-major="belt.outerSemiMajor"
-      :outer-eccentricity="belt.outerEccentricity"
-      :mass="belt.mass"
       :axial-tilt="belt.inclination"
       :day-length="belt.dayLength"
+      :depth="belt.depth"
       :fill="belt.fill"
-      :min-size="belt.minSize"
+      :inner-eccentricity="belt.innerEccentricity"
+      :inner-semi-major="belt.innerSemiMajor"
+      :mass="belt.mass"
       :max-size="belt.maxSize"
       :mean-velocity="0"
+      :min-size="belt.minSize"
+      :name="belt.name"
+      :num-of-asteroids="belt.numOfAsteroids"
+      :outer-eccentricity="belt.outerEccentricity"
+      :outer-semi-major="belt.outerSemiMajor"
       :star-radius="systemData.star.radius"
       @asteroid-belt-loaded="assetsLoaded++"
     />
@@ -73,11 +75,7 @@ export default defineComponent({
       return this.$store.getters["starSystem/starSystem"](this.name);
     },
     modelsToLoad(): number {
-      return (
-        this.systemData.planets.length +
-        1 +
-        this.systemData.asteroidBelts.length
-      );
+      return this.systemData.planets.length + 1 + this.systemData.asteroidBelts.length;
     },
     loaded(): boolean {
       return this.assetsLoaded === this.modelsToLoad;

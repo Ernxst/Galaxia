@@ -1,9 +1,12 @@
 <template>
-  <section ref="container" class="loader full-page centred">
+  <section ref="container"
+           class="loader full-page centred">
     <span class="percentage">{{ `${currentPercentage}%` }}</span>
     <div class="content centred">
       <label for="assets">{{ message }}</label>
-      <progress id="assets" :max="100" :value="percentage"></progress>
+      <progress id="assets"
+                :max="100"
+                :value="percentage"></progress>
     </div>
     <!-- TODO: Add fact of the day message -->
   </section>
@@ -46,7 +49,7 @@ export default defineComponent({
     };
   },
   mounted() {
-    window.addEventListener("assetLoaded", () => {
+    window.addEventListener("assetLoaded", (event) => {
       this.assetsLoaded += 1;
     });
   },
@@ -58,7 +61,7 @@ export default defineComponent({
   --width: 32vw;
   transition: 1.33s ease transform;
   transition-delay: 0.8s;
-  z-index: 2;
+  z-index: 9;
   position: absolute;
   top: 0;
   background: var(--page-bg);

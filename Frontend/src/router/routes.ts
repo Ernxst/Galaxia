@@ -4,7 +4,7 @@ import { RouteLocationNormalized } from "vue-router";
 export const routes = [
   {
     path: "/",
-    component: () => import("@/views/Simulate.vue"),
+    component: () => import("@/views/simulate/Simulate.vue"),
     name: "home",
     meta: {
       title: (route: RouteLocationNormalized) => {

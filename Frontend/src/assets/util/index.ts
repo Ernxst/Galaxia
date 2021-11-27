@@ -71,6 +71,9 @@ export function randomAsteroid(
 ): Asteroid {
   return {
     name: `asteroid-${id}`,
+    caption: "",
+    description: "",
+    shortDescription: "",
     size: randomNumber(minSize, maxSize),
     detail: Math.ceil(randomNumber(0, 12)),
     scale: new Vector3(

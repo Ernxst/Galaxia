@@ -1,32 +1,33 @@
 <template>
   <PointLight
     ref="light"
+    :cast-shadow="true"
     :color="starLightColour"
+    :decay="2"
+    :distance="0"
     :intensity="intensity"
     :position="initialPosition"
-    :distance="0"
-    :cast-shadow="true"
-    :decay="2"
   />
-  <Group ref="body" :position="initialPosition">
+  <Group ref="body"
+         :position="initialPosition">
     <Sphere
       ref="sphere"
+      :bump-map="bumpMap"
       :name="`${name}-sphere`"
       :radius="scaledRadius"
-      :texture="texture"
-      :bump-map="bumpMap"
       :specular-map="specularMap"
-      @sphere-loaded="setupSphere"
+      :texture="texture"
       @click="onClick"
+      @sphere-loaded="setupSphere"
     />
     <Atmosphere
-      ref="atmosphere"
       v-if="hasAtmosphere"
+      ref="atmosphere"
       :name="`${name}-atmosphere`"
+      :opacity="atmosphere.opacity"
       :parent-radius="scaledRadius"
       :scale="atmosphere.scale"
       :texture="atmosphere.texture"
-      :opacity="atmosphere.opacity"
       @atmosphere-loaded="assetsLoaded++"
     />
   </Group>
@@ -42,7 +43,6 @@ import Atmosphere from "@/components/three/util/Atmosphere.vue";
 import { Object3D } from "three/src/core/Object3D";
 import { PointLight as ThreePointLight } from "three/src/lights/PointLight";
 import { MeshBasicMaterial } from "three/src/materials/MeshBasicMaterial";
-import { Color } from "three/src/math/Color";
 import { Vector2 } from "three/src/math/Vector2";
 import { Mesh } from "three/src/objects/Mesh";
 import { Group, PointLight } from "troisjs";
@@ -101,9 +101,8 @@ export default defineComponent({
       sphere.material.map = oldMat.map;
       sphere.material.bumpMap = oldMat.bumpMap;
       sphere.material.specularMap = oldMat.specularMap;
-      sphere.material.color = new Color(0xff6600);
       sphere.material.needsUpdate = true;
-      dispatchLoadedEvent();
+      dispatchLoadedEvent(this.name);
       this.$emit("starLoaded");
     },
   },

@@ -15,8 +15,12 @@ export async function getTexture(src: string): Promise<Texture> {
   return texture;
 }
 
-export function dispatchLoadedEvent() {
-  const event = new CustomEvent("assetLoaded", {});
+export function dispatchLoadedEvent(name: string) {
+  const event = new CustomEvent("assetLoaded", {
+    detail: {
+      name
+    }
+  });
   window.dispatchEvent(event);
 }
 

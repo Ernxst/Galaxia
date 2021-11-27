@@ -8,7 +8,7 @@
       :receive-shadow="true"
       :theta-segments="slices"
     >
-      <LambertMaterial/>
+      <LambertMaterial />
     </trois-ring>
     <trois-ring
       ref="lower"
@@ -18,7 +18,7 @@
       :receive-shadow="true"
       :theta-segments="slices"
     >
-      <LambertMaterial/>
+      <LambertMaterial />
     </trois-ring>
   </Group>
 </template>

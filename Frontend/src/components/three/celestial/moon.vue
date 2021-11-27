@@ -1,29 +1,30 @@
 <template>
-  <Group ref="body" :position="initialPos">
+  <Group ref="body"
+         :position="initialPos">
     <Sphere
+      :material-props="{ transparent: true }"
       :name="`${name}-sphere`"
       :radius="scaledRadius"
       :texture="texture"
-      :material-props="{ transparent: true }"
-      @sphere-loaded="assetsLoaded++"
       @click="onClick"
+      @sphere-loaded="assetsLoaded++"
     />
     <Atmosphere
-      ref="atmosphere"
       v-if="hasAtmosphere"
+      ref="atmosphere"
       :name="`${name}-atmosphere`"
+      :opacity="atmosphere.opacity"
       :parent-radius="scaledRadius"
       :scale="atmosphere.scale"
       :texture="atmosphere.texture"
-      :opacity="atmosphere.opacity"
       @atmosphere-loaded="assetsLoaded++"
     />
     <slot></slot>
   </Group>
   <Trail
+    :inclination="inclinationRad"
     :semi-major="scaledX"
     :semi-minor="scaledZ"
-    :inclination="inclinationRad"
   />
 </template>
 
@@ -56,7 +57,7 @@ export default defineComponent({
   },
   watch: {
     loaded() {
-      dispatchLoadedEvent();
+      dispatchLoadedEvent(this.name);
       this.$emit("moonLoaded");
     },
   },

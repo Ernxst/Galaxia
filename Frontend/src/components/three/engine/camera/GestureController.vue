@@ -1,6 +1,6 @@
 <template>
-  <video ref="webcam"/>
-  <canvas ref="canvas"/>
+  <video ref="webcam" />
+  <canvas ref="canvas" />
 </template>
 
 <script lang="ts">
