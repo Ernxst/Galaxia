@@ -9,7 +9,7 @@
           </header>
           <factfile-stats v-bind="body" />
           <section class="content">
-            <p>{{ body.description }}</p>
+            <p v-for="paragraph in body.description.split(`\n`)">{{ paragraph }}</p>
           </section>
         </section>
         <span class="close-icon material-icons centred"
@@ -98,7 +98,14 @@ export default defineComponent({
   overflow-y: auto;
   overflow-x: hidden;
   width: 100%;
+}
+
+.factfile > * {
   padding: 18px 36px;
+}
+
+.factfile * {
+  text-shadow: 0 0 8px var(--page-bg);
 }
 
 .close-icon {
@@ -126,12 +133,13 @@ header p {
 }
 
 .content {
-  margin-top: 10px;
+  margin: 0 18px 18px;
+  padding: 18px;
 }
 
 .content p {
   font-size: 10px;
-  margin: 0;
+  margin: 0 0 16px;
   line-height: 1.6;
   white-space: pre-line;
   text-align: justify;
@@ -168,6 +176,10 @@ header p {
     .factfile-container {
       --factfile-width: 66.7vw;
       --margin: 64px;
+    }
+
+    .factfile * {
+      text-shadow: none;
     }
   }
 

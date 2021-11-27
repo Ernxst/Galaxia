@@ -56,6 +56,8 @@ export default defineComponent({
           const str = value.toExponential().toString();
           const index = str.toLowerCase().indexOf("e");
           return str.slice(0, index) + " × 10";
+        case "radius":
+          return value.toFixed().toString();
       }
       if (value > 1_000_00) return Number(value).toPrecision(3);
       return value;
@@ -73,10 +75,10 @@ export default defineComponent({
         mass: " kg",
         semiMajor: " AU",
         semiMinor: " AU",
-        orbitalPeriod: " Earth Days",
+        orbitalPeriod: " EARTH DAYS",
         inclination: "°",
         axialTilt: "°",
-        dayLength: " Earth Hours",
+        dayLength: " EARTH HOURS",
         meanVelocity: " km/s",
         luminosity: " J/s",
       };
@@ -110,6 +112,10 @@ export default defineComponent({
   font-weight: 900;
   text-align: right;
   color: var(--main);
+}
+
+.value strong {
+  text-transform: none;
 }
 
 @media (min-width: 480px) {
