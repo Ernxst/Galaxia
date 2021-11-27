@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,700?display=swap");
-
 :root {
   --text-colour: #FFF;
   --page-bg: #000;
@@ -13,46 +11,39 @@
   --button-radius: 0;
 }
 
-html {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-}
-
 html:focus-within {
   scroll-behavior: smooth;
 }
 
+@font-face {
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
-  text-rendering: optimizeSpeed;
-  margin: 0;
   font-family: "Montserrat", sans-serif;
   color: var(--text-colour);
   background: var(--page-bg);
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
-body,
-#app {
-  min-height: 100vh;
-  min-width: 100vw;
-  max-height: 100vh;
-  max-width: 100vw;
+html, body {
+  margin: 0;
+  height: 100%;
   overflow: hidden;
 }
 
-*,
-*:before,
-*:after {
+*, *:before, *:after {
   box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
   letter-spacing: 5px;
   text-transform: uppercase;
 }
 
-h1,
-h2,
-h3 {
-  font-weight: 100;
+h1, h2, h3 {
+  font-weight: 400;
   display: inline-block;
 }
 
@@ -69,9 +60,8 @@ h3 {
   font-size: 16px;
 }
 
-p,
-b {
-  line-height: 1.5;
+strong {
+  font-weight: 700;
 }
 
 a {
@@ -79,11 +69,13 @@ a {
   background: transparent;
 }
 
-input,
-button,
-textarea,
-select {
+input, button, textarea, select {
   font-family: inherit;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
 }
 
 .image {
@@ -91,8 +83,7 @@ select {
   height: inherit;
 }
 
-.image img,
-.background-img {
+.image img, .background-img {
   max-width: 100%;
   margin: auto;
   display: block;
@@ -112,17 +103,12 @@ select {
   z-index: -2;
 }
 
-.noselect,
-a, .material-icons {
+.noselect, a, .material-icons {
   -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
 }
 
-.centred,
-.image {
+.centred, .image {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -151,6 +137,14 @@ a, .material-icons {
 
 ::-webkit-scrollbar-thumb:hover {
   filter: brightness(1.4);
+}
+
+::selection {
+  background: var(--main);
+}
+
+::inactive-selection {
+  filter: brightness(0.67);
 }
 
 @keyframes fadeIn {
