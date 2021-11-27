@@ -1,28 +1,34 @@
 <template>
-  <header class="centred">
+  <header class="page-header centred">
     <h1 ref="header">Beyond Galaxia</h1>
   </header>
-  <page column pad>
-    <article ref="main" class="centred">
+  <page column
+        pad>
+    <section ref="main"
+             class="centred">
       <span class="material-icons">chevron_right</span>
       <p>
         the <strong>farpoint </strong> is defined as the farthest point from the
         eye at which images are clear - the requested page is beyond the
-        <strong>farpoint </strong> of <strong>Galaxia </strong> ...
+        <strong>farpoint </strong> of <strong>Galaxia ... </strong>
       </p>
-    </article>
-    <router-link text="Back to safety" to="/"></router-link>
+    </section>
+    <router-link to="/">
+      <flat-button text="Back to safety" />
+    </router-link>
   </page>
 </template>
 
 <script lang="ts">
 import Page from "@/components/ui/layout/page.vue";
+import FlatButton from "@/components/ui/widgets/buttons/flat-button.vue";
+import { nextTick } from "@vue/runtime-core";
 import { defineComponent, onBeforeMount, onMounted, ref } from "vue";
 
 
 export default defineComponent({
   name: "NotFound",
-  components: { Page },
+  components: { FlatButton, Page },
   setup() {
     const header = ref<HTMLHeadingElement>(null);
     const main = ref<HTMLElement>(null);
@@ -32,7 +38,9 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      resize();
+      nextTick(() => {
+        resize();
+      });
       window.addEventListener("resize", resize);
     });
 
@@ -46,23 +54,27 @@ export default defineComponent({
 
 <style scoped>
 header {
-  margin-top: calc(100vh * 0.125);
-  padding-left: 16px;
-  padding-right: 16px;
+  margin: auto auto 0;
+  padding: 3px;
+  border: 1px solid var(--main);
 }
 
 h1 {
   text-align: center;
   font-size: 28px;
   width: min-content;
+  background: var(--main);
+  color: var(--page-bg);
+  padding-left: 12px;
+  margin: 0;
 }
 
-article {
+section {
   align-items: flex-start;
   margin-bottom: 36px;
 }
 
-article p {
+section p {
   margin: 0;
   text-align: center;
 }
@@ -71,7 +83,7 @@ p strong {
   color: var(--main);
 }
 
-article span {
+section span {
   display: none;
 }
 
@@ -86,7 +98,7 @@ article span {
     font-size: 32px;
   }
 
-  article span {
+  section span {
     display: block;
     font-size: 24px;
     margin-right: 9px;
@@ -94,13 +106,13 @@ article span {
   }
 
   @media (pointer: fine) {
-    article:hover span {
+    section:hover span {
       margin-right: 21px;
     }
   }
 
-  article p {
-    text-align: left;
+  section p {
+    text-align: justify;
   }
 }
 </style>
