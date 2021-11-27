@@ -1,65 +1,46 @@
 <template>
-  <div
-    :style="`--diameter: ${2 * radius}px; --ring-scale: ${ringScale}`"
-    class="circle-button-container centred"
-  >
-    <button
-      class="circle-button centred"
-      @click="onClick"
-      @mouseenter="onMouseEnter"
-      @mouseleave="onMouseLeave"
-    >
+  <div :style="`--diameter: ${2 * radius}px; --ring-scale: ${ringScale}`"
+       class="circle-button-container centred">
+    <button :disabled="disabled"
+            :type="type"
+            class="circle-button centred"
+            @click="onClick"
+            @mouseenter="onMouseEnter"
+            @mouseleave="onMouseLeave">
       <span class="circle-button-text centred">{{ text }}</span>
       <slot></slot>
     </button>
-
-    <svg ref="ring" class="ring-container">
-      <circle
-        :cx="ringRadius"
-        :cy="ringRadius"
-        :r="ringRadius"
-        :transform="`rotate(-90 ${ringRadius} ${ringRadius})`"
-        class="ring"
-      />
+    <svg ref="ring"
+         :mouse="mouseEntered"
+         class="ring-container">
+      <circle :cx="ringRadius"
+              :cy="ringRadius"
+              :r="ringRadius"
+              :transform="`rotate(-90 ${ringRadius} ${ringRadius})`"
+              class="ring" />
     </svg>
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import FlatButton from "@/components/ui/widgets/buttons/flat-button.vue";
+import { defineComponent } from "vue";
+
+
+export default defineComponent({
   name: "circle-button",
+  extends: FlatButton,
   emits: ["click"],
   props: {
-    text: String,
-    radius: {
-      type: Number,
-      default: 24,
-    },
-    ringScale: {
-      type: Number,
-      default: 1.2,
-    },
+    radius: { type: Number, default: 24, },
+    ringScale: { type: Number, default: 1.2, },
   },
   computed: {
-    ringRadius() {
+    ringRadius(): number {
       return this.radius * this.ringScale;
     },
   },
-  methods: {
-    onClick(event) {
-      // TODO: Play button click sound here
-      this.$emit("click", event);
-    },
-    onMouseEnter() {
-      // TODO: Play button hover sound here
-      this.$refs.ring.classList.add("ring-hover");
-    },
-    onMouseLeave() {
-      // TODO: Stop button hover sound
-      this.$refs.ring.classList.remove("ring-hover");
-    },
-  },
-};
+});
 </script>
 
 <style>
@@ -91,7 +72,7 @@ export default {
 }
 
 .circle-button-text {
-  font-weight: 100;
+  font-weight: 300;
   z-index: 1;
   color: var(--text-colour);
   margin: auto;
@@ -158,7 +139,7 @@ export default {
   transition: 0.75s ease all;
 }
 
-.ring-hover .ring {
+.ring-container[mouse=true] .ring {
   stroke-dashoffset: 0;
 }
 </style>
