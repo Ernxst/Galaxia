@@ -11,6 +11,8 @@
     <section :open="menuOpen"
              class="mobile-menu glass centred">
       <template v-if="starSystem !== null">
+        <h2>Track Object</h2>
+        <p>Select a celestial body below to follow.</p>
         <navbar ref="navbar"
                 :planets="starSystem.planets"
                 :stars="[starSystem.star]"
@@ -181,6 +183,10 @@ export default defineComponent({
   border-radius: 0;
 }
 
+h2, p {
+  display: none;
+}
+
 @media (min-width: 480px) {
   .mobile-menu {
     background: none;
@@ -197,7 +203,7 @@ export default defineComponent({
 @media (max-width: 480px) {
   .mobile-menu {
     max-height: 75vh;
-    overflow-y: scroll;
+    overflow-y: auto;
     position: fixed;
     top: 0;
     left: 0;
@@ -219,6 +225,18 @@ export default defineComponent({
   .mobile-menu[open=false] {
     transform: translateY(-100%);
     padding-top: 0;
+  }
+
+  h2, p {
+    display: inline-block;
+    margin: 4px auto 0;
+  }
+
+  p {
+    font-size: 11px;
+    padding-left: var(--page-padding);
+    padding-right: var(--page-padding);
+    text-align: center;
   }
 
   .toggler[open=true] {

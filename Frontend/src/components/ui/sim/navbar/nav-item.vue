@@ -21,7 +21,7 @@
             :class="open ? 'toggler toggled material-icons' : 'toggler material-icons'"
             class="toggler material-icons"
             @click="open = !open"
-      >expand_more</span
+      >chevron_right</span
       >
     </div>
     <ul
@@ -107,7 +107,6 @@ export default defineComponent({
 .nav-item {
   flex-direction: column;
   align-items: flex-start;
-  overflow-x: visible;
 }
 
 .button-container {
@@ -122,9 +121,6 @@ button {
   background: none;
   outline: none;
   border: none;
-}
-
-button {
   padding: 6px 12px;
   cursor: pointer;
   margin: 4px;
@@ -171,9 +167,22 @@ button:hover .content > * {
   position: relative;
 }
 
-.image img {
+.image:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: "";
+  background: radial-gradient(circle at 50% 0px, #ffffff, rgba(255, 255, 255, 0) 58%);
+  filter: blur(3px);
   border-radius: 50%;
+}
+
+.image img {
   height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .content {
@@ -203,14 +212,18 @@ button:hover .content > * {
 }
 
 .toggler {
-  color: #FFF;
+  color: var(--text-colour);
   cursor: pointer;
-  margin-left: 12px;
-  transition: 0.44s ease-in-out all;
+  margin-left: 4px;
+  transition: 0.35s ease-in-out all;
+}
+
+.toggler:hover {
+  color: var(--main);
 }
 
 .toggler.toggled {
-  transform: rotate(180deg);
+  transform: rotate(90deg);
   color: var(--main);
 }
 
@@ -220,8 +233,7 @@ button:hover .content > * {
   margin-left: 36px;
   overflow-y: hidden;
   max-height: 0;
-  transition: 0.44s ease-in-out max-height;
-  overflow-x: visible;
+  transition: 0.35s ease-in-out max-height;
 }
 
 .moon-container.open {

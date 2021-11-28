@@ -143,7 +143,7 @@ export default defineComponent({
   }
 
   .name {
-    font-size: 28px;
+    font-size: 18px;
   }
 
   .close-icon {

@@ -3,8 +3,9 @@
        role="navigation">
     <div class="nav-buttons centred">
       <ul class="stars">
-        <li v-for="star in stars"
-            v-bind="star"
+        <li v-for="(star, index) in stars"
+            :key="index"
+            :data-name="star.name"
             class="star centred">
           <nav-item
             :ref="(el) => (buttons[star.name] = el)"
@@ -16,8 +17,9 @@
         </li>
       </ul>
       <ul class="planets">
-        <li v-for="planet in planets"
-            v-bind="planet"
+        <li v-for="(planet, index) in planets"
+            :key="index"
+            :data-name="planet.name"
             class="planet centred">
           <nav-item
             :ref="(el) => (buttons[planet.name] = el)"
@@ -56,9 +58,6 @@ export default defineComponent({
       buttons: {} as { [key: string]: typeof NavItem },
     };
   },
-  // beforeUpdate() {
-  //   this.buttons = {};
-  // },
   methods: {
     followPlanet(event) {
       this.toggle(event.name);
@@ -84,21 +83,25 @@ export default defineComponent({
   margin-top: auto;
   margin-bottom: auto;
   z-index: 2;
-  overflow-x: visible;
 }
 
 .nav-buttons {
   overflow-y: auto;
+  overflow-x: hidden;
   justify-content: flex-start;
   margin-top: 36px;
   margin-bottom: 36px;
+  position: relative;
 }
 
-.nav-buttons,
-ul {
+.nav-buttons, ul {
   flex-direction: column;
   align-items: flex-start;
-  overflow-x: visible;
+  width: 100%;
+}
+
+ul {
+  overflow: hidden;
 }
 
 li {
@@ -126,25 +129,35 @@ li {
   .nav-buttons, ul {
     display: flex;
     flex-direction: row;
-    overflow-y: visible;
+    overflow: unset;
   }
 
   .stars {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: min-content;
   }
 
   .planets {
-    overflow-x: scroll;
     align-items: flex-start;
     justify-content: flex-start;
+    overflow-x: auto;
   }
 }
 
 @media (max-height: 480px) and (min-width: 480px) and (orientation: landscape) {
   .navbar {
     left: 0;
+  }
+
+  .nav-buttons {
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  ul {
+    overflow: visible;
   }
 }
 </style>
