@@ -147,8 +147,6 @@ export default defineComponent({
           if (this.factfileOpen) centre.setX(centre.x - controls.minDistance / 4);
           controls.target = centre;
           // TODO: Camera needs to follow object and still allow rotation
-          camera.position.x = centre.x;
-          camera.position.y = centre.y;
         }
       }
     },

@@ -2,6 +2,7 @@
   <camera-controller ref="camera"
                      :aspect="aspect"
                      :orbit-controls="orbitControls"
+                     :show-tour="showTour"
                      :track-gestures="trackGestures"
                      @pause="pause"
                      @play="play"
@@ -45,6 +46,7 @@ export default defineComponent({
     sceneProps: { type: Object, default: {} },
     ui: { type: Boolean, default: false },
     trackGestures: { type: Boolean, default: false },
+    showTour: { type: Boolean, default: false },
   },
   data() {
     return {

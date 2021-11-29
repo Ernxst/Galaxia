@@ -78,7 +78,7 @@ export default defineComponent({
   background: black;
   opacity: .33;
   content: "";
-  width: calc(var(--margin) + var(--factfile-width));
+  width: var(--margin);
   display: none;
 }
 

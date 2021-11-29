@@ -30,7 +30,6 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "circle-button",
   extends: FlatButton,
-  emits: ["click"],
   props: {
     radius: { type: Number, default: 24, },
     ringScale: { type: Number, default: 1.2, },

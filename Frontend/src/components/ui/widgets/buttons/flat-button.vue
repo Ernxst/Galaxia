@@ -2,7 +2,7 @@
   <div class="button-container centred">
     <button :disabled="disabled"
             :style="`--button-bg: ${bg}`"
-            :type="type"
+            type="button"
             class="flat-button noselect centred"
             @click="onClick"
             @mouseenter="onMouseEnter"
@@ -22,7 +22,6 @@ export default defineComponent({
   name: "flat-button",
   emits: ["click"],
   props: {
-    type: { type: String, default: "button", },
     text: { type: String, default: "" },
     bg: { type: String, default: "var(--main)" }
   },
@@ -81,6 +80,10 @@ button:hover, button:focus {
 button span {
   font-size: 12px;
   text-shadow: 0 0 8px var(--page-bg);
+}
+
+button:hover span, button:focus span {
+  text-shadow: none;
 }
 
 button[disabled=true] {

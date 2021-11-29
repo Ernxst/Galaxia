@@ -9,7 +9,7 @@ import { Vector3 } from "three/src/math/Vector3";
 interface AnimParams {
   camera: PerspectiveCamera;
   controls: OrbitControls;
-  object: { position: Vector3 };
+  object: { position: Vector3, quaternion: Quaternion };
   offset?: Vector3;
   duration?: number;
   delay?: number;
@@ -56,7 +56,7 @@ export function animateCamera({
                                 },
                                 onComplete = () => {
                                 },
-                              }: AnimParams): Tween {
+                              }: AnimParams): Tween | undefined {
   if (!shouldAnimate(object.position, camera.position)) return;
   killAnimation();
   animParams = {

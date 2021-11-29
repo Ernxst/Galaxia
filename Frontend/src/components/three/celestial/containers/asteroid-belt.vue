@@ -2,7 +2,7 @@
   <InstancedMesh ref="body"
                  :count="numOfAsteroids">
     <DodecahedronGeometry />
-    <LambertMaterial />
+    <LambertMaterial color="#A9A9A9" />
   </InstancedMesh>
 </template>
 

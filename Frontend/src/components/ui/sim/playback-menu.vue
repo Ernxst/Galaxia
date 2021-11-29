@@ -1,7 +1,7 @@
 <template>
-  <nav class="playback-container centred">
+  <nav class="playback-container sim-ui-section centred">
     <div class="row centred">
-      <p class="sim-speed">Simulation Speed: <strong>{{ scaledSpeed }}×</strong></p>
+      <p class="sim-speed">Simulation Speed: <strong>×{{ scaledSpeed }}</strong></p>
     </div>
     <div class="row centred">
       <circle-button
@@ -72,6 +72,13 @@ export default defineComponent({
   margin: auto;
   flex-direction: column;
   z-index: 4;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+  border-radius: 4px;
+}
+
+.playback-container * {
+  mix-blend-mode: difference;
 }
 
 .playback-container .sim-speed {
@@ -82,6 +89,10 @@ export default defineComponent({
 
 .playback-container .sim-speed strong {
   color: var(--main);
+}
+
+.playback-container .sim-speed, .playback-container .sim-speed strong {
+  text-shadow: 0 0 8px var(--page-bg);
 }
 
 .playback-container .playback-button {
@@ -117,6 +128,7 @@ export default defineComponent({
     bottom: 16px;
     top: unset;
     flex-direction: column-reverse;
+    backdrop-filter: none;
   }
 
   .playback-container .sim-speed {

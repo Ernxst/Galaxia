@@ -6,6 +6,7 @@ import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass";
 import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
 import { Camera } from "three/src/cameras/Camera";
+import { BufferGeometry } from "three/src/core/BufferGeometry";
 import { Layers } from "three/src/core/Layers";
 import { Material } from "three/src/materials/Material";
 import { MeshBasicMaterial } from "three/src/materials/MeshBasicMaterial";
@@ -81,14 +82,14 @@ export function setComposerSize(width: number, height: number) {
   smaaPass.setSize(width, height);
 }
 
-function darkenNonBloomed(obj: Mesh) {
+function darkenNonBloomed(obj: Mesh<BufferGeometry, Material>) {
   if (obj.isMesh && !bloomLayer.test(obj.layers)) {
     materials[obj.uuid] = obj.material;
     obj.material = darkMaterial;
   }
 }
 
-function restoreMaterial(obj: Mesh) {
+function restoreMaterial(obj: Mesh<BufferGeometry, Material>) {
   if (materials[obj.uuid]) {
     obj.material = materials[obj.uuid];
     delete materials[obj.uuid];

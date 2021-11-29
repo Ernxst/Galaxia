@@ -92,6 +92,8 @@ export default defineComponent({
   margin-top: 36px;
   margin-bottom: 36px;
   position: relative;
+  backdrop-filter: blur(10px);
+  border-radius: 4px;
 }
 
 .nav-buttons, ul {
@@ -124,6 +126,7 @@ li {
     margin-top: 0;
     margin-bottom: 0;
     padding: 16px;
+    backdrop-filter: none;
   }
 
   .nav-buttons, ul {

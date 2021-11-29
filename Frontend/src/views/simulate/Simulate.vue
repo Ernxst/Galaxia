@@ -5,7 +5,8 @@
     <renderer-controller ref="renderer"
                          :controls="true"
                          :scene-component="sceneComponent"
-                         :scene-props="{ starSystemName: starSystem }"
+                         :scene-props="{ starSystemName: starSystem}"
+                         :show-tour="true"
                          :track-gestures="false"
                          :ui="true">
     </renderer-controller>

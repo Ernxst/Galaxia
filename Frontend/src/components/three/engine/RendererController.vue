@@ -12,6 +12,7 @@
         :orbit-controls="orbitControls"
         :scene-component="sceneComponent"
         :scene-props="sceneProps"
+        :show-tour="showTour"
         :track-gestures="trackGestures"
         :ui="ui"
         @loaded="onLoad" />
@@ -41,6 +42,7 @@ export default defineComponent({
     sceneProps: { type: Object, default: {} },
     ui: { type: Boolean, default: false },
     trackGestures: { type: Boolean, default: false },
+    showTour: { type: Boolean, default: false },
   },
   setup(props) {
     const width = ref<number>(1);
