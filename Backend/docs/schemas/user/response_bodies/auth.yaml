@@ -1,0 +1,9 @@
+type: object
+required:
+  - user_id
+  - token
+properties:
+  user_id:
+    type: string
+  token:
+    type: string

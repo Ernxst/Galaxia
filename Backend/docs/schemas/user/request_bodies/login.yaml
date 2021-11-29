@@ -1,0 +1,15 @@
+type: object
+required:
+  - user
+properties:
+  user:
+    type: object
+    required:
+      - username
+      - password
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+        format: password

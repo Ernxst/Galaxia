@@ -1,0 +1,9 @@
+type: object
+required:
+  - user
+  - project
+properties:
+  user:
+    $ref: './../../../openapi.yaml#/components/schemas/User'
+  project:
+    $ref: './../../../openapi.yaml#/components/schemas/Project'

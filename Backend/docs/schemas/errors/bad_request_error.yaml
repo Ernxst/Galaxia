@@ -1,0 +1,14 @@
+type: object
+required:
+  - errors
+  - status
+properties:
+  errors:
+    type: object
+    additionalProperties:
+      type: array
+      items: 
+        type: string
+      example: That is not a valid username. Please try again
+  status:
+    type: string

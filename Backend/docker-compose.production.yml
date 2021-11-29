@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  web:
+    restart: always
+    env_file:
+      - .env.production
+    build: 
+      args: 
+        RAILS_ENV: production
+  redis:
+    restart: always

@@ -1,0 +1,59 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Galaxia Backend API
+  description: OpenAPI specification for the backend.
+  contact:
+    name: Ernest Nkansah-Badu
+    email: ernest.nkansah-badu.19@ucl.ac.uk
+    url: https://www.some_url.com
+  license:
+    name: MIT
+servers:
+  - url: "https://APP_NAME.herokuapp.com/api/v1"
+paths:
+  /users/register:
+    $ref: "./paths/user/register.yaml"
+  /users/login:
+    $ref: "./paths/user/login.yaml"
+components:
+  responses:
+    UnauthorizedError:
+      description: The user is not logged in
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UnauthorizedError"
+    BadRequestError:
+      description: Action failed due to missing parameters in request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/BadRequestErrorResponse"
+    GenericError:
+      description: A generic server side error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GenericErrorResponse"
+    NotFoundError:
+      description: Action failed as the requested resource could not be located
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GenericErrorResponse"
+    UnprocessableEntityError:
+      description: Action failed due to semantic issues with input
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GenericFieldErrorsResponse"
+  schemas:
+    $ref: "./schemas/_index.yaml"
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []

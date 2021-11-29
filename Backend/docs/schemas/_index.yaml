@@ -1,0 +1,21 @@
+User:
+  $ref: "./user/user.yaml"
+AuthResponseBody:
+  $ref: "./user/response_bodies/auth.yaml"
+  
+# POST api/v1/users/register
+UserRegisterRequestBody:
+  $ref: "./user/request_bodies/register.yaml"
+
+# POST api/v1/users/login
+UserLoginRequestBody:
+  $ref: "./user/request_bodies/login.yaml"
+
+GenericErrorResponse:
+  $ref: "./errors/generic_error.yaml"
+GenericFieldErrorsResponse:
+  $ref: "./errors/generic_field_errors.yaml"
+BadRequestErrorResponse:
+  $ref: "./errors/bad_request_error.yaml"
+UnauthorizedError:
+  $ref: "./errors/unauthorized_error.yaml"
