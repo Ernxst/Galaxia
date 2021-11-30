@@ -1,0 +1,30 @@
+# TODO - Cache image to reduce workflow run time
+# TODO - Cache gems in image to reduce workflow run time
+# TODO - Report SimpleCov from inside container
+
+name: Test
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build app
+        working-directory: ./Backend
+        run: make build
+
+      - name: Start app
+        working-directory: ./Backend
+        run: make up silent=1
+
+      - name: Wait for server to respond
+        working-directory: ./Backend
+        run: make wait
+
+      - name: Run tests
+        working-directory: ./Backend
+        run: make rspec tty=1
