@@ -19,6 +19,9 @@
     "gsap": "^3.7.1",
     "handtrackjs": "^0.1.5",
     "three": "^0.127.0",
+    "@tensorflow/tfjs": "^3.11.0",
+    "seedrandom": "^3.0.5",
+    "@tensorflow/tfjs-converter": "3.3.0",
     "troisjs": "0.3.2",
     "vue": "^3.2.6",
     "vue-router": "^4.0.11"

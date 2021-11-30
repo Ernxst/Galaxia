@@ -17,8 +17,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-          cache: 'npm'
-          cache-dependency-path: Frontend/package-lock.json
+          # cache: 'npm'
+          # cache-dependency-path: Frontend/package-lock.json
       - name: Build frontend app
         run: | 
           npm ci
