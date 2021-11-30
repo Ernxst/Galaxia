@@ -226,10 +226,15 @@ REDIS_HOST=redis
 RAILS_ENV=production
 RAKE_ENV=production
 
+GUEST_USERNAME=guest
+GUEST_PASSWORD[OMITTED]
+
 DEVISE_JWT_SECRET_KEY=[OMITTED]
 ```
 
 You will then need to replace the `[OMITTED]` values.
+
+Note that `.env.production` requires `DATABASE_URL` field linking to the cloud database.
 
 The value for the `DEVISE_JWT_SECRET_KEY` field can be generated using:
 

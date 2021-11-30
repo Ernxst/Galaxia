@@ -1,9 +1,15 @@
 type: object
 required:
   - user
-  - project
 properties:
   user:
-    $ref: './../../../openapi.yaml#/components/schemas/User'
-  project:
-    $ref: './../../../openapi.yaml#/components/schemas/Project'
+    type: object
+    required:
+      - username
+      - password
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+        format: password

@@ -7,7 +7,8 @@ class ApplicationController < ActionController::API
   prepend_before_action :authenticate_user
   before_action :authenticate_user!
 
-  skip_before_action :authenticate_user!, only: %i[ping]
+  skip_before_action :authenticate_user!, only: %i[ping guest_username]
+  skip_before_action :authenticate_user, only: %i[ping guest_username]
 
   include ActionController::MimeResponds
   # Prevent CSRF attacks by rejecting their session cookie.
@@ -90,6 +91,11 @@ class ApplicationController < ActionController::API
   # @return [Boolean] a boolean, representing whether or not the user has been set and, hence, is signed in.
   def signed_in?
     @current_user.present?
+  end
+
+  # GET /users/guest_username
+  def guest_username
+    render json: { username: ENV['GUEST_USERNAME'] }, status: :ok
   end
 
   def ping

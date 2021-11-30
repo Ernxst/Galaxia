@@ -17,6 +17,8 @@ Rails.application.routes.draw do
                    registrations: 'users/registrations',
                    sessions: 'users/sessions'
                  }
+
+      get '/users/guest_username', to: 'application#guest_username'
     end
   end
 end

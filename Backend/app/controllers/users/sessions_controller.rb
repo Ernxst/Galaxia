@@ -2,8 +2,8 @@
 
 class Users::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
-  skip_before_action :authenticate_user!, only: [:create]
-  skip_before_action :authenticate_user, only: [:create]
+  skip_before_action :authenticate_user!, only: %i[create]
+  skip_before_action :authenticate_user, only: %i[create]
 
   # GET /resource/sign_in
   # def new
@@ -12,6 +12,12 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /users/login
   def create
+    params.require(:user).permit(:username, :password).require(%i[username])
+    if params[:user][:username] == ENV['GUEST_USERNAME']
+      params[:user][:password] = ENV['GUEST_PASSWORD']
+      request.params[:user][:password] = params[:user][:password]
+    end
+
     params.require(:user).permit(:username, :password).require(%i[username password])
     self.resource = warden.authenticate!(auth_options)
     sign_in(resource_name, resource)
@@ -34,6 +40,6 @@ class Users::SessionsController < Devise::SessionsController
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_in_params
-  #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
+  #   devise_parameter_sanitizer.permit(:sign_in, keys: %i[username password])
   # end
 end
