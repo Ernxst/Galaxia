@@ -404,7 +404,7 @@ Safely stop the application.
 <tr>
 <td align="center"><pre>make reset</pre></td>
 <td align="center"></td>
-<td>Drop all the tables in the production database. Used when the database structure needs changing (or purging). Requires a login and collaborator access to the application.Equivalent to: <code>heroku pg:reset -a --confirm [APP_NAME]</code></td>
+<td>Drop all the tables in the production database. Used when the database structure needs changing (or purging). Requires a login and collaborator access to the application.Equivalent to: <code>heroku pg:reset -a --confirm galaxia-app</code></td>
 </tr>
 <tr>
 <td align="center"><pre>make revert</pre></td>
@@ -435,7 +435,7 @@ Also note that on M1 Mac devices, the [Gemfile.lock](Gemfile.lock) file may have
 The production API is then available at:
 
 ```bash
-https://app_name.herokuapp.com
+https://galaxia-app.herokuapp.com
 ```
 
 With the available endpoints listed in the [Documentation](#documentation) section.

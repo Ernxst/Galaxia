@@ -18,15 +18,15 @@ en:
       unconfirmed: "You must confirm your email address before continuing."
     mailer:
       confirmation_instructions:
-        subject: "Confirm your APP_NAME Account"
+        subject: "Confirm your Galaxia Account"
       reset_password_instructions:
-        subject: "Reset your APP_NAME Password"
+        subject: "Reset your Galaxia Password"
       unlock_instructions:
         subject: "Unlock instructions"
       email_changed:
-        subject: "APP_NAME - Your Email Was Changed"
+        subject: "Galaxia - Your Email Was Changed"
       password_change:
-        subject: "APP_NAME - Your Password Was Changed"
+        subject: "Galaxia - Your Password Was Changed"
     omniauth_callbacks:
       failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
       success: "Successfully authenticated from %{kind} account."
