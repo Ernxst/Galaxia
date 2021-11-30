@@ -8,11 +8,11 @@
   "homepage": "https://www.ernestbadu.me",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --watch",
+    "build": "vite build",
     "preview": "vite preview",
     "watch": "tsc -b tsconfig.json -w",
     "test": "",
-    "deploy": ""
+    "deploy": "set -e; npm run build; firebase deploy"
   },
   "dependencies": {
     "autoprefixer": "^10.3.4",

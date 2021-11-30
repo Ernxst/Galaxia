@@ -1,0 +1,52 @@
+{
+    "headers": [
+        {
+            "headers": [
+                {
+                    "key": "Access-Control-Allow-Origin",
+                    "value": "*"
+                }
+            ],
+            "source": "**/*.@(eot|otf|ttf|ttc|woff|woff2|font.css)"
+        },
+        {
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "max-age=604800"
+                }
+            ],
+            "source": "**/*.@(js|css)"
+        },
+        {
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "max-age=604800"
+                }
+            ],
+            "source": "**/*.@(jpg|jpeg|gif|png|webp)"
+        }
+    ],
+    "hosting": {
+        "ignore": [
+            "firebase.json",
+            "Backend/**/.*",
+            "Frontend/jest.config.ts",
+            "Frontend/**/.*",
+            "Frontend/**/test/**",
+            "Frontend/**/.vscode/**",
+            "Frontend/**/node_modules/**"
+        ],
+        "public": "Frontend/dist",
+        "rewrites": [
+            {
+                "destination": "/Frontend/index.html",
+                "source": "**"
+            }
+        ]
+    },
+    "storage": {
+        "rules": "Frontend/storage.rules"
+    }
+}
