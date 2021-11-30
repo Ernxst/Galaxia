@@ -1,12 +1,13 @@
 <template>
   <nav class="playback-container sim-ui-section centred">
-    <div class="row centred">
+    <section class="row">
       <p class="sim-speed">Simulation Speed: <strong>×{{ scaledSpeed }}</strong></p>
-    </div>
-    <div class="row centred">
+    </section>
+    <section class="button-row row">
       <circle-button
-        :class="speedDownClass"
+        :disabled="isMinSpeed"
         :radius="buttonRadius"
+        class="playback-button"
         @click="$emit('speedDown')"
       >
         <span class="icon centred material-icons">fast_rewind</span>
@@ -21,13 +22,14 @@
         }}</span>
       </circle-button>
       <circle-button
-        :class="speedUpClass"
+        :disabled="isMaxSpeed"
         :radius="buttonRadius"
+        class="playback-button"
         @click="$emit('speedUp')"
       >
         <span class="icon centred material-icons">fast_forward</span>
       </circle-button>
-    </div>
+    </section>
   </nav>
 </template>
 
@@ -43,17 +45,17 @@ export default defineComponent({
   emits: ["togglePause", "speedUp", "speedDown"],
   props: {
     paused: Boolean,
-    speed: Number,
+    speed: { type: Number, required: true },
   },
   computed: {
     buttonRadius(): number {
-      return 16;
+      return window.innerWidth < 480 ? 18 : 16;
     },
-    speedDownClass(): string {
-      return `playback-button ${this.speed === MIN_SPEED ? "disabled" : ""}`;
+    isMinSpeed(): boolean {
+      return this.speed === MIN_SPEED;
     },
-    speedUpClass(): string {
-      return `playback-button ${this.speed === MAX_SPEED ? "disabled" : ""}`;
+    isMaxSpeed(): boolean {
+      return this.speed === MAX_SPEED;
     },
     scaledSpeed(): number {
       return Math.round(this.speed / BASE_SPEED);
@@ -77,10 +79,6 @@ export default defineComponent({
   border-radius: 4px;
 }
 
-.playback-container * {
-  mix-blend-mode: difference;
-}
-
 .playback-container .sim-speed {
   margin-top: 0;
   margin-bottom: 6px;
@@ -95,32 +93,21 @@ export default defineComponent({
   text-shadow: 0 0 8px var(--page-bg);
 }
 
-.playback-container .playback-button {
-  margin-right: 6px;
-}
-
-.playback-container .playback-button:last-child {
-  margin-right: 0;
+.playback-container .button-row {
+  display: grid;
+  grid-column-gap: 6px;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .playback-container .playback-button .icon {
   color: var(--text-colour);
   transition: 0.4s ease-in-out all;
-  font-weight: 100;
   font-size: 16px;
-  z-index: 3;
+  mix-blend-mode: multiply;
 }
 
 .playback-container .circle-button:hover .icon {
   color: var(--page-bg);
-}
-
-.playback-container .playback-button.disabled {
-  pointer-events: none;
-}
-
-.playback-container .playback-button.disabled .circle-button {
-  background: rgba(255, 255, 255, 0.75);
 }
 
 @media (max-width: 480px) {
@@ -139,6 +126,11 @@ export default defineComponent({
 }
 
 @media (max-height: 480px) and (min-width: 480px) and (orientation: landscape) {
+  .playback-container {
+    top: 0;
+    padding: 8px;
+  }
+
   .playback-container .sim-speed {
     letter-spacing: 1px;
   }

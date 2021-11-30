@@ -1,8 +1,8 @@
 <template>
   <div :style="`--diameter: ${2 * radius}px; --ring-scale: ${ringScale}`"
        class="circle-button-container centred">
-    <button :disabled="disabled"
-            :type="type"
+    <button v-bind="$attrs"
+            :disabled="disabled"
             class="circle-button centred"
             @click="onClick"
             @mouseenter="onMouseEnter"
@@ -140,5 +140,10 @@ export default defineComponent({
 
 .ring-container[mouse=true] .ring {
   stroke-dashoffset: 0;
+}
+
+.circle-button[disabled] {
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.75);
 }
 </style>
