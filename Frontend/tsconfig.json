@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "composite": true,
     "declaration": true,
+    "declarationMap": true,
     "esModuleInterop": true,
     "importHelpers": false,
     "jsx": "preserve",
@@ -17,6 +18,7 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
+    "outDir": "types",
     "paths": {
       "@/*": [
         "./src/*"
@@ -27,6 +29,7 @@
     "sourceMap": true,
     "strict": true,
     "target": "esnext",
+    "types": ["vite/client", "@types/jest", "node", "@types/three"],
     "typeRoots": [
       "./node_modules/@types",
       "./src/@types"
@@ -38,15 +41,15 @@
     "**/node_modules/*",
     "dist",
     "**/dump/*",
-    "docs",
     ".vscode"
   ],
   "include": [
-    "src/**/*.vue",
     "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/components/widgets",
+    "src/views",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ]
+    "tests/mocks/*.ts",
+    "__mocks__/**/*.ts"
+  ],
 }

@@ -1,17 +1,18 @@
 <template>
   <div :style="`--diameter: ${2 * radius}px; --ring-scale: ${ringScale}`"
        class="circle-button-container centred">
-    <button v-bind="$attrs"
-            :disabled="disabled"
-            class="circle-button centred"
-            @click="onClick"
-            @mouseenter="onMouseEnter"
-            @mouseleave="onMouseLeave">
+    <button
+      :disabled="disabled"
+      :type="type"
+      class="circle-button centred"
+      @click="onClick"
+      @mouseenter="onMouseEnter"
+      @mouseleave="onMouseLeave">
       <span class="circle-button-text centred">{{ text }}</span>
       <slot></slot>
     </button>
     <svg ref="ring"
-         :mouse="mouseEntered"
+         :data-mouse="mouseEntered"
          class="ring-container">
       <circle :cx="ringRadius"
               :cy="ringRadius"
@@ -138,11 +139,11 @@ export default defineComponent({
   transition: 0.75s ease all;
 }
 
-.ring-container[mouse=true] .ring {
+.ring-container[data-mouse=true] .ring {
   stroke-dashoffset: 0;
 }
 
-.circle-button[disabled] {
+.circle-button-container[disabled=true] .circle-button {
   pointer-events: none;
   background: rgba(255, 255, 255, 0.75);
 }

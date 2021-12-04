@@ -14,8 +14,6 @@ import { Vector2 } from "three/src/math/Vector2";
 import { Mesh } from "three/src/objects/Mesh";
 import { WebGLRenderer } from "three/src/renderers/WebGLRenderer";
 import { Scene } from "three/src/scenes/Scene";
-import bloomFragment from "./shaders/bloomFragment.glsl";
-import bloomVertex from "./shaders/bloomVertex.glsl";
 
 
 const darkMaterial = new MeshBasicMaterial({ color: "black" });
@@ -52,8 +50,17 @@ export function setupPostprocessing(
         baseTexture: { value: null },
         bloomTexture: { value: bloomComposer.renderTarget2.texture },
       },
-      vertexShader: bloomVertex,
-      fragmentShader: bloomFragment,
+      vertexShader: `varying vec2 vUv; 
+void main() {
+  vUv = uv;gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+}`,
+      fragmentShader: `uniform sampler2D baseTexture; 
+uniform sampler2D bloomTexture; 
+varying vec2 vUv; 
+void main() {
+  gl_FragColor = ( texture2D( baseTexture, vUv ) + vec4( 1.0 ) * texture2D( bloomTexture, vUv ) );
+}
+`,
       defines: {},
     }),
     "baseTexture"
@@ -69,8 +76,10 @@ export function setupPostprocessing(
   finalComposer.addPass(smaaPass);
 
   return () => {
+    // @ts-ignore
     scene.traverse(darkenNonBloomed);
     bloomComposer.render();
+    // @ts-ignore
     scene.traverse(restoreMaterial);
     finalComposer.render();
   };

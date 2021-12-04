@@ -1,14 +1,13 @@
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 import { defineConfig } from "vite";
-import glsl from "vite-plugin-glsl";
 
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), glsl()],
+  plugins: [vue()],
   server: {
-    port: 8080,
+    port: 8000,
   },
   resolve: {
     alias: [

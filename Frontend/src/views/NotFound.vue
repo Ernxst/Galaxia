@@ -22,33 +22,25 @@
 <script lang="ts">
 import Page from "@/components/ui/layout/page.vue";
 import FlatButton from "@/components/ui/widgets/buttons/flat-button.vue";
-import { nextTick } from "@vue/runtime-core";
-import { defineComponent, onBeforeMount, onMounted, ref } from "vue";
+import { defineComponent } from "vue";
 
 
 export default defineComponent({
   name: "NotFound",
   components: { FlatButton, Page },
-  setup() {
-    const header = ref<HTMLHeadingElement>(null);
-    const main = ref<HTMLElement>(null);
-
-    function resize() {
-      main.value.style.maxWidth = `${header.value.offsetWidth}px`;
+  methods: {
+    resize() {
+      this.$refs.main.style.maxWidth = `${this.$refs.header.offsetWidth}px`;
     }
-
-    onMounted(() => {
-      nextTick(() => {
-        resize();
-      });
-      window.addEventListener("resize", resize);
-    });
-
-    onBeforeMount(() => {
-      window.removeEventListener("resize", resize);
-    });
-    return { header, main };
   },
+  mounted() {
+    this.$nextTick(() => {
+      this.resize();
+    });
+    window.addEventListener("resize", () => {
+      this.resize();
+    });
+  }
 });
 </script>
 

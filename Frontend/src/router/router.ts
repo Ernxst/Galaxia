@@ -1,4 +1,5 @@
 import { APP_TITLE, DEFAULT_DESCRIPTION } from "@/assets/util/util.constants";
+import { store } from "@/store/store";
 import { nextTick } from "@vue/runtime-core";
 import { createRouter, createWebHistory } from "vue-router";
 import { routes } from "./routes";
@@ -9,12 +10,9 @@ const router = createRouter({
   routes,
 });
 
-const loggedIn = (): boolean => {
-  return false;
-};
-
-router.beforeEach((to, from) => {
-  return !(to.meta.requiresAuth && !loggedIn());
+router.beforeEach((to, from): string | void => {
+  const canAccess = !(to.meta.requiresAuth && !store.getters["auth/loggedIn"]);
+  if (!canAccess) return "/login";
 });
 
 router.afterEach((to, from) => {
@@ -25,11 +23,8 @@ router.afterEach((to, from) => {
     const content: string = meta.description(to) || DEFAULT_DESCRIPTION;
     if (desc) desc.setAttribute("content", content);
 
-    if (window.getSelection) {
-      window.getSelection().removeAllRanges();
-    } else if (document.selection) {
-      document.selection.empty();
-    }
+    const selection = window.getSelection();
+    if (selection) selection.removeAllRanges();
   });
 });
 

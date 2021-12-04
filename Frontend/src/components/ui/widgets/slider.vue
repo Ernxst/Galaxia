@@ -1,37 +1,34 @@
 <template>
-  <div :orient="orient"
-       class="slider-container noselect centred">
-    <p class="slider-label">{{ label }}</p>
-    <div class="slider-inner centred">
-      <span v-if="show_limits"
-            class="min value centred">{{ minValue }}</span>
-      <div class="slider centred">
+  <div :data-orient="orient"
+       :data-disabled="false"
+       class="slider-container noselect">
+    <label v-if="label">{{ label }}</label>
+    <div class="slider-inner">
+      <span v-if="showLimits">{{ min }}</span>
+      <div class="slider">
         <input
           :id="id"
           ref="slider"
-          :max="maxValue"
-          :min="minValue"
+          :max="max"
+          :min="min"
           :step="step"
-          class="slider"
+          :name="name"
+          :value.number="modelValue"
           type="range"
-          value.number="modelValue"
-          @input="update"
+          @input="onUpdate"
         />
-        <label ref="sliderLabel"
-               :for="id"
-               class="current-value noselect centred">
+        <p ref="sliderLabel"
+           :for="id">
           {{ modelValue }}
-        </label>
+        </p>
       </div>
-      <span v-if="show_limits"
-            class="max value centred">{{ maxValue }}</span>
+      <span v-if="showLimits">{{ max }}</span>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeUpdate } from "@vue/runtime-dom";
-import { computed, onMounted, ref, toRefs, watch } from "vue";
+import { defineComponent } from "vue";
 
 
 export default defineComponent({
@@ -39,143 +36,86 @@ export default defineComponent({
   props: {
     min: { default: 0, type: Number },
     max: { default: 100, type: Number },
-    modelValue: { default: 50, type: Number },
+    modelValue: Number,
     step: { default: 1, type: Number },
-    show_limits: { default: false, type: Boolean },
-    id: String,
+    showLimits: { default: false, type: Boolean },
+    id: { type: String, required: true },
     label: String,
+    name: String,
     orient: { default: "horizontal", type: String },
   },
   emits: ["update:modelValue"],
-  setup(props, { emit }) {
-    const reactiveProps = toRefs(props);
-    const minValue = reactiveProps.min;
-    const maxValue = reactiveProps.max;
-    const range = computed(() => {
-      return maxValue.value - minValue.value;
-    });
-
-    watch(reactiveProps.modelValue, () => {
-      if (slider.value.value !== props.modelValue)
-        slider.value.value = props.modelValue;
-    });
-
-    const slider = ref<HTMLInputElement>();
-    const sliderLabel = ref<HTMLElement>();
-
-    function update(event: Event) {
-      const el = event.target as HTMLInputElement;
-      const newValue: number = parseInt(el.value);
-      emit("update:modelValue", newValue);
+  computed: {
+    range(): number {
+      return Math.abs(this.max - this.min);
     }
-
-    function setPos(value: number) {
-      const percentage = (value - minValue.value) / range.value;
-      const width = slider.value?.clientWidth;
-      const labelWidth = sliderLabel.value?.clientWidth;
-      if (sliderLabel.value && width && labelWidth) {
-        sliderLabel.value.style["left"] = `${
-          percentage * (width - labelWidth)
-        }px`;
-      }
-    }
-
-    onBeforeUpdate(() => {
-      setPos(props.modelValue);
-    });
-
-    onMounted(() => {
-      // @ts-ignore
-      slider.value.value = props.modelValue;
-      setPos(props.modelValue);
-      window.addEventListener("resize", () => {
-        setPos(props.modelValue);
+  },
+  methods: {
+    onUpdate(event: InputEvent) {
+      this.updateSliderPos(event.target.value);
+      event.preventDefault();
+      this.$emit("update:modelValue", parseInt(event.target.value));
+    },
+    // Move the slider value indicator
+    updateSliderPos(newValue: string) {
+      const percentage = (parseInt(newValue) - this.min) / this.range;
+      const width = this.$refs.slider.clientWidth;
+      const lblWidth = this.$refs.sliderLabel.clientWidth;
+      this.$refs.sliderLabel.style.left = `${percentage * (width - lblWidth)}px`;
+    },
+  },
+  mounted() {
+    this.updateSliderPos(this.$refs.slider.value);
+    window.addEventListener("resize", () => {
+      this.$nextTick(() => {
+        this.updateSliderPos(this.$refs.slider.value);
       });
     });
-    return {
-      minValue,
-      maxValue,
-      slider,
-      sliderLabel,
-      update,
-    };
-  },
+  }
 });
 </script>
 
 <style scoped>
-.slider-container[orient=vertical] .slider-inner {
-  transform: rotate(270deg);
-  margin-top: 64px;
+.slider-container {
+  display: grid;
+  grid-row-gap: 6px;
 }
 
-.slider-container,
-.slider {
+label {
+  margin: 0;
   width: 100%;
-  flex-direction: column;
-  position: relative;
-}
-
-.slider-label {
-  text-align: left;
-  margin-top: 0;
-  margin-bottom: 16px;
-  line-height: 90%;
   font-size: 12px;
   color: var(--text-colour);
 }
 
-.slider-container[orient=vertical] .slider-label {
-  text-align: center;
-}
-
-.slider-inner,
-.slider-label,
-.slider {
-  width: 100%;
-}
-
-.value {
+span {
   padding: 4px;
   border-radius: var(--button-radius);
   color: var(--text-colour);
   background: var(--page-bg);
-  -webkit-text-stroke: 1px var(--page-bg);
 }
 
-.min {
-  margin-right: 6px;
+.slider-inner {
+  display: grid;
+  grid-template-columns: auto 5fr auto;
+  grid-column-gap: 6px;
 }
 
-.max {
-  margin-left: 6px;
+.slider {
+  position: relative;
+  grid-column-start: 2;
 }
 
-.slider-container[orient=vertical] .value {
-  transform: rotate(-270deg);
-}
-
-.slider input[type="range"] {
+input[type="range"] {
   --thumb-size: 24px;
   --bg: var(--main);
   -webkit-appearance: none;
   height: 4px;
-  border-radius: var(--button-radius);
+  background: #D3D3D3 linear-gradient(to right, var(--bg) 0%, var(--bg) 100%) no-repeat;
+  border: none;
   outline: none;
+  border-radius: var(--button-radius);
   width: 100%;
-  background: #D3D3D3;
-  background-image: -webkit-gradient(
-    linear,
-    20% 0%,
-    20% 100%,
-    color-stop(0%, var(--bg)),
-    color-stop(100%, var(--bg))
-  );
-  background-image: -webkit-linear-gradient(left, var(--bg) 0%, var(--bg) 100%);
-  background-image: -moz-linear-gradient(left, var(--bg) 0%, var(--bg) 100%);
-  background-image: -o-linear-gradient(to right, var(--bg) 0%, var(--bg) 100%);
-  background-image: linear-gradient(to right, var(--bg) 0%, var(--bg) 100%);
-  background-repeat: no-repeat;
 }
 
 input[type="range"]:focus {
@@ -198,7 +138,7 @@ input[type="range"]::-webkit-slider-thumb {
   height: var(--thumb-size);
   width: var(--thumb-size);
   border-radius: 2px;
-  background: #212121;
+  background: var(--page-bg);
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: -10px;
@@ -269,30 +209,44 @@ input[type="range"]:focus::-ms-fill-upper {
   background: transparent;
 }
 
-.current-value {
+p {
   position: absolute;
   left: 0;
   top: calc(100% + 14px);
-  color: var(--bg);
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.22);
   padding: 4px 8px;
   letter-spacing: 0;
   z-index: 2;
-  font-weight: 700;
   font-size: 12px;
-  background: #212121;
+  background: var(--page-bg);
+  margin: 0;
 }
 
-.slider-container[orient=vertical] .current-value {
-  transform: rotate(-270deg);
-}
-
-.slider-container[disabled=true] input[type=range] {
+.slider-container[data-disabled=true] input[type="range"] {
   --bg: grey;
   pointer-events: none;
 }
 
-.slider-container[disabled=true] .slider-label {
+.slider-container[data-disabled=true] label {
   color: grey;
+}
+
+.slider-container[data-orient=vertical] .slider-inner {
+  transform: rotate(90deg);
+  transform-origin: 0 100%;
+}
+
+.slider-container[data-orient=vertical] label {
+  transform: translateX(-8px);
+}
+
+.slider-container[data-orient=vertical] span,
+.slider-container[data-orient=vertical] p {
+  transform: rotate(-90deg);
+  transform-origin: 0 100%;
+}
+
+.slider-container[data-orient=vertical] p {
+  margin-left: 28px;
 }
 </style>

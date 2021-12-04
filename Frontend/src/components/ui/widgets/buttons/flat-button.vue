@@ -1,8 +1,8 @@
 <template>
   <div class="button-container centred">
-    <button :disabled="disabled"
+    <button :data-disabled="disabled"
             :style="`--button-bg: ${bg}`"
-            type="button"
+            :type="type"
             class="flat-button noselect centred"
             @click="onClick"
             @mouseenter="onMouseEnter"
@@ -20,10 +20,11 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "flat-button",
-  emits: ["click"],
+  emits: ["click", "mouseenter", "mouseleave"],
   props: {
     text: { type: String, default: "" },
-    bg: { type: String, default: "var(--main)" }
+    bg: { type: String, default: "var(--main)" },
+    type: { type: String, default: "button" },
   },
   data() {
     return {
@@ -36,13 +37,15 @@ export default defineComponent({
       // TODO: Play button click sound here
       this.$emit("click", event);
     },
-    onMouseEnter() {
+    onMouseEnter(event) {
       // TODO: Play button hover sound here
       this.mouseEntered = true;
+      this.$emit("mouseenter", event)
     },
-    onMouseLeave() {
+    onMouseLeave(event) {
       // TODO: Stop button hover sound
       this.mouseEntered = false;
+      this.$emit("mouseleave", event)
     },
     enable() {
       this.disabled = false;
@@ -86,7 +89,7 @@ button:hover span, button:focus span {
   text-shadow: none;
 }
 
-button[disabled=true] {
+button[data-disabled=true] {
   pointer-events: none;
   filter: brightness(0.33);
 }

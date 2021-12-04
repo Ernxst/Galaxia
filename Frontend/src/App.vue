@@ -5,7 +5,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { useStore } from "@/store/store";
+import { defineComponent, onBeforeMount } from "vue";
 
 
 export default defineComponent({
@@ -18,6 +19,12 @@ export default defineComponent({
         });
       }
     },
+  },
+  setup() {
+    const store = useStore();
+    onBeforeMount(async () => {
+      await store.dispatch("auth/fetchGuestUsername");
+    });
   },
   methods: {
     scrollToId(id: string) {

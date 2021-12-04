@@ -23,6 +23,9 @@ import { defineComponent, ref } from "vue";
 export default defineComponent({
   name: "Simulate",
   components: { RendererController, Page },
+  props: {
+    simulationID: { type: String, required: true },
+  },
   computed: {
     starSystem(): string {
       return "Solar System"; // TODO: Get from store by ID

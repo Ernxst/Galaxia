@@ -41,6 +41,7 @@ export default defineComponent({
     };
   },
   mounted() {
+    this.showFooter = window.innerHeight > 640;
     window.addEventListener("resize", () => {
       this.showFooter = window.innerHeight > 640;
     });
@@ -53,6 +54,7 @@ footer {
   margin-top: auto;
   padding: 16px var(--page-padding);
   z-index: 1;
+  backdrop-filter: blur(4px);
 }
 
 .links {
