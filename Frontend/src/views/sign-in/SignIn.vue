@@ -16,26 +16,39 @@
                     @login="submit('login', $event)"
                     @register="submit('register', $event)" />
       </section>
+      <template v-if="loading">
+        <loading-popup />
+      </template>
     </page>
 </template>
 
 <script lang="ts">
+// TODO: Show loading popup
 import Page from "@/components/ui/layout/page.vue";
 import { AuthRequest } from "@/services/auth.service";
+import LoadingPopup from "@/views/sign-in/loading-popup.vue";
 import LoginForm from "./login-form.vue";
 import { defineComponent } from "vue";
 
 
 export default defineComponent({
   name: "Home",
-  components: { LoginForm, Page },
+  components: { LoadingPopup, LoginForm, Page },
+  data() {
+    return {
+      loading: false,
+    }
+  },
   methods: {
     async submit(type: "login" | "register" | "guestLogin", user?: AuthRequest) {
       try {
+        this.loading = true;
         await this.$store.dispatch(`auth/${type}`, user);
+        this.loading = false;
         const username = this.$store.getters["auth/currentUsername"];
         await this.$router.push({ name: "home", params: { username } });
       } catch (error) {
+        this.loading = false;
         alert(error);
         this.$refs.form.focus();
       }
