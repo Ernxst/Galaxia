@@ -1,6 +1,7 @@
 <template>
   <nav class="navbar centred noselect"
-       role="navigation">
+       role="navigation"
+       :data-disabled="disabled">
     <div class="nav-buttons centred">
       <ul class="stars">
         <li v-for="(star, index) in stars"
@@ -56,9 +57,16 @@ export default defineComponent({
   data() {
     return {
       buttons: {} as { [key: string]: typeof NavItem },
+      disabled: false,
     };
   },
   methods: {
+    disable() {
+      this.disabled = true;
+    },
+    enable() {
+      this.disabled = false;
+    },
     followPlanet(event) {
       this.toggle(event.name);
       this.$emit("follow", event);
@@ -83,6 +91,11 @@ export default defineComponent({
   margin-top: auto;
   margin-bottom: auto;
   z-index: 2;
+}
+
+.navbar[data-disabled=true] .nav-buttons {
+  pointer-events: none;
+  filter: brightness(0.4);
 }
 
 .nav-buttons {

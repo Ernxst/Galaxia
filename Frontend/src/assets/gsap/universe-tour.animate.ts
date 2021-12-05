@@ -21,7 +21,7 @@ export async function tourUniverse(models: Array<typeof CelestialBody>,
       controls,
       offset,
       duration,
-      delay: i === 0 ? 0 : 1.25, // TODO: Extract constant
+      delay: i === 0 ? 0 : 1.25,
     });
     // TODO: Emit event signalling model is focused on, to open factfile
   }

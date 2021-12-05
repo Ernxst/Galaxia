@@ -2,7 +2,6 @@
 
 <script lang="ts">
 // TODO: Camera reset animation is weird
-// TODO: Does this need to be a subcomponent or can the camera controller extend it?
 import { animateCamera, calcDuration } from "@/assets/gsap";
 import { isAnimating } from "@/assets/gsap/camera.animate";
 import { tourUniverse } from "@/assets/gsap/universe-tour.animate";

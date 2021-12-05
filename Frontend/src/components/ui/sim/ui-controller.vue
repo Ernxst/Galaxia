@@ -84,6 +84,7 @@ export default defineComponent({
     },
     startAnimation() {
       this.animating = true;
+      this.$refs.navbar.disable();
       // Used so the app can pause again after animation ends if it was paused by the user
       if (!this.paused) {
         this.lastPausedBy = "animation";
@@ -93,6 +94,7 @@ export default defineComponent({
     stopAnimation() {
       this.setZoom(BASE_ZOOM);
       this.animating = false;
+      this.$refs.navbar.enable();
       if (this.paused && this.lastPausedBy === "animation") this.unpause();
     },
     pause() {

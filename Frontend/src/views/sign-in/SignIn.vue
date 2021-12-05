@@ -23,7 +23,6 @@
 </template>
 
 <script lang="ts">
-// TODO: Show loading popup
 import Page from "@/components/ui/layout/page.vue";
 import { AuthRequest } from "@/services/auth.service";
 import LoadingPopup from "@/views/sign-in/loading-popup.vue";
