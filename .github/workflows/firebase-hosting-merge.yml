@@ -5,13 +5,14 @@ name: Deploy to Firebase Hosting
 on:
   # Trigger the workflow after testing complete
   workflow_run:
-    workflows: ["Test Frontend on different Node.js versions"]
+    workflows: ["Test Frontend"]
     types:
       - completed
       
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 14
