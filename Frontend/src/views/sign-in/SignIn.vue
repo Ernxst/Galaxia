@@ -1,5 +1,4 @@
 <template>
-  <div>
     <page column
           fill
           header="Welcome"
@@ -18,11 +17,9 @@
                     @register="submit('register', $event)" />
       </section>
     </page>
-  </div>
 </template>
 
 <script lang="ts">
-// TODO: Testing & Create Node.js GitHub action running tests on multiple versions
 import Page from "@/components/ui/layout/page.vue";
 import { AuthRequest } from "@/services/auth.service";
 import LoginForm from "./login-form.vue";
