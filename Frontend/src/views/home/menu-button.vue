@@ -42,17 +42,18 @@ export default defineComponent({
     // click and hold for 1.2s before emitting click;
     mouseDown() {
       if (this.mouseDown) {
-        // TODO: Play sound
-        this.idTimeout = setTimeout(() => {
-          if (this.mouseDown) {
-            // TODO: Play sound when complete
-            this.ready = true;
-            setTimeout(() => {
-              this.$emit("click");
-            }, 125);
-
-          }
-        }, 1150);
+        if (this.isTouchDevice) this.$emit("click");
+        else
+          // TODO: Play sound
+          this.idTimeout = setTimeout(() => {
+            if (this.mouseDown) {
+              // TODO: Play sound when complete
+              this.ready = true;
+              setTimeout(() => {
+                this.$emit("click");
+              }, 125);
+            }
+          }, 1150);
       } else {
         // TODO: Stop sound
         clearTimeout(this.idTimeout);
@@ -61,7 +62,13 @@ export default defineComponent({
     }
   },
   computed: {
+    isTouchDevice(): boolean {
+      return (('ontouchstart' in window) ||
+        (navigator.maxTouchPoints > 0) ||
+        (navigator.msMaxTouchPoints > 0));
+    },
     infoText(): string {
+      if (this.isTouchDevice) return `Click to continue to ${this.text}`;
       if (this.ready) return "Release to continue to " + this.text;
       return this.mouseDown ? "Keep Holding" : "Click and hold to activate";
     }

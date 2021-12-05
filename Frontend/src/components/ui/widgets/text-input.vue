@@ -26,6 +26,7 @@
 </template>
 
 <script lang="ts">
+import { regExpEscape } from "@/assets/util/app.util";
 import { defineComponent, PropType } from "vue";
 
 
@@ -42,8 +43,8 @@ export default defineComponent({
     placeholder: { type: String, default: "" },
     autocomplete: { type: String, default: "off" },
     ignoreKeys: {
-      type: Object as PropType<string[]>, default: [";", "[", "]", "{", "}", "(", ")", '"', "£", ".", "-",
-        "$", "%", "^", "&", "*", "_", "+", "=", "|", "\\", "~", "`", ":", "!", "±", "§",]
+      type: Object as PropType<string[]>, default: [";", "\[", "\]", "\{", "\}", "\(", "\)", '"', "£", "\.", "-",
+        "$", "%", "^", "&", "\*", "_", "+", "=", "|", "\\", "\/", "~", "`", ":", "!", "±", "§",]
     },
     noSpaces: { type: Boolean, default: false },
   },
@@ -64,7 +65,7 @@ export default defineComponent({
       // Prevent user from copying and pasting unwanted keys into input
       // Uses a regex as str.replaceAll() not implemented on all browsers
       for (const char of this.ignoreKeys) {
-        const regex = new RegExp(char, "g");
+        const regex = new RegExp(regExpEscape(char), "g");
         event.target.value = event.target.value.replace(regex, "");
       }
       event.preventDefault();

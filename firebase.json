@@ -1,48 +1,47 @@
 {
-    "headers": [
-        {
-            "headers": [
-                {
-                    "key": "Access-Control-Allow-Origin",
-                    "value": "*"
-                }
-            ],
-            "source": "**/*.@(eot|otf|ttf|ttc|woff|woff2|font.css)"
-        },
-        {
-            "headers": [
-                {
-                    "key": "Cache-Control",
-                    "value": "max-age=604800"
-                }
-            ],
-            "source": "**/*.@(js|css)"
-        },
-        {
-            "headers": [
-                {
-                    "key": "Cache-Control",
-                    "value": "max-age=604800"
-                }
-            ],
-            "source": "**/*.@(jpg|jpeg|gif|png|webp)"
-        }
-    ],
     "hosting": {
+        "public": "Frontend/dist",
         "ignore": [
             "firebase.json",
-            "Backend/**/.*",
-            "Frontend/jest.config.ts",
-            "Frontend/**/.*",
-            "Frontend/**/test/**",
-            "Frontend/**/.vscode/**",
-            "Frontend/**/node_modules/**"
+            "**/.*",
+            "Backend/*/**",
+            "Frontend/tests/**",
+            "Frontend/__mocks__/**",
+            "Frontend/node_modules/**"
         ],
-        "public": "Frontend/dist",
         "rewrites": [
             {
-                "destination": "/Frontend/index.html",
-                "source": "**"
+                "source": "/Frontend/**",
+                "destination": "/Frontend/index.html"
+            }
+        ],
+        "headers": [
+            {
+                "source": "**/*.@(eot|otf|ttf|ttc|woff|woff2|font.css)",
+                "headers": [
+                    {
+                        "key": "Access-Control-Allow-Origin",
+                        "value": "*"
+                    }
+                ]
+            },
+            {
+                "source": "**/*.@(js|css)",
+                "headers": [
+                    {
+                        "key": "Cache-Control",
+                        "value": "max-age=604800"
+                    }
+                ]
+            },
+            {
+                "source": "**/*.@(jpg|jpeg|gif|png|webp)",
+                "headers": [
+                    {
+                        "key": "Cache-Control",
+                        "value": "max-age=604800"
+                    }
+                ]
             }
         ]
     },
