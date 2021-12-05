@@ -11,8 +11,8 @@
         ],
         "rewrites": [
             {
-                "source": "/Frontend/**",
-                "destination": "/Frontend/index.html"
+                "source": "**",
+                "destination": "/index.html"
             }
         ],
         "headers": [
