@@ -67,7 +67,6 @@ export default defineComponent({
 
 .content {
   margin-bottom: auto;
-  padding: 16px;
 }
 
 .content, .content > * {
@@ -85,6 +84,7 @@ export default defineComponent({
   .content {
     margin-top: auto;
     width: 67%;
+    padding: 16px;
   }
 }
 

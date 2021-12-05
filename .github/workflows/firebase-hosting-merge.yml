@@ -3,11 +3,11 @@
 
 name: Deploy to Firebase Hosting
 on:
-  # Trigger the workflow after testing complete
-  workflow_run:
-    workflows: ["Test Frontend"]
-    types:
-      - completed
+  # Trigger the workflow on push or pull request,
+  # but only for the main branch
+  push:
+    branches:
+      - main
       
 jobs:
   build_and_deploy:

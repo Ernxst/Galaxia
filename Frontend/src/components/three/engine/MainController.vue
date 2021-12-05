@@ -17,6 +17,7 @@
 
   <template v-if="loaded && ui">
     <ui-controller ref="gui"
+                   @intro-complete="startTour"
                    @reset="reset"
                    @zoom-update="zoomCamera"
                    @follow-body="followBody"
@@ -65,6 +66,10 @@ export default defineComponent({
     },
     loaded() {
       this.$emit("loaded");
+      if (this.ui)
+        setTimeout(() => {
+          this.$refs.gui.startIntro();
+        }, 1500);
     }
   },
   methods: {
@@ -81,6 +86,10 @@ export default defineComponent({
     const scene = ref<typeof SceneController>(null);
     const camera = ref<typeof CameraController>(null);
     const gui = ref<typeof UiController>(null);
+
+    function startTour() {
+      camera.value.startTour();
+    }
 
     function focusPlanet(event: MeshMouseEvent) {
       if (gui.value.animating) return;
@@ -149,6 +158,7 @@ export default defineComponent({
       stopAnimation,
       render,
       zoomCamera,
+      startTour,
       focusPlanet,
       followBody,
       reset,

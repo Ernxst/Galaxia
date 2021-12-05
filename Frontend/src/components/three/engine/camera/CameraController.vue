@@ -47,6 +47,7 @@ export default defineComponent({
       far: FAR as number,
       fov: FOV as number,
       defaultPos: new Vector3(),
+      models: [],
     };
   },
   methods: {
@@ -96,8 +97,11 @@ export default defineComponent({
       camera.position.multiplyScalar(SCENE_SCALE);
       camera.rotation.order = "YXZ";
       this.setupControls(camPos.x);
+      this.models = models;
+    },
+    startTour() {
       if (this.showTour)
-        this.$refs.animator.universeTour(models);
+        this.$refs.animator.universeTour(this.models);
     },
     setupControls(camX: number) {
       this.orbitControls.enableDamping = true;

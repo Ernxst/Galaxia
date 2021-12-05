@@ -1,5 +1,12 @@
 <template>
-  <div class="simulation-ui">
+  <template v-if="starSystem !== null">
+    <sim-intro ref="intro"
+               @intro-started="animDelay = $event + 2"
+               :username="$route.params.username"
+               :simulation-name="starSystem.name" />
+  </template>
+  <div class="simulation-ui"
+       :style="{ 'animation-delay': `${animDelay}s` }">
     <playback-menu :paused="paused"
                    :speed="speed"
                    @toggle-pause="togglePause"
@@ -36,14 +43,15 @@ import { BASE_SPEED, MAX_SPEED, MIN_SPEED } from "@/assets/util/sim.constants";
 import InfoHub from "@/components/ui/sim/info-hub.vue";
 import Navbar from "@/components/ui/sim/navbar/Navbar.vue";
 import PlaybackMenu from "@/components/ui/sim/playback-menu.vue";
+import SimIntro from "@/components/ui/sim/sim-intro.vue";
 import ZoomController from "@/components/ui/sim/zoom-controller.vue";
 import { defineComponent } from "vue";
 
 
 export default defineComponent({
   name: "UiController",
-  components: { Navbar, InfoHub, ZoomController, PlaybackMenu },
-  emits: ["zoomUpdate", "followBody", "reset", "openFactfile", "closeFactfile"],
+  components: { SimIntro, Navbar, InfoHub, ZoomController, PlaybackMenu },
+  emits: ["zoomUpdate", "followBody", "reset", "openFactfile", "closeFactfile", "introComplete"],
   data() {
     return {
       starSystem: null as StarSystem,
@@ -52,9 +60,17 @@ export default defineComponent({
       animating: false,
       lastPausedBy: undefined as "animation" | "keyboard" | "mouse" | undefined,
       menuOpen: false,
+      animDelay: 10,
     };
   },
   methods: {
+    startIntro() {
+      this.startAnimation();
+      this.$refs.intro.start().then(() => {
+        this.stopAnimation();
+        this.$emit("introComplete");
+      });
+    },
     setStarSystem(system: StarSystem) {
       this.starSystem = system;
     },
@@ -163,11 +179,12 @@ export default defineComponent({
 
 <style scoped>
 .simulation-ui {
+  --animation-delay: 6.33s;
   animation-duration: 1.67s;
   animation-name: fadeIn;
   animation-fill-mode: forwards;
   opacity: 0;
-  animation-delay: 1.33s;
+  animation-delay: var(--animation-delay);
 }
 
 .toggler {
