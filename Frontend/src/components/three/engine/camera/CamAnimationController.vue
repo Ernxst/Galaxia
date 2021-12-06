@@ -1,23 +1,24 @@
 <template></template>
 
 <script lang="ts">
-// TODO: Camera reset animation is weird
 import { animateCamera, calcDuration } from "@/assets/gsap";
 import { isAnimating } from "@/assets/gsap/camera.animate";
 import { tourUniverse } from "@/assets/gsap/universe-tour.animate";
 import { computeCentreAndSize } from "@/assets/three";
 import { setZoom } from "@/assets/three/camera";
-import { BASE_ZOOM } from "@/assets/three/camera/camera.constants";
+import { BASE_ZOOM, FAR } from "@/assets/three/camera/camera.constants";
+import { SCENE_SCALE } from "@/assets/util/sim.constants";
 import CelestialBody from "@/components/three/celestial/base/celestial-body.vue";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
+import { Quaternion } from "three/src/math/Quaternion";
 import { Vector3 } from "three/src/math/Vector3";
 import { Mesh } from "three/src/objects/Mesh";
 import { defineComponent, PropType } from "vue";
 
 
 interface MoveCameraParams {
-  object: { position: Vector3 },
+  object: { position: Vector3, quaternion: Quaternion },
   offset: Vector3,
   onStart?: Function,
   onComplete: Function
@@ -88,6 +89,7 @@ export default defineComponent({
         onStart: () => {
           this.$emit("animStart");
           this.orbitControls.minDistance = 0;
+          this.orbitControls.maxDistance = FAR;
           onStart?.();
         },
         onComplete: () => {
@@ -97,10 +99,8 @@ export default defineComponent({
       });
     },
     focus(body: typeof CelestialBody) {
-      if (this.target !== null &&
-        body.mesh().position.equals(this.target.position))
-        return;
       const mesh: Mesh = body.mesh();
+      if (this.target !== null && mesh.position.equals(this.target.position)) return;
       const { centre, size } = computeCentreAndSize(mesh);
       this.moveCamera({
         object: { position: centre, quaternion: mesh.quaternion },
@@ -119,7 +119,7 @@ export default defineComponent({
         return;
       }
       this.moveCamera({
-        object: { position: this.centre },
+        object: { position: this.centre, quaternion: new Quaternion() },
         offset: pos,
         onComplete: () => {
           this.resetControls();
@@ -130,18 +130,20 @@ export default defineComponent({
       this.target = null;
       this.orbitControls.enablePan = true;
       this.orbitControls.minDistance = 0;
+      this.orbitControls.maxDistance = this.$parent.$parent.defaultPos.x / 5.0 / SCENE_SCALE;
     },
     render(paused: boolean, speed: number) {
       if (isAnimating()) return;
 
       const camera: PerspectiveCamera = this.$parent.camera;
       const controls: OrbitControls = this.orbitControls;
+      controls.enablePan = true;
+
       if (this.target !== null) {
         if (!paused) {
           controls.enablePan = false;
           setZoom(camera, BASE_ZOOM);
-          const mesh: Mesh = this.target.mesh();
-          const { centre, size } = computeCentreAndSize(mesh);
+          const { centre, size } = computeCentreAndSize(this.target.mesh());
           controls.minDistance = size.length();
           if (this.factfileOpen) centre.setX(centre.x - controls.minDistance / 4);
           controls.target = centre;
