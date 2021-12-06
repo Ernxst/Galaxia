@@ -83,7 +83,6 @@ export default defineComponent({
 
 <style scoped>
 .navbar {
-  flex-direction: column;
   position: absolute;
   height: 100%;
   top: 0;
@@ -102,8 +101,7 @@ export default defineComponent({
   overflow-y: auto;
   overflow-x: hidden;
   justify-content: flex-start;
-  margin-top: 36px;
-  margin-bottom: 36px;
+  max-height: calc(100vh - 72px);
   position: relative;
   backdrop-filter: blur(10px);
   border-radius: 4px;
@@ -113,10 +111,6 @@ export default defineComponent({
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-}
-
-ul {
-  overflow: hidden;
 }
 
 li {
@@ -140,6 +134,7 @@ li {
     margin-bottom: 0;
     padding: 16px;
     backdrop-filter: none;
+    max-height: unset;
   }
 
   .nav-buttons, ul {
