@@ -7,7 +7,7 @@
             :model-value="zoom"
             label="Zoom"
             orient="vertical"
-            v-bind:disabled="disabled"
+            v-bind:data-disabled="disabled"
             @update:model-value="onUpdate"
     />
   </div>

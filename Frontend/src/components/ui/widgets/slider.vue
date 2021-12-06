@@ -231,19 +231,21 @@ p {
   color: grey;
 }
 
-.slider-container[data-orient=vertical] .slider-inner {
+.slider-container[data-orient=vertical] {
   transform: rotate(90deg);
-  transform-origin: 0 100%;
+}
+
+.slider-container[data-orient=vertical] .slider-inner {
+  transform: translate(50%, -50%) translateX(-48px) rotate(180deg);
 }
 
 .slider-container[data-orient=vertical] label {
-  transform: translateX(-8px);
+  transform: translateX(-64px) translateY(-35px) rotate(-90deg);
 }
 
 .slider-container[data-orient=vertical] span,
 .slider-container[data-orient=vertical] p {
-  transform: rotate(-90deg);
-  transform-origin: 0 100%;
+  transform: rotate(90deg) translateY(25px);
 }
 
 .slider-container[data-orient=vertical] p {

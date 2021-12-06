@@ -9,6 +9,7 @@
        :style="{ 'animation-delay': `${animDelay}s` }">
     <playback-menu :paused="paused"
                    :speed="speed"
+                   v-bind:data-disabled="animating"
                    @toggle-pause="togglePause"
                    @speed-down="decreaseSpeed"
                    @speed-up="increaseSpeed" />
@@ -85,6 +86,7 @@ export default defineComponent({
     startAnimation() {
       this.animating = true;
       this.$refs.navbar.disable();
+      this.$refs.zoomer.disable();
       // Used so the app can pause again after animation ends if it was paused by the user
       if (!this.paused) {
         this.lastPausedBy = "animation";
@@ -95,6 +97,7 @@ export default defineComponent({
       this.setZoom(BASE_ZOOM);
       this.animating = false;
       this.$refs.navbar.enable();
+      this.$refs.zoomer.enable();
       if (this.paused && this.lastPausedBy === "animation") this.unpause();
     },
     pause() {

@@ -1,5 +1,5 @@
 <template>
-  <nav class="playback-container sim-ui-section centred">
+  <nav class="playback-container sim-ui-section centred" :data-disabled="false">
     <section class="row">
       <p class="sim-speed">Simulation Speed: <strong>×{{ scaledSpeed }}</strong></p>
     </section>
@@ -77,6 +77,11 @@ export default defineComponent({
   padding: 16px;
   backdrop-filter: blur(10px);
   border-radius: 4px;
+}
+
+.playback-container[data-disabled=true] {
+  filter: brightness(0.33);
+  pointer-events: none;
 }
 
 .playback-container .sim-speed {

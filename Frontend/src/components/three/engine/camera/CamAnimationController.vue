@@ -89,7 +89,6 @@ export default defineComponent({
         onStart: () => {
           this.$emit("animStart");
           this.orbitControls.minDistance = 0;
-          this.orbitControls.maxDistance = FAR;
           onStart?.();
         },
         onComplete: () => {
@@ -111,7 +110,7 @@ export default defineComponent({
       });
     },
     reset() {
-      const pos: Vector3 = this.$parent.$parent.defaultPos;
+      const pos: Vector3 = this.$parent.$parent.defaultPos.clone().multiplyScalar(SCENE_SCALE);
       const currentPos: Vector3 = this.$parent.camera.position;
       if (pos.distanceTo(currentPos) < 1e-5 && this.target === null &&
         this.orbitControls.target.equals(this.centre)) {
