@@ -32,7 +32,6 @@
 </template>
 
 <script lang="ts">
-// TODO: Intro animation (zoom out)
 import { Star as StarInterface } from "@/@types/celestial/star";
 import { computeCentreAndSize } from "@/assets/three";
 import { BLOOM_LAYER } from "@/assets/three/three.constants";

@@ -38,11 +38,15 @@ export default defineComponent({
   computed: {
     sceneComponent() {
       return WelcomeScene;
+    },
+    firstVisit(): boolean {
+      return window.history.state.back === null;
     }
   },
   data() {
     return {
       clicked: false,
+      animating: false,
     };
   },
   methods: {
@@ -51,7 +55,7 @@ export default defineComponent({
       this.$refs.cursor.update(event, container.getBoundingClientRect());
     },
     async onClick() {
-      if (this.clicked) return;
+      if (this.clicked || this.animating) return;
       this.clicked = true;
       const mainController = this.$refs.renderer.$refs.controller;
       const camController = mainController.$refs.camera;
@@ -70,6 +74,18 @@ export default defineComponent({
       await animateZoom(5, camera, duration);
       this.clicked = false;
     }
+  },
+  mounted() {
+    const mainController = this.$refs.renderer.$refs.controller;
+    const camController = mainController.$refs.camera;
+    const camera: PerspectiveCamera = camController.getCamera();
+    camera.zoom = 75;
+    const delay = this.firstVisit ? 1300 : 0;
+    setTimeout(async () => {
+      this.animating = true;
+      await animateZoom(1, camera, 1.5);
+      this.animating = false;
+    }, delay);
   }
 });
 </script>
