@@ -26,8 +26,6 @@
                 :stars="[starSystem.star]"
                 @follow="$emit('followBody', $event)" />
       </template>
-      <zoom-controller ref="zoomer"
-                       @adjust-zoom="$emit('zoomUpdate', $event)" />
       <info-hub ref="hub"
                 @reset="$emit('reset')"
                 @open-factfile="$emit('openFactfile')"
@@ -39,20 +37,18 @@
 <script lang="ts">
 // TODO: Create component tracking object positions and overlay
 import { StarSystem } from "@/@types/celestial/containers/star-system";
-import { BASE_ZOOM } from "@/assets/three/camera/camera.constants";
 import { BASE_SPEED, MAX_SPEED, MIN_SPEED } from "@/assets/util/sim.constants";
 import InfoHub from "@/components/ui/sim/info-hub.vue";
 import Navbar from "@/components/ui/sim/navbar/Navbar.vue";
 import PlaybackMenu from "@/components/ui/sim/playback-menu.vue";
 import SimIntro from "@/components/ui/sim/sim-intro.vue";
-import ZoomController from "@/components/ui/sim/zoom-controller.vue";
 import { defineComponent } from "vue";
 
 
 export default defineComponent({
   name: "UiController",
-  components: { SimIntro, Navbar, InfoHub, ZoomController, PlaybackMenu },
-  emits: ["zoomUpdate", "followBody", "reset", "openFactfile", "closeFactfile", "introComplete"],
+  components: { SimIntro, Navbar, InfoHub, PlaybackMenu },
+  emits: ["followBody", "reset", "openFactfile", "closeFactfile", "introComplete"],
   data() {
     return {
       starSystem: null as StarSystem,
@@ -62,6 +58,7 @@ export default defineComponent({
       lastPausedBy: undefined as "animation" | "keyboard" | "mouse" | undefined,
       menuOpen: false,
       animDelay: 10,
+      activeBody: "",
     };
   },
   methods: {
@@ -86,7 +83,6 @@ export default defineComponent({
     startAnimation() {
       this.animating = true;
       this.$refs.navbar.disable();
-      this.$refs.zoomer.disable();
       // Used so the app can pause again after animation ends if it was paused by the user
       if (!this.paused) {
         this.lastPausedBy = "animation";
@@ -94,10 +90,8 @@ export default defineComponent({
       }
     },
     stopAnimation() {
-      this.setZoom(BASE_ZOOM);
       this.animating = false;
       this.$refs.navbar.enable();
-      this.$refs.zoomer.enable();
       if (this.paused && this.lastPausedBy === "animation") this.unpause();
     },
     pause() {
@@ -112,17 +106,8 @@ export default defineComponent({
     decreaseSpeed() {
       if (this.speed > MIN_SPEED) this.speed -= 1;
     },
-    setZoom(zoom: number) {
-      this.$refs.zoomer.update(zoom);
-    },
-    zoomIn() {
-      this.$refs.zoomer.zoomIn();
-    },
-    zoomOut() {
-      this.$refs.zoomer.zoomOut();
-    },
-    disableZoom() {
-      this.$refs.zoomer.disable();
+    shouldFollow(name: string) : boolean {
+      return name !== this.activeBody;
     },
     followBody(name: string, isStar: boolean, isMoon: boolean) {
       let body;
@@ -145,12 +130,14 @@ export default defineComponent({
           }
         }
       }
+      this.activeBody = name;
+      this.$refs.navbar.toggle(name);
       this.$refs.hub.setActiveBody(body, type);
     },
     reset() {
       this.$refs.navbar.toggle(undefined);
-      this.$refs.zoomer.reset();
-      this.$refs.hub.resetBody();
+      this.$refs.hub.reset();
+      this.activeBody = "";
     },
   },
   mounted() {
@@ -158,6 +145,7 @@ export default defineComponent({
       if (this.animating) return;
       switch (e.key) {
         case "r":
+          if (this.animating) return;
           this.reset();
           this.$emit("reset");
           return;
@@ -169,12 +157,6 @@ export default defineComponent({
           return;
         case ">":
           this.increaseSpeed();
-          return;
-        case "+":
-          this.zoomIn();
-          return;
-        case "-":
-          this.zoomOut();
           return;
       }
     });

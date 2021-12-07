@@ -13,14 +13,6 @@ const description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, se
   "\n" +
   "Est ultricies integer quis auctor elit sed vulputate mi. Tellus at urna condimentum mattis. Tempor nec feugiat nisl pretium fusce. Tristique magna sit amet purus gravida quis. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Et pharetra pharetra massa massa ultricies mi. Arcu non sodales neque sodales ut. Auctor urna nunc id cursus metus aliquam eleifend mi. Nisl nisi scelerisque eu ultrices vitae. Aliquam ut porttitor leo a diam sollicitudin. Feugiat in ante metus dictum at tempor commodo. Elit duis tristique sollicitudin nibh sit amet commodo. Nibh venenatis cras sed felis eget velit. Duis convallis convallis tellus id interdum. Sem nulla pharetra diam sit amet. Malesuada nunc vel risus commodo viverra maecenas accumsan. Elementum facilisis leo vel fringilla est ullamcorper eget nulla.";
 
-const kuiperBeltBase = {
-  depth: 1,
-  mass: 0,
-  meanVelocity: 0,
-  dayLength: 1_000_000,
-  maxSize: 3000,
-};
-
 // TODO: Store in backend
 export const solarSystem: StarSystem = {
   name: "Solar System",
@@ -234,7 +226,7 @@ export const solarSystem: StarSystem = {
   asteroidBelts: [
     {
       name: "Asteroid Belt",
-      numOfAsteroids: 10_000,
+      numOfAsteroids: 3_000,
       caption: "",
       shortDescription: "",
       description: description,
@@ -250,8 +242,7 @@ export const solarSystem: StarSystem = {
     },
     {
       name: "Kuiper Belt: Dynamically Cold",
-      ...kuiperBeltBase,
-      numOfAsteroids: 145_000,
+      numOfAsteroids: 10_000,
       caption: "",
       shortDescription: "",
       description: description,
@@ -261,20 +252,10 @@ export const solarSystem: StarSystem = {
       outerEccentricity: 0.1,
       inclination: 10,
       maxSize: 3000,
-    },
-    {
-      name: "Kuiper Belt: Dynamically Holt",
-      ...kuiperBeltBase,
-      numOfAsteroids: 5_000,
-      caption: "",
-      shortDescription: "",
-      description: description,
-      innerSemiMajor: 30,
-      innerEccentricity: 0.1,
-      outerSemiMajor: 55,
-      outerEccentricity: 0.1,
-      inclination: 30,
-      maxSize: 3000,
+      depth: 1,
+      mass: 0,
+      meanVelocity: 0,
+      dayLength: 1_000_000,
     },
   ],
 };

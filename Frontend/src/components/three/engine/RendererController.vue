@@ -8,7 +8,6 @@
               shadow>
       <main-controller
         ref="controller"
-        :aspect="aspect"
         :orbit-controls="orbitControls"
         :scene-component="sceneComponent"
         :scene-props="sceneProps"
@@ -24,12 +23,13 @@
 // TODO: Use FPS controls instead of OrbitControls - swap between FPS & OrbitControls dynamically
 import { TONE_MAPPING_EXPOSURE } from "@/assets/three/three.constants";
 import MainController from "@/components/three/engine/MainController.vue";
+import { rendererNeedsResize } from "@/components/three/engine/util";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
 import { PCFSoftShadowMap, ReinhardToneMapping, sRGBEncoding, } from "three/src/constants";
 import { WebGLRenderer } from "three/src/renderers/WebGLRenderer";
 import { Renderer } from "troisjs";
-import { defineComponent, getCurrentInstance, onMounted, ref, } from "vue";
+import { defineComponent, onMounted, ref, } from "vue";
 import { setComposerSize, setupPostprocessing, } from "./postprocessing/postprocessing";
 
 
@@ -45,51 +45,34 @@ export default defineComponent({
     showTour: { type: Boolean, default: false },
   },
   setup(props) {
-    const width = ref<number>(1);
-    const height = ref<number>(1);
     const renderer = ref<typeof Renderer>(null);
     const orbitControls = ref<OrbitControls>(null);
     const controller = ref<typeof MainController>(null);
 
     function onLoad() {
+      const glRenderer: WebGLRenderer = renderer.value.renderer;
+      const camera: PerspectiveCamera = renderer.value.camera;
       renderer.value.renderFn = setupPostprocessing(
-        renderer.value.renderer,
-        renderer.value.scene,
-        renderer.value.camera
-      );
-      let i = 0;
-      renderer.value.onBeforeRender(() => {
-        controller.value.render();
+        glRenderer, renderer.value.scene, camera);
 
-        if (i < 3) {
-          const glRenderer: WebGLRenderer = renderer.value.renderer;
-          console.log("Scene polycount:", glRenderer.info.render.triangles);
-          console.log("Active Drawcalls:", glRenderer.info.render.calls);
-          console.log("Textures in Memory", glRenderer.info.memory.textures);
-          console.log(
-            "Geometries in Memory",
-            glRenderer.info.memory.geometries
-          );
-          i++;
+      renderer.value.onBeforeRender(() => {
+        const { width, height, needsResize } = rendererNeedsResize(glRenderer);
+        if (needsResize) {
+          camera.aspect = width / height;
+          camera.updateProjectionMatrix();
+          const controlsCamera = orbitControls.value.object;
+          controlsCamera.aspect = camera.aspect;
+          controlsCamera.updateProjectionMatrix();
+
+          glRenderer.setSize(width, height, false);
+          setComposerSize(width, height);
         }
+
+        controller.value.render();
       });
     }
 
-    const { proxy } = getCurrentInstance();
-
     onMounted(() => {
-      window.addEventListener("resize", () => {
-        const parentElement: HTMLElement = proxy.$el.parentNode;
-        width.value = parentElement.clientWidth;
-        height.value = parentElement.clientHeight;
-        const camera: PerspectiveCamera = renderer.value.camera;
-        camera.aspect = width.value / height.value;
-        camera.updateProjectionMatrix();
-        const glRenderer: WebGLRenderer = renderer.value.renderer;
-        glRenderer.setSize(width.value, height.value);
-        setComposerSize(width.value, height.value);
-      });
-
       orbitControls.value = renderer.value.three.cameraCtrl;
       orbitControls.value.enabled = props.controls;
       orbitControls.value.listenToKeyEvents(window);
@@ -105,7 +88,6 @@ export default defineComponent({
     });
 
     return {
-      aspect: width / height,
       renderer,
       controller,
       orbitControls,

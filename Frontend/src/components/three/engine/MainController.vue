@@ -1,6 +1,5 @@
 <template>
   <camera-controller ref="camera"
-                     :aspect="aspect"
                      :orbit-controls="orbitControls"
                      :show-tour="showTour"
                      :track-gestures="trackGestures"
@@ -8,19 +7,18 @@
                      @play="play"
                      @anim-start="startAnimation"
                      @anim-done="stopAnimation"
-                     @adjust-zoom="zoomCamera" />
+                      />
   <scene-controller ref="scene"
                     :scene-component="sceneComponent"
                     :scene-props="sceneProps"
-                    @focus="focusPlanet"
+                    @focus="planetMeshClicked"
                     @loaded="onSceneLoad" />
 
   <template v-if="loaded && ui">
     <ui-controller ref="gui"
                    @intro-complete="startTour"
                    @reset="reset"
-                   @zoom-update="zoomCamera"
-                   @follow-body="followBody"
+                   @follow-body="navButtonClicked"
                    @open-factfile="openFactfile"
                    @close-factfile="closeFactfile" />
   </template>
@@ -42,7 +40,6 @@ export default defineComponent({
   emits: ["loaded"],
   props: {
     orbitControls: Object as PropType<OrbitControls>,
-    aspect: Number,
     sceneComponent: Object,
     sceneProps: { type: Object, default: {} },
     ui: { type: Boolean, default: false },
@@ -91,23 +88,17 @@ export default defineComponent({
       camera.value.startTour();
     }
 
-    function focusPlanet(event: MeshMouseEvent) {
-      if (gui.value.animating) return;
-      gui.value.disableZoom();
+    function planetMeshClicked(event: MeshMouseEvent) {
       const { name, isStar, isMoon } = event.component;
+      if (gui.value.animating || !gui.value.shouldFollow(name)) return;
       gui.value.followBody(name, isStar, isMoon);
       camera.value.focus(event.component);
     }
 
-    function followBody(event) {
+    function navButtonClicked(event) {
       const { name, isStar, isMoon } = event;
       const component = scene.value.findComponent(name, isStar, isMoon);
-      focusPlanet({ component });
-    }
-
-    function zoomCamera(zoom: number) {
-      camera.value.setZoom(zoom);
-      gui.value.setZoom(zoom);
+      planetMeshClicked({ component });
     }
 
     function startAnimation() {
@@ -157,10 +148,9 @@ export default defineComponent({
       startAnimation,
       stopAnimation,
       render,
-      zoomCamera,
       startTour,
-      focusPlanet,
-      followBody,
+      planetMeshClicked,
+      navButtonClicked,
       reset,
       pause,
       play,

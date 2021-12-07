@@ -13,7 +13,7 @@
             :icon="star.texture"
             :isStar="true"
             :name="star.name"
-            @follow="followPlanet"
+            @follow="$emit('follow', $event)"
           />
         </li>
       </ul>
@@ -29,7 +29,7 @@
             :isStar="false"
             :moons="planet.moons"
             :name="planet.name"
-            @follow="followPlanet"
+            @follow="$emit('follow', $event)"
           />
         </li>
       </ul>
@@ -66,10 +66,6 @@ export default defineComponent({
     },
     enable() {
       this.disabled = false;
-    },
-    followPlanet(event) {
-      this.toggle(event.name);
-      this.$emit("follow", event);
     },
     toggle(objectName: string) {
       for (const [name, button] of Object.entries(this.buttons)) {

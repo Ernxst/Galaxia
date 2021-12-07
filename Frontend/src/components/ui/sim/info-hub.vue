@@ -7,7 +7,7 @@
              :class="hubClass">
       <span v-if="bodySelected"
             class="close-icon material-icons centred"
-            @click="reset">close</span>
+            @click="$emit('reset')">close</span>
       <span class="subtitle">{{ bodySelected ? type : "Galaxia" }}</span>
       <h3 class="name">{{ bodySelected ? activeBody.name : "Select a Celestial Body" }}</h3>
       <p class="short-description">{{
@@ -64,13 +64,9 @@ export default defineComponent({
       this.activeBody = body;
       this.type = type;
     },
-    resetBody() {
+    reset() {
       this.activeBody = null;
       this.type = "";
-    },
-    reset() {
-      this.resetBody();
-      this.$emit("reset");
     },
   },
 });

@@ -104,7 +104,6 @@ function performAnimation({
     camX: camPos.x,
     camY: camPos.y,
     camZ: camPos.z,
-    zoom: camera.zoom,
   };
   return gsap.to(data, {
     duration,
@@ -116,7 +115,6 @@ function performAnimation({
     camX: object.position.x + offset.x,
     camY: object.position.y + offset.y,
     camZ: object.position.z + offset.z,
-    zoom: 1,
 
     onStart: function () {
       controls.enabled = false;
@@ -130,7 +128,6 @@ function performAnimation({
     onUpdate: function () {
       controls.target.set(data.x, data.y, data.z);
       camera.position.set(data.camX, data.camY, data.camZ);
-      camera.zoom = data.zoom;
       camera.quaternion.copy(startOrientation).slerp(targetOrientation, this.progress());
       camera.updateProjectionMatrix();
       onUpdate();

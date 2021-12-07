@@ -87,7 +87,6 @@ export default defineComponent({
         isStar: this.isStar,
         isMoon: this.isMoon,
       });
-      this.activate();
     },
     activate() {
       this.open = true;
