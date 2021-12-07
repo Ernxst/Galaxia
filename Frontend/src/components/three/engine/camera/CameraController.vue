@@ -76,7 +76,7 @@ export default defineComponent({
       const controls: OrbitControls = this.orbitControls;
       controls.object = camera;
       controls.enableDamping = true;
-      controls.maxDistance = dist;
+      controls.maxDistance = dist * SCENE_SCALE;
     },
     reset() {
       this.$refs.animator.reset();

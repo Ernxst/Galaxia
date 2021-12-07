@@ -87,6 +87,11 @@ export default defineComponent({
       });
     },
     focus(body: typeof CelestialBody) {
+      if (this.factfileOpen) {
+        this.target = body;
+        this.openFactfile();
+        return;
+      }
       const mesh: Mesh = body.mesh();
       const { centre, size } = computeCentreAndSize(mesh);
       this.moveCamera({
@@ -106,7 +111,7 @@ export default defineComponent({
       this.target = null;
       this.orbitControls.enablePan = true;
       this.orbitControls.minDistance = 0;
-      this.orbitControls.maxDistance = this.defaultPos.length();
+      this.orbitControls.maxDistance = this.defaultPos.length() * SCENE_SCALE;
     },
     render(paused: boolean) {
       if (isAnimating()) return;
