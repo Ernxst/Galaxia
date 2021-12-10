@@ -23,6 +23,7 @@ export function getOffset(mesh: Object3D) {
   return { centre, offset, quaternion: mesh.quaternion, size: magnitude };
 }
 
+// TODO: Get required size to fill screen
 export function computeCentreAndSize(object: Object3D): {
   centre: Vector3;
   size: Vector3;

@@ -7,15 +7,24 @@ import { Vector3 } from "three/src/math/Vector3";
 import { Mesh } from "three/src/objects/Mesh";
 
 
+function shouldReturnToOrigin(target: Vector3, currentTarget: Vector3, origin: Vector3): boolean {
+  if (!target.equals(origin)) return currentTarget.distanceTo(target) > 1;
+  return false;
+}
+
 export async function tourUniverse(models: Array<typeof CelestialBody>,
                                    camera: PerspectiveCamera, controls: OrbitControls) {
   const origin = new Vector3();
+  let currentTarget = origin.clone();
+
   for (const [i, model] of models.entries()) {
     const object: Mesh = model.mesh();
     const { centre, offset, quaternion } = getOffset(object);
+    const toOrigin = shouldReturnToOrigin(centre, currentTarget, origin);
+    currentTarget = centre;
+
     const duration = calcDuration(controls.target, object.position,
       camera.position, offset);
-    const toOrigin = !centre.equals(origin);
     await animateCamera({
       object: { position: centre, quaternion: quaternion },
       camera,

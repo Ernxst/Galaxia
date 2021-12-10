@@ -98,8 +98,15 @@ export default defineComponent({
         object: { position: centre, quaternion: quaternion },
         offset: offset,
         onComplete: () => (this.target = body),
-        timeline: !centre.equals(this.centre),
+        timeline: this.shouldReturnToOrigin(centre),
       });
+    },
+    shouldReturnToOrigin(target: Vector3): boolean {
+      if (this.target) {
+        const { centre, size } = computeCentreAndSize(this.target.mesh());
+        return centre.distanceTo(target) > 1;
+      }
+      return !target.equals(this.centre);
     },
     reset() {
       this.moveCamera({
