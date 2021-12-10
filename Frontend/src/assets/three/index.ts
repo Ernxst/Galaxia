@@ -16,6 +16,13 @@ export function getScreenPos(
   return new Vector2(pos.x, pos.y);
 }
 
+export function getOffset(mesh: Object3D) {
+  const { centre, size } = computeCentreAndSize(mesh);
+  const magnitude = size.length();
+  const offset = new Vector3(0, 0, centre.z > 0 ? magnitude * -1 : magnitude);
+  return { centre, offset, quaternion: mesh.quaternion, size: magnitude };
+}
+
 export function computeCentreAndSize(object: Object3D): {
   centre: Vector3;
   size: Vector3;

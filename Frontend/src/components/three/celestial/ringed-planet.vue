@@ -25,7 +25,7 @@
     <slot></slot>
     <Moon
       v-for="(moon, index) in moons"
-      :ref="(el) => moonComponents.push(el)"
+      :ref="addMoon"
       v-bind="moon"
       :axial-tilt="moon.axialTilt"
       :bump-map="moon.bumpMap"

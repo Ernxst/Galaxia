@@ -4,33 +4,33 @@
 import { animateCamera, calcDuration } from "@/assets/gsap";
 import { isAnimating } from "@/assets/gsap/camera.animate";
 import { tourUniverse } from "@/assets/gsap/universe-tour.animate";
-import { computeCentreAndSize } from "@/assets/three";
+import { computeCentreAndSize, getOffset } from "@/assets/three";
 import { SCENE_SCALE } from "@/assets/util/sim.constants";
 import CelestialBody from "@/components/three/celestial/base/celestial-body.vue";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
 import { Quaternion } from "three/src/math/Quaternion";
 import { Vector3 } from "three/src/math/Vector3";
-import { Mesh } from "three/src/objects/Mesh";
 import { defineComponent, PropType } from "vue";
 
 
 interface MoveCameraParams {
   object: { position: Vector3, quaternion: Quaternion },
   offset: Vector3,
-  onComplete: Function
+  onComplete: Function,
+  timeline: boolean,
 }
 
 export default defineComponent({
   name: "CamAnimationController",
   emits: ["animStart", "animDone"],
   props: {
-    orbitControls: Object as PropType<OrbitControls>,
+    orbitControls: Object as PropType<OrbitControls>
   },
   data() {
     return {
-      camera: null as typeof PerspectiveCamera,
-      target: null as typeof CelestialBody,
+      camera: null as unknown as PerspectiveCamera,
+      target: null as unknown as typeof CelestialBody,
       centre: new Vector3(),
       factfileOpen: false,
       defaultPos: new Vector3(),
@@ -38,8 +38,8 @@ export default defineComponent({
   },
   methods: {
     universeTour(models: Array<typeof CelestialBody>) {
+      this.$emit("animStart");
       setTimeout(() => {
-        this.$emit("animStart");
         this.orbitControls.minDistance = 0;
         tourUniverse(models, this.camera, this.orbitControls).then(() => {
           setTimeout(() => {
@@ -47,35 +47,36 @@ export default defineComponent({
             this.reset();
           }, 1500);
         });
-      }, 2000);
+      }, 1750);
     },
     openFactfile() {
-      const mesh: Mesh = this.target.mesh();
-      const { centre, size } = computeCentreAndSize(mesh);
-      centre.x -= size.length() / 4;
+      const { centre, offset, quaternion, size } = getOffset(this.target.mesh());
+      centre.x -= centre.z > 0 ? size / -4 : size / 4;
       this.moveCamera({
-        object: { position: centre, quaternion: mesh.quaternion },
-        offset: new Vector3(0, 0, size.length()),
-        onComplete: () => (this.factfileOpen = true)
+        object: { position: centre, quaternion: quaternion },
+        offset: offset,
+        onComplete: () => (this.factfileOpen = true),
+        timeline: false,
       });
     },
     closeFactfile() {
-      const mesh: Mesh = this.target.mesh();
-      const { centre, size } = computeCentreAndSize(mesh);
+      const { centre, offset, quaternion } = getOffset(this.target.mesh());
       this.moveCamera({
-        object: { position: centre, quaternion: mesh.quaternion },
-        offset: new Vector3(0, 0, size.length()),
-        onComplete: () => (this.factfileOpen = false)
+        object: { position: centre, quaternion: quaternion },
+        offset: offset,
+        onComplete: () => (this.factfileOpen = false),
+        timeline: false,
       });
     },
-    moveCamera({ object, offset, onComplete }: MoveCameraParams) {
+    moveCamera({ object, offset, onComplete, timeline }: MoveCameraParams) {
+      const duration = calcDuration(this.orbitControls.target, object.position,
+        this.camera.position, offset);
       animateCamera({
         camera: this.camera,
         controls: this.orbitControls,
         object,
         offset,
-        duration: calcDuration(this.orbitControls.target, object.position,
-          this.camera.position, offset),
+        duration: timeline ? duration * 2 : duration,
         onStart: () => {
           this.$emit("animStart");
           this.orbitControls.minDistance = 0;
@@ -84,7 +85,7 @@ export default defineComponent({
           onComplete();
           this.$emit("animDone");
         },
-      });
+      }, timeline);
     },
     focus(body: typeof CelestialBody) {
       if (this.factfileOpen) {
@@ -92,19 +93,20 @@ export default defineComponent({
         this.openFactfile();
         return;
       }
-      const mesh: Mesh = body.mesh();
-      const { centre, size } = computeCentreAndSize(mesh);
+      const { centre, offset, quaternion } = getOffset(body.mesh());
       this.moveCamera({
-        object: { position: centre, quaternion: mesh.quaternion },
-        offset: new Vector3(0, 0, size.length()),
-        onComplete: () => (this.target = body)
+        object: { position: centre, quaternion: quaternion },
+        offset: offset,
+        onComplete: () => (this.target = body),
+        timeline: !centre.equals(this.centre),
       });
     },
     reset() {
       this.moveCamera({
-        object: { position: this.centre },
+        object: { position: this.centre, quaternion: new Quaternion() },
         offset: this.defaultPos.clone().multiplyScalar(SCENE_SCALE),
-        onComplete: () => this.resetControls()
+        onComplete: () => this.resetControls(),
+        timeline: false,
       });
     },
     resetControls() {
@@ -118,7 +120,7 @@ export default defineComponent({
       const controls: OrbitControls = this.orbitControls;
       controls.enablePan = true;
 
-      if (this.target !== null) {
+      if (this.target) {
         if (!paused) {
           const { centre, size } = computeCentreAndSize(this.target.mesh());
           controls.minDistance = size.length();

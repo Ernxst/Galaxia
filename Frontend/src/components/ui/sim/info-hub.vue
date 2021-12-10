@@ -67,6 +67,7 @@ export default defineComponent({
     reset() {
       this.activeBody = null;
       this.type = "";
+      this.factfileOpen = false;
     },
   },
 });

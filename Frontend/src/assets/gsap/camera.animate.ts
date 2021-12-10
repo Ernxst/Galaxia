@@ -19,10 +19,9 @@ interface AnimParams {
   onComplete?: Function;
 }
 
-type Tween = ReturnType<typeof gsap.to> | null;
-let animation: Tween | null = null;
+let animation: gsap.core.Timeline | null = null;
 let animParams: AnimParams | null = null;
-const animQueue: Tween[] = [];
+const animQueue: Array<gsap.core.Timeline | null> = [];
 
 export function isAnimating(): boolean {
   return animQueue.length !== 0;
@@ -56,66 +55,41 @@ export function animateCamera({
                                 },
                                 onComplete = () => {
                                 },
-                              }: AnimParams): Tween | undefined {
+                              }: AnimParams, timeline: boolean = false): gsap.core.Timeline | undefined {
   if (!shouldAnimate(object.position, camera.position)) return;
   killAnimation();
   animParams = {
-    camera,
-    controls,
-    object,
-    offset,
-    duration,
-    delay,
-    onStart,
-    onInterrupt,
-    onUpdate,
-    onComplete,
+    camera, controls, object, offset, duration,
+    delay, onStart, onInterrupt, onUpdate, onComplete,
   };
-  animation = performAnimation(animParams);
+  animation = getAnim(animParams, timeline);
   animQueue.push(animation);
-  return animation;
+  return animation.play();
 }
 
-function performAnimation({
-                            camera,
-                            controls,
-                            object,
-                            offset = new Vector3(),
-                            duration = 0,
-                            delay = 0,
-                            onStart = () => {
-                            },
-                            onInterrupt = () => {
-                            },
-                            onUpdate = () => {
-                            },
-                            onComplete = () => {
-                            },
-                          }: AnimParams): Tween {
+function getAnim({
+                             camera,
+                             controls,
+                             object,
+                             offset = new Vector3(),
+                             duration = 0,
+                             delay = 0,
+                             onStart = () => {
+                             },
+                             onInterrupt = () => {
+                             },
+                             onUpdate = () => {
+                             },
+                             onComplete = () => {
+                             },
+                           }: AnimParams, toOrigin: boolean): gsap.core.Timeline {
   const startOrientation = camera.quaternion.clone();
-  const quaternion: Quaternion = object.quaternion
-    ? object.quaternion
-    : new Quaternion();
+  const quaternion: Quaternion = object.quaternion ? object.quaternion : new Quaternion();
   const targetOrientation = quaternion.clone().normalize();
 
-  const camPos = camera.position;
-  const data = {
-    ...controls.target,
-    camX: camPos.x,
-    camY: camPos.y,
-    camZ: camPos.z,
-  };
-  return gsap.to(data, {
-    duration,
-    delay,
-    ease: EASE_TYPE,
-    x: object.position.x,
-    y: object.position.y,
-    z: object.position.z,
-    camX: object.position.x + offset.x,
-    camY: object.position.y + offset.y,
-    camZ: object.position.z + offset.z,
-
+  let timeline = gsap.timeline({
+    paused: true,
+    delay: delay,
     onStart: function () {
       controls.enabled = false;
       controls.enableDamping = false;
@@ -126,8 +100,6 @@ function performAnimation({
       onInterrupt();
     },
     onUpdate: function () {
-      controls.target.set(data.x, data.y, data.z);
-      camera.position.set(data.camX, data.camY, data.camZ);
       camera.quaternion.copy(startOrientation).slerp(targetOrientation, this.progress());
       camera.updateProjectionMatrix();
       onUpdate();
@@ -139,4 +111,46 @@ function performAnimation({
       onComplete();
     },
   });
+
+  const controlsTimeline = getControlsTimeline(controls, object.position, duration);
+  const target = object.position.clone().add(offset);
+  const cameraTimeline = getCamTimeline(camera, target, duration, toOrigin);
+  timeline = timeline.add(controlsTimeline, 0)
+    .add(cameraTimeline, 0);
+  return timeline;
+}
+
+function getControlsTimeline(controls: OrbitControls, target: Vector3,
+                             duration: number): gsap.core.Timeline {
+  const timeline = gsap.timeline();
+  timeline.to(controls.target, {
+    ease: EASE_TYPE,
+    duration: duration,
+    x: target.x,
+    y: target.y,
+    z: target.z,
+  });
+  return timeline;
+}
+
+function getCamTimeline(camera: PerspectiveCamera, target: Vector3,
+                        duration: number, toOrigin: boolean): gsap.core.Timeline {
+  const timeline = gsap.timeline({
+    defaults: { ease: EASE_TYPE, duration: toOrigin ? duration * 0.5 : duration },
+  });
+
+  if (toOrigin)
+    timeline.to(camera.position, {
+      x: 0,
+      y: 0,
+      z: 0,
+    });
+
+  timeline.to(camera.position, {
+    x: target.x,
+    y: target.y,
+    z: target.z,
+  });
+
+  return timeline;
 }
