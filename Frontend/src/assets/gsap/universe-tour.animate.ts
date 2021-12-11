@@ -8,7 +8,7 @@ import { Mesh } from "three/src/objects/Mesh";
 
 
 function shouldReturnToOrigin(target: Vector3, currentTarget: Vector3, origin: Vector3): boolean {
-  if (!target.equals(origin)) return currentTarget.distanceTo(target) > 1;
+  if (!target.equals(origin)) return currentTarget.distanceTo(target) > 2.5;
   return false;
 }
 

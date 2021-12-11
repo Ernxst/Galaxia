@@ -102,11 +102,12 @@ export default defineComponent({
       });
     },
     shouldReturnToOrigin(target: Vector3): boolean {
+      if (target.equals(this.centre)) return false;
       if (this.target) {
         const { centre, size } = computeCentreAndSize(this.target.mesh());
-        return centre.distanceTo(target) > 1;
+        return centre.distanceTo(target) > 2.5;
       }
-      return !target.equals(this.centre);
+      return true;
     },
     reset() {
       this.moveCamera({

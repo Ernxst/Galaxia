@@ -2,7 +2,7 @@ import { AU, EARTH_RADIUS } from "./celestial.constants";
 
 
 export const SCENE_SCALE = 0.1;
-export const BUMP_SCALE = 0.025;
+export const BUMP_SCALE = 0.005;
 
 export const MIN_SPEED = 1;
 export const MAX_SPEED = 100;

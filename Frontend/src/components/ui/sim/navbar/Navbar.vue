@@ -70,6 +70,7 @@ export default defineComponent({
     toggle(objectName: string) {
       for (const [name, button] of Object.entries(this.buttons)) {
         if (name === objectName) button.activate();
+        else if (button.hasMoon(objectName)) button.activateMoon(objectName);
         else button.deactivate();
       }
     },

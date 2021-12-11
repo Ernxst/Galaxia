@@ -24,10 +24,7 @@
 </template>
 
 <script lang="ts">
-// TODO: Ring rotation
-// TODO: Cannot see underside of ring
-// TODO: Might need custom lighting on ring
-// TODO: Ring shine - reflect sunlight onto planet
+// TODO: Cannot see underside of ring - works if using MeshBasicMaterial and DoubleSide tex (no shadows)
 import { getTexture } from "@/assets/three/loaders";
 import { SPHERE_SLICES } from "@/assets/three/three.constants";
 import { RADIUS_SCALE } from "@/assets/util/sim.constants";
@@ -94,7 +91,7 @@ export default defineComponent({
     const lower: Mesh = this.$refs.lower.mesh;
     const upper: Mesh = this.$refs.upper.mesh;
     lower.applyMatrix4(new Matrix4().makeScale(1, 1, -1)); // Flip lower upside down
-    lower.position.y -= 1e-5;
+    lower.position.y += 1.5;
 
     if (!this.circular) {
       this.applyUVtoDotTex(upper.geometry);

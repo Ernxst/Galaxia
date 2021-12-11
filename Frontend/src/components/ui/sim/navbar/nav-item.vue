@@ -88,6 +88,14 @@ export default defineComponent({
         isMoon: this.isMoon,
       });
     },
+    hasMoon(name: string): boolean {
+      return this.moonButtons.find(moon => moon.name === name) !== undefined;
+    },
+    activateMoon(name: string) {
+      this.deactivate();
+      const component = this.moonButtons.find(moon => moon.name === name);
+      component.activate();
+    },
     activate() {
       this.open = true;
       this.following = true;
@@ -172,7 +180,7 @@ button:hover .content > * {
   right: 0;
   bottom: 0;
   content: "";
-  background: radial-gradient(circle at 50% 0px, #ffffff, rgba(255, 255, 255, 0) 58%);
+  background: radial-gradient(circle at 50% 0px, #FFFFFF, rgba(255, 255, 255, 0) 58%);
   filter: blur(3px);
   border-radius: 50%;
 }
