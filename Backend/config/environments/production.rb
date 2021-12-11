@@ -115,6 +115,8 @@ Rails.application.configure do
     { requestid: controller.request.request_id }
   end
 
+  config.active_storage.service = :google
+
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default_url_options = { host: 'galaxia-app.herokuapp.com' }

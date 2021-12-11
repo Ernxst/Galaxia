@@ -1,0 +1,28 @@
+type: object
+required:
+  - id
+  - url
+  - public_url
+  - api_url
+  - size
+  - for
+properties:
+  id:
+    type: integer
+    format: int32
+  url:
+    type: string
+  public_url:
+    type: string
+  api_url:
+    type: string
+  size:
+    type: integer
+    format: int32
+  for:
+    type: string
+    enum:
+      - any
+      - planets
+      - stars
+      - moons

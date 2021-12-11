@@ -1,0 +1,8 @@
+get:
+  summary: Fetch all stored bump maps
+  security: []
+  operationId: fetchAllBumpMaps
+  tags:
+    - media
+  responses:
+    $ref: "../../../responses/media/bump_maps/all_bump_maps.yaml"

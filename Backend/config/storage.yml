@@ -15,11 +15,17 @@ local:
 #   bucket: your_own_bucket
 
 # Remember not to checkin your GCS keyfile to a repository
-# google:
-#   service: GCS
-#   project: your_project
-#   credentials: <%= Rails.root.join("path/to/gcs.keyfile") %>
-#   bucket: your_own_bucket
+google_dev:
+    service: GCS
+    project: <%= ENV['GCS_PROJECT_NAME'] %>
+    credentials: <%= Rails.root.join("config/secrets/galaxia-gcs.json") %>
+    bucket:  <%= ENV['GCS_BUCKET_NAME'] %>
+
+ google:
+   service: GCS
+   project: <%= ENV['GCS_PROJECT_NAME'] %>
+   credentials: <%= ENV['GOOGLE_APPLICATION_CREDENTIALS'] %>
+   bucket:  <%= ENV['GCS_BUCKET_NAME'] %>
 
 # Use rails credentials:edit to set the Azure Storage secret (as azure_storage:storage_access_key)
 # microsoft:

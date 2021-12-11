@@ -1,0 +1,8 @@
+type: object
+required:
+  - bump_maps
+properties:
+  bump_maps:
+    type: array
+    items:
+      $ref: "./../texture.yaml"

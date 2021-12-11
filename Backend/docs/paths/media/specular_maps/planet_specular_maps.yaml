@@ -1,0 +1,8 @@
+get:
+  summary: Fetch all stored planet specular maps
+  security: []
+  operationId: fetchAllPlanetSpecularMaps
+  tags:
+    - media
+  responses:
+    $ref: "../../../responses/media/specular_maps/planet_specular_maps.yaml"

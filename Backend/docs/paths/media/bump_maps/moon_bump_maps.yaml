@@ -1,0 +1,8 @@
+get:
+  summary: Fetch all stored moon bump maps
+  security: []
+  operationId: fetchAllMoonBumpMaps
+  tags:
+    - media
+  responses:
+    $ref: "../../../responses/media/bump_maps/moon_bump_maps.yaml"

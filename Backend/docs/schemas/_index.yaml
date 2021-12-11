@@ -2,7 +2,45 @@ User:
   $ref: "./user/user.yaml"
 AuthResponseBody:
   $ref: "./user/response_bodies/auth.yaml"
-  
+Texture:
+  $ref: "./media/texture.yaml"
+
+# GET api/v1/media/textures/{id}
+SingleTextureFetchResponseBody:
+  $ref: "./media/response_bodies/single_texture.yaml"
+
+# GET api/v1/media/textures/all/{type}
+# GET api/v1/media/textures/
+TextureGroupFetchResponseBody:
+  $ref: "./media/response_bodies/textures.yaml"
+
+  # GET api/v1/media/bump_maps/{id}
+SingleBumpMapFetchResponseBody:
+  $ref: "./media/response_bodies/single_bump_map.yaml"
+
+# GET api/v1/media/bump_maps/all/{type}
+# GET api/v1/media/bump_maps/
+BumpMapGroupFetchResponseBody:
+  $ref: "./media/response_bodies/bump_maps.yaml"
+
+# GET api/v1/media/specular_maps/{id}
+SingleSpecularMapFetchResponseBody:
+  $ref: "./media/response_bodies/single_specular_map.yaml"
+
+# GET api/v1/media/specular_maps/all/{type}
+# GET api/v1/media/specular_maps/
+SpecularMapGroupFetchResponseBody:
+  $ref: "./media/response_bodies/specular_maps.yaml"
+
+# GET api/v1/media/atmosphere_textures/{id}
+SingleAtmosphereTextureFetchResponseBody:
+  $ref: "./media/response_bodies/single_atmosphere_texture.yaml"
+
+# GET api/v1/media/atmosphere_textures/all/{type}
+# GET api/v1/media/atmosphere_textures/
+AtmosphereTextureGroupFetchResponseBody:
+  $ref: "./media/response_bodies/atmosphere_textures.yaml"
+
 # POST api/v1/users/register
 UserRegisterRequestBody:
   $ref: "./user/request_bodies/register.yaml"

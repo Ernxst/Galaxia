@@ -1,0 +1,15 @@
+get:
+  summary: Fetch a specular map by ID
+  security: []
+  operationId: fetchSpecularMap
+  tags:
+    - media
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the specular map to fetch
+  responses:
+    $ref: "../../../responses/media/specular_maps/single_specular_map.yaml"

@@ -1,0 +1,8 @@
+get:
+  summary: Fetch all stored moon specular maps
+  security: []
+  operationId: fetchAllMoonSpecularMaps
+  tags:
+    - media
+  responses:
+    $ref: "../../../responses/media/specular_maps/moon_specular_maps.yaml"

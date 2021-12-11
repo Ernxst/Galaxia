@@ -1,0 +1,8 @@
+get:
+  summary: Fetch all stored specular maps
+  security: []
+  operationId: fetchAllSpecularMaps
+  tags:
+    - media
+  responses:
+    $ref: "../../../responses/media/specular_maps/all_specular_maps.yaml"

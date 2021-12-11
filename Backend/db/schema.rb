@@ -10,10 +10,61 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_29_214753) do
+ActiveRecord::Schema.define(version: 2021_12_09_114147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "atmosphere_textures", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "filename", null: false
+    t.string "original_url", default: ""
+    t.integer "width", null: false
+    t.integer "height", null: false
+    t.integer "for", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "bump_maps", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "filename", null: false
+    t.string "original_url", default: ""
+    t.integer "width", null: false
+    t.integer "height", null: false
+    t.integer "for", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "preset_simulations", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "description", default: ""
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "specular_maps", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "filename", null: false
+    t.string "original_url", default: ""
+    t.integer "width", null: false
+    t.integer "height", null: false
+    t.integer "for", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "textures", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "filename", null: false
+    t.string "original_url", default: ""
+    t.integer "width", null: false
+    t.integer "height", null: false
+    t.integer "for", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "encrypted_password", default: "", null: false

@@ -1,0 +1,16 @@
+'200':
+  description: Atmosphere texture successfully fetched
+  content:
+    application/json:
+      schema:
+        $ref: "../../../openapi.yaml#/components/schemas/SingleAtmosphereTextureFetchResponseBody"
+
+'400':
+  $ref: "../../../openapi.yaml#/components/responses/BadRequestError"
+
+'404':
+  $ref: "../../../openapi.yaml#/components/responses/NotFoundError"
+
+'500':
+  $ref: "../../../openapi.yaml#/components/responses/GenericError"
+

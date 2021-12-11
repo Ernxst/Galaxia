@@ -1,0 +1,8 @@
+get:
+  summary: Fetch all stored moon atmosphere textures
+  security: []
+  operationId: fetchAllMoonAtmosphereTextures
+  tags:
+    - media
+  responses:
+    $ref: "../../../responses/media/atmosphere_textures/moon_atmosphere_textures.yaml"

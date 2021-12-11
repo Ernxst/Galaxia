@@ -1,0 +1,8 @@
+get:
+  summary: Fetch all stored planet textures
+  security: []
+  operationId: fetchAllPlanetTextures
+  tags:
+    - media
+  responses:
+    $ref: "../../../responses/media/textures/planet_textures.yaml"

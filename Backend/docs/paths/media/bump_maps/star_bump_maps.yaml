@@ -1,0 +1,8 @@
+get:
+  summary: Fetch all stored star bump maps
+  security: []
+  operationId: fetchAllStarBumpMaps
+  tags:
+    - media
+  responses:
+    $ref: "../../../responses/media/bump_maps/star_bump_maps.yaml"

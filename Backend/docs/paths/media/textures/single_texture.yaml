@@ -1,0 +1,15 @@
+get:
+  summary: Fetch a texture by ID
+  security: []
+  operationId: fetchTexture
+  tags:
+    - media
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the texture to fetch
+  responses:
+    $ref: "../../../responses/media/textures/single_texture.yaml"

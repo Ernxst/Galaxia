@@ -1,0 +1,8 @@
+type: object
+required:
+  - specular_maps
+properties:
+  specular_maps:
+    type: array
+    items:
+      $ref: "./../texture.yaml"

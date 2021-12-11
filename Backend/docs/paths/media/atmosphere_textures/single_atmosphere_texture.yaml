@@ -1,0 +1,15 @@
+get:
+  summary: Fetch an atmosphere texture by ID
+  security: []
+  operationId: fetchAtmosphereTexture
+  tags:
+    - media
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the atmosphere texture to fetch
+  responses:
+    $ref: "../../../responses/media/atmosphere_textures/single_atmosphere_texture.yaml"

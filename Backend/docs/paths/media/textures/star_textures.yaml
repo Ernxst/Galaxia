@@ -1,0 +1,8 @@
+get:
+  summary: Fetch all stored star textures
+  security: []
+  operationId: fetchAllStarTextures
+  tags:
+    - media
+  responses:
+    $ref: "../../../responses/media/textures/star_textures.yaml"

@@ -1,0 +1,8 @@
+get:
+  summary: Fetch all stored atmosphere textures
+  security: []
+  operationId: fetchAllAtmosphereTextures
+  tags:
+    - media
+  responses:
+    $ref: "../../../responses/media/atmosphere_textures/all_atmosphere_textures.yaml"

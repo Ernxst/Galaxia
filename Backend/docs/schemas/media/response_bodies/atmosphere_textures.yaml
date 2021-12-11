@@ -1,0 +1,8 @@
+type: object
+required:
+  - atmosphere_textures
+properties:
+  atmosphere_textures:
+    type: array
+    items:
+      $ref: "./../texture.yaml"

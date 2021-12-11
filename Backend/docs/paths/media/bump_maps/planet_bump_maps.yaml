@@ -1,0 +1,8 @@
+get:
+  summary: Fetch all stored planet bump maps
+  security: []
+  operationId: fetchAllPlanetBumpMaps
+  tags:
+    - media
+  responses:
+    $ref: "../../../responses/media/bump_maps/planet_bump_maps.yaml"

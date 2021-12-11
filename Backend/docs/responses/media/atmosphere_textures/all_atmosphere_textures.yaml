@@ -1,0 +1,10 @@
+'200':
+  description: All atmosphere textures successfully fetched
+  content:
+    application/json:
+      schema:
+        $ref: "../../../openapi.yaml#/components/schemas/AtmosphereTextureGroupFetchResponseBody"
+
+'500':
+  $ref: "../../../openapi.yaml#/components/responses/GenericError"
+

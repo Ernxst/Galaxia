@@ -1,0 +1,10 @@
+'200':
+  description: All specular maps successfully fetched
+  content:
+    application/json:
+      schema:
+        $ref: "../../../openapi.yaml#/components/schemas/SpecularMapGroupFetchResponseBody"
+
+'500':
+  $ref: "../../../openapi.yaml#/components/responses/GenericError"
+

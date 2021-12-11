@@ -1,0 +1,8 @@
+type: object
+required:
+  - textures
+properties:
+  textures:
+    type: array
+    items:
+      $ref: "./../texture.yaml"

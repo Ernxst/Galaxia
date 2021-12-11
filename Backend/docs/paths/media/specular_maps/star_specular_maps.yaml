@@ -1,0 +1,8 @@
+get:
+  summary: Fetch all stored star specular maps
+  security: []
+  operationId: fetchAllStarSpecularMaps
+  tags:
+    - media
+  responses:
+    $ref: "../../../responses/media/specular_maps/star_specular_maps.yaml"

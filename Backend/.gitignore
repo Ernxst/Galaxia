@@ -318,3 +318,4 @@ build-iPhoneSimulator/
 
 docs/spec.yml
 .vscode/settings.json
+/config/secrets/galaxia-gcs.json

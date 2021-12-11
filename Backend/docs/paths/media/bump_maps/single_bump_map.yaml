@@ -1,0 +1,15 @@
+get:
+  summary: Fetch a bump map by ID
+  security: []
+  operationId: fetchBumpMap
+  tags:
+    - media
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the bump map to fetch
+  responses:
+    $ref: "../../../responses/media/bump_maps/single_bump_map.yaml"

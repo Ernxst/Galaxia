@@ -1,43 +1,43 @@
-# Ruby on Rails + Docker + Heroku Boilerplate
+# Galaxia Backend
 
-Source code for a Ruby on Rails RESTful JSON API deployed on Heroku.
+Source code for the Ruby on Rails RESTful JSON API backend for Galaxia deployed on Heroku.
 
 ## Table of Contents
 
-- [Ruby on Rails + Docker + Heroku Boilerplate](#ruby-on-rails--docker--heroku-boilerplate)
-  - [Table of Contents](#table-of-contents)
-  - [Dependencies](#dependencies)
-  - [Development](#development)
-    - [Running a Shell](#running-a-shell)
-    - [Running the Rails Console](#running-the-rails-console)
-    - [Updating Gems](#updating-gems)
-  - [Testing](#testing)
-  - [Deployment](#deployment)
-  - [Makefile](#makefile)
-  - [Production Deployment](#production-deployment)
-  - [Documentation](#documentation)
-  - [License](#license)
+- [Galaxia Backend](#galaxia-backend)
+    - [Table of Contents](#table-of-contents)
+    - [Dependencies](#dependencies)
+    - [Development](#development)
+        - [Running a Shell](#running-a-shell)
+        - [Running the Rails Console](#running-the-rails-console)
+        - [Updating Gems](#updating-gems)
+    - [Testing](#testing)
+    - [Deployment](#deployment)
+    - [Makefile](#makefile)
+    - [Production Deployment](#production-deployment)
+    - [Documentation](#documentation)
+    - [License](#license)
 
 ## Dependencies
 
 The following dependencies are required for development:
 
--   [**Docker**](https://docs.docker.com/get-docker/)
--   [**Docker Compose**](https://docs.docker.com/compose/install/)
--   [**Heroku CLI**](https://devcenter.heroku.com/articles/heroku-cli)
--   [**Ruby (version 2.7.3)**](https://www.ruby-lang.org/en/downloads/)
--   [**Postgres**](https://www.postgresql.org/download/)
--   [**Bundler**](https://bundler.io)
+- [**Docker**](https://docs.docker.com/get-docker/)
+- [**Docker Compose**](https://docs.docker.com/compose/install/)
+- [**Heroku CLI**](https://devcenter.heroku.com/articles/heroku-cli)
+- [**Ruby (version 2.7.3)**](https://www.ruby-lang.org/en/downloads/)
+- [**Postgres**](https://www.postgresql.org/download/)
+- [**Bundler**](https://bundler.io)
 
 To validate the API specification and to compile a single `YAML` file, you will need the following dependencies:
 
--   [**Node.js**](https://nodejs.org/en/download/)
--   [**Swagger CLI npm package**](https://www.npmjs.com/package/swagger-cli)
+- [**Node.js**](https://nodejs.org/en/download/)
+- [**Swagger CLI npm package**](https://www.npmjs.com/package/swagger-cli)
 
 Note that the scripts in the [`tools`](tools) directory are intended to be run when in
 a [shell window, running in the container](#running-a-shell).
 
--   Besides [`tools/entrypoint.sh`](tools/entrypoint.sh) - this is used by the [`Dockerfile`](Dockerfile).
+- Besides [`tools/entrypoint.sh`](tools/entrypoint.sh) - this is used by the [`Dockerfile`](Dockerfile).
 
 ## Development
 
@@ -151,9 +151,11 @@ And quit it using:
 exit
 ```
 
-When in a shell in the container, the prefix `docker-compose -f docker-compose.yml -f docker-compose.[ENVIRONMENT].yml --env-file .env.[ENVIRONMENT] exec web` is not needed.
+When in a shell in the container, the
+prefix `docker-compose -f docker-compose.yml -f docker-compose.[ENVIRONMENT].yml --env-file .env.[ENVIRONMENT] exec web`
+is not needed.
 
--   Nor is `bundle exec` (may be required to silence some `RSpec` warnings).
+- Nor is `bundle exec` (may be required to silence some `RSpec` warnings).
 
 ### Running the Rails Console
 
@@ -199,15 +201,16 @@ Note that this command is not available inside the container.
 
 The API is containerised using Docker and Docker Compose to make for simple deployment.
 
-Before running the application in `production` env, you will need to create a `.env.production` file to store
+Before running the application in a `production` environment, you will need to create a `.env.production` file to store
 environment variables.
 
--   The production `DotEnv` file **must** have the same environment variables defined as the development ([`.env.development`](.env.development)) `DotEnv` file.
+- The production `DotEnv` file **must** have the same environment variables defined as the
+  development ([`.env.development`](.env.development)) `DotEnv` file.
 
 Navigate to the main directory, where this `README` is located, and run:
 
 ```bash
-cat .env.development > .env.production
+touch .env.production && cat .env.development > .env.production
 ```
 
 To copy the contents of the development `DotEnv` file into the production file.
@@ -223,24 +226,39 @@ DB_PORT=[OMITTED]
 
 REDIS_HOST=redis
 
-RAILS_ENV=production
-RAKE_ENV=production
+RAILS_ENV=development # TODO: Replace this with `production`
+RAKE_ENV=development # TODO: Replace this with `production`
 
 GUEST_USERNAME=guest
-GUEST_PASSWORD[OMITTED]
+GUEST_PASSWORD=[OMITTED]
 
 DEVISE_JWT_SECRET_KEY=[OMITTED]
+
+GCS_PROJECT_NAME=[OMITTED]
+GCS_PROJECT_ID=[OMITTED]
+GCS_BUCKET_NAME=[OMITTED]
 ```
 
 You will then need to replace the `[OMITTED]` values.
 
-Note that `.env.production` requires `DATABASE_URL` field linking to the cloud database.
+Note that `.env.production` requires a `DATABASE_URL` field linking to the cloud database instead of the `DB_` prefixed
+attributes defined above.
 
 The value for the `DEVISE_JWT_SECRET_KEY` field can be generated using:
 
 ```bash
 rake secret
 ```
+
+The environment variables `GCS_PROJECT_NAME`, `GCS_PROJECT_ID` and `GCS_BUCKET_NAME` can be obtained from either the
+Firebase or Google Cloud consoles.
+
+* You will also need to generate a JSON keyfile.
+* Instructions can be found [here](https://cloud.google.com/iam/docs/creating-managing-service-account-keys), assuming
+  access to the Google Cloud bucket.
+* Once the file has been downloaded, rename it to `galaxia-gcs.json` and move it into `config/secrets`.
+
+<hr />
 
 To build the application:
 
@@ -275,12 +293,12 @@ This shutdown method is preferred over `CTRL + C`.
 
 A `Makefile` is included to shorten common `Docker` and `docker-compose` commands to the following:
 
--   Note that if a `make` action has arguments (all optional), a value should be supplied with it e.g., `build=1` (instead
-    of just `build`).
--   The `env` argument value can either be `development` or `production`. If no `env` is provided, it defaults to the
-    development (`development`) environment.
--   `make list` can be used to print all available actions.
-    -   Use `make list | xargs` to output the actions on a single line.
+- Note that if a `make` action has arguments (all optional), a value should be supplied with it e.g., `build=1` (instead
+  of just `build`).
+- The `env` argument value can either be `development` or `production`. If no `env` is provided, it defaults to the
+  development (`development`) environment.
+- `make list` can be used to print all available actions.
+    - Use `make list | xargs` to output the actions on a single line.
 
 <table>
 <thead>
@@ -433,9 +451,10 @@ make deploy
 
 Note that this requires collaborator access to the Heroku application.
 
-Also note that on M1 Mac devices, the [Gemfile.lock](Gemfile.lock) file may have to be deleted before running `make deploy` to prevent Docker trying to use a native M1 version of `nokogiri` in the Linux container.
+Also note that on M1 Mac devices, the [Gemfile.lock](Gemfile.lock) file may have to be deleted before
+running `make deploy` to prevent Docker trying to use a native M1 version of `nokogiri` in the Linux container.
 
--   The file can be generated again by running `bundle install`.
+- The file can be generated again by running `bundle install`.
 
 The production API is then available at:
 
@@ -457,9 +476,9 @@ make swagger
 
 Which will compile the `YAML` files in the [`docs`](docs) directory into a single `spec.yml` file.
 
--   Note that this requires the [**Swagger CLI npm package**](https://www.npmjs.com/package/swagger-cli).
--   The contents of the generated `spec.yml` file will then be copied to your clipboard where you can paste it into the
-    [Swagger Editor](https://editor.swagger.io) that is opened automatically by the `make swagger` action.
+- Note that this requires the [**Swagger CLI npm package**](https://www.npmjs.com/package/swagger-cli).
+- The contents of the generated `spec.yml` file will then be copied to your clipboard where you can paste it into the
+  [Swagger Editor](https://editor.swagger.io) that is opened automatically by the `make swagger` action.
 
 Any endpoints added to the API should also be documented and stored in the [`docs`](docs) directory.
 

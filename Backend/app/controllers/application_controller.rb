@@ -73,7 +73,7 @@ class ApplicationController < ActionController::API
   end
 
   # Return the ID of the user the token was generated for from the auth header.
-  # @param [String] the Bearer JWT token header
+  # @param [String] auth_header the Bearer JWT token header
   # @return [String] the ID of the user the token was generated for.
   def id_in_header(auth_header)
     token = auth_header.split(' ')[1]

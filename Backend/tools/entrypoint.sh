@@ -15,16 +15,16 @@ if [[ "$RAILS_ENV" != "production" ]]; then
 fi
 
 echo "== Database Ready =="
-bundle exec rake db:exists || exists=false
+#bundle exec rake db:exists || exists=false
 
 echo "== Preparing Database =="
 bundle exec rake db:prepare
 
-if [[ "$exists" == "false" ]]; then
+#if [[ "$exists" == "false" ]]; then
   echo "== Seeding Database =="
   bundle exec rake db:seed
   echo "== Database Seeded =="
-fi
+#fi
 
 echo "== Running App =="
 # Then exec the container's main process (what's set as CMD in the Dockerfile).

@@ -1,0 +1,16 @@
+'201':
+  description: Specular map successfully fetched
+  content:
+    application/json:
+      schema:
+        $ref: "../../../openapi.yaml#/components/schemas/SingleSpecularMapFetchResponseBody"
+
+'400':
+  $ref: "../../../openapi.yaml#/components/responses/BadRequestError"
+
+'404':
+  $ref: "../../../openapi.yaml#/components/responses/NotFoundError"
+
+'500':
+  $ref: "../../../openapi.yaml#/components/responses/GenericError"
+

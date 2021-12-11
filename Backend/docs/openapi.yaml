@@ -6,7 +6,7 @@ info:
   contact:
     name: Ernest Nkansah-Badu
     email: ernest.nkansah-badu.19@ucl.ac.uk
-    url: https://www.some_url.com
+    url: https://galaxia-js.web.app
   license:
     name: MIT
 servers:
@@ -16,6 +16,51 @@ paths:
     $ref: "./paths/user/register.yaml"
   /users/login:
     $ref: "./paths/user/login.yaml"
+
+  /media/textures:
+    $ref: "./paths/media/textures/all_textures.yaml"
+  /media/textures/{id}:
+    $ref: "./paths/media/textures/single_texture.yaml"
+  /media/textures/all/planets:
+    $ref: "./paths/media/textures/planet_textures.yaml"
+  /media/textures/all/stars:
+    $ref: "./paths/media/textures/star_textures.yaml"
+  /media/textures/all/moons:
+    $ref: "./paths/media/textures/moon_textures.yaml"
+
+  /media/atmosphere_textures:
+    $ref: "./paths/media/atmosphere_textures/all_atmosphere_textures.yaml"
+  /media/atmosphere_textures/{id}:
+    $ref: "./paths/media/atmosphere_textures/single_atmosphere_texture.yaml"
+  /media/atmosphere_textures/all/planets:
+    $ref: "./paths/media/atmosphere_textures/planet_atmosphere_textures.yaml"
+  /media/atmosphere_textures/all/stars:
+    $ref: "./paths/media/atmosphere_textures/star_atmosphere_textures.yaml"
+  /media/atmosphere_textures/all/moons:
+    $ref: "./paths/media/atmosphere_textures/moon_atmosphere_textures.yaml"
+
+  /media/bump_maps:
+    $ref: "./paths/media/bump_maps/all_bump_maps.yaml"
+  /media/bump_maps/{id}:
+    $ref: "./paths/media/bump_maps/single_bump_map.yaml"
+  /media/bump_maps/all/planets:
+    $ref: "./paths/media/bump_maps/planet_bump_maps.yaml"
+  /media/bump_maps/all/stars:
+    $ref: "./paths/media/bump_maps/star_bump_maps.yaml"
+  /media/bump_maps/all/moons:
+    $ref: "./paths/media/bump_maps/moon_bump_maps.yaml"
+
+  /media/specular_maps:
+    $ref: "./paths/media/specular_maps/all_specular_maps.yaml"
+  /media/specular_maps/{id}:
+    $ref: "./paths/media/specular_maps/single_specular_map.yaml"
+  /media/specular_maps/all/planets:
+    $ref: "./paths/media/specular_maps/planet_specular_maps.yaml"
+  /media/specular_maps/all/stars:
+    $ref: "./paths/media/specular_maps/star_specular_maps.yaml"
+  /media/specular_maps/all/moons:
+    $ref: "./paths/media/specular_maps/moon_specular_maps.yaml"
+
 components:
   responses:
     UnauthorizedError:

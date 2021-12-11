@@ -1,0 +1,10 @@
+'200':
+  description: All bump maps successfully fetched
+  content:
+    application/json:
+      schema:
+        $ref: "../../../openapi.yaml#/components/schemas/BumpMapGroupFetchResponseBody"
+
+'500':
+  $ref: "../../../openapi.yaml#/components/responses/GenericError"
+
