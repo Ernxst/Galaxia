@@ -30,6 +30,14 @@ FactoryBot.define do
     specular_map
   end
 
+  factory :moon, parent: :orbiting_body, class: 'celestial/moon' do
+    radius { Faker::Number.within(range: 637.1..2548.4) }
+    texture
+    atmosphere_texture
+    bump_map
+    specular_map
+  end
+
   factory :star, parent: :celestial_body, class: 'celestial/star' do
     radius { Faker::Number.within(range: 2255..258670) }
     luminosity { Faker::Number.within(range: 3e27 * 0.05..3e27 * 6000000) }

@@ -155,6 +155,24 @@
     "luminosity": 3e27,
     "texture": "8k_sun.webp"
   }],
-  "moons": [],
+  "moons": [
+    {
+      "name": "Moon",
+      "radius": 1737.4,
+      "caption": "",
+      "short_description": "",
+      "description": "",
+      "mass": 7.34767309e22,
+      "semi_major": 2.5832e-3,
+      "semi_minor": 0.00256554454,
+      "eccentricity": 0.0549,
+      "inclination": 1.543,
+      "orbital_period": 27,
+      "mean_velocity": 1.02,
+      "axial_tilt": 1.5,
+      "day_length": 2551392,
+      "texture": "8k_moon.webp"
+    }
+  ],
   "asteroidBelts": []
 }

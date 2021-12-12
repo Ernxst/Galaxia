@@ -55,6 +55,22 @@ SaveStarRequestBody:
 SaveStarResponseBody:
   $ref: "./celestial/response_bodies/planet_save.yaml"
 
+# GET api/v1/celestial/moons/{id}
+FetchMoonResponseBody:
+  $ref: "./celestial/response_bodies/moon_fetch.yaml"
+
+# GET api/v1/celestial/moons
+FetchAllMoonsResponseBody:
+  $ref: "./celestial/response_bodies/moon_fetch_all.yaml"
+
+# POST api/v1/celestial/moons
+SaveMoonRequestBody:
+  $ref: "./celestial/request_bodies/moon_save.yaml"
+
+# POST api/v1/celestial/moons
+SaveMoonResponseBody:
+  $ref: "./celestial/response_bodies/planet_save.yaml"
+
 # GET api/v1/media/textures/{id}
 SingleTextureFetchResponseBody:
   $ref: "./media/response_bodies/single_texture.yaml"

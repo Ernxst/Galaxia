@@ -27,6 +27,11 @@ paths:
   /celestial/stars/:
     $ref: "./paths/celestial/stars.yaml"
 
+  /celestial/moons/{id}:
+    $ref: "./paths/celestial/moon_fetch.yaml"
+  /celestial/moons/:
+    $ref: "./paths/celestial/moons.yaml"
+
   /media/textures:
     $ref: "./paths/media/textures/all_textures.yaml"
   /media/textures/{id}:

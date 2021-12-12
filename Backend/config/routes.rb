@@ -35,7 +35,7 @@ Rails.application.routes.draw do
       end
 
       scope :celestial do
-        [:planets, :stars].each do |type|
+        [:planets, :stars, :moons].each do |type|
           scope type do
             get '/', to: "celestial/#{type.to_s}#all"
             get '/:id', to: "celestial/#{type.to_s}#get"

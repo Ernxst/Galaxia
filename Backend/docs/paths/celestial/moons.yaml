@@ -1,0 +1,25 @@
+get:
+  summary: Fetch all stored moons
+  security:
+    - bearerAuth: []
+  operationId: FetchAllMoons
+  tags:
+    - moons
+  responses:
+    $ref: "../../responses/celestial/moons_get.yaml"
+
+post:
+  summary: Save a new moon
+  security:
+    - bearerAuth: []
+  operationId: SaveMoon
+  tags:
+    - moons
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../openapi.yaml#/components/schemas/SaveMoonRequestBody"
+  responses:
+    $ref: "../../responses/celestial/moons_post.yaml"

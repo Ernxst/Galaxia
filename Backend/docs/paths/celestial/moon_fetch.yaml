@@ -1,0 +1,16 @@
+get:
+  summary: Fetch a stored moon
+  security:
+    - bearerAuth: []
+  operationId: FetchMoon
+  tags:
+    - moons
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the moon to fetch
+  responses:
+    $ref: "../../responses/celestial/moon_get.yaml"

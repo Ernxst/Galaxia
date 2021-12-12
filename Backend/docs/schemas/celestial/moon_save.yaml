@@ -1,0 +1,6 @@
+allOf:
+  - $ref: "./base/celestial_body.yaml"
+  - $ref: "./base/orbiting_body.yaml"
+  - $ref: "./base/spherical_body.yaml"
+  - $ref: "./base/textured_body.yaml"
+  - type: object

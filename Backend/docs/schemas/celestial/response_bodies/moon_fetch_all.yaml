@@ -1,0 +1,8 @@
+type: object
+required:
+  - moons
+properties:
+  moons:
+    type: array
+    items:
+      $ref: "./../moon_fetch.yaml"

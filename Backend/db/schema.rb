@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_12_213020) do
+ActiveRecord::Schema.define(version: 2021_12_12_223704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,33 @@ ActiveRecord::Schema.define(version: 2021_12_12_213020) do
     t.integer "for", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "moons", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "caption", default: ""
+    t.string "description", default: ""
+    t.string "short_description", default: ""
+    t.float "mass", null: false
+    t.float "mean_velocity", null: false
+    t.float "axial_tilt", null: false
+    t.float "day_length", null: false
+    t.float "semi_major", null: false
+    t.float "semi_minor", null: false
+    t.float "eccentricity", null: false
+    t.float "inclination", null: false
+    t.float "orbital_period", null: false
+    t.float "radius", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "texture_id"
+    t.bigint "atmosphere_texture_id"
+    t.bigint "bump_map_id"
+    t.bigint "specular_map_id"
+    t.index ["atmosphere_texture_id"], name: "index_moons_on_atmosphere_texture_id"
+    t.index ["bump_map_id"], name: "index_moons_on_bump_map_id"
+    t.index ["specular_map_id"], name: "index_moons_on_specular_map_id"
+    t.index ["texture_id"], name: "index_moons_on_texture_id"
   end
 
   create_table "planets", force: :cascade do |t|
@@ -129,6 +156,10 @@ ActiveRecord::Schema.define(version: 2021_12_12_213020) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "moons", "atmosphere_textures"
+  add_foreign_key "moons", "bump_maps"
+  add_foreign_key "moons", "specular_maps"
+  add_foreign_key "moons", "textures"
   add_foreign_key "planets", "atmosphere_textures"
   add_foreign_key "planets", "bump_maps"
   add_foreign_key "planets", "specular_maps"

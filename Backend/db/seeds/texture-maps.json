@@ -15,6 +15,14 @@
       "for": "stars",
       "width": 4096,
       "height": 2048
+    },
+    {
+      "name": "Moon Texture Map (8k)",
+      "filename": "8k_moon.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/8k_moon.jpg",
+      "for": "moons",
+      "width": 0,
+      "height": 0
     }
   ],
   "bump_maps": [
