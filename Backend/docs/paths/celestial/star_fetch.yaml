@@ -1,0 +1,16 @@
+get:
+  summary: Fetch a stored star
+  security:
+    - bearerAuth: []
+  operationId: FetchStar
+  tags:
+    - stars
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the star to fetch
+  responses:
+    $ref: "../../responses/celestial/star_get.yaml"

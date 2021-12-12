@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_11_141535) do
+ActiveRecord::Schema.define(version: 2021_12_12_213020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,25 @@ ActiveRecord::Schema.define(version: 2021_12_11_141535) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "stars", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "caption", default: ""
+    t.string "description", default: ""
+    t.string "short_description", default: ""
+    t.float "mass", null: false
+    t.float "mean_velocity", null: false
+    t.float "axial_tilt", null: false
+    t.float "day_length", null: false
+    t.float "radius", null: false
+    t.float "luminosity", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "texture_id"
+    t.bigint "atmosphere_texture_id"
+    t.index ["atmosphere_texture_id"], name: "index_stars_on_atmosphere_texture_id"
+    t.index ["texture_id"], name: "index_stars_on_texture_id"
+  end
+
   create_table "textures", force: :cascade do |t|
     t.string "name", null: false
     t.string "filename", null: false
@@ -114,4 +133,6 @@ ActiveRecord::Schema.define(version: 2021_12_11_141535) do
   add_foreign_key "planets", "bump_maps"
   add_foreign_key "planets", "specular_maps"
   add_foreign_key "planets", "textures"
+  add_foreign_key "stars", "atmosphere_textures"
+  add_foreign_key "stars", "textures"
 end

@@ -11,7 +11,6 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # POST /users/login
-  # TODO: Return username in response instead of user_id
   def create
     params.require(:user).permit(:username, :password).require(%i[username])
     if params[:user][:username] == ENV['GUEST_USERNAME']

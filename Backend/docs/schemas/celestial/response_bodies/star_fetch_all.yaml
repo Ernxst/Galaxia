@@ -1,0 +1,8 @@
+type: object
+required:
+  - stars
+properties:
+  stars:
+    type: array
+    items:
+      $ref: "./../star_fetch.yaml"

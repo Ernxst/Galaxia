@@ -7,6 +7,14 @@
       "for": "planets",
       "width": 2048,
       "height": 1024
+    },
+    {
+      "name": "Sun Texture Map (8k)",
+      "filename": "8k_sun.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/8k_sun.jpg",
+      "for": "stars",
+      "width": 4096,
+      "height": 2048
     }
   ],
   "bump_maps": [

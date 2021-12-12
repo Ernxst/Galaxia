@@ -1,0 +1,6 @@
+type: object
+required:
+  - star
+properties:
+  star:
+    $ref: "./../star_fetch.yaml"

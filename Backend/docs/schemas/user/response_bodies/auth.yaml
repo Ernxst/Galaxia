@@ -4,6 +4,7 @@ required:
   - token
 properties:
   user_id:
-    type: string
+    type: integer
+    format: int32
   token:
     type: string

@@ -1,0 +1,11 @@
+allOf:
+  - $ref: "./base/celestial_body.yaml"
+  - $ref: "./base/spherical_body.yaml"
+  - $ref: "./base/textured_body.yaml"
+  - type: object
+  - required:
+      - luminosity
+  - properties:
+      luminosity:
+        type: number
+        format: float

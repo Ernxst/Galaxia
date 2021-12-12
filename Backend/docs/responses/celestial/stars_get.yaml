@@ -1,0 +1,10 @@
+'200':
+  description: All stars successfully fetched
+  content:
+    application/json:
+      schema:
+        $ref: "../../openapi.yaml#/components/schemas/FetchAllStarsResponseBody"
+
+'500':
+  $ref: "../../openapi.yaml#/components/responses/GenericError"
+

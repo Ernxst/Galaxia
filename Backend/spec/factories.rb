@@ -28,7 +28,13 @@ FactoryBot.define do
     atmosphere_texture
     bump_map
     specular_map
+  end
 
+  factory :star, parent: :celestial_body, class: 'celestial/star' do
+    radius { Faker::Number.within(range: 2255..258670) }
+    luminosity { Faker::Number.within(range: 3e27 * 0.05..3e27 * 6000000) }
+    texture
+    atmosphere_texture
   end
 
   factory :atmosphere_texture, class: 'media/atmosphere_texture' do

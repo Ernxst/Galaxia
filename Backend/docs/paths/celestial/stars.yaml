@@ -1,0 +1,25 @@
+get:
+  summary: Fetch all stored stars
+  security:
+    - bearerAuth: []
+  operationId: FetchAllStars
+  tags:
+    - stars
+  responses:
+    $ref: "../../responses/celestial/stars_get.yaml"
+
+post:
+  summary: Save a new star
+  security:
+    - bearerAuth: []
+  operationId: SaveStar
+  tags:
+    - stars
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../openapi.yaml#/components/schemas/SaveStarRequestBody"
+  responses:
+    $ref: "../../responses/celestial/stars_post.yaml"

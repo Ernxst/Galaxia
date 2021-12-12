@@ -18,6 +18,10 @@ PlanetToSave:
   $ref: "./celestial/planet_save.yaml"
 PlanetToFetch:
   $ref: "./celestial/planet_fetch.yaml"
+StarToSave:
+  $ref: "./celestial/star_save.yaml"
+StarToFetch:
+  $ref: "./celestial/star_fetch.yaml"
 
 # GET api/v1/celestial/planets/{id}
 FetchPlanetResponseBody:
@@ -33,6 +37,22 @@ SavePlanetRequestBody:
 
 # POST api/v1/celestial/planets
 SavePlanetResponseBody:
+  $ref: "./celestial/response_bodies/planet_save.yaml"
+
+# GET api/v1/celestial/stars/{id}
+FetchStarResponseBody:
+  $ref: "./celestial/response_bodies/star_fetch.yaml"
+
+# GET api/v1/celestial/stars
+FetchAllStarsResponseBody:
+  $ref: "./celestial/response_bodies/star_fetch_all.yaml"
+
+# POST api/v1/celestial/stars
+SaveStarRequestBody:
+  $ref: "./celestial/request_bodies/star_save.yaml"
+
+# POST api/v1/celestial/stars
+SaveStarResponseBody:
   $ref: "./celestial/response_bodies/planet_save.yaml"
 
 # GET api/v1/media/textures/{id}
