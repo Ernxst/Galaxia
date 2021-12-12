@@ -5,6 +5,36 @@ AuthResponseBody:
 Texture:
   $ref: "./media/texture.yaml"
 
+CelestialBody:
+  $ref: "./celestial/base/celestial_body.yaml"
+OrbitingBody:
+  $ref: "./celestial/base/orbiting_body.yaml"
+SphericalBody:
+  $ref: "./celestial/base/spherical_body.yaml"
+TexturedBody:
+  $ref: "./celestial/base/textured_body.yaml"
+
+PlanetToSave:
+  $ref: "./celestial/planet_save.yaml"
+PlanetToFetch:
+  $ref: "./celestial/planet_fetch.yaml"
+
+# GET api/v1/celestial/planets/{id}
+FetchPlanetResponseBody:
+  $ref: "./celestial/response_bodies/planet_fetch.yaml"
+
+# GET api/v1/celestial/planets
+FetchAllPlanetsResponseBody:
+  $ref: "./celestial/response_bodies/planet_fetch_all.yaml"
+
+# POST api/v1/celestial/planets
+SavePlanetRequestBody:
+  $ref: "./celestial/request_bodies/planet_save.yaml"
+
+# POST api/v1/celestial/planets
+SavePlanetResponseBody:
+  $ref: "./celestial/response_bodies/planet_save.yaml"
+
 # GET api/v1/media/textures/{id}
 SingleTextureFetchResponseBody:
   $ref: "./media/response_bodies/single_texture.yaml"

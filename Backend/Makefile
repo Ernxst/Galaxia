@@ -70,6 +70,12 @@ bundle:
 	$(exec) bundle $(task)
 update:
 	$(exec) bundle task=update
+rebuild:
+	make rake task='db:drop'
+	rm -f db/schema.rb
+	make rake task='db:prepare'
+	make rake task='db:migrate'
+	make rake task='db:seed'
 swagger:
 	set -e
 	swagger-cli bundle -t yaml -o docs/spec.yml docs/openapi.yaml

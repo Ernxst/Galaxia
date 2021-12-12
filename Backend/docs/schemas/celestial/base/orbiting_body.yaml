@@ -1,0 +1,23 @@
+type: object
+required:
+  - semi_major
+  - semi_minor
+  - eccentricity
+  - inclination
+  - orbital_period
+properties:
+  semi_minor:
+    type: number
+    format: float
+  semi_major:
+    type: number
+    format: float
+  inclination:
+    type: number
+    format: float
+  eccentricity:
+    type: number
+    format: float
+  orbital_period:
+    type: number
+    format: float

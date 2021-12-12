@@ -6,6 +6,7 @@ SimpleCov.start do
   add_filter %r{^/test/}
   add_filter %r{^/spec/}
   add_filter %r{^/config/}
+  add_filter %r{^/db/}
 
   add_group 'Controllers', 'app/controllers'
   add_group 'Models', 'app/models'
@@ -111,7 +112,4 @@ RSpec.configure do |config|
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
-  config.before :all do
-    Rails.application.load_seed
-  end
 end

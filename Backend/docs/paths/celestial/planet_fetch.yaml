@@ -1,0 +1,16 @@
+get:
+  summary: Fetch a stored planet
+  security:
+    - bearerAuth: []
+  operationId: FetchPlanet
+  tags:
+    - planets
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the planet to fetch
+  responses:
+    $ref: "../../responses/celestial/planet_get.yaml"

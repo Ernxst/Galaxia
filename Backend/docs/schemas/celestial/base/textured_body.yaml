@@ -1,0 +1,16 @@
+type: object
+required:
+  - texture_id
+properties:
+  texture_id:
+    type: integer
+    format: int32
+  atmosphere_texture_id:
+    type: integer
+    format: int32
+  bump_map_id:
+    type: integer
+    format: int32
+  specular_map_id:
+    type: integer
+    format: int32

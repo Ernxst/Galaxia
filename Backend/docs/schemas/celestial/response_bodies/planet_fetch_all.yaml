@@ -1,0 +1,8 @@
+type: object
+required:
+  - planets
+properties:
+  planets:
+    type: array
+    items:
+      $ref: "./../planet_fetch.yaml"

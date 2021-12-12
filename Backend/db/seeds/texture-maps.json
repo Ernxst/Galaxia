@@ -1,0 +1,43 @@
+{
+  "textures": [
+    {
+      "name": "Earth Day Map (2k)",
+      "filename": "2k_earth_daymap.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/2k_earth_daymap.jpg",
+      "for": "planets",
+      "width": 2048,
+      "height": 1024
+    }
+  ],
+  "bump_maps": [
+    {
+      "name": "Earth Bump Map",
+      "filename": "earth-bump-map.webp",
+      "original_url": "",
+      "for": "planets",
+      "width": 640,
+      "height": 320
+    }
+  ],
+  "specular_maps": [
+    {
+      "name": "Earth Specular Map (8k)",
+      "filename": "8k_earth_specular_map.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/8k_earth_specular_map.tif",
+      "for": "planets",
+      "width": 8192,
+      "height": 4096
+    }
+  ],
+  "atmosphere_textures": [
+    {
+      "name": "Earth Clouds (8k)",
+      "filename": "8k_earth_clouds.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/8k_earth_clouds.jpg",
+      "for": "planets",
+      "width": 8192,
+      "height": 4096
+    }
+  ],
+  "ring_textures": []
+}

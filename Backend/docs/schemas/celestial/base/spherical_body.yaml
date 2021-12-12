@@ -1,0 +1,7 @@
+type: object
+required:
+  - radius
+properties:
+  radius:
+    type: integer
+    format: int32

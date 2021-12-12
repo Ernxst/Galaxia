@@ -1,0 +1,33 @@
+type: object
+required:
+  - name
+  - caption
+  - short_description
+  - description
+
+  - mass
+  - mean_velocity
+  - day_length
+  - axial_tilt
+properties:
+  name:
+    type: string
+  caption:
+    type: string
+  short_description:
+    type: string
+  description:
+    type: string
+
+  mass:
+    type: number
+    format: float
+  axial_tilt:
+    type: number
+    format: float
+  day_length:
+    type: number
+    format: float
+  mean_velocity:
+    type: number
+    format: float

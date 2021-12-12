@@ -33,6 +33,17 @@ Rails.application.routes.draw do
           end
         end
       end
+
+      scope :celestial do
+        [:planets].each do |type|
+          scope type do
+            get '/', to: "celestial/#{type.to_s}#all"
+            get '/:id', to: "celestial/#{type.to_s}#get"
+            post '/', to: "celestial/#{type.to_s}#new"
+          end
+        end
+      end
+
     end
   end
 end

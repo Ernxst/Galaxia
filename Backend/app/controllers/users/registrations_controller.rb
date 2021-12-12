@@ -14,6 +14,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /users/register
   # Register a new user.
   # @return [JSON] a response based on whether the input is valid.
+  # TODO: Return username in response instead of user_id
   def create
     super do |user|
       return render json: { errors: user.errors }, status: :unprocessable_entity unless user.valid?

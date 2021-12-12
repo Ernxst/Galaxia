@@ -1,0 +1,16 @@
+allOf:
+  - $ref: "./base/celestial_body.yaml"
+  - $ref: "./base/orbiting_body.yaml"
+  - $ref: "./base/spherical_body.yaml"
+  - type: object
+    required:
+      - texture
+    properties:
+      texture:
+        $ref: "./../media/texture.yaml"
+      atmosphere_texture:
+        $ref: "./../media/texture.yaml"
+      bump_map:
+        $ref: "./../media/texture.yaml"
+      specular_map:
+        $ref: "./../media/texture.yaml"

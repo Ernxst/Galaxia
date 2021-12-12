@@ -1,0 +1,25 @@
+get:
+  summary: Fetch all stored planets
+  security:
+    - bearerAuth: []
+  operationId: FetchAllPlanets
+  tags:
+    - planets
+  responses:
+    $ref: "../../responses/celestial/planets_get.yaml"
+
+post:
+  summary: Save a new planet
+  security:
+    - bearerAuth: []
+  operationId: SavePlanet
+  tags:
+    - planets
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../openapi.yaml#/components/schemas/SavePlanetRequestBody"
+  responses:
+    $ref: "../../responses/celestial/planets_post.yaml"

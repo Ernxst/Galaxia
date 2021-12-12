@@ -17,6 +17,11 @@ paths:
   /users/login:
     $ref: "./paths/user/login.yaml"
 
+  /celestial/planets/{id}:
+    $ref: "./paths/celestial/planet_fetch.yaml"
+  /celestial/planets/:
+    $ref: "./paths/celestial/planets.yaml"
+
   /media/textures:
     $ref: "./paths/media/textures/all_textures.yaml"
   /media/textures/{id}:
