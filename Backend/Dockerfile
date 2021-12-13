@@ -17,7 +17,7 @@ RUN apk add --update build-base
 
 # Install gems
 ARG RAILS_ENV
-ENV BUNDLER_VERSION=2.2.24
+ENV BUNDLER_VERSION=2.2.32
 RUN gem install bundler:$BUNDLER_VERSION
 COPY Gemfile Gemfile.lock ./
 RUN if [[ "$RAILS_ENV" == "production" ]] ; then bundle config set without development test ; else bundle config set --local without production ; fi

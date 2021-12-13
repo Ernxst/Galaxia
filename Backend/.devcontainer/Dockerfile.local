@@ -6,7 +6,7 @@ RUN apt update -qq && apt install -y \
     build-essential libpq-dev postgresql-client
 
 # Install gems
-ENV BUNDLER_VERSION=2.2.24
+ENV BUNDLER_VERSION=2.2.32
 RUN gem install bundler:$BUNDLER_VERSION
 COPY Gemfile* /tmp/
 WORKDIR /tmp
