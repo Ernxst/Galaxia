@@ -1,19 +1,25 @@
 <template>
   <teleport to="body">
     <div class="overlay" />
-    <article class="popup centred">
-      <h1>Authenticating</h1>
-      <div class="loader">
-        <svg id="circle"
-             xmlns="http://www.w3.org/2000/svg"
-             xmlns:xlink="http://www.w3.org/1999/xlink"
-             x="0px"
-             y="0px"
-             width="100px"
-             height="100px"
-             viewBox="0 0 50 50"
-             style="enable-background:new 0 0 50 50;"
-             xml:space="preserve">
+    <div class="popup centred">
+      <content-container v-bind="$attrs"
+                         :glow="true"
+                         :visible="visible">
+        <template v-slot:header>
+          <h1>Authenticating</h1>
+        </template>
+        <div class="content centred">
+          <div class="loader">
+            <svg id="circle"
+                 xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 x="0px"
+                 y="0px"
+                 width="100px"
+                 height="100px"
+                 viewBox="0 0 50 50"
+                 style="enable-background:new 0 0 50 50;"
+                 xml:space="preserve">
   <path fill="#000"
         d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
     <animateTransform attributeType="xml"
@@ -25,23 +31,25 @@
                       repeatCount="indefinite" />
     </path>
   </svg>
-      </div>
-      <p>Please wait</p>
-    </article>
+          </div>
+          <p>Please wait</p>
+        </div>
+      </content-container>
+    </div>
   </teleport>
 </template>
 
 <script lang="ts">
+import ContentContainer from "@/components/ui/widgets/content-container.vue";
 import { defineComponent } from "vue";
 
 
 export default defineComponent({
   name: "loading-popup",
-  data() {
-    return {
-      visible: true
-    };
-  }
+  components: { ContentContainer },
+  props: {
+    visible: { type: Boolean, default: true },
+  },
 });
 </script>
 
@@ -65,19 +73,19 @@ export default defineComponent({
   max-width: 90%;
   max-height: 90vh;
   min-width: fit-content;
-  width: 30em;
-  background: var(--main);
-  box-shadow: 0 10px 20px rgba(var(--page-bg), 0.2);
+  width: fit-content;
   z-index: 14;
-  padding: 48px 24px;
-  flex-direction: column;
-  border-radius: 4px;
+  background: var(--page-bg);
 }
 
 h1 {
-  margin-top: 0;
-  margin-bottom: 8px;
+  margin: 0;
   letter-spacing: 4px;
+  font-size: 6vw;
+}
+
+.content {
+  flex-direction: column;
 }
 
 .loader {
@@ -90,8 +98,13 @@ h1 {
   vertical-align: top;
 }
 
-svg path,
-svg rect {
+svg path, svg rect {
   fill: var(--text-colour);
+}
+
+@media (min-width: 480px) {
+  h1 {
+    font-size: 32px;
+  }
 }
 </style>

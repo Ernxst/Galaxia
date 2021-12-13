@@ -26,8 +26,8 @@
 import Page from "@/components/ui/layout/page.vue";
 import { AuthRequest } from "@/services/auth.service";
 import LoadingPopup from "@/views/sign-in/loading-popup.vue";
-import LoginForm from "./login-form.vue";
 import { defineComponent } from "vue";
+import LoginForm from "./login-form.vue";
 
 
 export default defineComponent({
@@ -36,7 +36,7 @@ export default defineComponent({
   data() {
     return {
       loading: false,
-    }
+    };
   },
   methods: {
     async submit(type: "login" | "register" | "guestLogin", user?: AuthRequest) {
