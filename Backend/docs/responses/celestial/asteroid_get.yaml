@@ -1,0 +1,13 @@
+'200':
+  description: Asteroid belt successfully fetched
+  content:
+    application/json:
+      schema:
+        $ref: "../../openapi.yaml#/components/schemas/FetchAsteroidBeltResponseBody"
+
+'404':
+  $ref: "../../openapi.yaml#/components/responses/NotFoundError"
+
+'500':
+  $ref: "../../openapi.yaml#/components/responses/GenericError"
+

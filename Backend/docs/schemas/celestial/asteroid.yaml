@@ -1,0 +1,33 @@
+allOf:
+  - $ref: "./base/celestial_body.yaml"
+  - type: object
+    required:
+      - num_of_asteroids
+      - depth
+      - inclination
+      - inner_semi_major
+      - outer_semi_major
+      - inner_eccentricity
+      - outer_eccentricity
+    properties:
+      num_of_asteroids:
+        type: integer
+        format: int32
+      depth:
+        type: number
+        format: float
+      inclination:
+        type: number
+        format: float
+      inner_semi_major:
+        type: number
+        format: float
+      outer_semi_minor:
+        type: number
+        format: float
+      inner_eccentricity:
+        type: number
+        format: float
+      outer_eccentricity:
+        type: number
+        format: float

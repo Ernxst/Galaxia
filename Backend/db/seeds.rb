@@ -24,7 +24,7 @@ seed(tex_data[:atmosphere_textures], Media::AtmosphereTexture)
 def seed_celestial_bodies(arr, record)
   arr.each do |data|
     params = data.except(:texture, :bump_map, :specular_map, :atmosphere)
-    params[:texture_id] = Media::Texture.find_by_filename(data[:texture]).id
+    params[:texture_id] = Media::Texture.find_by_filename(data[:texture]).id unless data[:texture].nil?
     params[:bump_map_id] = Media::BumpMap.find_by_filename(data[:bump_map]).id unless data[:bump_map].nil?
     params[:specular_map_id] = Media::SpecularMap.find_by_filename(data[:specular_map]).id unless data[:specular_map].nil?
     atmosphere_data = data[:atmosphere]
@@ -38,6 +38,6 @@ end
 
 tex_data = get_data('db/seeds/celestial-bodies.json')
 seed_celestial_bodies(tex_data[:planets], Celestial::Planet)
-# seed(tex_data[:stars], Celestial::Star)
-# seed(tex_data[:moons], Celestial::Moon)
-# seed(tex_data[:asteroid_belts], Celestial::AsteroidBelt)
+seed_celestial_bodies(tex_data[:stars], Celestial::Star)
+seed_celestial_bodies(tex_data[:moons], Celestial::Moon)
+seed_celestial_bodies(tex_data[:asteroid_belts], Celestial::AsteroidBelt)

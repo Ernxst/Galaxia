@@ -1,3 +1,4 @@
+# TODO: Add endpoint for generating random celestial body
 class Celestial::CelestialBodyController < ApplicationController
 
   def initialize
@@ -31,7 +32,6 @@ class Celestial::CelestialBodyController < ApplicationController
     end
   end
 
-  # TODO: Override in AsteroidsController to just return body.as_json
   def serialise_body(body)
     add_textures(body).merge(body.as_json)
   end
@@ -61,10 +61,10 @@ class Celestial::CelestialBodyController < ApplicationController
   end
 
   # TODO: Add support for atmospheres and rings
-  # TODO: Override for AsteroidBelts and Stars and RingedPlanets
+  # TODO: Override for Planets (for implementing rings)
   # Can be overridden
   def build(params)
-    body = @record.create(params.except(:atmosphere, :ring))
+    body = @record.create(params.except(:atmosphere))
     body.save!
     body
   end

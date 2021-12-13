@@ -1,0 +1,8 @@
+type: object
+required:
+  - asteroid_belts
+properties:
+  asteroid_belts:
+    type: array
+    items:
+      $ref: "./../asteroid.yaml"

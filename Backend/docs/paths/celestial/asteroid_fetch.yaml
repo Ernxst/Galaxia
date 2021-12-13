@@ -1,0 +1,16 @@
+get:
+  summary: Fetch a stored asteroid belt
+  security:
+    - bearerAuth: []
+  operationId: FetchAsteroidBelt
+  tags:
+    - asteroid_belts
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the asteroid belt to fetch
+  responses:
+    $ref: "../../responses/celestial/asteroid_get.yaml"

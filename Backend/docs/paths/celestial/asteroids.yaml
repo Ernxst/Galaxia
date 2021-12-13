@@ -1,0 +1,25 @@
+get:
+  summary: Fetch all stored asteroid belts
+  security:
+    - bearerAuth: []
+  operationId: FetchAllAsteroidBelts
+  tags:
+    - asteroid_belts
+  responses:
+    $ref: "../../responses/celestial/asteroids_get.yaml"
+
+post:
+  summary: Save a new asteroid belt
+  security:
+    - bearerAuth: []
+  operationId: SaveAsteroidBelt
+  tags:
+    - asteroid_belts
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../openapi.yaml#/components/schemas/SaveAsteroidBeltRequestBody"
+  responses:
+    $ref: "../../responses/celestial/asteroid_post.yaml"

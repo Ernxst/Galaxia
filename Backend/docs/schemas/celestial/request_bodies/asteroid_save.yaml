@@ -1,0 +1,6 @@
+type: object
+required:
+  - asteroid_belt
+properties:
+  asteroid_belt:
+    $ref: "./../asteroid.yaml"

@@ -142,19 +142,21 @@
       "texture": "2k_earth_daymap.webp"
     }
   ],
-  "stars": [{
-    "name": "Sun",
-    "radius": 696340,
-    "caption": "",
-    "short_description": "",
-    "description": "",
-    "mass": 1.98847e30,
-    "mean_velocity": 220,
-    "axial_tilt": 7.25,
-    "day_length": 0,
-    "luminosity": 3e27,
-    "texture": "8k_sun.webp"
-  }],
+  "stars": [
+    {
+      "name": "Sun",
+      "radius": 696340,
+      "caption": "",
+      "short_description": "",
+      "description": "",
+      "mass": 1.98847e30,
+      "mean_velocity": 220,
+      "axial_tilt": 7.25,
+      "day_length": 0,
+      "luminosity": 3e27,
+      "texture": "8k_sun.webp"
+    }
+  ],
   "moons": [
     {
       "name": "Moon",
@@ -174,5 +176,40 @@
       "texture": "8k_moon.webp"
     }
   ],
-  "asteroidBelts": []
+  "asteroid_belts": [
+    {
+      "name": "Asteroid Belt",
+      "caption": "",
+      "short_description": "",
+      "description": "",
+      "num_of_asteroids": 3000,
+      "depth": 1,
+      "axial_tilt": 0,
+      "inner_semi_major": 2.06,
+      "inner_eccentricity": 0.33,
+      "outer_semi_major": 3.27,
+      "outer_eccentricity": 0.33,
+      "mass": 2.39e21,
+      "mean_velocity": 0,
+      "day_length": 1000000,
+      "inclination": 20
+    },
+    {
+      "name": "Kuiper Belt",
+      "caption": "",
+      "short_description": "",
+      "description": "",
+      "num_of_asteroids": 10000,
+      "depth": 1,
+      "axial_tilt": 0,
+      "inner_semi_major": 30,
+      "inner_eccentricity": 0.1,
+      "outer_semi_major": 55,
+      "outer_eccentricity": 0.1,
+      "mass": 0,
+      "mean_velocity": 0,
+      "day_length": 1000000,
+      "inclination": 10
+    }
+  ]
 }

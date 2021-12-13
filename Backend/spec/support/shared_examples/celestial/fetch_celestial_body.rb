@@ -22,7 +22,7 @@ shared_examples 'a celestial body fetch test', type: :request do |id:, type:, ex
   it 'expected response', unless: expected_status == :ok do
     expect(response.body).to eq(expected_response.to_json)
   end
-  it 'celestial bodies returned', if: expected_status == :ok do
+  it 'celestial body returned', if: expected_status == :ok do
     body = JSON.parse(response.body)[type.singularize]
     expect(body).to have_key "name"
     expect(body).to have_key "caption"

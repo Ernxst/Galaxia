@@ -1,0 +1,16 @@
+'201':
+  description: Asteroid belt successfully saved
+  content:
+    application/json:
+      schema:
+        $ref: "../../openapi.yaml#/components/schemas/SaveAsteroidBeltResponseBody"
+
+'400':
+  $ref: "../../openapi.yaml#/components/responses/BadRequestError"
+
+'422':
+  $ref: "../../openapi.yaml#/components/responses/UnprocessableEntityError"
+
+'500':
+  $ref: "../../openapi.yaml#/components/responses/GenericError"
+

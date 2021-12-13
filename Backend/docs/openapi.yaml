@@ -32,6 +32,11 @@ paths:
   /celestial/moons/:
     $ref: "./paths/celestial/moons.yaml"
 
+  /celestial/asteroid_belts/{id}:
+    $ref: "./paths/celestial/asteroid_fetch.yaml"
+  /celestial/asteroid_belts/:
+    $ref: "./paths/celestial/asteroids.yaml"
+
   /media/textures:
     $ref: "./paths/media/textures/all_textures.yaml"
   /media/textures/{id}:

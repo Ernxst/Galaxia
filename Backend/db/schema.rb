@@ -10,10 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_12_223704) do
+ActiveRecord::Schema.define(version: 2021_12_13_134344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "asteroid_belts", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "caption", default: ""
+    t.string "description", default: ""
+    t.string "short_description", default: ""
+    t.integer "num_of_asteroids", null: false
+    t.float "depth", null: false
+    t.float "mass", null: false
+    t.float "mean_velocity", null: false
+    t.float "axial_tilt", null: false
+    t.float "day_length", null: false
+    t.float "inner_semi_major", null: false
+    t.float "outer_semi_major", null: false
+    t.float "inner_eccentricity", null: false
+    t.float "outer_eccentricity", null: false
+    t.float "inclination", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "atmosphere_textures", force: :cascade do |t|
     t.string "name", null: false
@@ -89,13 +109,6 @@ ActiveRecord::Schema.define(version: 2021_12_12_223704) do
     t.index ["bump_map_id"], name: "index_planets_on_bump_map_id"
     t.index ["specular_map_id"], name: "index_planets_on_specular_map_id"
     t.index ["texture_id"], name: "index_planets_on_texture_id"
-  end
-
-  create_table "preset_simulations", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "description", default: ""
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "specular_maps", force: :cascade do |t|

@@ -1,7 +1,7 @@
 
 require 'rails_helper'
 
-describe Celestial::Base::Spherical, :type => :model do
+describe Celestial::Star, :type => :model do
   context "when included in a class" do
     subject { Celestial::Star.create(attributes_for(:star)) }
 

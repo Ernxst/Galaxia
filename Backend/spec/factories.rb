@@ -15,7 +15,7 @@ FactoryBot.define do
   end
 
   factory :orbiting_body, parent: :celestial_body, class: 'celestial/base/orbitable' do
-    semi_major { Faker::Number.within(range: 0.25..11) }
+    semi_major { Faker::Number.within(range: 0.25..55) }
     eccentricity { Faker::Number.within(range: 0..0.96) }
     semi_minor { (1 - eccentricity ** 2.0) * semi_major }
     inclination { Faker::Number.within(range: 0..2 * Math::PI) }
@@ -43,6 +43,16 @@ FactoryBot.define do
     luminosity { Faker::Number.within(range: 3e27 * 0.05..3e27 * 6000000) }
     texture
     atmosphere_texture
+  end
+
+  factory :asteroid_belt, parent: :celestial_body, class: 'celestial/asteroid_belt' do
+    inner_semi_major { Faker::Number.within(range: 0.25..60) }
+    outer_semi_major { Faker::Number.within(range: 0.5..80) }
+    inner_eccentricity { Faker::Number.within(range: 0..0.96) }
+    outer_eccentricity { Faker::Number.within(range: 0..0.96) }
+    inclination { Faker::Number.within(range: 0..2 * Math::PI) }
+    depth { Faker::Number.within(range: 1..15) }
+    num_of_asteroids { Faker::Number.within(range: 500..100000) }
   end
 
   factory :atmosphere_texture, class: 'media/atmosphere_texture' do
