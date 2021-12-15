@@ -1,0 +1,36 @@
+type: object
+required:
+  - id
+  - name
+  - description
+  - star
+  - planets
+  - asteroid_belts
+properties:
+  id:
+    type: integer
+    format: int32
+  name:
+    type: string
+  description:
+    type: string
+  star:
+    $ref: "./../../openapi.yaml#/components/schemas/StarToFetch"
+  planets:
+    type: array
+    items:
+      allOf:
+        - $ref: "./../../openapi.yaml#/components/schemas/PlanetToFetch"
+        - required:
+          - moons
+        - properties:
+            moons:
+              type: array
+              items:
+                $ref: "./../../openapi.yaml#/components/schemas/MoonToFetch"
+  asteroid_belts:
+    type: array
+    items:
+      $ref: "./../../openapi.yaml#/components/schemas/Asteroid"
+
+

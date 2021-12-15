@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe Celestial::AsteroidBelt, :type => :model do
+describe Space::AsteroidBelt, :type => :model do
   context "when included in a class" do
-    subject { Celestial::AsteroidBelt.create(attributes_for(:asteroid_belt)) }
+    subject { Space::AsteroidBelt.create(attributes_for(:asteroid_belt)) }
 
     describe "Validations" do
       it "is valid with valid attributes" do

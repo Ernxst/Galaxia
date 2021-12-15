@@ -18,18 +18,30 @@ PlanetToSave:
   $ref: "./celestial/planet_save.yaml"
 PlanetToFetch:
   $ref: "./celestial/planet_fetch.yaml"
+MoonToSave:
+  $ref: "./celestial/planet_save.yaml"
+MoonToFetch:
+  $ref: "./celestial/planet_fetch.yaml"
 StarToSave:
   $ref: "./celestial/star_save.yaml"
 StarToFetch:
   $ref: "./celestial/star_fetch.yaml"
 Asteroid:
   $ref: "./celestial/asteroid.yaml"
+Simulation:
+  $ref: "./simulation/simulation.yaml"
+SimulationToSave:
+  $ref: "./simulation/simulation_create.yaml"
+SimulationToUpdate:
+  $ref: "./simulation/simulation_update.yaml"
+SimulationsFetchResponseBody:
+  $ref: "./simulation/response_bodies/simulations_fetch.yaml"
 
+# ===============================================================
 # GET api/v1/celestial/planets/{id}
 FetchPlanetResponseBody:
   $ref: "./celestial/response_bodies/planet_fetch.yaml"
 
-# ===============================================================
 # GET api/v1/celestial/planets
 FetchAllPlanetsResponseBody:
   $ref: "./celestial/response_bodies/planet_fetch_all.yaml"

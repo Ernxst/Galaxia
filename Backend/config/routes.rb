@@ -44,6 +44,13 @@ Rails.application.routes.draw do
         end
       end
 
+      scope :simulations do
+        get '/:id', to: 'simulations/simulations_fetch#get'
+        get '/by/:id', to: 'simulations/simulations_fetch#get_users_sims'
+        get '/all/preset', to: 'simulations/simulations_fetch#get_preset'
+        get '/all/user', to: 'simulations/simulations_fetch#get_user_created'
+      end
+
     end
   end
 end

@@ -35,9 +35,6 @@ class ApplicationController < ActionController::API
   end
 
   # Return a JSON response to the client if a parameter is missing.
-  # Overrides Devise's default error message.
-  # @param [Exception] exception the exception that was thrown
-  # @return [JSON] the error message of the exception inserted into a JSON response
   def handle_parameter_missing(exception)
     param = exception.param
     render json: { status: :bad_request,
@@ -46,7 +43,6 @@ class ApplicationController < ActionController::API
   end
 
   # Verify that the user is authenticated and signed in.
-  # @return [JSON] a response to client indicating they need to sign in if they are not signed in.
   def authenticate_user!
     return if signed_in?
 
@@ -57,7 +53,6 @@ class ApplicationController < ActionController::API
   end
 
   # Authenticate a user using the JWT mechanism.
-  # @return [void, JSON] a response if JWT authentication failed.
   def authenticate_user
     auth_header = request.headers['Authorization']
     return unless auth_header.present? && auth_header.starts_with?('Bearer ')

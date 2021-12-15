@@ -11,5 +11,5 @@ describe 'POST /celestial/moons/', type: :request do
                                                   specular_map_id: nil, atmosphere_texture_id: nil }) },
                   type: 'moons',
                   expected_status: :created,
-                  record: Celestial::Moon
+                  record: Space::Moon
 end

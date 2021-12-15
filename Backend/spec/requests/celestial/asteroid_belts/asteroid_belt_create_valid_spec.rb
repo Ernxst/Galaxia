@@ -9,6 +9,6 @@ describe 'POST /celestial/asteroid_belts/', type: :request do
                   params: { asteroid_belt: FactoryBot.attributes_for(:asteroid_belt) },
                   type: 'asteroid_belts',
                   expected_status: :created,
-                  record: Celestial::AsteroidBelt
+                  record: Space::AsteroidBelt
 end
 

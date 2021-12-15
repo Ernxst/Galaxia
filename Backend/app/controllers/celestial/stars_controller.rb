@@ -1,7 +1,7 @@
 class Celestial::StarsController < Celestial::CelestialBodyController
   def initialize
     super
-    @record = Celestial::Star
+    @record = Space::Star
     @body = "stars"
   end
 

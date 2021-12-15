@@ -8,5 +8,5 @@ describe 'POST /celestial/planets/ missing params', type: :request do
                   params: { planet: {} },
                   type: 'planets',
                   expected_status: :bad_request,
-                  record: Celestial::Planet
+                  record: Space::Planet
 end

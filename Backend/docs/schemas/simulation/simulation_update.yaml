@@ -1,0 +1,32 @@
+type: object
+required:
+  - name
+  - description
+  - star
+  - planets
+  - asteroid_belts
+properties:
+  name:
+    type: string
+  description:
+    type: string
+  star:
+    $ref: "./../../openapi.yaml#/components/schemas/StarToSave"
+  planets:
+    type: array
+    items:
+      allOf:
+        - $ref: "./../../openapi.yaml#/components/schemas/PlanetToSave"
+        - required:
+            - moons
+        - properties:
+            moons:
+              type: array
+              items:
+                $ref: "./../../openapi.yaml#/components/schemas/MoonToSave"
+  asteroid_belts:
+    type: array
+    items:
+      $ref: "./../../openapi.yaml#/components/schemas/Asteroid"
+
+

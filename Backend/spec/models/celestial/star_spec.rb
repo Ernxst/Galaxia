@@ -1,9 +1,9 @@
 
 require 'rails_helper'
 
-describe Celestial::Star, :type => :model do
+describe Space::Star, :type => :model do
   context "when included in a class" do
-    subject { Celestial::Star.create(attributes_for(:star)) }
+    subject { Space::Star.create(attributes_for(:star)) }
 
     describe "Validations" do
       it "is valid with valid attributes" do

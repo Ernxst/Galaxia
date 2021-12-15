@@ -1,7 +1,7 @@
 class Celestial::AsteroidBeltsController < Celestial::CelestialBodyController
   def initialize
     super
-    @record = Celestial::AsteroidBelt
+    @record = Space::AsteroidBelt
     @body = "asteroid_belts"
   end
 

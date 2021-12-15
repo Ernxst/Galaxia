@@ -1,0 +1,11 @@
+{
+  "simulations": [
+    {
+      "name": "The Solar System",
+      "description": "",
+      "star": "Sun",
+      "planets": ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"],
+      "asteroid_belts": ["Asteroid Belt", "Kuiper Belt"]
+    }
+  ]
+}

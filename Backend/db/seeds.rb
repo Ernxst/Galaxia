@@ -21,6 +21,8 @@ seed(tex_data[:specular_maps], Media::SpecularMap)
 seed(tex_data[:atmosphere_textures], Media::AtmosphereTexture)
 # seed(tex_data[:ring_textures], Media::RingTexture)
 
+@bodies = {}
+
 def seed_celestial_bodies(arr, record)
   arr.each do |data|
     params = data.except(:texture, :bump_map, :specular_map, :atmosphere)
@@ -32,12 +34,25 @@ def seed_celestial_bodies(arr, record)
       filename = atmosphere_data[:texture]
       params[:atmosphere_texture_id] = Media::AtmosphereTexture.find_by_filename(filename).id
     end
-    record.create(params)
+    @bodies[params[:name]] = record.create(params)
   end
 end
 
 tex_data = get_data('db/seeds/celestial-bodies.json')
-seed_celestial_bodies(tex_data[:planets], Celestial::Planet)
-seed_celestial_bodies(tex_data[:stars], Celestial::Star)
-seed_celestial_bodies(tex_data[:moons], Celestial::Moon)
-seed_celestial_bodies(tex_data[:asteroid_belts], Celestial::AsteroidBelt)
+seed_celestial_bodies(tex_data[:planets], Space::Planet)
+seed_celestial_bodies(tex_data[:stars], Space::Star)
+seed_celestial_bodies(tex_data[:moons], Space::Moon)
+seed_celestial_bodies(tex_data[:asteroid_belts], Space::AsteroidBelt)
+
+def seed_simulations(arr)
+  arr.each do |sim|
+    star = @bodies[sim[:star]]
+    planets = sim[:planets].map { |b| @bodies[b] }
+    asteroid_belts = sim[:asteroid_belts].map { |b| @bodies[b] }
+    Simulation.create(name: sim[:name], description: sim[:description],
+                      star: star, planets: planets, asteroid_belts: asteroid_belts)
+  end
+end
+
+sim_data = get_data('db/seeds/simulations.json')
+seed_simulations(sim_data[:simulations])

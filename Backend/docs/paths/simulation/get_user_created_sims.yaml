@@ -1,0 +1,9 @@
+get:
+  summary: Fetch all stored user created simulations
+  security:
+    - bearerAuth: []
+  operationId: FetchAllUserSimulations
+  tags:
+    - simulations
+  responses:
+    $ref: "./../../responses/simulation/get_sims.yaml"

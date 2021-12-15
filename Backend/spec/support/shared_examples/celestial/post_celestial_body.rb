@@ -7,7 +7,7 @@ require 'devise/jwt/test_helpers'
 before_count = 0
 
 shared_examples 'a celestial body post test', type: :request do |type:, params: {},
-  expected_status:, record: Celestial::Planet|
+  expected_status:, record: Space::Planet|
   before(:all) do
     Helpers::MediaHelpers.insert_textures
   end

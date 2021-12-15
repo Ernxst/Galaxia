@@ -1,0 +1,9 @@
+get:
+  summary: Fetch all stored preset simulations
+  security:
+    - bearerAuth: []
+  operationId: FetchAllPresetSimulations
+  tags:
+    - simulations
+  responses:
+    $ref: "./../../responses/simulation/get_sims.yaml"

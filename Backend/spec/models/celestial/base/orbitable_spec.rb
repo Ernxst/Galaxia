@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Celestial::Base::Orbitable, :type => :model do
+RSpec.describe Celestial::Orbitable, :type => :model do
   context "when included in a class" do
-    subject { Celestial::Planet.create(attributes_for(:planet)) }
+    subject { Space::Planet.create(attributes_for(:planet)) }
 
     describe "Validations" do
       it "is valid with valid attributes" do

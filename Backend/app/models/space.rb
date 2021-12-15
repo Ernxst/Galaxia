@@ -1,0 +1,3 @@
+module Space
+
+end

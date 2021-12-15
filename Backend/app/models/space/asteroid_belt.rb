@@ -1,4 +1,5 @@
-class Celestial::AsteroidBelt < Celestial::Base::CelestialBody
+class Space::AsteroidBelt < ApplicationRecord
+  include Celestial
   self.table_name = 'asteroid_belts'
 
   [:inner_semi_major, :outer_semi_major, :inner_eccentricity,
@@ -7,4 +8,7 @@ class Celestial::AsteroidBelt < Celestial::Base::CelestialBody
       "The #{object.model_name.human.downcase} must have a value for the #{attr.to_s.humanize.downcase} defined."
     end }, numericality: true
   end
+
+  has_many :simulation_asteroid_belts, class_name: 'Sim::SimulationAsteroidBelt', dependent: :destroy
+  has_many :simulations, through: :simulation_asteroid_belts
 end

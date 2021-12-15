@@ -10,6 +10,6 @@ describe 'POST /celestial/stars/', type: :request do
                   params: { star: attrs.merge({ texture_id: 1, atmosphere_texture_id: nil }) },
                   type: 'stars',
                   expected_status: :created,
-                  record: Celestial::Star
+                  record: Space::Star
 end
 

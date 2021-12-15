@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_13_134344) do
+ActiveRecord::Schema.define(version: 2021_12_14_162123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,44 @@ ActiveRecord::Schema.define(version: 2021_12_13_134344) do
     t.index ["texture_id"], name: "index_planets_on_texture_id"
   end
 
+  create_table "simulation_asteroid_belts", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "simulation_id"
+    t.bigint "asteroid_belt_id"
+    t.index ["asteroid_belt_id"], name: "index_simulation_asteroid_belts_on_asteroid_belt_id"
+    t.index ["simulation_id"], name: "index_simulation_asteroid_belts_on_simulation_id"
+  end
+
+  create_table "simulation_moons", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "moon_id"
+    t.bigint "simulation_planet_id"
+    t.index ["moon_id"], name: "index_simulation_moons_on_moon_id"
+    t.index ["simulation_planet_id"], name: "index_simulation_moons_on_simulation_planet_id"
+  end
+
+  create_table "simulation_planets", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "simulation_id"
+    t.bigint "planet_id"
+    t.index ["planet_id"], name: "index_simulation_planets_on_planet_id"
+    t.index ["simulation_id"], name: "index_simulation_planets_on_simulation_id"
+  end
+
+  create_table "simulations", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "description", default: "", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.bigint "star_id"
+    t.index ["star_id"], name: "index_simulations_on_star_id"
+    t.index ["user_id"], name: "index_simulations_on_user_id"
+  end
+
   create_table "specular_maps", force: :cascade do |t|
     t.string "name", null: false
     t.string "filename", null: false
@@ -177,6 +215,14 @@ ActiveRecord::Schema.define(version: 2021_12_13_134344) do
   add_foreign_key "planets", "bump_maps"
   add_foreign_key "planets", "specular_maps"
   add_foreign_key "planets", "textures"
+  add_foreign_key "simulation_asteroid_belts", "asteroid_belts"
+  add_foreign_key "simulation_asteroid_belts", "simulations"
+  add_foreign_key "simulation_moons", "moons"
+  add_foreign_key "simulation_moons", "simulation_planets"
+  add_foreign_key "simulation_planets", "planets"
+  add_foreign_key "simulation_planets", "simulations"
+  add_foreign_key "simulations", "stars"
+  add_foreign_key "simulations", "users"
   add_foreign_key "stars", "atmosphere_textures"
   add_foreign_key "stars", "textures"
 end

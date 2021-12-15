@@ -2,7 +2,7 @@
 class Celestial::CelestialBodyController < ApplicationController
 
   def initialize
-    @record = Celestial::Planet
+    @record = Space::Planet
     @body = ''
     @texture_controller = Media::TexturesController.new
     @atmosphere_texture_controller = Media::AtmosphereTexturesController.new

@@ -13,5 +13,5 @@ describe 'POST /celestial/planets/ short name', type: :request do
                   params: { planet: planet },
                   type: 'planets',
                   expected_status: :unprocessable_entity,
-                  record: Celestial::Planet
+                  record: Space::Planet
 end

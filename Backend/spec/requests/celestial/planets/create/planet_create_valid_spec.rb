@@ -11,5 +11,5 @@ describe 'POST /celestial/planets/', type: :request do
                                                   specular_map_id: nil, atmosphere_texture_id: nil }) },
                   type: 'planets',
                   expected_status: :created,
-                  record: Celestial::Planet
+                  record: Space::Planet
 end

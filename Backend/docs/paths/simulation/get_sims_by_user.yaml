@@ -1,0 +1,16 @@
+get:
+  summary: Fetch all simulations created by a given user
+  security:
+    - bearerAuth: []
+  operationId: FetchAllSimulationsByUser
+  tags:
+    - simulations
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the user's simulations to fetch
+  responses:
+    $ref: "./../../responses/simulation/get_sims.yaml"
