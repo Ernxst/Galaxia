@@ -27,6 +27,41 @@ post:
   responses:
     $ref: "./../../responses/simulation/body_add.yaml"
 
+patch:
+  summary: Update an existing moon in an existing simulation
+  security:
+    - bearerAuth: []
+  operationId: UpdateMoonInSimulation
+  tags:
+    - simulations
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the simulation the moon belongs to
+    - in: path
+      name: planet_id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the planet the moon orbits
+    - in: path
+      name: moon_id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the moon to update
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../openapi.yaml#/components/schemas/SaveMoonRequestBody"
+  responses:
+    $ref: "./../../responses/simulation/update_sim.yaml"
+
 delete:
   summary: Remove an existing moon from an existing simulation as a child of a planet already in the simulation without deleting the moon or planet
   security:

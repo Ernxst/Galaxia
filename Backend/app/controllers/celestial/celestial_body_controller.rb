@@ -60,6 +60,10 @@ class Celestial::CelestialBodyController < ApplicationController
     params
   end
 
+  def update_params(params)
+    params.require(@body.singularize.to_sym).permit(*required_params, **optional_params)
+  end
+
   # TODO: Add support for atmospheres and rings
   # TODO: Override for Planets (for implementing rings)
   # Can be overridden

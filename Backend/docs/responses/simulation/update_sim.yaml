@@ -1,11 +1,14 @@
 '204':
-  description: Simulation successfully updated
+  description: Resource successfully updated
 
 '401':
   $ref: "../../openapi.yaml#/components/responses/UnauthorizedError"
 
 '404':
   $ref: "../../openapi.yaml#/components/responses/NotFoundError"
+
+'422':
+  $ref: "../../openapi.yaml#/components/responses/UnprocessableEntityError"
 
 '500':
   $ref: "../../openapi.yaml#/components/responses/GenericError"

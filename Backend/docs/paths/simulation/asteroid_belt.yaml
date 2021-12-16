@@ -21,6 +21,35 @@ post:
   responses:
     $ref: "./../../responses/simulation/body_add.yaml"
 
+patch:
+  summary: Update an existing asteroid belt in an existing simulation
+  security:
+    - bearerAuth: []
+  operationId: UpdateAsteroidBeltInSimulation
+  tags:
+    - simulations
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the simulation the asteroid belt belongs to
+    - in: path
+      name: asteroid_belt_id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the asteroid belt to update
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../openapi.yaml#/components/schemas/SaveAsteroidBeltRequestBody"
+  responses:
+    $ref: "./../../responses/simulation/update_sim.yaml"
+
 delete:
   summary: Remove an existing asteroid belt from an existing simulation without deleting the asteroid belt
   security:

@@ -21,6 +21,35 @@ post:
   responses:
     $ref: "./../../responses/simulation/body_add.yaml"
 
+patch:
+  summary: Update an existing planet in an existing simulation
+  security:
+    - bearerAuth: []
+  operationId: UpdatePlanetInSimulation
+  tags:
+    - simulations
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the simulation the planet belongs to
+    - in: path
+      name: planet_id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the planet to update
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../openapi.yaml#/components/schemas/SavePlanetRequestBody"
+  responses:
+    $ref: "./../../responses/simulation/update_sim.yaml"
+
 delete:
   summary: Remove an existing planet from an existing simulation without deleting the planet
   security:

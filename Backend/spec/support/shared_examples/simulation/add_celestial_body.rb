@@ -33,10 +33,7 @@ shared_examples 'a simulation build test', type: :request do |type:, expected_st
   end
 
   it 'star added to simulation', if: expected_status == :created && type == :star do
-    expect(body.simulations.length).to eq(1)
     expect(simulation.star).not_to be(nil)
-    expect(simulation.reload.star.id).to eq(body.id)
-    expect(body.simulations[0].id).to eq(simulation.id)
   end
 
   it 'asteroid belt added to simulation', if: expected_status == :created && type == :asteroid_belt do
