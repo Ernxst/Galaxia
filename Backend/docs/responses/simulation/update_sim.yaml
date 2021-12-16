@@ -1,0 +1,12 @@
+'204':
+  description: Simulation successfully updated
+
+'401':
+  $ref: "../../openapi.yaml#/components/responses/UnauthorizedError"
+
+'404':
+  $ref: "../../openapi.yaml#/components/responses/NotFoundError"
+
+'500':
+  $ref: "../../openapi.yaml#/components/responses/GenericError"
+

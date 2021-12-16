@@ -1,0 +1,21 @@
+'201':
+  description: Simulation successfully created
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - id
+        properties:
+          id:
+            type: integer
+            format: int32
+'401':
+  $ref: "../../openapi.yaml#/components/responses/UnauthorizedError"
+
+'422':
+  $ref: "../../openapi.yaml#/components/responses/UnprocessableEntityError"
+
+'500':
+  $ref: "../../openapi.yaml#/components/responses/GenericError"
+

@@ -8,7 +8,7 @@ class Simulation < ApplicationRecord
             length: { in: 0..512, too_long: "The description is limited to %{count} characters only." }
 
   belongs_to :user, required: false
-  belongs_to :star, class_name: 'Space::Star'
+  belongs_to :star, class_name: 'Space::Star', required: false
 
   has_many :simulation_planets, class_name: 'Sim::SimulationPlanet', dependent: :destroy
   has_many :planets, class_name: 'Space::Planet', through: :simulation_planets
@@ -21,4 +21,8 @@ class Simulation < ApplicationRecord
 
   scope :preset, -> { where(user_id: nil) }
   scope :user_created, -> { where.not(user_id: nil) }
+
+  def editable?
+    !user.nil?
+  end
 end

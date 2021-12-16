@@ -36,6 +36,8 @@ SimulationToUpdate:
   $ref: "./simulation/simulation_update.yaml"
 SimulationsFetchResponseBody:
   $ref: "./simulation/response_bodies/simulations_fetch.yaml"
+CreateSimulationRequestBody:
+  $ref: "./simulation/request_bodies/create_sim.yaml"
 
 # ===============================================================
 # GET api/v1/celestial/planets/{id}

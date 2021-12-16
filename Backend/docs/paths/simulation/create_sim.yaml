@@ -1,0 +1,15 @@
+post:
+  summary: Create a new simulation
+  security:
+    - bearerAuth: []
+  operationId: CreateSimulation
+  tags:
+    - simulations
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../openapi.yaml#/components/schemas/CreateSimulationRequestBody"
+  responses:
+    $ref: "./../../responses/simulation/create_sim.yaml"

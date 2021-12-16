@@ -1,0 +1,6 @@
+type: object
+required:
+  - simulation
+properties:
+  simulation:
+    $ref: "./../simulation_create.yaml"

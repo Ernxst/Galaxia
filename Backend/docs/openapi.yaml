@@ -37,8 +37,10 @@ paths:
   /celestial/asteroid_belts/:
     $ref: "./paths/celestial/asteroids.yaml"
 
+  /simulations:
+    $ref: "./paths/simulation/create_sim.yaml"
   /simulations/{id}:
-    $ref: "./paths/simulation/get_sim.yaml"
+    $ref: "./paths/simulation/simulation.yaml"
   /simulations/all/preset:
     $ref: "./paths/simulation/get_preset_sims.yaml"
   /simulations/all/user:

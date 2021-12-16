@@ -1,0 +1,56 @@
+get:
+  summary: Fetch a stored simulation
+  security:
+    - bearerAuth: []
+  operationId: FetchSimulation
+  tags:
+    - simulations
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the simulation to fetch
+  responses:
+    $ref: "./../../responses/simulation/get_sim.yaml"
+
+patch:
+  summary: Update a stored simulation
+  security:
+    - bearerAuth: []
+  operationId: UpdateSimulation
+  tags:
+    - simulations
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the simulation to update
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../openapi.yaml#/components/schemas/CreateSimulationRequestBody"
+  responses:
+    $ref: "./../../responses/simulation/update_sim.yaml"
+
+delete:
+  summary: Delete a stored simulation
+  security:
+    - bearerAuth: []
+  operationId: DeleteSimulation
+  tags:
+    - simulations
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the simulation to delete
+  responses:
+    $ref: "./../../responses/simulation/delete_sim.yaml"

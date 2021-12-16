@@ -45,7 +45,12 @@ Rails.application.routes.draw do
       end
 
       scope :simulations do
+        post '/', to: 'simulations/simulations#new'
+
         get '/:id', to: 'simulations/simulations_fetch#get'
+        patch '/:id', to: 'simulations/simulations#update'
+        delete '/:id', to: 'simulations/simulations#delete'
+
         get '/by/:id', to: 'simulations/simulations_fetch#get_users_sims'
         get '/all/preset', to: 'simulations/simulations_fetch#get_preset'
         get '/all/user', to: 'simulations/simulations_fetch#get_user_created'

@@ -13,7 +13,7 @@ SimpleCov.start do
   add_group 'Helpers', 'app/helpers'
   add_group 'Jobs', 'app/jobs'
 end
-SimpleCov.minimum_coverage line: 90, branch: 50
+SimpleCov.minimum_coverage line: 98, branch: 95
 
 require_relative 'support/helpers/user_helpers'
 require_relative 'support/helpers/media_helpers'
