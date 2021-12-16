@@ -54,6 +54,12 @@ Rails.application.routes.draw do
         get '/by/:id', to: 'simulations/simulations_fetch#get_users_sims'
         get '/all/preset', to: 'simulations/simulations_fetch#get_preset'
         get '/all/user', to: 'simulations/simulations_fetch#get_user_created'
+
+        post '/:id/planets/:planet_id', to: 'simulations/simulations_update#add_planet'
+        post '/:id/stars/:star_id', to: 'simulations/simulations_update#add_star'
+        post '/:id/asteroid_belts/:asteroid_belt_id', to: 'simulations/simulations_update#add_asteroid_belt'
+        post '/:id/planets/:planet_id/moons/:moon_id', to: 'simulations/simulations_update#add_moon'
+
       end
 
     end

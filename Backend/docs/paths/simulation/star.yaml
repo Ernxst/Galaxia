@@ -1,0 +1,22 @@
+post:
+  summary: Add an existing star to an existing simulation
+  security:
+    - bearerAuth: []
+  operationId: AddStarToSimulation
+  tags:
+    - simulations
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the simulation to add the star to
+    - in: path
+      name: star_id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the star to add to the simulation
+  responses:
+    $ref: "./../../responses/simulation/body_add.yaml"

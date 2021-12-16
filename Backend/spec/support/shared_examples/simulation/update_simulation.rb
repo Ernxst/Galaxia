@@ -14,7 +14,8 @@ shared_examples 'a simulation update test', type: :request do |params: {},
 
   before(:each) do
     allow(Google::Cloud::Storage).to receive(:new).and_return(stub)
-    patch "/api/v1/simulations/#{simulation.id}", params: params,
+    id = expected_status == :not_found ? 50000 : simulation.id
+    patch "/api/v1/simulations/#{id}", params: params,
           headers: Devise::JWT::TestHelpers.auth_headers({ 'Accept': 'application/json' }, user),
           as: :json
   end

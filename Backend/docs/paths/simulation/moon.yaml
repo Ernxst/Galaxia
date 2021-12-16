@@ -1,0 +1,28 @@
+post:
+  summary: Add an existing moon to an existing simulation as a child of a planet already in the simulation
+  security:
+    - bearerAuth: []
+  operationId: AddMoonToSimulation
+  tags:
+    - simulations
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the simulation to add the moon to
+    - in: path
+      name: planet_id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the planet already in the simulation
+    - in: path
+      name: moon_id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the moon to add to the simulation
+  responses:
+    $ref: "./../../responses/simulation/body_add.yaml"

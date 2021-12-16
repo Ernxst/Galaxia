@@ -1,0 +1,22 @@
+post:
+  summary: Add an existing asteroid belt to an existing simulation
+  security:
+    - bearerAuth: []
+  operationId: AddAsteroidBeltToSimulation
+  tags:
+    - simulations
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the simulation to add the asteroid belt to
+    - in: path
+      name: asteroid_belt_id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the asteroid belt to add to the simulation
+  responses:
+    $ref: "./../../responses/simulation/body_add.yaml"

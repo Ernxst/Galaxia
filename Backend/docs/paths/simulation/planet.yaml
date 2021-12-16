@@ -1,0 +1,22 @@
+post:
+  summary: Add an existing planet to an existing simulation
+  security:
+    - bearerAuth: []
+  operationId: AddPlanetToSimulation
+  tags:
+    - simulations
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the simulation to add the planet to
+    - in: path
+      name: planet_id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the planet to add to the simulation
+  responses:
+    $ref: "./../../responses/simulation/body_add.yaml"

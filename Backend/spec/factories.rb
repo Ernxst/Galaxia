@@ -9,8 +9,13 @@ FactoryBot.define do
 
   factory :simulation_planet, class: 'Sim::SimulationPlanet' do
     planet
-    after(:create) do |sim_planet|
-      create_list :simulation_moon, 1, simulation_planet: sim_planet
+    transient do
+      with_moons { true }
+    end
+    after(:create) do |sim_planet, options|
+      if options.with_moons
+        create_list :simulation_moon, 1, simulation_planet: sim_planet
+      end
     end
   end
 
@@ -98,9 +103,14 @@ FactoryBot.define do
     trait :user_created do
       user
     end
-    after(:create) do |sim|
-      create_list :simulation_planet, 3, simulation: sim
-      create_list :simulation_asteroid_belt, 1, simulation: sim
+    transient do
+      with_bodies { true }
+    end
+    after(:create) do |sim, options|
+      if options.with_bodies
+        create_list :simulation_planet, 3, simulation: sim
+        create_list :simulation_asteroid_belt, 1, simulation: sim
+      end
     end
   end
 

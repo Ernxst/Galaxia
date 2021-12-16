@@ -39,8 +39,18 @@ paths:
 
   /simulations:
     $ref: "./paths/simulation/create_sim.yaml"
+
   /simulations/{id}:
     $ref: "./paths/simulation/simulation.yaml"
+  /simulations/{id}/planets/{planet_id}:
+    $ref: "./paths/simulation/planet.yaml"
+  /simulations/{id}/planets/{planet_id}/moon/{moon_id}:
+    $ref: "./paths/simulation/moon.yaml"
+  /simulations/{id}/stars/{star_id}:
+    $ref: "./paths/simulation/star.yaml"
+  /simulations/{id}/asteroid_belts/{asteroid_belt_id}:
+    $ref: "./paths/simulation/asteroid_belt.yaml"
+
   /simulations/all/preset:
     $ref: "./paths/simulation/get_preset_sims.yaml"
   /simulations/all/user:
