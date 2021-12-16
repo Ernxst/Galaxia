@@ -26,3 +26,32 @@ post:
       description: Numeric ID of the moon to add to the simulation
   responses:
     $ref: "./../../responses/simulation/body_add.yaml"
+
+delete:
+  summary: Remove an existing moon from an existing simulation as a child of a planet already in the simulation without deleting the moon or planet
+  security:
+    - bearerAuth: []
+  operationId: RemoveMoonFromSimulation
+  tags:
+    - simulations
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the simulation to remove the moon from
+    - in: path
+      name: planet_id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the planet already in the simulation
+    - in: path
+      name: moon_id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the moon to remove from the simulation
+  responses:
+    $ref: "./../../responses/simulation/delete_sim.yaml"

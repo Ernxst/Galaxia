@@ -20,3 +20,26 @@ post:
       description: Numeric ID of the asteroid belt to add to the simulation
   responses:
     $ref: "./../../responses/simulation/body_add.yaml"
+
+delete:
+  summary: Remove an existing asteroid belt from an existing simulation without deleting the asteroid belt
+  security:
+    - bearerAuth: []
+  operationId: RemoveAsteroidBeltFromSimulation
+  tags:
+    - simulations
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the simulation to remove the asteroid belt from
+    - in: path
+      name: asteroid_belt_id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the asteroid belt to remove from the simulation
+  responses:
+    $ref: "./../../responses/simulation/delete_sim.yaml"

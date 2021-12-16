@@ -14,7 +14,7 @@ class Simulations::SimulationsUpdateController < Simulations::SimulationsControl
   def add_planet
     planet = Space::Planet.find(params[:planet_id])
     sim_planet = Sim::SimulationPlanet.create!(simulation_id: @simulation.id,
-                                              planet_id: planet.id)
+                                               planet_id: planet.id)
     render json: { id: sim_planet.id }, status: :created
   end
 
@@ -32,7 +32,7 @@ class Simulations::SimulationsUpdateController < Simulations::SimulationsControl
     sim_planet = Sim::SimulationPlanet.find(params[:planet_id])
     moon = Space::Moon.find(params[:moon_id])
     sim_moon = Sim::SimulationMoon.create!(simulation_planet_id: sim_planet.id,
-                                          moon_id: moon.id)
+                                           moon_id: moon.id)
     render json: { id: sim_moon.id }, status: :created
   end
 
@@ -40,7 +40,7 @@ class Simulations::SimulationsUpdateController < Simulations::SimulationsControl
   def add_asteroid_belt
     asteroid_belt = Space::AsteroidBelt.find(params[:asteroid_belt_id])
     sim_belt = Sim::SimulationAsteroidBelt.create!(simulation_id: @simulation.id,
-                                                  asteroid_belt_id: asteroid_belt.id)
+                                                   asteroid_belt_id: asteroid_belt.id)
     render json: { id: sim_belt.id }, status: :created
   end
 
@@ -66,5 +66,33 @@ class Simulations::SimulationsUpdateController < Simulations::SimulationsControl
   def update_asteroid_belt
     # TODO: Replace simulation_planet with new one
     # TODO: Needs a transaction to do
+  end
+
+  # DELETE /simulations/{id}/planets/{planet_id}
+  def delete_planet
+    planet = Sim::SimulationPlanet.find(params[:planet_id])
+    planet.destroy!
+    head :no_content
+  end
+
+  # DELETE /simulations/{id}/stars/{star_id}
+  def remove_star
+    star = Space::Star.find(params[:star_id])
+    star.simulations.delete(@simulation)
+    head :no_content
+  end
+
+  # DELETE /simulations/{id}/planets/{planet_id}/moons/{moon_id}
+  def delete_moon
+    moon = Sim::SimulationMoon.find(params[:moon_id])
+    moon.destroy!
+    head :no_content
+  end
+
+  # DELETE /simulations/{id}/asteroid_belts/{asteroid_belt_id}
+  def delete_asteroid_belt
+    asteroid_belt = Sim::SimulationAsteroidBelt.find(params[:asteroid_belt_id])
+    asteroid_belt.destroy!
+    head :no_content
   end
 end

@@ -20,3 +20,26 @@ post:
       description: Numeric ID of the planet to add to the simulation
   responses:
     $ref: "./../../responses/simulation/body_add.yaml"
+
+delete:
+  summary: Remove an existing planet from an existing simulation without deleting the planet
+  security:
+    - bearerAuth: []
+  operationId: RemovePlanetFromSimulation
+  tags:
+    - simulations
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the simulation to remove the planet from
+    - in: path
+      name: planet_id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the planet to remove from the simulation
+  responses:
+    $ref: "./../../responses/simulation/delete_sim.yaml"

@@ -20,3 +20,26 @@ post:
       description: Numeric ID of the star to add to the simulation
   responses:
     $ref: "./../../responses/simulation/body_add.yaml"
+
+delete:
+  summary: Remove an existing star from an existing simulation without deleting the star
+  security:
+    - bearerAuth: []
+  operationId: RemoveStarFromSimulation
+  tags:
+    - simulations
+  parameters:
+    - in: path
+      name: id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the simulation to remove the star from
+    - in: path
+      name: star_id
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the star to remove from the simulation
+  responses:
+    $ref: "./../../responses/simulation/delete_sim.yaml"

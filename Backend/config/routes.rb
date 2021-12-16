@@ -60,6 +60,10 @@ Rails.application.routes.draw do
         post '/:id/asteroid_belts/:asteroid_belt_id', to: 'simulations/simulations_update#add_asteroid_belt'
         post '/:id/planets/:planet_id/moons/:moon_id', to: 'simulations/simulations_update#add_moon'
 
+        delete '/:id/planets/:planet_id', to: 'simulations/simulations_update#delete_planet'
+        delete '/:id/stars/:star_id', to: 'simulations/simulations_update#remove_star'
+        delete '/:id/asteroid_belts/:asteroid_belt_id', to: 'simulations/simulations_update#delete_asteroid_belt'
+        delete '/:id/planets/:planet_id/moons/:moon_id', to: 'simulations/simulations_update#delete_moon'
       end
 
     end
