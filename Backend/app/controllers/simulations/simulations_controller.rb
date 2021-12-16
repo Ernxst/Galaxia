@@ -33,16 +33,19 @@ class Simulations::SimulationsController < ApplicationController
     def can_edit?
       simulation = Simulation.find(params[:id])
       return render json: { error: 'You cannot modify a preset simulation.' },
-             status: :unauthorized unless simulation.editable?
+                    status: :unauthorized unless simulation.editable?
 
       return render json: { error: 'You cannot modify this simulation as you are not the owner.' },
-             status: :unauthorized unless simulation.user.id == current_user.id
+                    status: :unauthorized unless simulation.user.id == current_user.id
 
       @simulation = simulation
     end
 
-    def handle_not_found_error
-      render json: { error: 'Could not find a simulation with the given ID.' }, status: :not_found
+    def handle_not_found_error(exception)
+      model = exception.model.demodulize.humanize.downcase
+      render json: {
+        error: "Could not find a #{model} with #{exception.primary_key} #{exception.id}." },
+             status: :not_found
     end
 
     def handle_invalid_record(exception)
