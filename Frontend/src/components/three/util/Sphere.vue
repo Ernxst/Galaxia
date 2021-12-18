@@ -53,6 +53,20 @@ export default defineComponent({
       bumpScale: BUMP_SCALE,
     };
   },
+  watch: {
+    texture() {
+      const material: MeshPhongMaterial = this.mesh().material;
+      this.setTextures(material);
+    },
+    bumpMap() {
+      const material: MeshPhongMaterial = this.mesh().material;
+      this.setTextures(material);
+    },
+    specularMap() {
+      const material: MeshPhongMaterial = this.mesh().material;
+      this.setTextures(material);
+    }
+  },
   methods: {
     async setTextures(material: MeshPhongMaterial) {
       if (this.texture) material.map = await getTexture(this.texture);
