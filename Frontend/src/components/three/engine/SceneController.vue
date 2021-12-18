@@ -1,7 +1,7 @@
 <template>
   <Scene ref="scene">
     <template v-if="dataLoaded">
-      <teleport to="body">
+      <teleport to="body" :disabled="!teleport">
         <loader
           v-if="!assetsLoaded"
           :assets-to-load="assetsToLoad"
@@ -32,6 +32,7 @@ export default defineComponent({
   props: {
     sceneComponent: Object,
     sceneProps: { type: Object, default: {} },
+    teleport: { type: Boolean, default: true },
   },
   emits: ["loaded", "focus"],
   setup() {

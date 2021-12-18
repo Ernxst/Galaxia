@@ -1,6 +1,6 @@
 <template>
   <section ref="container"
-           class="loader full-page centred">
+           class="loader centred">
     <span class="percentage">{{ `${currentPercentage}%` }}</span>
     <div class="content centred">
       <label for="assets">{{ message }}</label>
@@ -64,6 +64,9 @@ export default defineComponent({
   z-index: 9;
   position: absolute;
   top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   background: var(--page-bg);
 }
 

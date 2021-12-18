@@ -7,10 +7,11 @@
                      @play="play"
                      @anim-start="startAnimation"
                      @anim-done="stopAnimation"
-                      />
+  />
   <scene-controller ref="scene"
                     :scene-component="sceneComponent"
                     :scene-props="sceneProps"
+                    :teleport="teleport"
                     @focus="planetMeshClicked"
                     @loaded="onSceneLoad" />
 
@@ -45,6 +46,7 @@ export default defineComponent({
     ui: { type: Boolean, default: false },
     trackGestures: { type: Boolean, default: false },
     showTour: { type: Boolean, default: false },
+    teleport: { type: Boolean, default: true },
   },
   data() {
     return {

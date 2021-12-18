@@ -1,5 +1,5 @@
 <template>
-  <article id="renderer">
+  <article id="renderer" class="centred">
     <Renderer ref="renderer"
               :alpha="true"
               :antialias="false"
@@ -12,6 +12,7 @@
         :scene-component="sceneComponent"
         :scene-props="sceneProps"
         :show-tour="showTour"
+        :teleport="teleport"
         :track-gestures="trackGestures"
         :ui="ui"
         @loaded="onLoad" />
@@ -43,6 +44,7 @@ export default defineComponent({
     ui: { type: Boolean, default: false },
     trackGestures: { type: Boolean, default: false },
     showTour: { type: Boolean, default: false },
+    teleport: { type: Boolean, default: true },
   },
   setup(props) {
     const renderer = ref<typeof Renderer>(null);
@@ -101,6 +103,6 @@ export default defineComponent({
 article {
   position: relative;
   width: stretch;
-  height: stretch;
+  height: 100%;
 }
 </style>
