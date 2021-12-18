@@ -1,10 +1,10 @@
 import { BLOOM_LAYER } from "@/assets/three/three.constants";
+import { UnrealBloomPass } from "@/components/three/engine/postprocessing/custom-bloom-pass";
 import { ShaderMaterial } from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass";
 import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass.js";
-import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
 import { Camera } from "three/src/cameras/Camera";
 import { BufferGeometry } from "three/src/core/BufferGeometry";
 import { Layers } from "three/src/core/Layers";
