@@ -2,11 +2,15 @@
   <article v-show="visible || animating"
            ref="container">
     <div class="content">
-      <header>
-        <slot name="header" />
+      <header ref="header">
+        <div class="header-content" v-show="hasHeaderSlot">
+          <slot name="header"></slot>
+        </div>
       </header>
-      <section>
-        <slot></slot>
+      <section ref="content">
+        <div class="section-content" v-show="hasContentSlot">
+          <slot name="content"></slot>
+        </div>
       </section>
     </div>
   </article>
@@ -27,15 +31,58 @@ export default defineComponent({
       animating: false,
     };
   },
+  computed: {
+    hasHeaderSlot() {
+      return !!this.$slots.header;
+    },
+    hasContentSlot() {
+      return !!this.$slots.content;
+    }
+  },
   watch: {
     visible(newVal: boolean) {
-      gsap.to(this.$refs.container, {
-        ease: "power2.out",
-        duration: .33,
-        opacity: newVal ? 1 : 0,
+      const timeline = gsap.timeline({
+        defaults: { ease: "power2.out", duration: .67 },
         onStart: () => (this.animating = true),
         onComplete: () => (this.animating = false)
       });
+      if (this.hasHeaderSlot) {
+        timeline.to(".header-content > *", {
+          opacity: 0,
+          duration: .167,
+          delay: newVal ? .4 : 0,
+          repeat: 5,
+        }, 0)
+          .set(".header-content > *", {
+            opacity: 1,
+          });
+
+        timeline.to(this.$refs.header, {
+          width: newVal ? "100%" : "0%",
+          delay: newVal ? 0.167 : 0,
+        }, newVal ? 0 : 1);
+
+        timeline.to(".header-content > *", {
+          opacity: newVal ? 1 : 0,
+        }, newVal ? 0 : 1);
+      }
+
+      if (this.hasContentSlot) {
+        timeline.to(this.$refs.content, {
+          height: newVal ? "auto" : 0,
+          delay: newVal ? 0.33 : 0,
+        }, newVal ? 0 : 1);
+
+        timeline.to(".section-content > * ", {
+          opacity: newVal ? 1 : 0,
+        }, newVal ? 0 : 1);
+      }
+
+      timeline.to(this.$refs.container, {
+        height: newVal ? "auto" : 0,
+        delay: newVal ? 0 : 0.5,
+        duration: .33,
+      }, newVal ? 0 : 1);
     }
   },
 });
@@ -44,13 +91,13 @@ export default defineComponent({
 <style scoped>
 article {
   --bg: var(--main);
-  padding: 7px;
   position: relative;
   transition: .2s ease-in-out filter;
+  overflow: hidden;
 }
 
 article[glow=true] {
-  box-shadow: 0 0 32px -16px var(--bg);
+  box-shadow: 0 0 48px -20px var(--bg);
 }
 
 article[disabled=true] {
@@ -86,6 +133,10 @@ article::after {
   border-radius: 1px;
 }
 
+.content {
+  padding: 7px;
+}
+
 .content::before {
   top: 11px;
   bottom: 11px;
@@ -101,19 +152,27 @@ header, section::after {
 
 header {
   background: var(--bg);
+  overflow-x: hidden;
+}
+
+header .header-content {
   padding: 10px 28px;
 }
 
 section {
-  padding: 21px;
   position: relative;
+  overflow-y: hidden;
+}
+
+section .section-content {
+  padding: 21px;
 }
 
 section::after {
   top: 0;
   bottom: 0;
   background: var(--bg);
-  opacity: 0.1;
+  opacity: 0.2;
   z-index: -1;
 }
 </style>
