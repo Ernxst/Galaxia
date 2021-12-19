@@ -6,6 +6,7 @@ required:
   - star
   - planets
   - asteroid_belts
+  - by
   - preset
 properties:
   id:
@@ -33,6 +34,9 @@ properties:
     type: array
     items:
       $ref: "./../../openapi.yaml#/components/schemas/Asteroid"
+  by:
+    type: string
+    nullable: true
   preset:
     type: boolean
 

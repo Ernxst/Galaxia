@@ -1,5 +1,5 @@
 class SimulationSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :star, :planets, :asteroid_belts, :user_id, :preset
+  attributes :id, :name, :description, :star, :planets, :asteroid_belts, :by, :preset
   has_many :simulation_planets, class_name: 'Sim::SimulationPlanet', key: 'planets', dependent: :destroy
   has_many :simulation_asteroid_belts, class_name: 'Sim::SimulationAsteroidBelt', key: 'asteroid_belts'
 
@@ -17,5 +17,10 @@ class SimulationSerializer < ActiveModel::Serializer
 
   def preset
     object.user.nil?
+  end
+
+  def by
+    user = object.user
+    user.nil? ? nil : user.username
   end
 end

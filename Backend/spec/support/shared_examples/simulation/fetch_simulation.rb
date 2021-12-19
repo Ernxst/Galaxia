@@ -35,6 +35,7 @@ shared_examples 'a simulation fetch test', type: :request do |id:, expected_stat
     expect(simulation).to have_key "star"
     expect(simulation).to have_key "planets"
     expect(simulation).to have_key "asteroid_belts"
+    expect(simulation).to have_key "by"
     expect(simulation).to have_key "preset"
   end
 end
