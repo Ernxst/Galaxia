@@ -3,7 +3,7 @@
 <script lang="ts">
 import { MeshMouseEvent } from "@/@types/three/mesh-mouse-event";
 import { AU } from "@/assets/util/celestial.constants";
-import { ATMOSPHERE_ROTATION_SPEED_SCALE, DISTANCE_SCALE, SPEED_SCALE } from "@/assets/util/sim.constants";
+import { ATMOSPHERE_ROTATION_SPEED_SCALE, DISTANCE_SCALE, SECONDS_PER_FRAME } from "@/assets/util/sim.constants";
 import { Vector3 } from "three/src/math/Vector3";
 import { Mesh } from "three/src/objects/Mesh";
 import { defineComponent } from "vue";
@@ -33,13 +33,13 @@ export default defineComponent({
   },
   computed: {
     scaledVelocity(): number {
-      return (this.meanVelocity * DISTANCE_SCALE * SPEED_SCALE) / AU;
+      return (this.meanVelocity * DISTANCE_SCALE * SECONDS_PER_FRAME) / AU;
     },
     tidallyLocked() {
       return this.dayLength === 0;
     },
     rotationSpeed() {
-      return this.tidallyLocked ? 0 : (2 * Math.PI) / this.dayLength;
+      return this.tidallyLocked ? 0 : (2 * SECONDS_PER_FRAME * Math.PI) / (this.dayLength);
     },
     axialTiltRads(): number {
       return (Math.PI * this.axialTilt) / 180;

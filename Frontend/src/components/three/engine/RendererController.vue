@@ -1,6 +1,6 @@
 <template>
   <article id="renderer"
-           class="centred">
+           class="centred noselect">
     <Renderer ref="renderer"
               :alpha="true"
               :antialias="false"

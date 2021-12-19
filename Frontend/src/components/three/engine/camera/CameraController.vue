@@ -62,7 +62,7 @@ export default defineComponent({
     setupCamera(camPos: Vector3, models: Array<typeof CelestialBody>) {
       const camera: PerspectiveCamera = this.$refs.camera.camera;
       camera.position.set(camPos.x, camPos.y, camPos.z);
-      camera.position.multiplyScalar(SCENE_SCALE)
+      camera.position.multiplyScalar(SCENE_SCALE);
       this.$refs.animator.camera = camera.clone();
       this.$refs.animator.defaultPos = camPos.clone();
       this.models = models;

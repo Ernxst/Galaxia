@@ -35,7 +35,7 @@ export default defineComponent({
     starRadius: { type: Number, default: 1 },
     fill: { type: Boolean, default: true },
     minSize: { type: Number, default: 60 },
-    maxSize: { type: Number, default: 1000 },
+    maxSize: { type: Number, default: 3000 },
   },
   computed: {
     allAsteroids(): AsteroidInterface[] {
