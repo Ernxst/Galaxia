@@ -1,6 +1,6 @@
 <template>
   <teleport to="body">
-    <div :class="`factfile-container ${closing ? 'out': ''}`">
+    <div :class="`factfile-container pseudo-after ${closing ? 'out': ''}`">
       <article class="celestial-factfile glass centred">
         <section class="factfile centred">
           <header class="header">
@@ -70,14 +70,11 @@ export default defineComponent({
 }
 
 .factfile-container::after {
-  position: absolute;
   left: calc(var(--margin) * -1);
-  top: 0;
-  bottom: 0;
+  right: unset;
   z-index: 3;
   background: black;
   opacity: .33;
-  content: "";
   width: var(--margin);
   display: none;
 }

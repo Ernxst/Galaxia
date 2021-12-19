@@ -13,6 +13,7 @@
                     :scene-props="sceneProps"
                     :teleport="teleport"
                     @focus="planetMeshClicked"
+                    @ready="$emit('ready')"
                     @loaded="onSceneLoad" />
 
   <template v-if="loaded && ui">
@@ -38,7 +39,7 @@ import SceneController from "./SceneController.vue";
 export default defineComponent({
   name: "MainController",
   components: { UiController, SceneController, CameraController },
-  emits: ["loaded"],
+  emits: ["loaded", "ready"],
   props: {
     orbitControls: Object as PropType<OrbitControls>,
     sceneComponent: Object,

@@ -1,0 +1,67 @@
+.glass {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  background-clip: padding-box;
+}
+
+.close-icon {
+  padding: 6px;
+  cursor: pointer;
+  background: var(--main);
+  border-radius: 50%;
+  transition-timing-function: ease-in-out;
+  transition-property: color, filter;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.33);
+}
+
+.close-icon:hover {
+  color: var(--page-bg);
+  filter: brightness(1.25);
+}
+
+.noselect, a, .material-icons {
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+.centred, .image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.full-page {
+  min-width: 100%;
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+}
+
+.image {
+  width: inherit;
+  height: inherit;
+}
+
+.image img {
+  max-width: 100%;
+  margin: auto;
+  display: block;
+}
+
+.pseudo-before, .pseudo-after {
+  position: relative;
+}
+
+.abs, .pseudo-before::before, .pseudo-after::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.pseudo-before::before, .pseudo-after::after {
+  content: "";
+}

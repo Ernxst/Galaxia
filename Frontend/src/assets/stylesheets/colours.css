@@ -1,0 +1,13 @@
+:root {
+  --text-colour: #FFF;
+  --page-bg: #000;
+  --orange: #F39041;
+  --bright-orange: #ff6348;
+  --red: #EA2027;
+  --green: #2ED573;
+  --blue: #74b9ff;
+  --electron-blue: #0984e3;
+
+  --main: var(--orange);
+  --accent: var(--bright-orange);
+}

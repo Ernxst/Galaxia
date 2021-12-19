@@ -1,6 +1,6 @@
 <template>
   <section ref="container"
-           class="loader centred">
+           class="loader abs centred">
     <span class="percentage">{{ `${currentPercentage}%` }}</span>
     <div class="content centred">
       <label for="assets">{{ message }}</label>
@@ -20,7 +20,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "loader",
   props: { assetsToLoad: Number },
-  emits: ["assetsLoaded"],
+  emits: ["assetsLoaded", "ready"],
   watch: {
     loaded() {
       this.message = "Ready";
@@ -28,6 +28,7 @@ export default defineComponent({
       this.$refs.container.classList.add("complete");
       setTimeout(() => {
         this.$emit("assetsLoaded");
+        this.$emit("ready");
       }, 1300);
     },
   },
@@ -62,11 +63,6 @@ export default defineComponent({
   transition: 1.33s ease transform;
   transition-delay: 0.8s;
   z-index: 9;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
   background: var(--page-bg);
 }
 

@@ -6,6 +6,7 @@
           v-if="!assetsLoaded"
           :assets-to-load="assetsToLoad"
           @assets-loaded="assetsLoaded = true"
+          @ready="$emit('ready')"
         />
       </teleport>
     </template>
@@ -34,7 +35,7 @@ export default defineComponent({
     sceneProps: { type: Object, default: {} },
     teleport: { type: Boolean, default: true },
   },
-  emits: ["loaded", "focus"],
+  emits: ["loaded", "focus", "ready"],
   setup() {
     const scene = ref<typeof Scene>(null);
     const app = ref(null);

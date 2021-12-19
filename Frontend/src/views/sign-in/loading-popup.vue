@@ -1,6 +1,6 @@
 <template>
   <teleport to="body">
-    <div class="overlay" />
+    <div class="abs overlay" />
     <div class="popup centred">
       <content-container v-bind="$attrs"
                          :glow="true"
@@ -59,10 +59,6 @@ export default defineComponent({
 <style scoped>
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   z-index: 13;
   background: var(--page-bg);
   opacity: .33;

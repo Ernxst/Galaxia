@@ -2,10 +2,10 @@
   <a v-bind="$attrs"
      :activating="mouseDown"
      :ready="ready"
-     class="menu-button centred noselect"
+     class="menu-button pseudo-before pseudo-after centred noselect"
      @mousedown="mouseDown = true"
      @mouseup="mouseDown = false">
-    <div class="img-container">
+    <div class="img-container pseudo-after abs">
       <img :alt="text"
            :src="image">
     </div>
@@ -109,13 +109,9 @@ export default defineComponent({
 }
 
 .menu-button:before, .menu-button:after {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  top: unset;
   background: var(--accent);
   opacity: 0.67;
-  content: "";
   transition: 1.25s ease height, .25s ease background-color;
   height: 0;
   z-index: 3;
@@ -136,14 +132,6 @@ export default defineComponent({
   background: var(--green);
 }
 
-.img-container, .img-container::after {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
 img, .img-container::after {
   object-fit: cover;
   width: 100%;
@@ -153,7 +141,6 @@ img, .img-container::after {
 
 .img-container::after {
   box-shadow: inset 0 0 24px 16px var(--page-bg);
-  content: "";
   z-index: 1;
 }
 

@@ -6,7 +6,7 @@
         class="nav-button centred"
         @click="go"
       >
-        <div class="image centred">
+        <div class="image pseudo-after centred">
           <img :alt="name"
                :src="icon"
                height="32"
@@ -174,12 +174,6 @@ button:hover .content > * {
 }
 
 .image:after {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  content: "";
   background: radial-gradient(circle at 50% 0px, #FFFFFF, rgba(255, 255, 255, 0) 58%);
   filter: blur(3px);
   border-radius: 50%;

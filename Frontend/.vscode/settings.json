@@ -11,7 +11,12 @@
         "editor.tabSize": 2
     },
     "cssCustomProperties.files": [
-        "src/assets/global.css"
+        "src/assets/global.css",
+        "src/assets/util.css",
+        "src/assets/animations.css",
+        "src/assets/common.css",
+        "src/assets/base.css",
+        "src/assets/colours.css"
     ],
     "path-intellisense.mappings": {
         "@": "${workspaceRoot}/src"

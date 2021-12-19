@@ -4,16 +4,16 @@
     <button
       :disabled="disabled"
       :type="type"
-      class="circle-button centred"
+      class="circle-button pseudo-before centred"
       @click="onClick"
       @mouseenter="onMouseEnter"
       @mouseleave="onMouseLeave">
-      <span class="circle-button-text centred">{{ text }}</span>
+      <span class="circle-button-text abs centred">{{ text }}</span>
       <slot></slot>
     </button>
     <svg ref="ring"
          :data-mouse="mouseEntered"
-         class="ring-container">
+         class="ring-container abs">
       <circle :cx="ringRadius"
               :cy="ringRadius"
               :r="ringRadius"
@@ -79,18 +79,7 @@ export default defineComponent({
   text-align: center;
 }
 
-.circle-button:before,
-.circle-button-text,
-.ring-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-}
-
 .circle-button:before {
-  content: "";
   width: 0;
   height: 0;
   z-index: 0;

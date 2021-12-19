@@ -1,0 +1,58 @@
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+@font-face {
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  color: var(--text-colour);
+  background: var(--page-bg);
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--main);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  filter: brightness(1.4);
+}
+
+::selection {
+  background: var(--main);
+}
+
+::inactive-selection {
+  filter: brightness(0.67);
+}
+
+

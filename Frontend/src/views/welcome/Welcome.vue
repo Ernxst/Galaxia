@@ -1,7 +1,8 @@
 <template>
-  <section class="welcome-page-bg"
+  <section class="welcome-page-bg pseudo-after abs"
            :transitioning="clicked">
     <RendererController :scene-component="sceneComponent"
+                        @ready="startIntro"
                         ref="renderer" />
   </section>
   <page :bg="false"
@@ -47,6 +48,7 @@ export default defineComponent({
     return {
       clicked: false,
       animating: false,
+      animated: false,
     };
   },
   methods: {
@@ -65,27 +67,34 @@ export default defineComponent({
     },
     async transitionOut(camera: PerspectiveCamera, duration: number) {
       setTimeout(() => {
-        const loggedIn = false;
-        if (loggedIn)
-          this.$router.push({ name: "home", params: { username: "Ernest" } });
+        if (this.$store.getters["auth/loggedIn"])
+          this.$router.push({
+            name: "home", params: {
+              username: this.$store.getters["auth/currentUsername"]
+            }
+          });
         else
           this.$router.push({ name: "login" });
       }, duration * 620);
-      await animateZoom(5, camera, duration);
+      await animateZoom(15, camera, duration);
       this.clicked = false;
+    },
+    async startIntro() {
+      if (this.animated) return;
+      const mainController = this.$refs.renderer.$refs.controller;
+      const camController = mainController.$refs.camera;
+      this.animating = true;
+      await animateZoom(1, camController.getCamera(), 1.5);
+      this.animating = false;
+      this.animated = true;
     }
   },
   mounted() {
     const mainController = this.$refs.renderer.$refs.controller;
     const camController = mainController.$refs.camera;
     const camera: PerspectiveCamera = camController.getCamera();
-    camera.zoom = 75;
-    const delay = this.firstVisit ? 1300 : 0;
-    setTimeout(async () => {
-      this.animating = true;
-      await animateZoom(1, camera, 1.5);
-      this.animating = false;
-    }, delay);
+    camera.zoom = 60;
+    if (!this.firstVisit) this.startIntro();
   }
 });
 </script>
@@ -104,11 +113,6 @@ export default defineComponent({
 }
 
 #app > .welcome-page-bg, #app > .welcome-page-bg::after {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   z-index: -1;
 }
 
@@ -117,7 +121,6 @@ export default defineComponent({
   transition: 2s ease opacity;
   transition-delay: 1s;
   background: var(--page-bg);
-  content: "";
   z-index: 0;
 }
 

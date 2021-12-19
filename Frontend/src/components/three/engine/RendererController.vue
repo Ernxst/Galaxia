@@ -1,5 +1,6 @@
 <template>
-  <article id="renderer" class="centred">
+  <article id="renderer"
+           class="centred">
     <Renderer ref="renderer"
               :alpha="true"
               :antialias="false"
@@ -15,7 +16,8 @@
         :teleport="teleport"
         :track-gestures="trackGestures"
         :ui="ui"
-        @loaded="onLoad" />
+        @loaded="onLoad"
+        @ready="$emit('ready')" />
     </Renderer>
   </article>
 </template>
@@ -37,6 +39,7 @@ import { setComposerSize, setupPostprocessing, } from "./postprocessing/postproc
 export default defineComponent({
   name: "RendererController",
   components: { Renderer, MainController },
+  emits: ["ready"],
   props: {
     controls: { type: Boolean, default: false },
     sceneComponent: Object,

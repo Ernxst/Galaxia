@@ -7,6 +7,7 @@
          tabindex="0"
          @keyup.enter="onEnter">
       <input :id="id"
+             class="abs"
              ref="checkbox"
              :name="name"
              :value="modelValue"
@@ -69,11 +70,6 @@ label, input {
 
 input {
   border-radius: var(--button-radius);
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   opacity: 0;
   z-index: 1;
 }
