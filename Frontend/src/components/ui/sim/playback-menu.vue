@@ -1,7 +1,10 @@
 <template>
   <nav class="playback-container sim-ui-section centred" :data-disabled="false">
     <section class="row">
-      <p class="sim-speed">Simulation Speed: <strong>×{{ scaledSpeed }}</strong></p>
+      <p class="sim-speed">Simulation Speed: <strong>×{{ scaledSpeed }}</strong>
+        <br>
+        <span><strong>1</strong> Frame =  <strong>{{ timeStep }}</strong> Earth Days</span>
+      </p>
     </section>
     <section class="button-row row">
       <circle-button
@@ -34,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { BASE_SPEED, MAX_SPEED, MIN_SPEED } from "@/assets/util/sim.constants";
+import { BASE_SPEED, MAX_SPEED, MIN_SPEED, TIME_STEP } from "@/assets/util/sim.constants";
 import CircleButton from "@/components/ui/widgets/buttons/circle-button.vue";
 import { defineComponent } from "vue";
 
@@ -59,6 +62,9 @@ export default defineComponent({
     },
     scaledSpeed(): number {
       return Math.round(this.speed / BASE_SPEED);
+    },
+    timeStep(): number {
+      return TIME_STEP;
     }
   },
 });
@@ -88,6 +94,11 @@ export default defineComponent({
   margin-top: 0;
   margin-bottom: 6px;
   font-size: 13px;
+  text-align: center;
+}
+
+.playback-container .sim-speed span {
+  font-size: 10px;
 }
 
 .playback-container .sim-speed strong {
