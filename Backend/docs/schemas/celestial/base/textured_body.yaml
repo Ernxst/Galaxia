@@ -8,9 +8,12 @@ properties:
   atmosphere_texture_id:
     type: integer
     format: int32
+    nullable: true
   bump_map_id:
     type: integer
     format: int32
+    nullable: true
   specular_map_id:
     type: integer
     format: int32
+    nullable: true

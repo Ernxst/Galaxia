@@ -13,3 +13,4 @@ allOf:
         $ref: "./../media/texture.yaml"
       atmosphere_texture:
         $ref: "./../media/texture.yaml"
+        nullable: true

@@ -33,6 +33,7 @@ shared_examples 'a group of simulations fetch test', type: :request do |endpoint
       expect(simulation).to have_key "star"
       expect(simulation).to have_key "planets"
       expect(simulation).to have_key "asteroid_belts"
+      expect(simulation).to have_key "preset"
     end
   end
 end
