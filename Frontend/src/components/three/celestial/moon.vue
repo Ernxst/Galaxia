@@ -13,10 +13,8 @@
       v-if="hasAtmosphere"
       ref="atmosphere"
       :name="`${name}-atmosphere`"
-      :opacity="atmosphere.opacity"
       :parent-radius="scaledRadius"
-      :scale="atmosphere.scale"
-      :texture="atmosphere.texture"
+      :texture="atmosphereTexture"
       @atmosphere-loaded="assetsLoaded++"
     />
     <slot></slot>
@@ -29,7 +27,6 @@
 </template>
 
 <script lang="ts">
-import AtmosphereProps from "@/@types/celestial/atmosphere-props";
 import { dispatchLoadedEvent } from "@/assets/three/loaders";
 import { RADIUS_SCALE } from "@/assets/util/sim.constants";
 import Atmosphere from "@/components/three/util/Atmosphere.vue";
@@ -48,8 +45,7 @@ export default defineComponent({
   components: { Atmosphere, Group, Sphere, Trail },
   props: {
     ...SphereProps,
-    atmosphere: Object as PropType<AtmosphereProps>,
-    atmosphereTexture: { type: String, default: "" },
+    atmosphereTexture: String,
   },
   data() {
     return {
@@ -67,7 +63,7 @@ export default defineComponent({
       return this.starRadius * RADIUS_SCALE + this.scaledRadius * 2.0;
     },
     hasAtmosphere(): boolean {
-      return this.atmosphere !== undefined;
+      return this.atmosphereTexture !== null;
     },
     scaledRadius(): number {
       return this.radius * RADIUS_SCALE;

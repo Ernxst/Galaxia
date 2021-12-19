@@ -29,13 +29,9 @@ def seed_celestial_bodies(arr, record)
   arr.each do |data|
     params = data.except(:texture, :bump_map, :specular_map, :atmosphere)
     params[:texture_id] = Media::Texture.find_by_filename(data[:texture]).id unless data[:texture].nil?
+    params[:atmosphere_texture_id] = Media::AtmosphereTexture.find_by_filename(data[:atmosphere]).id unless data[:atmosphere].nil?
     params[:bump_map_id] = Media::BumpMap.find_by_filename(data[:bump_map]).id unless data[:bump_map].nil?
     params[:specular_map_id] = Media::SpecularMap.find_by_filename(data[:specular_map]).id unless data[:specular_map].nil?
-    atmosphere_data = data[:atmosphere]
-    unless atmosphere_data.nil?
-      filename = atmosphere_data[:texture]
-      params[:atmosphere_texture_id] = Media::AtmosphereTexture.find_by_filename(filename).id
-    end
     @bodies[params[:name]] = record.create(params)
   end
 end

@@ -33,7 +33,8 @@
       "mean_velocity": 35.02,
       "axial_tilt": 177.36,
       "day_length": 10.0872e6,
-      "texture": "2k_venus_surface.webp"
+      "texture": "2k_venus_surface.webp",
+      "atmosphere": "2k_venus_atmosphere.webp"
     },
     {
       "name": "Earth",
@@ -53,9 +54,7 @@
       "texture": "2k_earth_daymap.webp",
       "bump_map": "earth-bump-map.webp",
       "specular_map": "8k_earth_specular_map.webp",
-      "atmosphere": {
-        "texture": "2k_earth_clouds.webp"
-      }
+      "atmosphere": "earth-shell.webp"
     },
     {
       "name": "Mars",

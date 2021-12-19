@@ -24,17 +24,14 @@
       v-if="hasAtmosphere"
       ref="atmosphere"
       :name="`${name}-atmosphere`"
-      :opacity="atmosphere.opacity"
       :parent-radius="scaledRadius"
-      :scale="atmosphere.scale"
-      :texture="atmosphere.texture"
+      :texture="atmosphereTexture"
       @atmosphere-loaded="assetsLoaded++"
     />
   </Group>
 </template>
 
 <script lang="ts">
-import AtmosphereProps from "@/@types/celestial/atmosphere-props";
 import { NEAR } from "@/assets/three/camera/camera.constants";
 import { dispatchLoadedEvent } from "@/assets/three/loaders";
 import { BLOOM_LAYER } from "@/assets/three/three.constants";
@@ -61,8 +58,7 @@ export default defineComponent({
     ...SphereProps,
     starLightColour: { type: String, default: "#FFFFFF" },
     luminosity: { type: Number, default: 3e27 },
-    atmosphere: Object as PropType<AtmosphereProps>,
-    atmosphereTexture: { type: String, default: "" },
+    atmosphereTexture: String,
   },
   data() {
     return {
@@ -76,7 +72,7 @@ export default defineComponent({
   },
   computed: {
     hasAtmosphere(): boolean {
-      return this.atmosphere !== undefined;
+      return this.atmosphereTexture !== null;
     },
     scaledRadius(): number {
       return this.radius * RADIUS_SCALE;

@@ -15,10 +15,8 @@
       v-if="hasAtmosphere"
       ref="atmosphere"
       :name="`${name}-atmosphere`"
-      :opacity="atmosphere.opacity"
       :parent-radius="scaledRadius"
-      :scale="atmosphere.scale"
-      :texture="atmosphere.texture"
+      :texture="atmosphereTexture"
       @atmosphere-loaded="assetsLoaded++"
     />
     <slot></slot>
@@ -54,10 +52,9 @@
 </template>
 
 <script lang="ts">
-import AtmosphereProps from "@/@types/celestial/atmosphere-props";
 import { Moon as MoonInterface } from "@/@types/celestial/moon";
 import { dispatchLoadedEvent } from "@/assets/three/loaders";
-import { RADIUS_SCALE } from "@/assets/util/sim.constants";
+import { ATMOSPHERE_SCALE, RADIUS_SCALE } from "@/assets/util/sim.constants";
 import Atmosphere from "@/components/three/util/Atmosphere.vue";
 import { Vector3 } from "three/src/math/Vector3";
 import { Group } from "troisjs";
@@ -70,9 +67,8 @@ import Moon from "./moon.vue";
 
 export const PlanetProps = {
   ...SphereProps,
-  atmosphere: Object as PropType<AtmosphereProps>,
   moons: { type: Array as PropType<MoonInterface[]>, default: [] },
-  atmosphereTexture: { type: String, default: "" },
+  atmosphereTexture: String,
 };
 
 export default defineComponent({
@@ -103,11 +99,11 @@ export default defineComponent({
       return this.moons && this.moons.length > 0;
     },
     hasAtmosphere(): boolean {
-      return this.atmosphere !== undefined;
+      return this.atmosphereTexture !== null;
     },
     maxRadius(): number {
       if (this.hasAtmosphere)
-        return this.radius * this.atmosphere.scale;
+        return this.radius * ATMOSPHERE_SCALE;
       return this.radius;
     },
     scaledRadius(): number {
