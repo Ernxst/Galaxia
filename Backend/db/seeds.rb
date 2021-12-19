@@ -1,5 +1,7 @@
 require "json"
 
+puts "=== Seeding Database (seeds.rb) ==="
+
 User.create(username: ENV['GUEST_USERNAME'], password: ENV['GUEST_PASSWORD'])
 
 def get_data(filename)
@@ -47,10 +49,18 @@ seed_celestial_bodies(tex_data[:asteroid_belts], Space::AsteroidBelt)
 def seed_simulations(arr)
   arr.each do |sim|
     star = @bodies[sim[:star]]
-    planets = sim[:planets].map { |b| @bodies[b] }
-    asteroid_belts = sim[:asteroid_belts].map { |b| @bodies[b] }
-    Simulation.create(name: sim[:name], description: sim[:description],
-                      star: star, planets: planets, asteroid_belts: asteroid_belts)
+    simulation = Simulation.create(name: sim[:name], description: sim[:description], star: star)
+    sim[:planets].each do |planet|
+      body = @bodies[planet[:name]]
+      sim_planet = Sim::SimulationPlanet.create(simulation: simulation, planet: body)
+      planet[:moons].each do |moon|
+         Sim::SimulationMoon.create(moon: @bodies[moon], simulation_planet: sim_planet)
+      end
+    end
+    sim[:asteroid_belts].each do |asteroid_belt|
+      body = @bodies[asteroid_belt]
+      Sim::SimulationAsteroidBelt.create(simulation: simulation, asteroid_belt: body)
+    end
   end
 end
 

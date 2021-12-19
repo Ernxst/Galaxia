@@ -4,8 +4,46 @@
       "name": "The Solar System",
       "description": "",
       "star": "Sun",
-      "planets": ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"],
-      "asteroid_belts": ["Asteroid Belt", "Kuiper Belt"]
+      "planets": [
+        {
+          "name": "Mercury",
+          "moons": []
+        },
+        {
+          "name": "Venus",
+          "moons": []
+        },
+        {
+          "name": "Earth",
+          "moons": [
+            "Moon"
+          ]
+        },
+        {
+          "name": "Mars",
+          "moons": []
+        },
+        {
+          "name": "Jupiter",
+          "moons": []
+        },
+        {
+          "name": "Saturn",
+          "moons": []
+        },
+        {
+          "name": "Uranus",
+          "moons": []
+        },
+        {
+          "name": "Neptune",
+          "moons": []
+        }
+      ],
+      "asteroid_belts": [
+        "Asteroid Belt",
+        "Kuiper Belt"
+      ]
     }
   ]
 }

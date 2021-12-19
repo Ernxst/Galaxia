@@ -15,7 +15,8 @@
       "mean_velocity": 47,
       "axial_tilt": 0.034,
       "day_length": 5067000,
-      "texture": "2k_earth_daymap.webp"
+      "texture": "2k_mercury.webp",
+      "bump_map": "mercury-bump-map.webp"
     },
     {
       "name": "Venus",
@@ -30,9 +31,9 @@
       "inclination": 3.86,
       "orbital_period": 224.701,
       "mean_velocity": 35.02,
-      "axial_tilt": 10087200,
+      "axial_tilt": 177.36,
       "day_length": 10.0872e6,
-      "texture": "2k_earth_daymap.webp"
+      "texture": "2k_venus_surface.webp"
     },
     {
       "name": "Earth",
@@ -53,7 +54,7 @@
       "bump_map": "earth-bump-map.webp",
       "specular_map": "8k_earth_specular_map.webp",
       "atmosphere": {
-        "texture": "8k_earth_clouds.webp"
+        "texture": "2k_earth_clouds.webp"
       }
     },
     {
@@ -71,7 +72,8 @@
       "mean_velocity": 24.07,
       "axial_tilt": 25.19,
       "day_length": 88620,
-      "texture": "2k_earth_daymap.webp"
+      "texture": "2k_mars.webp",
+      "bump_map": "mars-bump-map.webp"
     },
     {
       "name": "Jupiter",
@@ -88,7 +90,7 @@
       "mean_velocity": 13.06,
       "axial_tilt": 3.13,
       "day_length": 35733,
-      "texture": "2k_earth_daymap.webp"
+      "texture": "2k_jupiter.webp"
     },
     {
       "name": "Saturn",
@@ -105,7 +107,7 @@
       "mean_velocity": 9.68,
       "axial_tilt": 26.73,
       "day_length": 38517,
-      "texture": "2k_earth_daymap.webp"
+      "texture": "2k_saturn.webp"
     },
     {
       "name": "Uranus",
@@ -122,7 +124,7 @@
       "mean_velocity": 6.8,
       "axial_tilt": 97.77,
       "day_length": 62035,
-      "texture": "2k_earth_daymap.webp"
+      "texture": "2k_uranus.webp"
     },
     {
       "name": "Neptune",
@@ -139,7 +141,7 @@
       "mean_velocity": 5.43,
       "axial_tilt": 28.32,
       "day_length": 57974,
-      "texture": "2k_earth_daymap.webp"
+      "texture": "2k_neptune.webp"
     }
   ],
   "stars": [
@@ -154,7 +156,7 @@
       "axial_tilt": 7.25,
       "day_length": 0,
       "luminosity": 3e27,
-      "texture": "8k_sun.webp"
+      "texture": "2k_sun.webp"
     }
   ],
   "moons": [
@@ -173,7 +175,9 @@
       "mean_velocity": 1.02,
       "axial_tilt": 1.5,
       "day_length": 2551392,
-      "texture": "8k_moon.webp"
+      "texture": "2k_moon.webp",
+      "bump_map": "moon-bump-map.webp"
+
     }
   ],
   "asteroid_belts": [

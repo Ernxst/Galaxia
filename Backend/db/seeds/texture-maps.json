@@ -1,6 +1,105 @@
 {
   "textures": [
     {
+      "name": "Sun Texture Map (8k)",
+      "filename": "8k_sun.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/8k_sun.jpg",
+      "for": "stars",
+      "width": 8192,
+      "height": 4096
+    },
+    {
+      "name": "Moon Texture Map (8k)",
+      "filename": "8k_moon.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/8k_moon.jpg",
+      "for": "moons",
+      "width": 8192,
+      "height": 4096
+    },
+    {
+      "name": "Sun Texture Map (2k)",
+      "filename": "2k_sun.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/2k_sun.jpg",
+      "for": "stars",
+      "width": 2048,
+      "height": 1024
+    },
+    {
+      "name": "Moon Texture Map (2k)",
+      "filename": "2k_moon.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/2k_moon.jpg",
+      "for": "moons",
+      "width": 2048,
+      "height": 1024
+    },
+
+    {
+      "name": "Mercury Texture Map (8k)",
+      "filename": "8k_mercury.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/8k_mercury.jpg",
+      "for": "planets",
+      "width": 8192,
+      "height": 4096
+    },
+    {
+      "name": "Venus Texture Map (8k)",
+      "filename": "8k_venus_surface.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/8k_venus_surface.jpg",
+      "for": "planets",
+      "width": 8192,
+      "height": 4096
+    },
+    {
+      "name": "Earth Day Map (8k)",
+      "filename": "8k_earth_daymap.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/8k_earth_daymap.jpg",
+      "for": "planets",
+      "width": 8192,
+      "height": 4096
+    },
+    {
+      "name": "Mars Texture Map (8k)",
+      "filename": "8k_mars.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/8k_mars.jpg",
+      "for": "planets",
+      "width": 8192,
+      "height": 4096
+    },
+    {
+      "name": "Jupiter Texture Map (8k)",
+      "filename": "8k_jupiter.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/8k_jupiter.jpg",
+      "for": "planets",
+      "width": 8192,
+      "height": 4096
+    },
+    {
+      "name": "Saturn Texture Map (8k)",
+      "filename": "8k_saturn.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/8k_saturn.jpg",
+      "for": "planets",
+      "width": 8192,
+      "height": 4096
+    },
+
+
+    {
+      "name": "Mercury Texture Map (2k)",
+      "filename": "2k_mercury.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/2k_mercury.jpg",
+      "for": "planets",
+      "width": 2048,
+      "height": 1024
+    },
+    {
+      "name": "Venus Texture Map (2k)",
+      "filename": "2k_venus_surface.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/2k_venus_surface.jpg",
+      "for": "planets",
+      "width": 2048,
+      "height": 1024
+    },
+    {
       "name": "Earth Day Map (2k)",
       "filename": "2k_earth_daymap.webp",
       "original_url": "https://www.solarsystemscope.com/textures/download/2k_earth_daymap.jpg",
@@ -9,20 +108,44 @@
       "height": 1024
     },
     {
-      "name": "Sun Texture Map (8k)",
-      "filename": "8k_sun.webp",
-      "original_url": "https://www.solarsystemscope.com/textures/download/8k_sun.jpg",
-      "for": "stars",
-      "width": 4096,
-      "height": 2048
+      "name": "Mars Texture Map (2k)",
+      "filename": "2k_mars.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/2k_mars.jpg",
+      "for": "planets",
+      "width": 2048,
+      "height": 1024
     },
     {
-      "name": "Moon Texture Map (8k)",
-      "filename": "8k_moon.webp",
-      "original_url": "https://www.solarsystemscope.com/textures/download/8k_moon.jpg",
-      "for": "moons",
-      "width": 0,
-      "height": 0
+      "name": "Jupiter Texture Map (2k)",
+      "filename": "2k_jupiter.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/2k_jupiter.jpg",
+      "for": "planets",
+      "width": 2048,
+      "height": 1024
+    },
+    {
+      "name": "Saturn Texture Map (2k)",
+      "filename": "2k_saturn.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/2k_saturn.jpg",
+      "for": "planets",
+      "width": 2048,
+      "height": 1024
+    },
+    {
+      "name": "Uranus Texture Map (2k)",
+      "filename": "2k_uranus.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/2k_uranus.jpg",
+      "for": "planets",
+      "width": 2048,
+      "height": 1024
+    },
+    {
+      "name": "Neptune Texture Map (2k)",
+      "filename": "2k_neptune.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/2k_neptune.jpg",
+      "for": "planets",
+      "width": 2048,
+      "height": 1024
     }
   ],
   "bump_maps": [
@@ -33,6 +156,30 @@
       "for": "planets",
       "width": 640,
       "height": 320
+    },
+    {
+      "name": "Mercury Bump Map",
+      "filename": "mercury-bump-map.webp",
+      "original_url": "http://planetpixelemporium.com/mercury.html",
+      "for": "planets",
+      "width": 1024,
+      "height": 512
+    },
+    {
+      "name": "Moon Bump Map",
+      "filename": "moon-bump-map.webp",
+      "original_url": "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/ldem_4_uint.tif",
+      "for": "moons",
+      "width": 1440,
+      "height": 720
+    },
+    {
+      "name": "Mars Bump Map",
+      "filename": "mars-bump-map.webp",
+      "original_url": "http://planetpixelemporium.com/mars.html",
+      "for": "planets",
+      "width": 1000,
+      "height": 500
     }
   ],
   "specular_maps": [
@@ -53,6 +200,30 @@
       "for": "planets",
       "width": 8192,
       "height": 4096
+    },
+    {
+      "name": "Earth Clouds (2k)",
+      "filename": "2k_earth_clouds.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/2k_earth_clouds.jpg",
+      "for": "planets",
+      "width": 2048,
+      "height": 1024
+    },
+    {
+      "name": "Venus Atmosphere (4k)",
+      "filename": "4k_venus_atmosphere.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/8k_moon.jpg",
+      "for": "planets",
+      "width": 8192,
+      "height": 4096
+    },
+    {
+      "name": "Venus Atmosphere (2k)",
+      "filename": "2k_venus_atmosphere.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/2k_sun.jpg",
+      "for": "planets",
+      "width": 2048,
+      "height": 1024
     }
   ],
   "ring_textures": []

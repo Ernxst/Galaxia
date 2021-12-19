@@ -30,9 +30,9 @@ class Media::CloudStorageController < ApplicationController
 
   def get_media(path)
     file = get_file(path)
-    { url: file.media_url,
+    { url: file.public_url,
       size: file.size,
-      public_url: file.public_url,
+      public_url: file.media_url,
       api_url: file.api_url }
   end
 
