@@ -72,6 +72,7 @@ export const PlanetProps = {
   ...SphereProps,
   atmosphere: Object as PropType<AtmosphereProps>,
   moons: { type: Array as PropType<MoonInterface[]>, default: [] },
+  atmosphereTexture: { type: String, default: "" },
 };
 
 export default defineComponent({

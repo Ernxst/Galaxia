@@ -29,7 +29,7 @@ export default defineComponent({
       setTimeout(() => {
         this.$emit("assetsLoaded");
         this.$emit("ready");
-      }, 1300);
+      }, 2130);
     },
   },
   computed: {

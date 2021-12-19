@@ -20,14 +20,14 @@
 
 <script lang="ts">
 import { gsap } from "gsap";
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 
 
 export default defineComponent({
   name: "sim-intro",
   emits: ["introStarted"],
   props: {
-    username: { type: String, required: true },
+    username: Object as PropType<string | null>,
     simulationName: { type: String, required: true },
     preset: Boolean,
   },

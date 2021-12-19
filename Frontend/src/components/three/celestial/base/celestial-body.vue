@@ -15,6 +15,7 @@ export default defineComponent({
   extends: BaseObject,
   emits: ["click"],
   props: {
+    id: Number,
     mass: Number,
     meanVelocity: Number,
     dayLength: { type: Number, default: 0 },
@@ -22,6 +23,8 @@ export default defineComponent({
     caption: String,
     shortDescription: String,
     description: String,
+    updatedAt: String,
+    createdAt: String,
   },
   data() {
     return {

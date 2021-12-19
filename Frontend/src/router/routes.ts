@@ -49,17 +49,15 @@ export const routes = [
   {
     path: "/:username/:simulationID/simulate",
     component: () => import("@/views/simulate/Simulate.vue"),
-    props: true,
+    props:  (route: RouteLocationNormalized) => ({ simulationID: Number(route.params.simulationID) }),
     name: "simulate",
     meta: {
       title: (route: RouteLocationNormalized) => {
-        const id = Number(route.params.simulationID);
-        const simulation = store.getters["starSystem/simulation"](id);
+        const simulation = store.getters["starSystem/simulation"](route.params.simulationID);
         return simulation.name;
       },
       description: (route: RouteLocationNormalized) => {
-        const id = Number(route.params.simulationID);
-        const simulation = store.getters["starSystem/simulation"](id);
+        const simulation = store.getters["starSystem/simulation"](route.params.simulationID);
         return simulation.description;
       },
       requiresAuth: true,

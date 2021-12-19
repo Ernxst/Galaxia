@@ -49,6 +49,7 @@ export default defineComponent({
   props: {
     ...SphereProps,
     atmosphere: Object as PropType<AtmosphereProps>,
+    atmosphereTexture: { type: String, default: "" },
   },
   data() {
     return {

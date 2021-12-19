@@ -62,6 +62,7 @@ export default defineComponent({
     starLightColour: { type: String, default: "#FFFFFF" },
     luminosity: { type: Number, default: 3e27 },
     atmosphere: Object as PropType<AtmosphereProps>,
+    atmosphereTexture: { type: String, default: "" },
   },
   data() {
     return {
