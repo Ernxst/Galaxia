@@ -18,7 +18,7 @@
                      image="https://images.newscientist.com/wp-content/uploads/2020/08/28214732/28-aug_traversable-wormholes.jpg?width=800"
                      subtitle="Start a new journey"
                      text="Explore"
-                     @click="go('simulate',{simulationID: 'abcdefg'} )"
+                     @click="go('simulate',{simulationID: 1} )"
         />
         <menu-button :disabled="true"
                      description="View, run, share and edit your previously created Galaxia simulations."
@@ -41,42 +41,72 @@
       <flat-button text="Sign Out"
                    @click="logout" />
     </section>
+    <template v-if="loading">
+      <loading-popup text="fetching simulations" />
+    </template>
   </page>
 </template>
 
 <script lang="ts">
+import { isObjectEmpty } from "@/assets/util/app.util";
 import AppFooter from "@/components/ui/layout/app-footer.vue";
 import Page from "@/components/ui/layout/page.vue";
 import FlatButton from "@/components/ui/widgets/buttons/flat-button.vue";
-import { defineComponent } from "vue";
+import ContentContainer from "@/components/ui/widgets/content-container.vue";
+import { StarSystems } from "@/services/simulation.service";
+import { useStore } from "@/store/store";
+import LoadingPopup from "@/views/sign-in/loading-popup.vue";
+import { computed, defineComponent, onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 import MenuButton from "./menu-button.vue";
 
 
 export default defineComponent({
   name: "Home",
-  components: { AppFooter, FlatButton, MenuButton, Page },
+  components: { LoadingPopup, ContentContainer, AppFooter, FlatButton, MenuButton, Page },
   props: {
     username: { type: String, required: true },
   },
-  computed: {
-    isGuest(): boolean {
-      return this.username === this.$store.getters["auth/guestUsername"];
-    }
-  },
-  methods: {
-    go(page: string, routeParams = {}) {
-      this.$router.push({
+  setup(props) {
+    const store = useStore();
+    const router = useRouter();
+    const isGuest = computed(() => {
+      return props.username == store.getters["auth/guestUsername"];
+    });
+
+    // TODO: Move to correct component
+    const simulations = ref<StarSystems>({});
+    onMounted(async () => {
+      try {
+        // TODO: Uncomment once preset simulations are properly seeded
+        // const preset = store.getters["starSystem/presetSimulations"];
+        // simulations.value = preset;
+        // if (isObjectEmpty(preset))
+          simulations.value = await store.dispatch("starSystem/fetchPresetSimulations");
+      } catch (e) {
+        alert(e);
+      }
+    });
+    const loading = computed(() => {
+      return isObjectEmpty(simulations.value);
+    });
+
+    function go(page: string, routeParams = {}) {
+      router.push({
         name: page,
         params: {
-          username: this.username,
+          username: props.username,
           ...routeParams
         }
       });
-    },
-    async logout() {
-      await this.$store.dispatch("auth/logout");
-      await this.$router.push({ name: "login" });
     }
+
+    async function logout() {
+      await store.dispatch("auth/logout");
+      await router.push({ name: "login" });
+    }
+
+    return { go, logout, isGuest, loading };
   },
 });
 </script>

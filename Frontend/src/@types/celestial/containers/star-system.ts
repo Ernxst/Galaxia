@@ -5,7 +5,12 @@ import { AsteroidBelt } from "./asteroid-belt";
 
 
 export interface StarSystem {
+  id: number;
+  by?: string;
   name: string;
+  caption: string;
+  description: string;
+  preset: boolean;
   star: Star;
   planets: Array<Planet | RingedPlanet>;
   asteroidBelts: AsteroidBelt[];

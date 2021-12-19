@@ -2,8 +2,9 @@
   <template v-if="starSystem !== null">
     <sim-intro ref="intro"
                @intro-started="animDelay = $event + 2"
-               :username="$route.params.username"
-               :simulation-name="starSystem.name" />
+               :username="starSystem.by"
+               :simulation-name="starSystem.name"
+               :preset="starSystem.preset" />
   </template>
   <div class="simulation-ui"
        :style="{ 'animation-delay': `${animDelay}s` }">

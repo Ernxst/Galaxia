@@ -21,6 +21,8 @@ interface MoveCameraParams {
   timeline: boolean,
 }
 
+// TODO: Camera has stopped moving with followed object
+// TODO: Planets do not seem to be rotating on their axis
 export default defineComponent({
   name: "CamAnimationController",
   emits: ["animStart", "animDone"],

@@ -5,7 +5,7 @@
     <renderer-controller ref="renderer"
                          :controls="true"
                          :scene-component="sceneComponent"
-                         :scene-props="{ starSystemName: starSystem}"
+                         :scene-props="{ starSystem: starSystem}"
                          :show-tour="true"
                          :track-gestures="false"
                          :ui="true">
@@ -14,6 +14,7 @@
 </template>
 
 <script lang="ts">
+import { StarSystem } from "@/@types/celestial/containers/star-system";
 import RendererController from "@/components/three/engine/RendererController.vue";
 import Page from "@/components/ui/layout/page.vue";
 import SimulateScene from "@/views/simulate/simulate-scene.vue";
@@ -24,11 +25,11 @@ export default defineComponent({
   name: "Simulate",
   components: { RendererController, Page },
   props: {
-    simulationID: { type: String, required: true },
+    simulationID: { type: Number, required: true },
   },
   computed: {
-    starSystem(): string {
-      return "Solar System"; // TODO: Get from store by ID
+    starSystem(): StarSystem {
+      return this.$store.getters["starSystem/simulation"](this.simulationID);
     },
     sceneComponent() {
       return SimulateScene;

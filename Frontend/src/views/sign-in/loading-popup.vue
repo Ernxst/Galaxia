@@ -6,7 +6,7 @@
                          :glow="true"
                          :visible="visible">
         <template v-slot:header>
-          <h1>Authenticating</h1>
+          <h1>{{ text }}</h1>
         </template>
         <template v-slot:content>
           <div class="content centred">
@@ -52,6 +52,7 @@ export default defineComponent({
   components: { ContentContainer },
   props: {
     visible: { type: Boolean, default: true },
+    text: { type: String, default: "Authenticating" },
   },
 });
 </script>

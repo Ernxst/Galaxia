@@ -1,46 +1,60 @@
 import { StarSystem } from "@/@types/celestial/containers/star-system";
-import { solarSystem } from "@/services/star-system.service";
-import { ActionTree, GetterTree, MutationTree } from "vuex";
+import { SimulationService, StarSystems } from "@/services/simulation.service";
+import { ActionTree, Commit, GetterTree, MutationTree } from "vuex";
 
-
-export type StarSystems = { [key: string]: StarSystem };
 
 export interface StarSystemModuleState {
-  starSystems: StarSystems;
+  presetSimulations: StarSystems;
+  userSimulations: StarSystems;
 }
 
 const state: StarSystemModuleState = {
-  starSystems: {},
+  presetSimulations: {},
+  userSimulations: {},
 };
 
 const getters = <GetterTree<StarSystemModuleState, any>>{
-  starSystems: (state: StarSystemModuleState): StarSystems => {
-    return state.starSystems;
+  presetSimulations: (state: StarSystemModuleState): StarSystems => {
+    return state.presetSimulations;
   },
-  starSystem: (
-    state: StarSystemModuleState
-  ): ((name: string) => StarSystem) => {
-    return (name: string) => {
-      return state.starSystems[name];
+  userSimulations: (state: StarSystemModuleState): StarSystems => {
+    return state.userSimulations;
+  },
+  simulation: (state: StarSystemModuleState): ((id: number) => StarSystem) => {
+    return (id: number) => {
+      const preset = state.presetSimulations[id];
+      if (preset) return preset;
+      return state.userSimulations[id];
     };
   },
 };
 
+const fetchSimulations = async (commit: Commit, action: string,
+                                simPromise: Promise<StarSystem[]>) => {
+  try {
+    const simulations = await simPromise;
+    const map : StarSystems = {}
+    for (const sim of simulations) map[sim.id] = sim;
+    commit(action, map);
+    return Promise.resolve(simulations);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
 const actions = <ActionTree<StarSystemModuleState, any>>{
-  async fetchAllStarSystems({ commit }) {
-    const systems = { "Solar System": solarSystem };
-    commit("setStarSystems", systems);
-  },
-  async fetchStarSystem({ commit }, name) {
+  async fetchPresetSimulations({ commit }) {
+    const systems = SimulationService.instance().presetSimulations();
+    return fetchSimulations(commit, "setPresetSimulations", systems)
   },
 };
 
 const mutations = <MutationTree<StarSystemModuleState>>{
-  setStarSystems(state: StarSystemModuleState, starSystems: StarSystems) {
-    state.starSystems = starSystems;
+  setPresetSimulations(state: StarSystemModuleState, starSystems: StarSystems) {
+    state.presetSimulations = starSystems;
   },
-  addStarSystem(state: StarSystemModuleState, starSystem: StarSystem) {
-    state.starSystems[starSystem.name] = starSystem;
+  setUserSimulations(state: StarSystemModuleState, starSystems: StarSystems) {
+    state.userSimulations = starSystems;
   },
 };
 

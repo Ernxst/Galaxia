@@ -1,3 +1,4 @@
+import { store } from "@/store/store";
 import { RouteLocationNormalized } from "vue-router";
 
 
@@ -52,12 +53,14 @@ export const routes = [
     name: "simulate",
     meta: {
       title: (route: RouteLocationNormalized) => {
-        const id = route.params.id;
-        return "Solar System"; // TODO: get from store by ID
+        const id = Number(route.params.simulationID);
+        const simulation = store.getters["starSystem/simulation"](id);
+        return simulation.name;
       },
       description: (route: RouteLocationNormalized) => {
-        const id = route.params.id;
-        return "The Solar System"; // TODO: get from store by ID
+        const id = Number(route.params.simulationID);
+        const simulation = store.getters["starSystem/simulation"](id);
+        return simulation.description;
       },
       requiresAuth: true,
     },

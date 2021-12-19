@@ -5,6 +5,7 @@ import { Texture } from "three/src/textures/Texture";
 
 
 const loader = new TextureLoader();
+loader.setRequestHeader({ "x-goog-project-id": "galaxia-js" });
 const textures: { [key: string]: Texture } = {};
 
 export async function getTexture(src: string): Promise<Texture> {

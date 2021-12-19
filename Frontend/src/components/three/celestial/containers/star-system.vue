@@ -48,7 +48,7 @@ import { TIME_STEP } from "@/assets/util/sim.constants";
 import CelestialBody from "@/components/three/celestial/base/celestial-body.vue";
 import { Vector3 } from "three/src/math/Vector3";
 import { Group } from "troisjs";
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import Planet from "../planet.vue";
 import RingedPlanet from "../ringed-planet.vue";
 import Star from "../star.vue";
@@ -59,7 +59,7 @@ export default defineComponent({
   name: "star-system",
   components: { Group, Star, AsteroidBelt },
   emits: ["starSystemLoaded", "focusOnBody"],
-  props: { name: String },
+  props: { systemData: Object as PropType<StarSystemInterface> },
   watch: {
     loaded() {
       const sceneData = {
@@ -71,9 +71,6 @@ export default defineComponent({
     },
   },
   computed: {
-    systemData(): StarSystemInterface {
-      return this.$store.getters["starSystem/starSystem"](this.name);
-    },
     modelsToLoad(): number {
       return this.systemData.planets.length + 1 + this.systemData.asteroidBelts.length;
     },

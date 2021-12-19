@@ -23,11 +23,9 @@ export abstract class AbstractApiService {
     this.api = axios.create({
       baseURL: BASE_URL + "/" + path,
       timeout: RESPONSE_TIMEOUT,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
     });
+    this.api.defaults.headers.common["Accept"] =  "application/json";
+    this.api.defaults.headers.common["Content-Type"] =  "application/json;charset=UTF-8";
   }
 
   protected makeRequest<Success, Failure>({
@@ -35,6 +33,7 @@ export abstract class AbstractApiService {
                                             body = {}, auth = true,
                                           }: fnParams): Promise<Success | Failure | GenericApiErrorResponse> {
     const config: AxiosRequestConfig = {
+      headers: {},
       method: method,
       url: endpoint,
       params: params,

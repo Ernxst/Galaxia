@@ -10,7 +10,7 @@ export const BASE_SPEED = 1;
 export const SPEED_SCALE = 1e3; // Speed is measured in km/s so multiply by 1000
 
 // 0.01 Earth Days between each frame
-export const TIME_STEP = 0.01;
+export const TIME_STEP = 0.1;
 
 export const RADIUS_SCALE = 1 / EARTH_RADIUS;
 export const DISTANCE_SCALE = 23.49; // 1 AU = 23.49 metres

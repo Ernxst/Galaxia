@@ -12,7 +12,7 @@
       </div>
       <div class="tagline centred">
         <span class="line" />
-        <p class="content">By <strong>{{ username }}</strong></p>
+        <p class="content">{{ preset ? "" : "By" }} <strong>{{ preset ? "Preset Simulation" : username }}</strong></p>
       </div>
     </header>
   </teleport>
@@ -29,6 +29,7 @@ export default defineComponent({
   props: {
     username: { type: String, required: true },
     simulationName: { type: String, required: true },
+    preset: Boolean,
   },
   methods: {
     setup() {

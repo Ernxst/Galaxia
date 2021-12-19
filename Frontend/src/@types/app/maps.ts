@@ -1,3 +1,7 @@
+export interface MapInterface {
+  [key: string | number | symbol]: any
+}
+
 export interface StringAnyMap {
   [key: string]: any;
 }
