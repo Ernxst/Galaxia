@@ -13,10 +13,10 @@ module Celestial
               length: { in: 0..32, too_long: "The caption is limited to %{count} characters only." }
 
     validates :short_description, allow_blank: true,
-              length: { in: 0..128, too_long: "The short description is limited to %{count} characters only." }
+              length: { in: 0..1024, too_long: "The short description is limited to %{count} characters only." }
 
     validates :description, allow_blank: true,
-              length: { in: 0..512, too_long: "The description is limited to %{count} characters only." }
+              length: { in: 0..4096, too_long: "The description is limited to %{count} characters only." }
 
     validates :mass, presence: { message: -> (object, _) do
       "The #{object.model_name.human.downcase} must have a mass defined."

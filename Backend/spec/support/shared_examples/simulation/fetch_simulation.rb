@@ -5,19 +5,14 @@ require 'google/cloud/storage'
 require 'devise/jwt/test_helpers'
 
 shared_examples 'a simulation fetch test', type: :request do |id:, expected_status:, expected_response: {}|
+  let(:user) { create(:user) }
+  let(:headers) { Devise::JWT::TestHelpers.auth_headers({ 'Accept': 'application/json' }, user) }
+  let(:stub) { double('Google Cloud Storage', bucket: StubbedBucket.new) }
+
   before(:each) do
-    Helpers::MediaHelpers.insert_textures
-    2.times do
-      create(:simulation)
-      create(:simulation, :user_created)
-    end
-    stub = double('Google Cloud Storage', bucket: StubbedBucket.new)
     allow(Google::Cloud::Storage).to receive(:new).and_return(stub)
-    create(:user) do |user|
-      headers = Devise::JWT::TestHelpers.auth_headers({ 'Accept': 'application/json' }, user)
-      id = expected_status == :ok ? create(:simulation).id : id
-      get "/api/v1/simulations/#{id}", headers: headers, as: :json
-    end
+    id = expected_status == :ok ? create(:simulation).id : id
+    get "/api/v1/simulations/#{id}", headers: headers, as: :json
   end
 
   it 'correct status code' do

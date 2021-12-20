@@ -5,7 +5,7 @@ class Simulation < ApplicationRecord
                       too_short: "The simulation name must be at least %{count} characters long.",
                       too_long: "The simulation name cannot be more than %{count} characters long." }
   validates :description, allow_blank: true,
-            length: { in: 0..512, too_long: "The description is limited to %{count} characters only." }
+            length: { in: 0..4096, too_long: "The description is limited to %{count} characters only." }
 
   belongs_to :user, required: false
   belongs_to :star, class_name: 'Space::Star', required: false

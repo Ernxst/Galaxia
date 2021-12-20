@@ -16,7 +16,7 @@ describe Simulation, :type => :model do
       end
 
       it "is not valid with a long description" do
-        subject.description = Faker::Lorem.paragraphs(number: 10)
+        subject.description = Faker::Lorem.characters(number: 5000)
         subject.save
         expect(subject.errors[:description]).not_to be_empty
       end

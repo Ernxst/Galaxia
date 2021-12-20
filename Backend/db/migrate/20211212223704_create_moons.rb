@@ -3,9 +3,9 @@ class CreateMoons < ActiveRecord::Migration[6.1]
     create_table :moons do |t|
       # Base Object
       t.string :name, null: false
-      t.string :caption, default: ""
-      t.string :description, default: ""
-      t.string :short_description, default: ""
+      t.text :caption, default: ""
+      t.text :description, default: ""
+      t.text :short_description, default: ""
 
       # Celestial Body
       t.float :mass, null: false, limit: 12

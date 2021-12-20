@@ -11,4 +11,6 @@ class Media::Texture < ApplicationRecord
   scope :planet_textures, -> { where(for: :planets) }
   scope :moon_textures, -> { where(for: :moons) }
 
+  # TODO: For each texture, store a high and low quality version in the same row in the table
+
 end

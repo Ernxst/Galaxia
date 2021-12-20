@@ -2,7 +2,7 @@ class CreateSimulations < ActiveRecord::Migration[6.1]
   def change
     create_table :simulations do |t|
       t.string :name, null: false
-      t.string :description, null: false, default: ""
+      t.text :description, null: false, default: ""
       t.timestamps
     end
 

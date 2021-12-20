@@ -34,13 +34,13 @@ RSpec.describe Celestial, :type => :model do
       end
 
       it "is not valid with a long short_description" do
-        subject.short_description = Faker::Lorem.paragraphs(number: 4)
+        subject.short_description = Faker::Lorem.characters(number: 5000)
         subject.save
         expect(subject.errors[:short_description]).not_to be_empty
       end
 
       it "is not valid with a long description" do
-        subject.description = Faker::Lorem.paragraphs(number: 10)
+        subject.description = Faker::Lorem.characters(number: 5000)
         subject.save
         expect(subject.errors[:description]).not_to be_empty
       end

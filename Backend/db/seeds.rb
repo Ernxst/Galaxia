@@ -62,3 +62,5 @@ end
 
 sim_data = get_data('db/seeds/simulations.json')
 seed_simulations(sim_data[:simulations])
+
+puts "=== Database Seeded (seeds.rb) ==="

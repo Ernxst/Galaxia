@@ -17,9 +17,9 @@ ActiveRecord::Schema.define(version: 2021_12_14_162123) do
 
   create_table "asteroid_belts", force: :cascade do |t|
     t.string "name", null: false
-    t.string "caption", default: ""
-    t.string "description", default: ""
-    t.string "short_description", default: ""
+    t.text "caption", default: ""
+    t.text "description", default: ""
+    t.text "short_description", default: ""
     t.integer "num_of_asteroids", null: false
     t.float "depth", null: false
     t.float "mass", null: false
@@ -59,9 +59,9 @@ ActiveRecord::Schema.define(version: 2021_12_14_162123) do
 
   create_table "moons", force: :cascade do |t|
     t.string "name", null: false
-    t.string "caption", default: ""
-    t.string "description", default: ""
-    t.string "short_description", default: ""
+    t.text "caption", default: ""
+    t.text "description", default: ""
+    t.text "short_description", default: ""
     t.float "mass", null: false
     t.float "mean_velocity", null: false
     t.float "axial_tilt", null: false
@@ -86,9 +86,9 @@ ActiveRecord::Schema.define(version: 2021_12_14_162123) do
 
   create_table "planets", force: :cascade do |t|
     t.string "name", null: false
-    t.string "caption", default: ""
-    t.string "description", default: ""
-    t.string "short_description", default: ""
+    t.text "caption", default: ""
+    t.text "description", default: ""
+    t.text "short_description", default: ""
     t.float "mass", null: false
     t.float "mean_velocity", null: false
     t.float "axial_tilt", null: false
@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 2021_12_14_162123) do
 
   create_table "simulations", force: :cascade do |t|
     t.string "name", null: false
-    t.string "description", default: "", null: false
+    t.text "description", default: "", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id"
@@ -162,9 +162,9 @@ ActiveRecord::Schema.define(version: 2021_12_14_162123) do
 
   create_table "stars", force: :cascade do |t|
     t.string "name", null: false
-    t.string "caption", default: ""
-    t.string "description", default: ""
-    t.string "short_description", default: ""
+    t.text "caption", default: ""
+    t.text "description", default: ""
+    t.text "short_description", default: ""
     t.float "mass", null: false
     t.float "mean_velocity", null: false
     t.float "axial_tilt", null: false

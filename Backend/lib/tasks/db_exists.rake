@@ -4,7 +4,7 @@ namespace :db do
     begin
       Rake::Task['environment'].invoke
       ActiveRecord::Base.connection
-      if Media::Texture.all == 0
+      if Media::Texture.all.length == 0
         exit 1
       end
     rescue
