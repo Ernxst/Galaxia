@@ -1,25 +1,25 @@
 <template>
-    <page column
-          fill
-          header="Welcome"
-          overflow-y
-          pad
-          top>
-      <p class="page-subtitle">Welcome to <strong>Galaxia</strong>. Please enter your email and password and click
-        <strong>sign in</strong> to continue (<i>or <strong>register</strong> if you do not have an account</i>).You can
-        also sign in as a <strong>guest</strong> if you would just like to create and run simulations without saving
-        them.
-      </p>
-      <section class="content">
-        <login-form ref="form"
-                    @guest-login="submit('guestLogin', $event)"
-                    @login="submit('login', $event)"
-                    @register="submit('register', $event)" />
-      </section>
-      <template v-if="loading">
-        <loading-popup />
-      </template>
-    </page>
+  <page column
+        fill
+        header="Welcome"
+        overflow-y
+        pad
+        top>
+    <p class="page-subtitle">Welcome to <strong>Galaxia</strong>. Please enter your email and password and click
+      <strong>sign in</strong> to continue (<i>or <strong>register</strong> if you do not have an account</i>).You can
+      also sign in as a <strong>guest</strong> if you would just like to create and run simulations without saving
+      them.
+    </p>
+    <section class="content">
+      <login-form ref="form"
+                  @guest-login="submit('guestLogin', $event)"
+                  @login="submit('login', $event)"
+                  @register="submit('register', $event)" />
+    </section>
+    <loading-popup text="Authenticating"
+                   :animate="false"
+                   :visible="loading" />
+  </page>
 </template>
 
 <script lang="ts">

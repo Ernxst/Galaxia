@@ -51,6 +51,6 @@ export abstract class AbstractApiService {
 
   protected handleError<T>(error: AxiosError<T>): T | GenericApiErrorResponse {
     if (error.response) return error.response.data;
-    return { error: "The server did not respond. Please try again later." };
+    return { error: "A network error occurred. Please try again." };
   }
 }

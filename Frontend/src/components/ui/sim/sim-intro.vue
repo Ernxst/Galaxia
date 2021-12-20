@@ -19,6 +19,7 @@
 </template>
 
 <script lang="ts">
+import { EASE_TYPE } from "@/assets/gsap/gsap.constants";
 import { gsap } from "gsap";
 import { defineComponent, PropType } from "vue";
 
@@ -35,7 +36,7 @@ export default defineComponent({
     setup() {
       const timeline = gsap.timeline({
         paused: true,
-        defaults: { ease: "power2.out", duration: 1.25 },
+        defaults: { ease: EASE_TYPE, duration: 1.25 },
       });
       // Animate simulation name in
       timeline.to(".intro .simulation-name", { opacity: 1, delay: 0.9 }, 0);

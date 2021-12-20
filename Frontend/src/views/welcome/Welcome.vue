@@ -94,7 +94,7 @@ export default defineComponent({
     const camController = mainController.$refs.camera;
     const camera: PerspectiveCamera = camController.getCamera();
     camera.zoom = 60;
-    if (!this.firstVisit) this.startIntro();
+    if (!this.firstVisit) setTimeout(() => (this.startIntro()), 750);
   }
 });
 </script>

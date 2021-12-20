@@ -41,9 +41,8 @@
       <flat-button text="Sign Out"
                    @click="logout" />
     </section>
-    <template v-if="loading">
-      <loading-popup text="fetching simulations" />
-    </template>
+    <loading-popup text="fetching simulations"
+                   :visible="loading" />
   </page>
 </template>
 
@@ -52,7 +51,7 @@ import { isObjectEmpty } from "@/assets/util/app.util";
 import AppFooter from "@/components/ui/layout/app-footer.vue";
 import Page from "@/components/ui/layout/page.vue";
 import FlatButton from "@/components/ui/widgets/buttons/flat-button.vue";
-import ContentContainer from "@/components/ui/widgets/content-container.vue";
+import ContentContainer from "@/components/ui/widgets/content-container/content-container.vue";
 import { StarSystems } from "@/services/simulation.service";
 import { useStore } from "@/store/store";
 import LoadingPopup from "@/views/sign-in/loading-popup.vue";
@@ -82,7 +81,7 @@ export default defineComponent({
         // const preset = store.getters["starSystem/presetSimulations"];
         // simulations.value = preset;
         // if (isObjectEmpty(preset))
-          simulations.value = await store.dispatch("starSystem/fetchPresetSimulations");
+        simulations.value = await store.dispatch("starSystem/fetchPresetSimulations");
       } catch (e) {
         alert(e);
       }

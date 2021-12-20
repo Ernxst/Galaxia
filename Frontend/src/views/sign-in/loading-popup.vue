@@ -1,58 +1,47 @@
 <template>
   <teleport to="body">
-    <div class="abs overlay" />
-    <div class="popup centred">
-      <content-container v-bind="$attrs"
-                         :glow="true"
-                         :visible="visible">
-        <template v-slot:header>
-          <h1>{{ text }}</h1>
-        </template>
-        <template v-slot:content>
-          <div class="content centred">
-            <div class="loader">
-              <svg id="circle"
-                   xmlns="http://www.w3.org/2000/svg"
-                   xmlns:xlink="http://www.w3.org/1999/xlink"
-                   x="0px"
-                   y="0px"
-                   width="100px"
-                   height="100px"
-                   viewBox="0 0 50 50"
-                   style="enable-background:new 0 0 50 50;"
-                   xml:space="preserve">
-  <path fill="#000"
-        d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
-    <animateTransform attributeType="xml"
-                      attributeName="transform"
-                      type="rotate"
-                      from="0 25 25"
-                      to="360 25 25"
-                      dur="0.6s"
-                      repeatCount="indefinite" />
-    </path>
-  </svg>
+      <div class="abs overlay" v-if="visible || animating" />
+      <div class="popup centred">
+        <content-container ref="container"
+                           @opened="$emit('opened')"
+                           @closed="$emit('closed')"
+                           v-bind="$attrs"
+                           :glow="true"
+                           :animate="animate"
+                           :visible="visible">
+          <template v-slot:header>
+            <h1>{{ text }}</h1>
+          </template>
+          <template v-slot:content>
+            <div class="content centred">
+              <v-spinner />
+              <p>Please wait</p>
             </div>
-            <p>Please wait</p>
-          </div>
-        </template>
-
-      </content-container>
-    </div>
+          </template>
+        </content-container>
+      </div>
   </teleport>
 </template>
 
 <script lang="ts">
-import ContentContainer from "@/components/ui/widgets/content-container.vue";
-import { defineComponent } from "vue";
+import ContentContainer from "@/components/ui/widgets/content-container/content-container.vue";
+import VSpinner from "@/components/ui/widgets/v-spinner.vue";
+import { computed, defineComponent, ref } from "vue";
 
 
 export default defineComponent({
   name: "loading-popup",
-  components: { ContentContainer },
+  components: { VSpinner, ContentContainer },
+  emits: ["closed", "opened"],
   props: {
+    animate: { type: Boolean, default: true },
     visible: { type: Boolean, default: true },
     text: { type: String, default: "Authenticating" },
+  },
+  setup() {
+    const container = ref<typeof ContentContainer>(null);
+    const animating = computed(() => (container.value ? container.value.animating : false));
+    return { container, animating };
   },
 });
 </script>
@@ -81,25 +70,12 @@ export default defineComponent({
 h1 {
   margin: 0;
   letter-spacing: 4px;
-  font-size: 6vw;
+  font-size: 5.5vw;
+  white-space: nowrap;
 }
 
 .content {
   flex-direction: column;
-}
-
-.loader {
-  height: 100px;
-  width: 20%;
-  text-align: center;
-  padding: 1em;
-  margin: 0 auto 1em;
-  display: inline-block;
-  vertical-align: top;
-}
-
-svg path, svg rect {
-  fill: var(--text-colour);
 }
 
 @media (min-width: 480px) {
