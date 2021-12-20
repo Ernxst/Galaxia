@@ -53,7 +53,7 @@ header {
   transition: .2s ease-in-out background-color;
 }
 
-header .header-content {
+.header-content {
   padding: 10px 28px;
 }
 
@@ -63,5 +63,11 @@ header[data-animate=true] {
 
 header[data-animate=true] .header-content > * {
   opacity: 0;
+}
+
+@media (min-width: 630px) {
+  .header-content {
+    width: max-content;
+  }
 }
 </style>

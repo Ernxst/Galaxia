@@ -86,9 +86,7 @@ export default defineComponent({
         alert(e);
       }
     });
-    const loading = computed(() => {
-      return isObjectEmpty(simulations.value);
-    });
+    const loading = computed(() => (isObjectEmpty(simulations.value)));
 
     function go(page: string, routeParams = {}) {
       router.push({

@@ -59,9 +59,9 @@ export default defineComponent({
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  max-width: 90%;
+  max-width: 90vw;
   max-height: 90vh;
-  min-width: fit-content;
+  min-width: min-content;
   width: fit-content;
   z-index: 14;
   background: var(--page-bg);
@@ -71,7 +71,7 @@ h1 {
   margin: 0;
   letter-spacing: 4px;
   font-size: 5.5vw;
-  white-space: nowrap;
+  text-align: center;
 }
 
 .content {
