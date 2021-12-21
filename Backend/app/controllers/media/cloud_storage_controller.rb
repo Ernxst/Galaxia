@@ -1,4 +1,5 @@
 require "google/cloud/storage"
+require "json"
 
 class Media::CloudStorageController < ApplicationController
   attr_accessor :folder
@@ -10,14 +11,26 @@ class Media::CloudStorageController < ApplicationController
     }, status: :internal_server_error
   end
 
+  def credentials_path
+    Rails.root.join('config/secrets/galaxia-gcs.json')
+  end
+
+  def create_prod_credentials
+    config = JSON.parse(ENV['GOOGLE_APPLICATION_CREDENTIALS'])
+    pkey = config["private_key"]
+    config["private_key"] = pkey.gsub("PRIVATEKEY", " PRIVATE KEY")
+    File.open(credentials_path, "w") do |f|
+      f.write(JSON.dump(config))
+    end
+  end
+
   def initialize
     super
-    credentials = ENV['RAILS_ENV'] === 'production' ? ENV['GOOGLE_APPLICATION_CREDENTIALS'].as_json :
-                    Rails.root.join("config/secrets/galaxia-gcs.json")
+    create_prod_credentials if ENV['RAILS_ENV'] === 'production'
     @storage = Google::Cloud::Storage.new(
       project_id: ENV['GCS_PROJECT_ID'],
       project: ENV['GCS_PROJECT_NAME'],
-      credentials: credentials
+      credentials: credentials_path
     )
     @bucket = @storage.bucket "#{ENV['GCS_BUCKET_NAME']}"
   end
