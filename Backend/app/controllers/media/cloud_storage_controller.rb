@@ -12,10 +12,12 @@ class Media::CloudStorageController < ApplicationController
 
   def initialize
     super
+    credentials = ENV['RAILS_ENV'] === 'production' ? ENV['GOOGLE_APPLICATION_CREDENTIALS'].as_json :
+                    Rails.root.join("config/secrets/galaxia-gcs.json")
     @storage = Google::Cloud::Storage.new(
       project_id: ENV['GCS_PROJECT_ID'],
       project: ENV['GCS_PROJECT_NAME'],
-      credentials: Rails.root.join("config/secrets/galaxia-gcs.json")
+      credentials: credentials
     )
     @bucket = @storage.bucket "#{ENV['GCS_BUCKET_NAME']}"
   end
