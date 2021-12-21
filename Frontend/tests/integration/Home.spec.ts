@@ -65,10 +65,9 @@ describe("Home.vue", () => {
     await flushPromises();
     expect(routerSpy).toHaveBeenCalledWith(
       expect.objectContaining({
-        name: "simulate",
+        name: "explore",
         params: {
           username: testUser.username,
-          simulationID: expect.any(String)
         }
       }));
   });

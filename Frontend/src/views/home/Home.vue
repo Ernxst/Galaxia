@@ -18,7 +18,7 @@
                      image="https://images.newscientist.com/wp-content/uploads/2020/08/28214732/28-aug_traversable-wormholes.jpg?width=800"
                      subtitle="Start a new journey"
                      text="Explore"
-                     @click="go('simulate',{simulationID: 1} )"
+                     @click="go('explore' )"
         />
         <menu-button :disabled="true"
                      description="View, run, share and edit your previously created Galaxia simulations."
@@ -41,28 +41,23 @@
       <flat-button text="Sign Out"
                    @click="logout" />
     </section>
-    <loading-popup text="fetching simulations"
-                   :visible="loading" />
   </page>
 </template>
 
 <script lang="ts">
-import { isObjectEmpty } from "@/assets/util/app.util";
 import AppFooter from "@/components/ui/layout/app-footer.vue";
 import Page from "@/components/ui/layout/page.vue";
 import FlatButton from "@/components/ui/widgets/buttons/flat-button.vue";
 import ContentContainer from "@/components/ui/widgets/content-container/content-container.vue";
-import { StarSystems } from "@/services/simulation.service";
 import { useStore } from "@/store/store";
-import LoadingPopup from "@/views/sign-in/loading-popup.vue";
-import { computed, defineComponent, onMounted, ref } from "vue";
+import { computed, defineComponent } from "vue";
 import { useRouter } from "vue-router";
 import MenuButton from "./menu-button.vue";
 
 
 export default defineComponent({
   name: "Home",
-  components: { LoadingPopup, ContentContainer, AppFooter, FlatButton, MenuButton, Page },
+  components: { ContentContainer, AppFooter, FlatButton, MenuButton, Page },
   props: {
     username: { type: String, required: true },
   },
@@ -72,21 +67,6 @@ export default defineComponent({
     const isGuest = computed(() => {
       return props.username == store.getters["auth/guestUsername"];
     });
-
-    // TODO: Move to correct component
-    const simulations = ref<StarSystems>({});
-    onMounted(async () => {
-      try {
-        // TODO: Uncomment once preset simulations are properly seeded
-        // const preset = store.getters["starSystem/presetSimulations"];
-        // simulations.value = preset;
-        // if (isObjectEmpty(preset))
-        simulations.value = await store.dispatch("starSystem/fetchPresetSimulations");
-      } catch (e) {
-        alert(e);
-      }
-    });
-    const loading = computed(() => (isObjectEmpty(simulations.value)));
 
     function go(page: string, routeParams = {}) {
       router.push({
@@ -103,7 +83,7 @@ export default defineComponent({
       await router.push({ name: "login" });
     }
 
-    return { go, logout, isGuest, loading };
+    return { go, logout, isGuest };
   },
 });
 </script>

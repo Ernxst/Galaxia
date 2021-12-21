@@ -5,6 +5,14 @@ function addDivContainer(): HTMLDivElement {
   return div;
 }
 
+function fillArray<T>(object: T, length: number): T[] {
+  const array: T[] = [];
+  for (let i = 0; i < length; i++)
+    array[i] = object;
+  return array;
+}
+
 export {
-  addDivContainer
+  addDivContainer,
+  fillArray
 }

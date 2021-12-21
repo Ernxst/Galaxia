@@ -85,7 +85,7 @@ export default defineComponent({
   }
 
   .page[overflow-y] {
-    overflow-y: unset;
+    /*overflow-y: unset;*/
   }
 }
 

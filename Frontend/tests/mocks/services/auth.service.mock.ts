@@ -4,13 +4,15 @@ import axios from "../../../__mocks__/axios";
 import { resetAllWhenMocks, when } from "../../util/jest-when";
 
 
-const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+
+const authHeader = { "Authorization": `Bearer ${jwtToken}` };
 
 const testUser = {
   username: "testuser",
   password: "12345",
   token: jwtToken,
-}
+};
 
 const validLoginRequest: AuthRequest = {
   username: "ernest",
@@ -62,7 +64,7 @@ const invalidParametersResponse: GenericApiErrorResponse = {
 };
 
 const genericErrorResponse: GenericApiErrorResponse = {
-  error: "The server did not respond. Please try again later."
+  error: "A network error occurred. Please try again."
 };
 
 const setupAuthServiceMock = () => {
@@ -72,6 +74,7 @@ const setupAuthServiceMock = () => {
 
   when(mockAPI.request)
     .calledWith({
+      headers: {},
       method: "POST",
       url: loginEndpoint,
       params: {},
@@ -81,6 +84,7 @@ const setupAuthServiceMock = () => {
 
   when(mockAPI.request)
     .calledWith({
+      headers: {},
       method: "POST",
       url: registerEndpoint,
       params: {},
@@ -90,6 +94,7 @@ const setupAuthServiceMock = () => {
 
   when(mockAPI.request)
     .calledWith({
+      headers: {},
       method: "GET",
       url: "guest_username",
       params: {},
@@ -99,6 +104,7 @@ const setupAuthServiceMock = () => {
 
   when(mockAPI.request)
     .calledWith({
+      headers: {},
       method: "POST",
       url: loginEndpoint,
       params: {},
@@ -108,6 +114,7 @@ const setupAuthServiceMock = () => {
 
   when(mockAPI.request)
     .calledWith({
+      headers: {},
       method: "POST",
       url: loginEndpoint,
       params: {},
@@ -117,6 +124,7 @@ const setupAuthServiceMock = () => {
 
   when(mockAPI.request)
     .calledWith({
+      headers: {},
       method: "POST",
       url: loginEndpoint,
       params: {},
@@ -126,6 +134,7 @@ const setupAuthServiceMock = () => {
 
   when(mockAPI.request)
     .calledWith({
+      headers: {},
       method: "POST",
       url: loginEndpoint,
       params: {},
@@ -135,6 +144,7 @@ const setupAuthServiceMock = () => {
 
   when(mockAPI.request)
     .calledWith({
+      headers: {},
       method: "POST",
       url: loginEndpoint,
       params: {},
@@ -151,6 +161,7 @@ export {
   setupAuthServiceMock,
   resetAuthServiceMock,
   jwtToken,
+  authHeader,
   testUser,
   validLoginRequest,
   invalidLoginRequest,

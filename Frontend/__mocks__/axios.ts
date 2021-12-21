@@ -1,4 +1,9 @@
 interface AxiosMockInstance {
+  defaults: {
+    headers: {
+      common: {}
+    }
+  };
   get?: jest.MockedFunction<any>;
   post?: jest.MockedFunction<any>;
   delete?: jest.MockedFunction<any>;
@@ -8,6 +13,11 @@ interface AxiosMockInstance {
 }
 
 const mockAPI : AxiosMockInstance = {
+  defaults: {
+    headers: {
+      common: {}
+    }
+  },
   delete: jest.fn(),
   get: jest.fn(),
   post: jest.fn(),

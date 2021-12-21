@@ -47,6 +47,36 @@ export const routes = [
     },
   },
   {
+    path: "/:username/explore",
+    component: () => import("@/views/explore/Explore.vue"),
+    name: "explore",
+    props: true,
+    meta: {
+      title: (route: RouteLocationNormalized) => {
+        return "Explore";
+      },
+      description: (route: RouteLocationNormalized) => {
+        return "";
+      },
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/:username/explore/preset",
+    component: () => import("@/views/explore/SelectPreset.vue"),
+    name: "select-preset",
+    props: true,
+    meta: {
+      title: (route: RouteLocationNormalized) => {
+        return "Select Preset Simulation";
+      },
+      description: (route: RouteLocationNormalized) => {
+        return "";
+      },
+      requiresAuth: true,
+    },
+  },
+  {
     path: "/:username/:simulationID/simulate",
     component: () => import("@/views/simulate/Simulate.vue"),
     props:  (route: RouteLocationNormalized) => ({ simulationID: Number(route.params.simulationID) }),

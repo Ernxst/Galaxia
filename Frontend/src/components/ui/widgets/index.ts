@@ -7,3 +7,6 @@ export { default as ContentContainer } from "./content-container/content-contain
 export { default as VContent } from "./content-container/v-content.vue";
 export { default as VHeader } from "./content-container/v-header.vue";
 export { default as VSpinner } from "./v-spinner.vue";
+export { default as Carousel } from "./carousel/carousel.vue";
+export { default as CarouselButton } from "./carousel/carousel-button.vue";
+export { default as CarouselItem } from "./carousel/carousel-item.vue";
