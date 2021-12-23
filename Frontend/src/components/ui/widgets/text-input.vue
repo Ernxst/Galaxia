@@ -6,17 +6,20 @@
            class="noselect">{{ label }}<strong v-if="required">*</strong></label>
     <div :focused="focused"
          class="input-container">
-      <input :id="id"
-             ref="input"
-             :autocomplete="autocomplete"
-             :name="name"
-             :placeholder="placeholder"
-             :type="type"
-             :value="modelValue"
-             @focusin="focused = true"
-             @focusout="focused = false"
-             @input="onKeyPress"
-             @keyup.enter="$emit('submit', $event)">
+      <component :is="multiline ? 'textarea' : 'input'"
+                 :id="id"
+                 ref="input"
+                 :autocomplete="autocomplete"
+                 :name="name"
+                 :placeholder="placeholder"
+                 :type="type"
+                 :value="modelValue"
+                 :maxlength="maxlength"
+                 @focusin="focused = true"
+                 @focusout="focused = false"
+                 :rows="rows"
+                 @input="onKeyPress"
+                 @keyup.enter="$emit('submit', $event)"></component>
       <div class="icon-container centred">
         <span class="delete-icon material-icons centred"
               @click="$emit('update:modelValue', '')">close</span>
@@ -46,7 +49,10 @@ export default defineComponent({
       type: Object as PropType<string[]>, default: [";", "\[", "\]", "\{", "\}", "\(", "\)", '"', "£", "\.", "-",
         "$", "%", "^", "&", "\*", "_", "+", "=", "|", "\\", "\/", "~", "`", ":", "!", "±", "§",]
     },
+    maxlength: { type: Number, default: 255 },
+    rows: { type: Number, default: 10 },
     noSpaces: { type: Boolean, default: false },
+    multiline: { type: Boolean, default: false }
   },
   data() {
     return {
@@ -62,6 +68,7 @@ export default defineComponent({
       this.$refs.input.focus();
     },
     onKeyPress(event: InputEvent) {
+      event.target.value = event.target.value.slice(0, this.maxlength);
       // Prevent user from copying and pasting unwanted keys into input
       // Uses a regex as str.replaceAll() not implemented on all browsers
       for (const char of this.ignoreKeys) {
@@ -78,11 +85,10 @@ export default defineComponent({
 <style scoped>
 .text-input {
   display: grid;
-  grid-template-rows: 1fr 2fr;
   grid-row-gap: 6px;
 }
 
-label, input {
+label, input, textarea {
   font-size: 13px;
 }
 
@@ -110,7 +116,7 @@ strong {
   border-color: var(--accent);
 }
 
-input {
+input, textarea {
   outline: none;
   border: none;
   text-transform: none;
@@ -127,6 +133,7 @@ input {
   opacity: 0;
   transition: .25s ease opacity;
   margin: 6px 0;
+  height: min-content;
 }
 
 .icon-container:hover {
