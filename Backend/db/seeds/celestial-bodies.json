@@ -153,7 +153,7 @@
       "mass": 1.98847e30,
       "mean_velocity": 220,
       "axial_tilt": 7.25,
-      "day_length": 0,
+      "day_length": 2160000,
       "luminosity": 3e27,
       "texture": "2k_sun.webp"
     }

@@ -24,14 +24,16 @@ import { gsap } from "gsap";
 import { defineComponent, onMounted, ref, toRefs, watch } from "vue";
 
 
+export const ContentContainerProps = {
+  visible: { type: Boolean, default: true },
+  animate: { type: Boolean, default: true },
+};
+
 export default defineComponent({
   name: "content-container",
   components: { VContent, VHeader },
   emits: ["opened", "closed"],
-  props: {
-    visible: { type: Boolean, default: true },
-    animate: { type: Boolean, default: true },
-  },
+  props: ContentContainerProps,
   setup(props, { emit }) {
     let timeline = null;
     const animating = ref<boolean>(false);
