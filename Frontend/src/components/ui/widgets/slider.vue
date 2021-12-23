@@ -6,16 +6,15 @@
     <div class="slider-inner">
       <span v-if="showLimits">{{ min }}</span>
       <div class="slider">
-        <input
-          :id="id"
-          ref="slider"
-          :max="max"
-          :min="min"
-          :step="step"
-          :name="name"
-          :value.number="modelValue"
-          type="range"
-          @input="onUpdate"
+        <input :id="id"
+               ref="slider"
+               :max="max"
+               :min="min"
+               :step="step"
+               :name="name"
+               :value.number="modelValue"
+               type="range"
+               @input="onUpdate"
         />
         <p ref="sliderLabel"
            :for="id">
@@ -54,11 +53,11 @@ export default defineComponent({
     onUpdate(event: InputEvent) {
       this.updateSliderPos(event.target.value);
       event.preventDefault();
-      this.$emit("update:modelValue", parseInt(event.target.value));
+      this.$emit("update:modelValue", Number(event.target.value));
     },
     // Move the slider value indicator
     updateSliderPos(newValue: string) {
-      const percentage = (parseInt(newValue) - this.min) / this.range;
+      const percentage = (Number(newValue) - this.min) / this.range;
       const width = this.$refs.slider.clientWidth;
       const lblWidth = this.$refs.sliderLabel.clientWidth;
       this.$refs.sliderLabel.style.left = `${percentage * (width - lblWidth)}px`;
@@ -84,7 +83,7 @@ export default defineComponent({
 label {
   margin: 0;
   width: 100%;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-colour);
 }
 
@@ -212,7 +211,7 @@ input[type="range"]:focus::-ms-fill-upper {
 p {
   position: absolute;
   left: 0;
-  top: calc(100% + 14px);
+  top: 100%;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.22);
   padding: 4px 8px;
   letter-spacing: 0;
@@ -220,6 +219,7 @@ p {
   font-size: 12px;
   background: var(--page-bg);
   margin: 0;
+  border: 1px solid var(--main);
 }
 
 .slider-container[data-disabled=true] input[type="range"] {
