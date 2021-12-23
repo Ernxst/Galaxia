@@ -47,26 +47,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.overlay {
-  position: fixed;
-  z-index: 13;
-  background: var(--page-bg);
-  opacity: .33;
-}
-
-.popup {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  max-width: 90vw;
-  max-height: 90vh;
-  min-width: min-content;
-  width: fit-content;
-  z-index: 14;
-  background: var(--page-bg);
-}
-
 h1 {
   margin: 0;
   letter-spacing: 4px;

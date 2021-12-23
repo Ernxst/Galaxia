@@ -65,3 +65,53 @@
 .pseudo-before::before, .pseudo-after::after {
   content: "";
 }
+
+.decorated {
+  overflow: hidden;
+  text-align: center;
+  width: 100%;
+}
+
+.decorated > span {
+  position: relative;
+  display: inline-block;
+  font-size: 14px;
+}
+
+.decorated > span:before, .decorated > span:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  border-bottom: 1px solid var(--main);
+  border-radius: 3px;
+  width: 100vw;
+  margin: 0 20px;
+}
+
+.decorated > span:before {
+  right: 100%;
+}
+
+.decorated > span:after {
+  left: 100%;
+}
+
+.overlay {
+  position: fixed;
+  z-index: 13;
+  background: var(--page-bg);
+  opacity: .33;
+}
+
+.popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  max-width: 90vw;
+  max-height: 90vh;
+  min-width: min-content;
+  width: fit-content;
+  z-index: 14;
+  background: var(--page-bg);
+}
