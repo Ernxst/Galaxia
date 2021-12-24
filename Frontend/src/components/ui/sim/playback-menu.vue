@@ -3,7 +3,7 @@
     <section class="row">
       <p class="sim-speed">Simulation Speed: <strong>×{{ scaledSpeed }}</strong>
         <br>
-        <span><strong>1</strong> Frame =  <strong>{{ timeStep }}</strong> Earth Days</span>
+        <span><strong>1</strong> Frame = <strong>{{ timeStep }}</strong> Earth Days</span>
       </p>
     </section>
     <section class="button-row row">

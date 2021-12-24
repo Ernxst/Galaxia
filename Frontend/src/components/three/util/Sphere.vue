@@ -55,19 +55,19 @@ export default defineComponent({
   },
   watch: {
     texture() {
-      const material: MeshPhongMaterial = this.mesh().material;
-      this.setTextures(material);
+      this.setTextures(this.material());
     },
     bumpMap() {
-      const material: MeshPhongMaterial = this.mesh().material;
-      this.setTextures(material);
+      this.setTextures(this.material());
     },
     specularMap() {
-      const material: MeshPhongMaterial = this.mesh().material;
-      this.setTextures(material);
+      this.setTextures(this.material());
     }
   },
   methods: {
+    material(): MeshPhongMaterial {
+      return this.mesh().material;
+    },
     async setTextures(material: MeshPhongMaterial) {
       if (this.texture) material.map = await getTexture(this.texture);
       if (this.bumpMap) material.bumpMap = await getTexture(this.bumpMap);
@@ -77,10 +77,7 @@ export default defineComponent({
     },
   },
   mounted() {
-    const material: MeshPhongMaterial = this.mesh().material;
-    this.setTextures(material).then((_) => {
-      this.$emit("sphereLoaded");
-    });
+    this.setTextures(this.material()).then((_) => (this.$emit("sphereLoaded")));
   },
 });
 </script>

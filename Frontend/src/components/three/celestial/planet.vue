@@ -99,7 +99,7 @@ export default defineComponent({
       return this.moons && this.moons.length > 0;
     },
     hasAtmosphere(): boolean {
-      return this.atmosphereTexture !== null;
+      return this.atmosphereTexture !== null && this.atmosphereTexture !== undefined;
     },
     maxRadius(): number {
       if (this.hasAtmosphere)

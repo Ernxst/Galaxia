@@ -15,6 +15,7 @@
                :value.number="modelValue"
                type="range"
                @input="onUpdate"
+               :style="`--left: ${left}px`"
         />
         <p ref="sliderLabel"
            :for="id">
@@ -49,6 +50,11 @@ export default defineComponent({
       return Math.abs(this.max - this.min);
     }
   },
+  data() {
+    return {
+      left: 0,
+    };
+  },
   methods: {
     onUpdate(event: InputEvent) {
       this.updateSliderPos(event.target.value);
@@ -61,6 +67,7 @@ export default defineComponent({
       const width = this.$refs.slider.clientWidth;
       const lblWidth = this.$refs.sliderLabel.clientWidth;
       this.$refs.sliderLabel.style.left = `${percentage * (width - lblWidth)}px`;
+      this.left = percentage * (width - lblWidth / 2);
     },
   },
   mounted() {
@@ -108,6 +115,7 @@ span {
 input[type="range"] {
   --thumb-size: 24px;
   --bg: var(--main);
+  --left: 0;
   -webkit-appearance: none;
   height: 4px;
   background: #D3D3D3 linear-gradient(to right, var(--bg) 0%, var(--bg) 100%) no-repeat;
@@ -115,6 +123,19 @@ input[type="range"] {
   outline: none;
   border-radius: var(--button-radius);
   width: 100%;
+  position: relative;
+}
+
+input::after {
+  position: absolute;
+  top: 0;
+  left: var(--left);
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  content: "";
+  background: rgba(255, 255, 255, .5);
+  mix-blend-mode: difference;
 }
 
 input[type="range"]:focus {
@@ -141,6 +162,8 @@ input[type="range"]::-webkit-slider-thumb {
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: -10px;
+  position: relative;
+  z-index: 3;
 }
 
 input[type="range"]:focus::-webkit-slider-runnable-track {
@@ -165,6 +188,8 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 2px;
   background: #FFFFFF;
   cursor: pointer;
+  position: relative;
+  z-index: 3;
 }
 
 input[type="range"]::-ms-track {
@@ -198,6 +223,8 @@ input[type="range"]::-ms-thumb {
   border-radius: 2px;
   background: #FFFFFF;
   cursor: pointer;
+  position: relative;
+  z-index: 3;
 }
 
 input[type="range"]:focus::-ms-fill-lower {

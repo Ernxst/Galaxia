@@ -44,7 +44,7 @@ import { MeshBasicMaterial } from "three/src/materials/MeshBasicMaterial";
 import { Vector2 } from "three/src/math/Vector2";
 import { Mesh } from "three/src/objects/Mesh";
 import { Group, PointLight } from "troisjs";
-import { defineComponent, PropType } from "vue";
+import { defineComponent } from "vue";
 import Sphere, { SphereProps } from "../util/Sphere.vue";
 import OrbittingBody from "./base/orbitting-body.vue";
 
@@ -72,7 +72,7 @@ export default defineComponent({
   },
   computed: {
     hasAtmosphere(): boolean {
-      return this.atmosphereTexture !== null;
+      return this.atmosphereTexture !== null && this.atmosphereTexture !== undefined;
     },
     scaledRadius(): number {
       return this.radius * RADIUS_SCALE;

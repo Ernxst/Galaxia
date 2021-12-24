@@ -32,7 +32,7 @@ import { RADIUS_SCALE } from "@/assets/util/sim.constants";
 import Atmosphere from "@/components/three/util/Atmosphere.vue";
 import { Vector3 } from "three/src/math/Vector3";
 import { Group } from "troisjs";
-import { defineComponent, PropType } from "vue";
+import { defineComponent } from "vue";
 import Sphere, { SphereProps } from "../util/Sphere.vue";
 import Trail from "../util/trail.vue";
 import OrbittingBody from "./base/orbitting-body.vue";
@@ -63,7 +63,7 @@ export default defineComponent({
       return this.starRadius * RADIUS_SCALE + this.scaledRadius * 2.0;
     },
     hasAtmosphere(): boolean {
-      return this.atmosphereTexture !== null;
+      return this.atmosphereTexture !== null && this.atmosphereTexture !== undefined;
     },
     scaledRadius(): number {
       return this.radius * RADIUS_SCALE;
