@@ -74,7 +74,7 @@ export default defineComponent({
     this.updateSliderPos(this.$refs.slider.value);
     window.addEventListener("resize", () => {
       this.$nextTick(() => {
-        this.updateSliderPos(this.$refs.slider.value);
+        this.updateSliderPos(this.$refs.slider?.value);
       });
     });
   }
@@ -98,7 +98,7 @@ span {
   padding: 4px;
   border-radius: var(--button-radius);
   color: var(--text-colour);
-  background: var(--page-bg);
+  font-size: 12px;
 }
 
 .slider-inner {
@@ -245,7 +245,7 @@ p {
   z-index: 2;
   font-size: 12px;
   background: var(--page-bg);
-  margin: 0;
+  margin: 6px 0 0 0;
   border: 1px solid var(--main);
 }
 

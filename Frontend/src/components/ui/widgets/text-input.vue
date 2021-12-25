@@ -5,7 +5,8 @@
            :for="id"
            class="noselect">{{ label }}<strong v-if="required">*</strong></label>
     <div :focused="focused"
-         class="input-container">
+         class="input-container centred">
+      <div class="indicator"></div>
       <component :is="multiline ? 'textarea' : 'input'"
                  :id="id"
                  ref="input"
@@ -97,23 +98,31 @@ strong {
 }
 
 .input-container {
-  display: grid;
-  grid-template-columns: 3fr auto;
-  grid-column-gap: 6px;
-  padding-right: 6px;
+  padding: 0 6px 0 0;
   background: rgba(255, 255, 255, 0.22);
   backdrop-filter: blur(3px);
   border: 1px solid var(--main);
-  border-left-width: 12px;
   border-radius: var(--button-radius);
-  transition-timing-function: ease;
-  transition-duration: .2s;
-  transition-property: border-left-width, border-color;
+  align-items: flex-start;
+}
+
+.input-container, .input-container * {
+  transition: .2s ease-in-out all;
+}
+
+.indicator {
+  width: 12px;
+  height: 100%;
+  background: var(--main);
 }
 
 .input-container[focused=true] {
-  border-left-width: 24px;
   border-color: var(--accent);
+}
+
+.input-container[focused=true] .indicator {
+  width: 24px;
+  background: var(--accent);
 }
 
 input, textarea {
@@ -124,6 +133,7 @@ input, textarea {
   padding: 10px 12px;
   letter-spacing: 1px;
   color: var(--text-colour);
+  width: 100%;
 }
 
 .icon-container {

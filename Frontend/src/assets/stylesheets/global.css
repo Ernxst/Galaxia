@@ -39,7 +39,7 @@ html, body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--main);
+  background: var(--accent);
   border-radius: 10px;
 }
 
