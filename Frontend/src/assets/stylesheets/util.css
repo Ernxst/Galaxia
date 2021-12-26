@@ -50,11 +50,11 @@
   display: block;
 }
 
-.pseudo-before, .pseudo-after {
+.pseudo-before, .pseudo-after, .shaded-circle {
   position: relative;
 }
 
-.abs, .pseudo-before::before, .pseudo-after::after {
+.abs, .pseudo-before::before, .pseudo-after::after, .shaded-circle::after {
   position: absolute;
   top: 0;
   left: 0;
@@ -62,8 +62,15 @@
   bottom: 0;
 }
 
-.pseudo-before::before, .pseudo-after::after {
+.pseudo-before::before, .pseudo-after::after, .shaded-circle::after {
   content: "";
+}
+
+.shaded-circle:after {
+  background: radial-gradient(circle at 50% 0px, #FFFFFF, rgba(255, 255, 255, 0) 58%);
+  filter: blur(3px);
+  border-radius: 50%;
+  z-index: 2;
 }
 
 .decorated {

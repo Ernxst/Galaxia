@@ -6,6 +6,8 @@
       :name="`${name}-sphere`"
       :radius="scaledRadius"
       :texture="texture"
+      :bump-map="bumpMap"
+      :specular-map="specularMap"
       @click="onClick"
       @sphere-loaded="assetsLoaded++"
     />
@@ -23,6 +25,7 @@
     :inclination="inclinationRad"
     :semi-major="scaledX"
     :semi-minor="scaledZ"
+    v-if="showTrail"
   />
 </template>
 
@@ -46,6 +49,7 @@ export default defineComponent({
   props: {
     ...SphereProps,
     atmosphereTexture: String,
+    showTrail: { type: Boolean, default: true },
   },
   data() {
     return {

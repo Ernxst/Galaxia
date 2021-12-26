@@ -48,6 +48,7 @@
     :inclination="inclinationRad"
     :semi-major="scaledX"
     :semi-minor="scaledZ"
+    v-if="showTrail"
   />
 </template>
 
@@ -69,6 +70,7 @@ export const PlanetProps = {
   ...SphereProps,
   moons: { type: Array as PropType<MoonInterface[]>, default: [] },
   atmosphereTexture: String,
+  showTrail: { type: Boolean, default: true },
 };
 
 export default defineComponent({

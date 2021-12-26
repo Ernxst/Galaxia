@@ -35,8 +35,8 @@ export const SphereProps = {
   radius: { type: Number, default: 1 },
   slices: { type: Number, default: SPHERE_SLICES },
   texture: { type: String, default: "" },
-  bumpMap: { type: String },
-  specularMap: { type: String },
+  bumpMap: { type: String, default: "" },
+  specularMap: { type: String, default: "" },
   castShadow: { type: Boolean, default: false },
   receiveShadow: { type: Boolean, default: true },
   materialProps: Object,
@@ -70,9 +70,11 @@ export default defineComponent({
     },
     async setTextures(material: MeshPhongMaterial) {
       if (this.texture) material.map = await getTexture(this.texture);
+      else (material.map) = null;
       if (this.bumpMap) material.bumpMap = await getTexture(this.bumpMap);
-      if (this.specularMap)
-        material.specularMap = await getTexture(this.specularMap);
+      else (material.bumpMap = null);
+      if (this.specularMap) material.specularMap = await getTexture(this.specularMap);
+      else (material.specularMap) = null;
       material.needsUpdate = true;
     },
   },

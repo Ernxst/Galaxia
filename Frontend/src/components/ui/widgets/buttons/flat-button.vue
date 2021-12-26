@@ -1,6 +1,7 @@
 <template>
   <div class="button-container centred">
     <button :data-disabled="disabled"
+            v-bind="$attrs"
             :style="`--button-bg: ${bg}`"
             :type="type"
             class="flat-button noselect centred"
@@ -15,44 +16,17 @@
 </template>
 
 <script lang="ts">
+import CustomButton from "@/components/ui/widgets/buttons/custom-button.vue";
 import { defineComponent } from "vue";
 
 
 export default defineComponent({
   name: "flat-button",
-  emits: ["click", "mouseenter", "mouseleave"],
+  extends: CustomButton,
   props: {
     text: { type: String, default: "" },
     bg: { type: String, default: "var(--main)" },
     type: { type: String, default: "button" },
-  },
-  data() {
-    return {
-      disabled: false,
-      mouseEntered: false,
-    };
-  },
-  methods: {
-    onClick(event) {
-      // TODO: Play button click sound here
-      this.$emit("click", event);
-    },
-    onMouseEnter(event) {
-      // TODO: Play button hover sound here
-      this.mouseEntered = true;
-      this.$emit("mouseenter", event)
-    },
-    onMouseLeave(event) {
-      // TODO: Stop button hover sound
-      this.mouseEntered = false;
-      this.$emit("mouseleave", event)
-    },
-    enable() {
-      this.disabled = false;
-    },
-    disable() {
-      this.disabled = true;
-    },
   },
 });
 </script>
@@ -96,7 +70,7 @@ button[data-disabled=true] {
 
 @media (min-width: 480px) {
   button span {
-    font-size: 1.25vw;
+    font-size: 1vw;
   }
 }
 </style>

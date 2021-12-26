@@ -144,6 +144,7 @@ input, textarea {
   transition: .25s ease opacity;
   margin: 6px 0;
   height: min-content;
+  pointer-events: none;
 }
 
 .icon-container:hover {
@@ -157,5 +158,6 @@ input, textarea {
 
 .text-input[empty=false] .icon-container {
   opacity: 1;
+  pointer-events: all;
 }
 </style>
