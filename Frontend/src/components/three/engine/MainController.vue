@@ -1,6 +1,7 @@
 <template>
   <camera-controller ref="camera"
                      :orbit-controls="orbitControls"
+                     :enable-pan="enablePan"
                      :show-tour="showTour"
                      :track-gestures="trackGestures"
                      @pause="pause"
@@ -42,6 +43,7 @@ export default defineComponent({
   emits: ["loaded", "ready"],
   props: {
     orbitControls: Object as PropType<OrbitControls>,
+    enablePan: { type: Boolean, default: true },
     sceneComponent: Object,
     sceneProps: { type: Object, default: {} },
     ui: { type: Boolean, default: false },

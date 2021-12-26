@@ -6,6 +6,7 @@
     <cam-animation-controller
       ref="animator"
       :orbit-controls="orbitControls"
+      :enable-pan="enablePan"
       @anim-start="$emit('animStart')"
       @anim-done="$emit('animDone')"
     />
@@ -34,6 +35,7 @@ export default defineComponent({
   emits: ["animStart", "animDone", "pause", "play"],
   props: {
     orbitControls: Object as PropType<OrbitControls>,
+    enablePan: { type: Boolean, default: true },
     trackGestures: { type: Boolean, default: false },
     showTour: { type: Boolean, default: false },
   },
@@ -77,6 +79,7 @@ export default defineComponent({
       controls.object = camera;
       controls.enableDamping = true;
       controls.maxDistance = dist * SCENE_SCALE;
+      controls.enablePan = this.enablePan;
     },
     reset() {
       this.$refs.animator.reset();

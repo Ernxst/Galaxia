@@ -26,7 +26,8 @@ export default defineComponent({
   name: "CamAnimationController",
   emits: ["animStart", "animDone"],
   props: {
-    orbitControls: Object as PropType<OrbitControls>
+    orbitControls: Object as PropType<OrbitControls>,
+    enablePan: { type: Boolean, default: true },
   },
   data() {
     return {
@@ -121,14 +122,14 @@ export default defineComponent({
     resetControls() {
       this.factfileOpen = false;
       this.target = null;
-      this.orbitControls.enablePan = true;
+      this.orbitControls.enablePan = this.enablePan;
       this.orbitControls.minDistance = 0;
       this.orbitControls.maxDistance = this.defaultPos.length() * SCENE_SCALE;
     },
     render(paused: boolean) {
       if (isAnimating()) return;
       const controls: OrbitControls = this.orbitControls;
-      controls.enablePan = true;
+      controls.enablePan = this.enablePan;
 
       if (this.target) {
         controls.enablePan = false;

@@ -11,6 +11,7 @@
         ref="controller"
         :orbit-controls="orbitControls"
         :scene-component="sceneComponent"
+        :enable-pan="enablePan"
         :scene-props="sceneProps"
         :show-tour="showTour"
         :teleport="teleport"
@@ -42,6 +43,7 @@ export default defineComponent({
   emits: ["ready"],
   props: {
     controls: { type: Boolean, default: false },
+    enablePan: { type: Boolean, default: true },
     sceneComponent: Object,
     sceneProps: { type: Object, default: {} },
     ui: { type: Boolean, default: false },
