@@ -22,7 +22,6 @@ interface MoveCameraParams {
 }
 
 // TODO: Camera has stopped moving with followed object
-// TODO: Planets do not seem to be rotating on their axis
 export default defineComponent({
   name: "CamAnimationController",
   emits: ["animStart", "animDone"],
@@ -120,6 +119,7 @@ export default defineComponent({
       });
     },
     resetControls() {
+      this.factfileOpen = false;
       this.target = null;
       this.orbitControls.enablePan = true;
       this.orbitControls.minDistance = 0;
@@ -131,12 +131,12 @@ export default defineComponent({
       controls.enablePan = true;
 
       if (this.target) {
+        controls.enablePan = false;
         if (!paused) {
           const { centre, size } = computeCentreAndSize(this.target.mesh());
           controls.minDistance = size.length();
           if (this.factfileOpen) centre.x -= controls.minDistance / 4;
           controls.target.set(centre.x, centre.y, centre.z);
-          controls.enablePan = false;
         }
       }
     },
