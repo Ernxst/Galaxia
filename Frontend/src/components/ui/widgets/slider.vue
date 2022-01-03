@@ -55,6 +55,11 @@ export default defineComponent({
       left: 0,
     };
   },
+  watch: {
+    modelValue(newVal) {
+      this.updateSliderPos(newVal);
+    }
+  },
   methods: {
     onUpdate(event: InputEvent) {
       this.updateSliderPos(event.target.value);

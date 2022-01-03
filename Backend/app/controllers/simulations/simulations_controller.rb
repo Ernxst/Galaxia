@@ -9,7 +9,7 @@ class Simulations::SimulationsController < ApplicationController
   # POST /simulations
   def new
     create_params = params.require(:simulation).permit(:name, :description)
-    create_params.require([:name, :description])
+    create_params.require([:name])
     simulation = Simulation.create(**create_params, user_id: current_user.id)
     simulation.save!
     render json: { id: simulation.id }, status: :created

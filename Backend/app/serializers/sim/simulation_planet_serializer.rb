@@ -9,5 +9,6 @@ class Sim::SimulationPlanetSerializer < ActiveModel::Serializer
       .merge({ moons: object.simulation_moons.map do |moon|
         Sim::SimulationMoonSerializer.new(moon).attributes
       end })
+      .merge({id: object.id})
   end
 end

@@ -12,7 +12,7 @@ export const routes = [
         return "Welcome";
       },
       description: (route: RouteLocationNormalized) => {
-        return "";
+        return "An interactive journey through space and time in three dimensions.";
       },
       requiresAuth: false,
     },
@@ -26,7 +26,7 @@ export const routes = [
         return "Sign In";
       },
       description: (route: RouteLocationNormalized) => {
-        return "";
+        return "Sign into or register your Galaxia account.";
       },
       requiresAuth: false,
     },
@@ -41,7 +41,7 @@ export const routes = [
         return "Home";
       },
       description: (route: RouteLocationNormalized) => {
-        return "";
+        return "Your dashboard.";
       },
       requiresAuth: true,
     },
@@ -56,7 +56,7 @@ export const routes = [
         return "Explore";
       },
       description: (route: RouteLocationNormalized) => {
-        return "";
+        return "Select the type of celestial journey you'd like to go on.";
       },
       requiresAuth: true,
     },
@@ -71,7 +71,22 @@ export const routes = [
         return "Select Preset Simulation";
       },
       description: (route: RouteLocationNormalized) => {
-        return "";
+        return "Explore the available preset simulations.";
+      },
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/:username/explore/build",
+    component: () => import("@/views/create/Build.vue"),
+    name: "Build",
+    props: true,
+    meta: {
+      title: (route: RouteLocationNormalized) => {
+        return "Build Your Universe";
+      },
+      description: (route: RouteLocationNormalized) => {
+        return "Build your own custom simulation.";
       },
       requiresAuth: true,
     },
@@ -79,15 +94,20 @@ export const routes = [
   {
     path: "/:username/:simulationID/simulate",
     component: () => import("@/views/simulate/Simulate.vue"),
-    props:  (route: RouteLocationNormalized) => ({ simulationID: Number(route.params.simulationID) }),
+    props: (route: RouteLocationNormalized) => ({
+      username: route.params.username,
+      simulationID: Number(route.params.simulationID)
+    }),
     name: "simulate",
     meta: {
-      title: (route: RouteLocationNormalized) => {
-        const simulation = store.getters["starSystem/simulation"](route.params.simulationID);
+      title: async (route: RouteLocationNormalized) => {
+        const id = Number(route.params.simulationID);
+        const simulation = await store.dispatch("starSystem/fetchSimulation", id);
         return simulation.name;
       },
-      description: (route: RouteLocationNormalized) => {
-        const simulation = store.getters["starSystem/simulation"](route.params.simulationID);
+      description: async (route: RouteLocationNormalized) => {
+        const id = Number(route.params.simulationID);
+        const simulation = await store.dispatch("starSystem/fetchSimulation", id);
         return simulation.description;
       },
       requiresAuth: true,

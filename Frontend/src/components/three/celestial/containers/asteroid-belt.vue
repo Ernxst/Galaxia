@@ -32,6 +32,7 @@ export default defineComponent({
     innerEccentricity: Number,
     outerSemiMajor: Number,
     outerEccentricity: Number,
+    inclination: { type: Number, default: 0 },
     starRadius: { type: Number, default: 1 },
     fill: { type: Boolean, default: true },
     minSize: { type: Number, default: 60 },
@@ -59,30 +60,38 @@ export default defineComponent({
       return this.starRadius * RADIUS_SCALE;
     },
   },
+  watch: {
+    allAsteroids() {
+      this.drawAsteroids();
+    }
+  },
   methods: {
     animate(dt: number) {
       this.spinOnAxis(dt);
     },
+    drawAsteroids() {
+      const mesh: ThreeInstancedMesh = this.mesh();
+      const dummy = new Object3D();
+
+      for (let [index, asteroid] of this.allAsteroids.entries()) {
+        const rotation = asteroid.rotation || new Vector3();
+        rotation.add(new Vector3(asteroid.axialTilt, 0, 0));
+        dummy.rotation.set(rotation.x, rotation.y, rotation.z);
+
+        const position = asteroid.initialPosition || new Vector3();
+        dummy.position.set(position.x, position.y, position.z);
+
+        const scale = asteroid.scale.multiplyScalar(asteroid.size);
+        dummy.scale.set(scale.x, scale.y, scale.z);
+        dummy.updateMatrix();
+        mesh.setMatrixAt(index, dummy.matrix);
+      }
+
+      mesh.instanceMatrix.needsUpdate = true;
+    }
   },
   mounted() {
-    const mesh: ThreeInstancedMesh = this.mesh();
-    const dummy = new Object3D();
-
-    for (let [index, asteroid] of this.allAsteroids.entries()) {
-      const rotation = asteroid.rotation || new Vector3();
-      rotation.add(new Vector3(asteroid.axialTilt, 0, 0));
-      dummy.rotation.set(rotation.x, rotation.y, rotation.z);
-
-      const position = asteroid.initialPosition || new Vector3();
-      dummy.position.set(position.x, position.y, position.z);
-
-      const scale = asteroid.scale.multiplyScalar(asteroid.size);
-      dummy.scale.set(scale.x, scale.y, scale.z);
-      dummy.updateMatrix();
-      mesh.setMatrixAt(index, dummy.matrix);
-    }
-
-    mesh.instanceMatrix.needsUpdate = true;
+    this.drawAsteroids();
     dispatchLoadedEvent(this.name);
     this.$emit("asteroidBeltLoaded");
   },

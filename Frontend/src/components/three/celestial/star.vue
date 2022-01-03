@@ -17,6 +17,7 @@
       :radius="scaledRadius"
       :specular-map="specularMap"
       :texture="texture"
+      :receive-shadow="receiveShadow"
       @click="onClick"
       @sphere-loaded="setupSphere"
     />
@@ -59,6 +60,7 @@ export default defineComponent({
     starLightColour: { type: String, default: "#FFFFFF" },
     luminosity: { type: Number, default: 3e27 },
     atmosphereTexture: String,
+    receiveShadow: { type: Boolean, default: false },
   },
   data() {
     return {

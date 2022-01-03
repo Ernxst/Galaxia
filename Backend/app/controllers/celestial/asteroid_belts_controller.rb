@@ -6,13 +6,13 @@ class Celestial::AsteroidBeltsController < Celestial::CelestialBodyController
   end
 
   def required_params
-    [:name, :caption, :short_description, :description, :mass, :mean_velocity,
-     :axial_tilt, :day_length, :inner_semi_major, :outer_semi_major, :depth,
-     :inner_eccentricity, :outer_eccentricity, :inclination, :num_of_asteroids]
+    [:name, :mass, :mean_velocity, :axial_tilt, :day_length, :inner_semi_major, 
+      :outer_semi_major, :depth, :inner_eccentricity, :outer_eccentricity,
+       :inclination, :num_of_asteroids]
   end
 
   def optional_params
-    {}
+    { caption: nil, description: nil, short_description: nil }
   end
 
   def build(params)

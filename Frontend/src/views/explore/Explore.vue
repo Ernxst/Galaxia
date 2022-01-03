@@ -12,7 +12,7 @@
                       title="Preset Simulation"
                       description="Select a pre-made simulation to dive into celestial exploration mode immediately."
                       caption="Start your journey" />
-      <explore-button @click="go('select-preset')"
+      <explore-button @click="go('Build')"
                       img="https://www.seti.org/sites/default/files/styles/original/public/2018-08/protodisk_NASA_JPL-Caltech_T.Pyle_.jpg?itok=xaXME_pS"
                       title="Custom Simulation"
                       description="Build your simulation the way you want it - either from a template or from scratch."

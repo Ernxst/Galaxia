@@ -16,11 +16,11 @@ router.beforeEach((to, from): string | void => {
 });
 
 router.afterEach((to, from) => {
-  nextTick(() => {
+  nextTick(async () => {
     const meta: any = to.meta;
-    document.title = meta.title(to) + " — " + APP_TITLE;
+    document.title = await meta.title(to) + " — " + APP_TITLE;
     const desc = document.querySelector('head meta[name="description"]');
-    const content: string = meta.description(to) || DEFAULT_DESCRIPTION;
+    const content: string = await meta.description(to) || DEFAULT_DESCRIPTION;
     if (desc) desc.setAttribute("content", content);
 
     const selection = window.getSelection();

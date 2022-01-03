@@ -3,5 +3,6 @@ class Sim::SimulationAsteroidBeltSerializer < ActiveModel::Serializer
 
   def attributes(requested_attrs = nil, reload = nil)
     super.merge(object.asteroid_belt.attributes)
+    .merge({id: object.id})
   end
 end

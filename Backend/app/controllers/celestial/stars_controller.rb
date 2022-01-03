@@ -6,11 +6,10 @@ class Celestial::StarsController < Celestial::CelestialBodyController
   end
 
   def required_params
-    [:name, :caption, :short_description, :description, :mass, :mean_velocity,
-     :axial_tilt, :day_length, :radius, :luminosity, :texture_id]
+    [:name, :mass, :mean_velocity, :axial_tilt, :day_length, :radius, :luminosity, :texture_id]
   end
 
   def optional_params
-    {}
+    { caption: nil, description: nil, short_description: nil, }
   end
 end

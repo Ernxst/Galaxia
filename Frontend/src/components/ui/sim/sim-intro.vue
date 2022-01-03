@@ -28,7 +28,7 @@ export default defineComponent({
   name: "sim-intro",
   emits: ["introStarted"],
   props: {
-    username: Object as PropType<string | null>,
+    username: String,
     simulationName: { type: String, required: true },
     preset: Boolean,
   },

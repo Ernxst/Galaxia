@@ -44,6 +44,7 @@
 import { StarSystem as StarSystemInterface } from "@/@types/celestial/containers/star-system";
 import { Planet as PlanetInterface } from "@/@types/celestial/planet";
 import { RingedPlanet as RingedPlanetInterface } from "@/@types/celestial/ringed-planet";
+import { computeCentreAndSize } from "@/assets/three";
 import { TIME_STEP } from "@/assets/util/sim.constants";
 import CelestialBody from "@/components/three/celestial/base/celestial-body.vue";
 import { Vector3 } from "three/src/math/Vector3";
@@ -109,6 +110,10 @@ export default defineComponent({
     },
     furthestObjectDistance(): number {
       const starPos: Vector3 = this.$refs.star.position;
+      if (this.planets.length === 0) {
+        const { centre, size } = computeCentreAndSize(this.$refs.star.mesh());
+        return size.length();
+      }
       const furthestObject = this.planets.reduce(
         (prevPlanet, currentPlanet) => {
           const prevPos: Vector3 = prevPlanet.initialPos;

@@ -4,9 +4,13 @@ module.exports = {
   coveragePathIgnorePatterns: [
     "<rootDir>/src/main.ts",
     "<rootDir>/src/components/three",
+    "<rootDir>/src/components/ui/sim",
+    "<rootDir>/src/components/ui/widgets/carousel/carousel-scene.vue",
     "<rootDir>/src/assets/three",
     "<rootDir>/src/assets/gsap",
     "<rootDir>/src/views/simulate",
+    "<rootDir>/src/views/welcome/welcome-scene.vue",
+    "<rootDir>/src/views/create/builder/preview/preview-3d.vue"
   ],
   moduleFileExtensions: [
     "js",
@@ -19,7 +23,9 @@ module.exports = {
   },
   testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
   testURL: "http://localhost/",
-  transformIgnorePatterns: ["node_modules/(?!three|@tensorflow/tfjs|@tensorflow/tfjs-converter|handtrackjs|lodash-es)"],
+  transformIgnorePatterns: [
+    "node_modules/(?!three|@tensorflow/tfjs|@tensorflow/tfjs-converter|handtrackjs|lodash-es|@popperjs/core)"
+  ],
   transform: {
     ".*\\.(vue)$": "vue-jest",
     "^.+\\.tsx?$": "ts-jest",

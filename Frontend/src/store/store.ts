@@ -1,4 +1,6 @@
 import { auth, AuthState } from "@/store/modules/auth.module";
+import { builder, BuilderModuleState } from "@/store/modules/builder.module";
+import { media, MediaModuleState } from "@/store/modules/media.module";
 import { starSystem, StarSystemModuleState } from "@/store/modules/star-system.module";
 import { InjectionKey } from "vue";
 import { createStore, Store, useStore as baseUseStore, } from "vuex";
@@ -13,7 +15,7 @@ const plugins = [];
 plugins.push(createPersistedState({ storage: window.localStorage }));
 
 // Define State here
-export type State = AuthState & StarSystemModuleState;
+export type State = AuthState & StarSystemModuleState & MediaModuleState & BuilderModuleState;
 export const key: InjectionKey<Store<State>> = Symbol();
 
 export const store = createStore<State>({
@@ -22,6 +24,8 @@ export const store = createStore<State>({
   modules: {
     starSystem,
     auth,
+    media,
+    builder,
   },
 });
 

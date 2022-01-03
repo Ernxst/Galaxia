@@ -1,5 +1,6 @@
 import { StarSystem } from "@/@types/celestial/containers/star-system";
 import { SimulationService, StarSystems } from "@/services/simulation.service";
+import { SimulationData } from "@/views/create/util/types";
 import { ActionTree, Commit, GetterTree, MutationTree } from "vuex";
 
 
@@ -33,7 +34,7 @@ const fetchSimulations = async (commit: Commit, action: string,
                                 simPromise: Promise<StarSystem[]>) => {
   try {
     const simulations = await simPromise;
-    const map : StarSystems = {}
+    const map: StarSystems = {};
     for (const sim of simulations) map[sim.id] = sim;
     commit(action, map);
     return Promise.resolve(simulations);
@@ -43,9 +44,36 @@ const fetchSimulations = async (commit: Commit, action: string,
 };
 
 const actions = <ActionTree<StarSystemModuleState, any>>{
+  async fetchSimulation({ commit }, simulationID: number) {
+    try {
+      const simulation = await SimulationService.instance().fetchSimulation(simulationID);
+      return Promise.resolve(simulation);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+
   async fetchPresetSimulations({ commit }) {
     const systems = SimulationService.instance().presetSimulations();
-    return fetchSimulations(commit, "setPresetSimulations", systems)
+    return fetchSimulations(commit, "setPresetSimulations", systems);
+  },
+
+  async createSimulation({ commit }, simulation: SimulationData) {
+    try {
+      const id = await SimulationService.instance().createSimulation(simulation);
+      return Promise.resolve(id);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+
+  async updateSimulation({ commit }, simData: { simulationID: number, simulation: SimulationData }) {
+    try {
+      await SimulationService.instance().updateSimulation(simData.simulationID, simData.simulation);
+      return Promise.resolve();
+    } catch (e) {
+      return Promise.reject(e);
+    }
   },
 };
 

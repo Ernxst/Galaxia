@@ -132,6 +132,7 @@ header p {
 .content {
   margin: 0 18px 18px;
   padding: 18px;
+  width: 100%;
 }
 
 .content p {

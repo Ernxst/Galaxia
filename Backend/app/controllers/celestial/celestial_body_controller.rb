@@ -1,4 +1,3 @@
-# TODO: Add endpoint for generating random celestial body
 class Celestial::CelestialBodyController < ApplicationController
 
   def initialize
@@ -64,24 +63,23 @@ class Celestial::CelestialBodyController < ApplicationController
     params.require(@body.singularize.to_sym).permit(*required_params, **optional_params)
   end
 
-  # TODO: Add support for atmospheres and rings
+  # TODO: Add support for rings
   # TODO: Override for Planets (for implementing rings)
   # Can be overridden
   def build(params)
-    body = @record.create(params.except(:atmosphere))
+    body = @record.create(params)
     body.save!
     body
   end
 
   # Can be overridden
   def required_params
-    [:name, :caption, :short_description, :description, :mass, :mean_velocity,
-     :axial_tilt, :day_length, :semi_major, :semi_minor, :inclination,
-     :orbital_period, :radius, :eccentricity, :texture_id]
+    [:name, :mass, :mean_velocity, :axial_tilt, :day_length, 
+      :semi_major, :semi_minor, :inclination, :orbital_period, :radius, :eccentricity, :texture_id]
   end
 
   # Can be overridden
   def optional_params
-    { bump_mad_id: nil, specular_map_id: nil }
+    { bump_mad_id: nil, specular_map_id: nil, caption: nil, description: nil, short_description: nil, }
   end
 end

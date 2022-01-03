@@ -3,6 +3,6 @@ class Sim::SimulationMoonSerializer < ActiveModel::Serializer
   has_one :moon, class_name: 'Space::Moon'
 
   def attributes(requested_attrs = nil, reload = nil)
-    Space::MoonSerializer.new(object.moon).attributes
+    Space::MoonSerializer.new(object.moon).attributes.merge({id: object.id})
   end
 end

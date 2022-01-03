@@ -8,6 +8,13 @@ export interface GenericApiErrorResponse {
   error: string;
 }
 
+export interface UnprocessableEntityErrorResponse {
+  errors: { [key: string]: string[] };
+  status: string;
+}
+
+export type ApiErrorResponse = GenericApiErrorResponse | UnprocessableEntityErrorResponse;
+
 interface fnParams {
   endpoint: string;
   method: Method;
@@ -24,8 +31,8 @@ export abstract class AbstractApiService {
       baseURL: BASE_URL + "/" + path,
       timeout: RESPONSE_TIMEOUT,
     });
-    this.api.defaults.headers.common["Accept"] =  "application/json";
-    this.api.defaults.headers.common["Content-Type"] =  "application/json;charset=UTF-8";
+    this.api.defaults.headers.common["Accept"] = "application/json";
+    this.api.defaults.headers.common["Content-Type"] = "application/json;charset=UTF-8";
   }
 
   protected makeRequest<Success, Failure>({
