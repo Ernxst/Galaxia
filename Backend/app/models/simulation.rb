@@ -20,8 +20,7 @@ class Simulation < ApplicationRecord
   has_many :asteroid_belts, class_name: 'Space::AsteroidBelt', through: :simulation_asteroid_belts
 
   scope :preset, -> { where(user_id: nil) }
-  scope :user_created, -> { where.not(user_id: nil) }
-
+  scope :user_created, -> { where.not(user_id: nil, user_id: 1) } # TODO: also add username != "guest"
   def editable?
     !user.nil?
   end

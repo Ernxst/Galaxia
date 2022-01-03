@@ -18,12 +18,14 @@ export interface BuilderModuleState {
 }
 
 const state: BuilderModuleState = {
+  // @ts-ignore
   simulation: null,
 };
 
 const getters = <GetterTree<BuilderModuleState, any>>{
   validSimulation: (state: BuilderModuleState): boolean | string => {
     const { textData, star, planets, moons, asteroidBelts } = state.simulation;
+    // @ts-ignore
     return validateSimulation(textData, star, planets, moons, asteroidBelts);
   },
   simulation: (state: BuilderModuleState): Simulation => {
