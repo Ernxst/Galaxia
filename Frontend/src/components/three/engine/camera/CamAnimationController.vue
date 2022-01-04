@@ -1,5 +1,6 @@
 <template>
-  <div class="skip-container centred" v-if="touring">
+  <div class="skip-container centred"
+       v-if="touring">
     <flat-button text="Skip Tour"
                  @click="stopUniverseTour" />
   </div>
@@ -44,10 +45,12 @@ export default defineComponent({
       factfileOpen: false,
       defaultPos: new Vector3(),
       touring: false,
+      interrupted: false
     };
   },
   methods: {
     stopUniverseTour() {
+      this.interrupted = true;
       interruptUniverseTour();
     },
     universeTour(models: Array<typeof CelestialBody>) {
@@ -56,11 +59,13 @@ export default defineComponent({
         this.touring = true;
         this.orbitControls.minDistance = 0;
         tourUniverse(models, this.camera, this.orbitControls).then(() => {
+          this.touring = false;
+          const delay = this.interrupted ? 250 : 1500;
+
           setTimeout(() => {
-            this.touring = false;
             this.$emit("animDone");
             this.reset();
-          }, 1500);
+          }, delay);
         });
       }, 1750);
     },

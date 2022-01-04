@@ -67,7 +67,7 @@ export function animateCamera({
   return animation.play();
 }
 
-function getAnim({
+export function getAnim({
                              camera,
                              controls,
                              object,
