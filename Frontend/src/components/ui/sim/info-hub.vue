@@ -4,10 +4,13 @@
                         :body="activeBody"
                         @close="closeFactfile" />
     <section v-else
-             :class="hubClass">
+             :class="hubClass"
+             :data-minimised="minimised">
       <span v-if="bodySelected"
             class="close-icon material-icons centred"
             @click="$emit('reset')">close</span>
+      <span class="toggler close-icon material-icons centred"
+            @click="minimised = !minimised">{{ minimised ? `open_in_full` : 'close_fullscreen' }}</span>
       <span class="subtitle">{{ bodySelected ? type : "Galaxia" }}</span>
       <h3 class="name">{{ bodySelected ? activeBody.name : "Select a Celestial Body" }}</h3>
       <p class="short-description">{{
@@ -40,6 +43,7 @@ export default defineComponent({
       type: "" as "Star" | "Planet" | "Moon",
       activeBody: null as Star | Planet | RingedPlanet | Moon | null,
       factfileOpen: false,
+      minimised: false,
     };
   },
   computed: {
@@ -84,6 +88,44 @@ export default defineComponent({
   margin: auto;
   width: 40vw;
   z-index: 2;
+  transition: .33s ease-in-out all;
+}
+
+@media (min-width: 640px) {
+  .body-overview {
+    max-height: 500vh;
+  }
+
+  .body-overview[data-minimised=true] {
+    max-height: 0;
+    overflow: hidden;
+  }
+}
+
+.body-overview .toggler, .body-overview .close-icon {
+  position: absolute;
+  right: -16px;
+  transition: .33s ease-in-out all;
+  width: fit-content;
+}
+
+.body-overview .close-icon {
+  top: 16px;
+}
+
+.body-overview .toggler  {
+  top: 64px;
+}
+
+.body-overview[data-minimised=true] .close-icon {
+  top: 6px;
+  right: 6px;
+}
+
+.body-overview[data-minimised=true] .toggler.close-icon {
+  top: 6px;
+  left: 6px;
+  right: unset;
 }
 
 .body-overview.in {
@@ -92,11 +134,6 @@ export default defineComponent({
   animation-fill-mode: forwards;
 }
 
-.close-icon {
-  position: absolute;
-  top: 16px;
-  right: -16px;
-}
 
 .subtitle {
   font-size: 10px;
@@ -147,6 +184,10 @@ export default defineComponent({
     right: 16px;
     border-radius: 0;
   }
+
+  .toggler {
+    display: none;
+  }
 }
 
 @media (max-height: 480px) and (min-width: 480px) and (orientation: landscape) {
@@ -173,7 +214,7 @@ export default defineComponent({
     display: none;
   }
 
-  .close-icon {
+  .close-icon, .toggler {
     padding: 2px;
   }
 }
