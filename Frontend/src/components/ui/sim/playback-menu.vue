@@ -1,20 +1,18 @@
 <template>
-  <nav class="playback-container sim-ui-section centred" :data-disabled="false">
+  <nav class="playback-container sim-ui-section centred"
+       :data-disabled="false">
     <section class="row">
       <p class="sim-speed">Simulation Speed: <strong>×{{ scaledSpeed }}</strong>
         <br>
         <span><strong>1</strong> Frame = <strong>{{ timeStep }}</strong> Earth Days</span>
       </p>
     </section>
-    <section class="button-row row">
-      <circle-button
-        :disabled="isMinSpeed"
-        :radius="buttonRadius"
-        class="playback-button"
-        @click="$emit('speedDown')"
-      >
-        <span class="icon centred material-icons">fast_rewind</span>
-      </circle-button>
+    <section class="button-row row centred">
+      <slider :min="minSpeed"
+              :max="maxSpeed"
+              :step="1"
+              v-model="speed"
+              id="speed-slider" />
       <circle-button
         :radius="buttonRadius"
         class="playback-button"
@@ -24,14 +22,6 @@
           paused ? "play_arrow" : "pause"
         }}</span>
       </circle-button>
-      <circle-button
-        :disabled="isMaxSpeed"
-        :radius="buttonRadius"
-        class="playback-button"
-        @click="$emit('speedUp')"
-      >
-        <span class="icon centred material-icons">fast_forward</span>
-      </circle-button>
     </section>
   </nav>
 </template>
@@ -39,34 +29,34 @@
 <script lang="ts">
 import { BASE_SPEED, MAX_SPEED, MIN_SPEED, TIME_STEP } from "@/assets/util/sim.constants";
 import CircleButton from "@/components/ui/widgets/buttons/circle-button.vue";
-import { defineComponent } from "vue";
+import Slider from "@/components/ui/widgets/slider.vue";
+import { computed, defineComponent, ref, toRefs, watch } from "vue";
 
 
 export default defineComponent({
   name: "playback-menu",
-  components: { CircleButton },
-  emits: ["togglePause", "speedUp", "speedDown"],
+  components: { Slider, CircleButton },
+  emits: ["togglePause", "speedUp", "speedDown", "update:modelValue"],
   props: {
     paused: Boolean,
-    speed: { type: Number, required: true },
+    modelValue: Number
   },
-  computed: {
-    buttonRadius(): number {
-      return window.innerWidth < 480 ? 18 : 16;
-    },
-    isMinSpeed(): boolean {
-      return this.speed === MIN_SPEED;
-    },
-    isMaxSpeed(): boolean {
-      return this.speed === MAX_SPEED;
-    },
-    scaledSpeed(): number {
-      return Math.round(this.speed / BASE_SPEED);
-    },
-    timeStep(): number {
-      return TIME_STEP;
-    }
-  },
+  setup(props, { emit }) {
+    const { modelValue, paused } = toRefs(props);
+    const buttonRadius = computed(() => window.innerWidth < 480 ? 18 : 16);
+    const speed = ref<number>(BASE_SPEED);
+    const scaledSpeed = computed(() => Math.round(modelValue.value / BASE_SPEED));
+    watch(speed, (newVal) => emit("update:modelValue", newVal));
+    return {
+      minSpeed: MIN_SPEED,
+      maxSpeed: MAX_SPEED,
+      timeStep: TIME_STEP,
+      buttonRadius,
+      speed,
+      scaledSpeed,
+      paused,
+    };
+  }
 });
 </script>
 
@@ -109,10 +99,8 @@ export default defineComponent({
   text-shadow: 0 0 8px var(--page-bg);
 }
 
-.playback-container .button-row {
-  display: grid;
-  grid-column-gap: 6px;
-  grid-template-columns: repeat(3, 1fr);
+.playback-container .playback-button {
+  margin-left: 12px;
 }
 
 .playback-container .playback-button .icon {

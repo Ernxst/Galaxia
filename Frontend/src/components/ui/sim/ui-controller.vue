@@ -9,7 +9,7 @@
   <div class="simulation-ui"
        :style="{ 'animation-delay': `${animDelay}s` }">
     <playback-menu :paused="paused"
-                   :speed="speed"
+                   v-model="speed"
                    v-bind:data-disabled="animating"
                    @toggle-pause="togglePause"
                    @speed-down="decreaseSpeed"
