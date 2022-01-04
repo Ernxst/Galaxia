@@ -1,12 +1,18 @@
-<template></template>
+<template>
+  <div class="skip-container centred" v-if="touring">
+    <flat-button text="Skip Tour"
+                 @click="stopUniverseTour" />
+  </div>
+</template>
 
 <script lang="ts">
 import { animateCamera, calcDuration } from "@/assets/gsap";
 import { isAnimating } from "@/assets/gsap/camera.animate";
-import { tourUniverse } from "@/assets/gsap/universe-tour.animate";
+import { interruptUniverseTour, tourUniverse } from "@/assets/gsap/universe-tour.animate";
 import { computeCentreAndSize, getOffset } from "@/assets/three";
 import { SCENE_SCALE } from "@/assets/util/sim.constants";
 import CelestialBody from "@/components/three/celestial/base/celestial-body.vue";
+import FlatButton from "@/components/ui/widgets/buttons/flat-button.vue";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
 import { Quaternion } from "three/src/math/Quaternion";
@@ -24,6 +30,7 @@ interface MoveCameraParams {
 // TODO: Camera has stopped moving with followed object
 export default defineComponent({
   name: "CamAnimationController",
+  components: { FlatButton },
   emits: ["animStart", "animDone"],
   props: {
     orbitControls: Object as PropType<OrbitControls>,
@@ -36,15 +43,21 @@ export default defineComponent({
       centre: new Vector3(),
       factfileOpen: false,
       defaultPos: new Vector3(),
+      touring: false,
     };
   },
   methods: {
+    stopUniverseTour() {
+      interruptUniverseTour();
+    },
     universeTour(models: Array<typeof CelestialBody>) {
       this.$emit("animStart");
       setTimeout(() => {
+        this.touring = true;
         this.orbitControls.minDistance = 0;
         tourUniverse(models, this.camera, this.orbitControls).then(() => {
           setTimeout(() => {
+            this.touring = false;
             this.$emit("animDone");
             this.reset();
           }, 1500);
@@ -145,4 +158,18 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.skip-container {
+  position: absolute;
+  bottom: 25vh;
+}
+
+@media (min-width: 640px) {
+  .skip-container {
+    top: 16px;
+    right: 16px;
+    bottom: unset;
+    left: unset;
+  }
+}
+</style>
