@@ -66,22 +66,26 @@ export default defineComponent({
       event.preventDefault();
       this.$emit("update:modelValue", Number(event.target.value));
     },
+    update() {
+      this.updateSliderPos(this.$refs.slider?.value);
+    },
     // Move the slider value indicator
     updateSliderPos(newValue: string) {
-      const percentage = (Number(newValue) - this.min) / this.range;
-      const width = this.$refs.slider.clientWidth;
-      const lblWidth = this.$refs.sliderLabel.clientWidth;
-      this.$refs.sliderLabel.style.left = `${percentage * (width - lblWidth)}px`;
-      this.left = percentage * (width - lblWidth / 2);
+      this.$nextTick(() => {
+        const percentage = (Number(newValue) - this.min) / this.range;
+        const width = this.$refs.slider.clientWidth;
+        const lblWidth = this.$refs.sliderLabel.clientWidth;
+        this.$refs.sliderLabel.style.left = `${percentage * (width - lblWidth)}px`;
+        this.left = percentage * (width - lblWidth / 2);
+      });
     },
   },
   mounted() {
-    this.updateSliderPos(this.$refs.slider.value);
-    window.addEventListener("resize", () => {
-      this.$nextTick(() => {
-        this.updateSliderPos(this.$refs.slider?.value);
-      });
-    });
+    window.addEventListener("resize", this.update);
+    this.update();
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.update);
   }
 });
 </script>

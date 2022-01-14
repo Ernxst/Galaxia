@@ -1,25 +1,26 @@
 <template>
   <teleport to="body">
-      <div class="abs overlay" v-if="visible || animating" />
-      <div class="popup centred">
-        <content-container ref="container"
-                           @opened="$emit('opened')"
-                           @closed="$emit('closed')"
-                           v-bind="$attrs"
-                           :glow="true"
-                           :animate="animate"
-                           :visible="visible">
-          <template v-slot:header>
-            <h1>{{ text }}</h1>
-          </template>
-          <template v-slot:content>
-            <div class="content centred">
-              <v-spinner />
-              <p>Please wait</p>
-            </div>
-          </template>
-        </content-container>
-      </div>
+    <div class="abs overlay"
+         v-if="visible || animating" />
+    <div class="popup centred">
+      <content-container ref="container"
+                         @opened="$emit('opened')"
+                         @closed="$emit('closed')"
+                         v-bind="$attrs"
+                         :glow="true"
+                         :animate="animate"
+                         :visible="visible">
+        <template v-slot:header>
+          <h1>{{ text }}</h1>
+        </template>
+        <template v-slot:content>
+          <div class="content centred">
+            <v-spinner />
+            <p>Please wait</p>
+          </div>
+        </template>
+      </content-container>
+    </div>
   </teleport>
 </template>
 
@@ -56,6 +57,7 @@ h1 {
 
 .content {
   flex-direction: column;
+  min-width: 33vw !important;
 }
 
 @media (min-width: 480px) {

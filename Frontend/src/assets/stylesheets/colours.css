@@ -7,7 +7,8 @@
   --green: #2ED573;
   --blue: #74b9ff;
   --electron-blue: #0984e3;
+  --dark-blue: #0652DD;
 
-  --main: var(--electron-blue);
+  --main: var(--dark-blue);
   --accent: var(--blue);
 }
