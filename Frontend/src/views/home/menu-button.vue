@@ -97,10 +97,11 @@ export default defineComponent({
 }
 
 .menu-button:hover {
-  --content-colour: var(--main);
+  --content-colour: var(--accent);
 }
 
 .menu-button[activating=true] {
+  --content-colour: var(--text-colour);
   border-color: var(--accent);
 }
 
@@ -153,7 +154,7 @@ img, .img-container::after {
   font-size: 9px;
   text-align: left;
   transition: var(--transition-duration) ease opacity;
-  color: var(--main);
+  color: var(--content-colour);
   justify-content: flex-start;
   align-items: flex-start;
   z-index: 4;
