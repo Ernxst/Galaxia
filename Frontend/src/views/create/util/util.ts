@@ -25,7 +25,7 @@ import {
 
 
 export const defaultSimulation: SimulationData = {
-  name: "My Simulation", // TODO: Set to blank
+  name: "",
   description: "",
 };
 
@@ -40,7 +40,7 @@ export const defaultStar: StarData = {
   meanVelocity: 1,
   luminosity: 1,
   dayLength: 1,
-  textureId: 1, // TODO: Set to null
+  textureId: null,
   atmosphereTextureId: null,
 };
 
@@ -59,7 +59,7 @@ export const defaultPlanet: PlanetData = {
   orbitalPeriod: 0,
   semiMajor: 1.2,
   semiMinor: 1,
-  textureId: 4, // TODO: Set to null
+  textureId: null,
   atmosphereTextureId: null,
   specularMapId: null,
   bumpMapId: null,
@@ -80,7 +80,7 @@ export const defaultMoon: MoonData = {
   orbitalPeriod: 0,
   semiMajor: 1.2,
   semiMinor: 1,
-  textureId: 11, // TODO: Set to null
+  textureId: 11,
   atmosphereTextureId: null,
   specularMapId: null,
   bumpMapId: null,

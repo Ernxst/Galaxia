@@ -30,7 +30,7 @@ import CustomButton from "@/components/ui/widgets/buttons/custom-button.vue";
 import FlatButton from "@/components/ui/widgets/buttons/flat-button.vue";
 import VTooltip from "@/components/ui/widgets/v-tooltip.vue";
 import { CelestialType } from "@/views/create/util/types";
-import GroupItem from "@/views/create/builder/group-builder/group-item.vue";
+import GroupItem from "@/views/create/builders/group-builder/celestial-group-item.vue";
 import { defineComponent, PropType } from "vue";
 
 

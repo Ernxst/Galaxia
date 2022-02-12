@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { PlanetData } from "@/views/create/util/types";
-import GroupButton from "@/views/create/builder/group-builder/group-button.vue";
+import GroupButton from "@/views/create/builders/group-builder/group-button.vue";
 import { computed, defineComponent, PropType, ref, toRefs, watch } from "vue";
 
 

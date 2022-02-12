@@ -20,10 +20,10 @@
 import { useStore } from "@/store/store";
 import BaseBuilder from "@/views/create/builders/base-builder.vue";
 import { StarData } from "@/views/create/util/types";
-import CelestialForm from "@/views/create/builder/forms/celestial-form.vue";
-import SphericalForm from "@/views/create/builder/forms/spherical-form.vue";
-import TextForm from "@/views/create/builder/forms/text-form.vue";
-import TexturedForm from "@/views/create/builder/forms/textured-form.vue";
+import CelestialForm from "@/views/create/forms/celestial-form.vue";
+import SphericalForm from "@/views/create/forms/spherical-form.vue";
+import TextForm from "@/views/create/forms/text-form.vue";
+import TexturedForm from "@/views/create/forms/textured-form.vue";
 import { defineComponent, PropType, ref, toRefs, watch } from "vue";
 
 

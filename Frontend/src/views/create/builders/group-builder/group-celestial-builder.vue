@@ -32,7 +32,7 @@ import CelestialGroupItem from "@/views/create/builders/group-builder/celestial-
 import GroupBuilderInfo from "@/views/create/builders/group-builder/group-builder-info.vue";
 import { useGroupBuilder } from "@/views/create/builders/group-builder/group-builder.composable";
 import { CelestialBodyData, CelestialType } from "@/views/create/util/types";
-import GroupItem from "@/views/create/builder/group-builder/group-item.vue";
+import GroupItem from "@/views/create/builders/group-builder/celestial-group-item.vue";
 import { computed, defineComponent, PropType, toRefs } from "vue";
 
 
