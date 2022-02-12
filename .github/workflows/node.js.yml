@@ -3,7 +3,11 @@
 
 name: Test Frontend
 
-on: [push]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build_and_test_frontend:
@@ -14,18 +18,20 @@ jobs:
       max-parallel: 1
       fail-fast: false
       matrix:
-        node-version: [14.x]
+        node-version: [17]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Build and run using Node.js ${{ matrix.node-version }}
-      run: |
-        npm ci
-        npm test
-      working-directory: "./Frontend"
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install
+        working-directory: "./Frontend"
+      - name: Run Tests
+        run: yarn test
+        working-directory: "./Frontend"
         

@@ -2,27 +2,43 @@
 # https://github.com/firebase/firebase-tools
 
 name: Deploy to Firebase Hosting on PR
-'on': pull_request
+on:
+  workflow_run:
+    workflows: [ "Test Frontend" ]
+    branches: [ main ]
+    types:
+      - completed
+      
 jobs:
-  build_and_preview:
+  build_and_deploy:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 14
+      - name: Use Node.js 17
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
-          cache: 'npm'
-          cache-dependency-path: Frontend/package-lock.json
-      - name: Build frontend app
-        run: | 
-          npm install
-          npm run build
-        working-directory: ./Frontend
+          node-version: 17
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install
+        working-directory: "./Frontend"
+        
+      - name: Build app
+        run: yarn run build
+        working-directory: "./Frontend"
+        
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_GALAXIA_JS }}'
+          channelId: live
           projectId: galaxia-js
         env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
+  on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - run: echo 'The app failed tests and this updated version was, therefore, not deployed'
