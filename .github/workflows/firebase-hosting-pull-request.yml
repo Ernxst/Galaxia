@@ -20,7 +20,8 @@ jobs:
         with:
           node-version: 17
           cache: 'yarn'
-
+          cache-dependency-path: Frontend/yarn.lock
+        
       - name: Install dependencies
         run: yarn install
         working-directory: "./Frontend"
