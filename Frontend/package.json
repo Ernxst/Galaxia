@@ -5,17 +5,16 @@
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
-  "homepage": "https://www.galaxia-js.web.app",
+  "homepage": "https://galaxia-js.web.app",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "watch": "tsc -b tsconfig.json -w",
     "test": "jest",
     "test:unit": "jest tests/unit",
     "test:integration": "jest tests/integration",
     "test:e2e": "jest tests/e2e",
-    "deploy": "set -e; npm run build; firebase deploy"
+    "deploy": "set -e; yarn build; firebase deploy"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.16.4",
@@ -48,9 +47,11 @@
     "ts-jest": "^26.5.6",
     "typescript": "^4.3.2",
     "vite": "^2.5.4",
+    "vite-plugin-html": "^3.0.3",
     "vue-jest": "^5.0.0-alpha.10",
     "vue-tsc": "^0.2.2",
     "vuex": "^4.0.2",
     "vuex-persistedstate": "^4.0.0-beta.4"
-  }
+  },
+  "packageManager": "yarn@3.1.1"
 }

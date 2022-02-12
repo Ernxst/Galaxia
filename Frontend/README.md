@@ -1,4 +1,4 @@
-# Galaxia.js
+# Galaxia
 
 ## Features
 
@@ -6,52 +6,55 @@
 
 To get started with development, you will need a browser that runs JavaScript and some extra prerequisites:
 
-- [Node.js (14)](https://nodejs.org) - _Package manager_
-- [npm](https://www.npmjs.com/get-npm) - _This should come with your Node installation._
+- [Node.js (17)](https://nodejs.org) - _Runtime Environment_
+- [Yarn](https://yarnpkg.com/getting-started/install) - _Package manager_
 - A (relatively recent) browser that allows JavaScript.
 
 ## Build Setup
 
-To install dependencies:
+All commands are run from the root of the project, from a terminal:
 
-```bash
-npm install
-```
-
-To build the application for production:
-
-```bash
-npm run build
-```
-
-To serve the application in development mode, in a development server:
-
-```bash
-npm run-script dev
-```
-
-To launch application in production mode with necessary optimisations:
-
-```bash
-npm run serve
-```
+| Command            | Action                                       |
+| :----------------- | :------------------------------------------- |
+| `yarn install`     | Installs dependencies                        |
+| `yarn dev`     | Starts local dev server at `localhost:8000`  |
+| `yarn build`   | Build production site to `./dist/`      |
+| `yarn preview` | Preview build locally, before deploying |
 
 ## Testing
 
-Testing, with a coverage report, can be performed using the following command:
+All test commands are run from the root of the project, from a terminal:
 
-```bash
-npm test
-```
+| Command                     | Action                                                                  |
+| :-------------------------- | :---------------------------------------------------------------------- |
+| `pnpm install`              | Installs dependencies                                                   |
+| `yarn test`             | Run all tests in [`./tests/`](tests)                                    |
+| `yarn test:unit`        | Run all units tests in [`./tests/unit`](tests/unit)                     |
+| `yarn test:integration` | Run all integration tests in [`./tests/integration`](tests/integration) |
+| `yarn test:e2e`         | Run all e2e tests in [`./tests/e2e`](tests/e2e)                         |
 
-Which will open the coverage report in your default browser.Ø
-
-The [`test/unit/components`](test/unit/components) directory contains tests for the `.vue` single file components.
+Note that, by default, a coverage report is always generated when running tests.
 
 ## Deployment
 
-Deployment to the hosting platform can be performed using:
+Deploys to Firebase occur on every push, provided all tests pass.
+
+Manual deployment to the hosting platform can be performed using:
 
 ```bash
-npm run-script deploy
+yarn deploy
 ```
+
+The production app is then available at:
+
+`https://galaxia-js.web.app`
+
+## Roadmap
+
+## Acknowledgements
+
+Nothing to see here yet!
+
+## License
+
+Distributed under the MIT License. See [`LICENSE`](LICENSE) for more information.
