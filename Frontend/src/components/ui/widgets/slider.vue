@@ -67,17 +67,20 @@ export default defineComponent({
       this.$emit("update:modelValue", Number(event.target.value));
     },
     update() {
-      this.updateSliderPos(this.$refs.slider?.value);
+      const slider = this.$refs.slider as HTMLInputElement;
+      this.updateSliderPos(slider.value);
     },
     // Move the slider value indicator
     updateSliderPos(newValue: string) {
-      this.$nextTick(() => {
+      const slider = this.$refs.slider as HTMLInputElement;
+      const label = this.$refs.sliderLabel as HTMLParagraphElement;
+      if (slider && label) {
         const percentage = (Number(newValue) - this.min) / this.range;
-        const width = this.$refs.slider.clientWidth;
-        const lblWidth = this.$refs.sliderLabel.clientWidth;
-        this.$refs.sliderLabel.style.left = `${percentage * (width - lblWidth)}px`;
+        const width = slider.clientWidth;
+        const lblWidth = label.clientWidth;
+        label.style.left = `${percentage * (width - lblWidth)}px`;
         this.left = percentage * (width - lblWidth / 2);
-      });
+      }
     },
   },
   mounted() {

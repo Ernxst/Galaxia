@@ -10,5 +10,6 @@
   --dark-blue: #0652DD;
 
   --main: var(--dark-blue);
+  --highlight: var(--electron-blue);
   --accent: var(--blue);
 }

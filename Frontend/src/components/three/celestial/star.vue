@@ -38,7 +38,7 @@ import { dispatchLoadedEvent } from "@/assets/three/loaders";
 import { BLOOM_LAYER } from "@/assets/three/three.constants";
 import { LIGHTING_SCALE, NORMAL_BIAS, RADIUS_SCALE, SHADOW_BIAS, SHADOW_MAP_SIZE } from "@/assets/util/sim.constants";
 import Atmosphere from "@/components/three/util/Atmosphere.vue";
-import { Color } from "three";
+import { Color } from "three/src/math/Color";
 import { Object3D } from "three/src/core/Object3D";
 import { PointLight as ThreePointLight } from "three/src/lights/PointLight";
 import { MeshBasicMaterial } from "three/src/materials/MeshBasicMaterial";

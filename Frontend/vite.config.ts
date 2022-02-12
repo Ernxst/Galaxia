@@ -20,5 +20,10 @@ export default defineConfig({
   build: {
     chunkSizeWarningLimit: 600,
     cssCodeSplit: true,
+    rollupOptions: {
+      manualChunks: {
+        lodash: ['lodash']
+      }
+    }
   },
 });

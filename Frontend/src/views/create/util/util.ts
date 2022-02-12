@@ -1,4 +1,3 @@
-import { SphericalBody } from "@/@types/celestial/base/spherical-body";
 import {
   EARTH_DAY_LENGTH,
   EARTH_MASS,
@@ -14,11 +13,19 @@ import {
   SUN_DAY_LENGTH,
   SUN_MEAN_VELOCITY
 } from "@/assets/util/celestial.constants";
-import { AsteroidBeltData, MoonData, PlanetData, SimulationData, StarData } from "@/views/create/util/types";
+import {
+  AsteroidBeltData,
+  CelestialBodyData,
+  CelestialType,
+  MoonData,
+  PlanetData,
+  SimulationData,
+  StarData
+} from "@/views/create/util/types";
 
 
 export const defaultSimulation: SimulationData = {
-  name: "",
+  name: "My Simulation", // TODO: Set to blank
   description: "",
 };
 
@@ -33,7 +40,7 @@ export const defaultStar: StarData = {
   meanVelocity: 1,
   luminosity: 1,
   dayLength: 1,
-  textureId: null,
+  textureId: 1, // TODO: Set to null
   atmosphereTextureId: null,
 };
 
@@ -52,7 +59,7 @@ export const defaultPlanet: PlanetData = {
   orbitalPeriod: 0,
   semiMajor: 1.2,
   semiMinor: 1,
-  textureId: null,
+  textureId: 4, // TODO: Set to null
   atmosphereTextureId: null,
   specularMapId: null,
   bumpMapId: null,
@@ -73,7 +80,7 @@ export const defaultMoon: MoonData = {
   orbitalPeriod: 0,
   semiMajor: 1.2,
   semiMinor: 1,
-  textureId: null,
+  textureId: 11, // TODO: Set to null
   atmosphereTextureId: null,
   specularMapId: null,
   bumpMapId: null,
@@ -98,9 +105,10 @@ export const defaultAsteroidBelt: AsteroidBeltData = {
   outerSemiMajor: 5,
 };
 
-export function scaleParams<T extends SphericalBody>(data: T, type: "star" | "moon" | "planet" | "asteroid belt") {
+export function scaleParams<T extends CelestialBodyData>(data: T, type: CelestialType) {
   switch (type) {
     case "star":
+      // @ts-ignore
       data["radius"] *= SOLAR_RADIUS;
       data["meanVelocity"] *= SUN_MEAN_VELOCITY;
       data["mass"] *= SOLAR_MASS;
@@ -109,12 +117,14 @@ export function scaleParams<T extends SphericalBody>(data: T, type: "star" | "mo
       data["dayLength"] *= SUN_DAY_LENGTH;
       break;
     case "planet":
+      // @ts-ignore
       data["radius"] *= EARTH_RADIUS;
       data["meanVelocity"] *= EARTH_MEAN_VELOCITY;
       data["mass"] *= EARTH_MASS;
       data["dayLength"] *= EARTH_DAY_LENGTH;
       break;
     case "moon":
+      // @ts-ignore
       data["radius"] *= MOON_RADIUS;
       data["meanVelocity"] *= MOON_MEAN_VELOCITY;
       data["mass"] *= MOON_MASS;

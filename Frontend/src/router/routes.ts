@@ -78,7 +78,7 @@ export const routes = [
   },
   {
     path: "/:username/explore/build",
-    component: () => import("@/views/create/Build.vue"),
+    component: () => import("@/views/create/BuildSimulation.vue"),
     name: "Build",
     props: true,
     meta: {

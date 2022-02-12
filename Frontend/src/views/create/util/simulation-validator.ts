@@ -1,4 +1,12 @@
-import { AsteroidBeltData, MoonData, PlanetData, SimulationData, StarData } from "@/views/create/util/types";
+import {
+  AsteroidBeltData,
+  CelestialBodyData,
+  CelestialType,
+  MoonData,
+  PlanetData,
+  SimulationData,
+  StarData
+} from "@/views/create/util/types";
 
 
 function findDuplicates(array: string[]): string[] {
@@ -6,8 +14,7 @@ function findDuplicates(array: string[]): string[] {
   return array.filter(n => (counter[n] = counter[n] + 1 || 1) === 2);
 }
 
-function allUniqueNames(starName: string,
-                        planets: PlanetData[], moons: MoonData[],
+function allUniqueNames(starName: string, planets: PlanetData[], moons: MoonData[],
                         asteroidBelts: AsteroidBeltData[]): string | true {
   const planetNames: string[] = planets.map(({ name }) => name.toLowerCase());
   const moonNames: string[] = moons.map(({ name }) => name.toLowerCase());
@@ -51,8 +58,7 @@ function validateSimulation(textData: SimulationData, star: StarData,
   return true;
 }
 
-function validateCelestialBody(data: StarData | PlanetData | MoonData | AsteroidBeltData,
-                               type: "star" | "planet" | "moon" | "asteroid belt"): string | true {
+function validateCelestialBody(data: CelestialBodyData, type: CelestialType): string | true {
   if (data.name === "") return `Please give the ${type} a name.`;
   // @ts-ignore
   if (type === "moon" && data.parentId === null) return `Please select a parent planet for the moon "${data.name}"`;

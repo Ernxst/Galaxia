@@ -38,7 +38,7 @@ import { BLOOM_LAYER } from "@/assets/three/three.constants";
 import { SOLAR_MASS } from "@/assets/util/celestial.constants";
 import { RADIUS_SCALE } from "@/assets/util/sim.constants";
 import Star from "@/components/three/celestial/star.vue";
-import { MathUtils } from "three";
+import * as MathUtils from "three/src/math/MathUtils";
 import { Object3D } from "three/src/core/Object3D";
 import { Vector3 } from "three/src/math/Vector3";
 import { InstancedMesh as ThreeInstancedMesh } from "three/src/objects/InstancedMesh";
