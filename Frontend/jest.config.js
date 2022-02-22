@@ -24,7 +24,7 @@ module.exports = {
   testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
   testURL: "http://localhost/",
   transformIgnorePatterns: [
-    "node_modules/(?!three|@tensorflow/tfjs|@tensorflow/tfjs-converter|handtrackjs|lodash-es|@popperjs/core)"
+    "node_modules/(?!three|lodash-es|@popperjs/core)"
   ],
   transform: {
     ".*\\.(vue)$": "vue-jest",

@@ -10,9 +10,6 @@
       @anim-start="$emit('animStart')"
       @anim-done="$emit('animDone')"
     />
-    <template v-if="trackGestures">
-      <gesture-controller ref="controller" />
-    </template>
   </Camera>
 </template>
 
@@ -21,7 +18,6 @@ import { FAR, FOV, NEAR } from "@/assets/three/camera/camera.constants";
 import { SCENE_SCALE } from "@/assets/util/sim.constants";
 import CelestialBody from "@/components/three/celestial/base/celestial-body.vue";
 import CamAnimationController from "@/components/three/engine/camera/CamAnimationController.vue";
-import GestureController from "@/components/three/engine/camera/GestureController.vue";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
 import { Vector3 } from "three/src/math/Vector3";
@@ -31,7 +27,7 @@ import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
   name: "CameraController",
-  components: { GestureController, CamAnimationController, Camera },
+  components: { CamAnimationController, Camera },
   emits: ["animStart", "animDone", "pause", "play"],
   props: {
     orbitControls: Object as PropType<OrbitControls>,
@@ -92,8 +88,6 @@ export default defineComponent({
       camera.copy(this.$refs.animator.camera);
       camera.zoom = zoom;
       camera.updateProjectionMatrix();
-      if (this.trackGestures)
-        this.$refs.controller.detectVideo();
     },
   },
 });

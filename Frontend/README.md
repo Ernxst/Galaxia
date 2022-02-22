@@ -47,7 +47,7 @@ yarn deploy
 
 The production app is then available at:
 
-`https://galaxia-js.web.app`
+[`https://galaxia-js.web.app`](https://galaxia-js.web.app)
 
 ## Roadmap
 
