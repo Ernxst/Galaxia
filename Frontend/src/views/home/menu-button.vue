@@ -19,8 +19,11 @@
 </template>
 
 <script lang="ts">
+import useAudio from "@/assets/audio/audio-controller";
 import { defineComponent } from "vue";
 
+
+const { buttonHover, buttonClick } = useAudio();
 
 export default defineComponent({
   name: "menu-button",
@@ -43,17 +46,18 @@ export default defineComponent({
     mouseDown() {
       if (this.mouseDown) {
         if (this.isTouchDevice) this.$emit("click");
-        else
-          // TODO: Play sound
+        else {
+          buttonHover();
           this.idTimeout = setTimeout(() => {
             if (this.mouseDown) {
-              // TODO: Play sound when complete
+              buttonClick();
               this.ready = true;
               setTimeout(() => {
                 this.$emit("click");
               }, 125);
             }
           }, 1150);
+        }
       } else {
         // TODO: Stop sound
         clearTimeout(this.idTimeout);

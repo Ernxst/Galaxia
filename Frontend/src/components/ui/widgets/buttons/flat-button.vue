@@ -17,6 +17,7 @@
 
 <script lang="ts">
 import CustomButton from "@/components/ui/widgets/buttons/custom-button.vue";
+import useButton from "@/components/ui/widgets/buttons/use-button";
 import { defineComponent } from "vue";
 
 
@@ -27,6 +28,9 @@ export default defineComponent({
     text: { type: String, default: "" },
     bg: { type: String, default: "var(--main)" },
     type: { type: String, default: "button" },
+  },
+  setup(props, { emit }) {
+    return useButton(emit);
   },
 });
 </script>

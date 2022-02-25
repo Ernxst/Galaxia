@@ -5,39 +5,15 @@
 </template>
 
 <script lang="ts">
+import useButton from "@/components/ui/widgets/buttons/use-button";
 import { defineComponent } from "vue";
 
 
 export default defineComponent({
   name: "custom-button",
   emits: ["click", "mouseenter", "mouseleave"],
-  data() {
-    return {
-      disabled: false,
-      mouseEntered: false,
-    };
-  },
-  methods: {
-    onClick(event) {
-      // TODO: Play button click sound here
-      this.$emit("click", event);
-    },
-    onMouseEnter(event) {
-      // TODO: Play button hover sound here
-      this.mouseEntered = true;
-      this.$emit("mouseenter", event);
-    },
-    onMouseLeave(event) {
-      // TODO: Stop button hover sound
-      this.mouseEntered = false;
-      this.$emit("mouseleave", event);
-    },
-    enable() {
-      this.disabled = false;
-    },
-    disable() {
-      this.disabled = true;
-    },
+  setup(props, { emit }) {
+    return useButton(emit);
   },
 });
 </script>

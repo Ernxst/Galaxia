@@ -25,7 +25,8 @@
 
 <script lang="ts">
 import FlatButton from "@/components/ui/widgets/buttons/flat-button.vue";
-import { defineComponent } from "vue";
+import useButton from "@/components/ui/widgets/buttons/use-button";
+import { computed, defineComponent, toRefs } from "vue";
 
 
 export default defineComponent({
@@ -35,10 +36,10 @@ export default defineComponent({
     radius: { type: Number, default: 24, },
     ringScale: { type: Number, default: 1.2, },
   },
-  computed: {
-    ringRadius(): number {
-      return this.radius * this.ringScale;
-    },
+  setup(props, { emit }) {
+    const { radius, ringScale } = toRefs(props);
+    const ringRadius = computed(() => radius.value * ringScale.value);
+    return { ...useButton(emit), ringRadius };
   },
 });
 </script>
