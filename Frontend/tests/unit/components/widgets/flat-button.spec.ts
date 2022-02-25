@@ -87,26 +87,4 @@ describe("flat-button.vue", () => {
     expect(button.attributes()["data-disabled"]).toEqual("false");
     wrapper.unmount();
   });
-
-  it("can disable by modifying data", async () => {
-    const wrapper = mount(FlatButton, {
-      props: defaultProps
-    });
-    await wrapper.setData({ disabled: true });
-    const button = wrapper.find("button");
-    expect(wrapper.vm.disabled).toBe(true);
-    expect(button.attributes()["data-disabled"]).toEqual("true");
-    wrapper.unmount();
-  });
-
-  it("can enable by modifying data", async () => {
-    const wrapper = mount(FlatButton, {
-      props: defaultProps
-    });
-    await wrapper.setData({ disabled: false });
-    const button = wrapper.find("button");
-    expect(wrapper.vm.disabled).toBe(false);
-    expect(button.attributes()["data-disabled"]).toEqual("false");
-    wrapper.unmount();
-  });
 });

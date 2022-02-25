@@ -22,6 +22,7 @@ bgSound.once("load", () => playingAudio.value = true);
 
 export default function useAudio() {
   const toggleAudio = () => soundOn.value = !soundOn.value;
+  // @ts-ignore
   watch(soundOn, (newValue: boolean) => Howler.mute(newValue));
 
   function playSoundEffect(sound: Howl) {
