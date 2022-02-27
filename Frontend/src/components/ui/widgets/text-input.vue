@@ -69,15 +69,15 @@ export default defineComponent({
       this.$refs.input.focus();
     },
     onKeyPress(event: InputEvent) {
-      event.target.value = event.target.value.slice(0, this.maxlength);
+      let input = event.target.value.slice(0, this.maxlength);
       // Prevent user from copying and pasting unwanted keys into input
       // Uses a regex as str.replaceAll() not implemented on all browsers
       for (const char of this.ignoreKeys) {
         const regex = new RegExp(regExpEscape(char), "g");
-        event.target.value = event.target.value.replace(regex, "");
+        input = input.replace(regex, "");
       }
       event.preventDefault();
-      this.$emit("update:modelValue", event.target.value);
+      this.$emit("update:modelValue", input);
     }
   }
 });
