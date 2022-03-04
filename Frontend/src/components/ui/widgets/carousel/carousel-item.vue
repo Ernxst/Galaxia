@@ -120,7 +120,6 @@ export default defineComponent({
 .data > p {
   margin: 0;
   padding: 8px 24px;
-  white-space: nowrap;
 }
 
 .data > p:last-child {
