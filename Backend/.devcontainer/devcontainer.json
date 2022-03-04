@@ -80,7 +80,13 @@
     "service": "web",
     // Set *default* container specific settings.json values on container create.
     "settings": {
-        "editor.tabSize": 2
+        "editor.tabSize": 2,
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+            "bash": {
+                "path": "/bin/bash"
+            },
+        }
     },
     // The optional 'workspaceFolder' property is the path VS Code should open by default when
     // connected. This is typically a file mount in .devcontainer/docker-compose.yml

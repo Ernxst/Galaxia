@@ -2,7 +2,8 @@ require "json"
 
 puts "=== Seeding Database (seeds.rb) ==="
 
-User.create(username: ENV['GUEST_USERNAME'], password: ENV['GUEST_PASSWORD'])
+guest_user = User.create(username: ENV['GUEST_USERNAME'], password: ENV['GUEST_PASSWORD'])
+
 
 def get_data(filename)
   file = File.open Rails.root.join(filename)
@@ -42,10 +43,12 @@ seed_celestial_bodies(tex_data[:stars], Space::Star)
 seed_celestial_bodies(tex_data[:moons], Space::Moon)
 seed_celestial_bodies(tex_data[:asteroid_belts], Space::AsteroidBelt)
 
-def seed_simulations(arr)
+def seed_simulations(arr, ernest)
   arr.each do |sim|
+    user_id = sim[:user_id]
     star = @bodies[sim[:star]]
-    simulation = Simulation.create(name: sim[:name], description: sim[:description], star: star)
+    model = sim[:preset] ? Simulation : ernest.simulations
+    simulation = model.create(name: sim[:name], description: sim[:description], star: star)
     sim[:planets].each do |planet|
       body = @bodies[planet[:name]]
       sim_planet = Sim::SimulationPlanet.create(simulation: simulation, planet: body)
@@ -60,7 +63,9 @@ def seed_simulations(arr)
   end
 end
 
+ernest = User.create(username: "ernest", password: "12345")
+ernest.save
 sim_data = get_data('db/seeds/simulations.json')
-seed_simulations(sim_data[:simulations])
+seed_simulations(sim_data[:simulations], ernest)
 
 puts "=== Database Seeded (seeds.rb) ==="
