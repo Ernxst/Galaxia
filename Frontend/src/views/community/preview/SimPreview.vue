@@ -8,7 +8,9 @@
     <template v-if="simLoaded">
       <section class="carousel-container centred">
         <carousel :simulations="[simulation]"
-                  @click="select($event)" />
+                  @click="$router.push({ name: 'simulate',
+                   params: { username, simulationID: id, }
+                  });" />
       </section>
       <section class="social">
         <!--      TODO: Add likes, comments etc. -->
@@ -26,7 +28,6 @@ import Carousel from "@/components/ui/widgets/carousel/carousel.vue";
 import { useStore } from "@/store/store";
 import LoadingPopup from "@/views/sign-in/loading-popup.vue";
 import { computed, defineComponent, onBeforeUnmount, ref, toRefs } from "vue";
-import { useRouter } from "vue-router";
 
 
 export default defineComponent({
@@ -37,9 +38,7 @@ export default defineComponent({
     username: { type: String, required: true, },
   },
   setup(props) {
-    const { username, id } = toRefs(props);
-    const router = useRouter();
-
+    const { id } = toRefs(props);
     const store = useStore();
     const simulation = ref<StarSystem>();
     simulation.value = store.getters["starSystem/cachedSimulation"];
@@ -54,6 +53,7 @@ export default defineComponent({
         }, 650);
         store.dispatch("starSystem/fetchSimulation", id.value).then((r: StarSystem) => {
           simulation.value = r;
+          store.commit("starSystem/cacheSimulation", r);
           loading.value = false;
         });
       } catch (e) {
@@ -61,20 +61,9 @@ export default defineComponent({
       }
     }
 
-    function select(simulationID: number) {
-      store.commit("starSystem/cacheSimulation", null);
-      router.push({
-        name: "simulate",
-        params: {
-          username: username.value,
-          simulationID,
-        }
-      });
-    }
-
     onBeforeUnmount(() => store.commit("starSystem/cacheSimulation", null));
 
-    return { simulation, loading, simName, simLoaded, select };
+    return { simulation, loading, simName, simLoaded };
   }
 });
 </script>
