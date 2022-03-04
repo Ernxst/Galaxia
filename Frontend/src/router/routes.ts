@@ -56,7 +56,7 @@ export const routes = [
         return "Explore";
       },
       description: (route: RouteLocationNormalized) => {
-        return "Select the type of celestial journey you'd like to go on.";
+        return "Select the type of celestial journey you'd like to embark on.";
       },
       requiresAuth: true,
     },
@@ -109,6 +109,36 @@ export const routes = [
         const id = Number(route.params.simulationID);
         const simulation = await store.dispatch("starSystem/fetchSimulation", id);
         return simulation.description;
+      },
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/:username/community",
+    component: () => import("@/views/community/Community.vue"),
+    name: "community",
+    props: true,
+    meta: {
+      title: (route: RouteLocationNormalized) => {
+        return "Community";
+      },
+      description: (route: RouteLocationNormalized) => {
+        return "View community-shared simulations to see variety of Galaxia, or find inspiration for your next creation.";
+      },
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/:username/community/:id",
+    component: () => import("@/views/community/preview/SimPreview.vue"),
+    name: "preview",
+    props: true,
+    meta: {
+      title: (route: RouteLocationNormalized) => {
+        return "Preview";
+      },
+      description: (route: RouteLocationNormalized) => {
+        return "Preview a community-shared simulation.";
       },
       requiresAuth: true,
     },

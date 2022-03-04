@@ -25,6 +25,10 @@ class SimulationService extends AbstractApiService {
     return this.fetchSimulations("preset");
   }
 
+  public userSimulations(): Promise<StarSystem[]> {
+    return this.fetchSimulations("user");
+  }
+
   public async fetchSimulation(id: number): Promise<StarSystem> {
     const response = await this.makeRequest<StarSystem, GenericApiErrorResponse>({
       endpoint: `${id}`,

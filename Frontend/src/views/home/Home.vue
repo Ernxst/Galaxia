@@ -25,11 +25,11 @@
                      image="https://images.newscientist.com/wp-content/uploads/2020/10/28124436/f0254420-black_hole_web.jpg?width=800"
                      subtitle="View your work"
                      text="My Simulations" />
-        <menu-button :disabled="true"
-                     description="View community-shared simulations, textures and celestial bodies available for use in your custom simulations."
+        <menu-button description="View community-shared simulations to see variety of Galaxia, or find inspiration for your next creation."
                      image="https://scitechdaily.com/images/TRAPPIST-1-System-1-2048x2048.jpg"
                      subtitle="Interact with the community"
-                     text="Community" />
+                     text="Community"
+                     @click="go('community')" />
         <menu-button :disabled="true"
                      description="Adjust Galaxia to behave just the way you want it."
                      image="https://i.natgeofe.com/k/a2a738a9-e019-4911-98e6-17f31c45ac88/milky-way-2.jpg?w=826&h=464"

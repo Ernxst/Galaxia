@@ -7,11 +7,13 @@ import { ActionTree, Commit, GetterTree, MutationTree } from "vuex";
 export interface StarSystemModuleState {
   presetSimulations: StarSystems;
   userSimulations: StarSystems;
+  cachedSimulation: StarSystem | null;
 }
 
 const state: StarSystemModuleState = {
   presetSimulations: {},
   userSimulations: {},
+  cachedSimulation: null,
 };
 
 const getters = <GetterTree<StarSystemModuleState, any>>{
@@ -28,6 +30,9 @@ const getters = <GetterTree<StarSystemModuleState, any>>{
       return state.userSimulations[id];
     };
   },
+  cachedSimulation: (state: StarSystemModuleState): StarSystem | null => {
+    return state.cachedSimulation
+  }
 };
 
 const fetchSimulations = async (commit: Commit, action: string,
@@ -58,6 +63,11 @@ const actions = <ActionTree<StarSystemModuleState, any>>{
     return fetchSimulations(commit, "setPresetSimulations", systems);
   },
 
+  async fetchUserSimulations({ commit }) {
+    const systems = SimulationService.instance().userSimulations();
+    return fetchSimulations(commit, "setUserSimulations", systems);
+  },
+
   async createSimulation({ commit }, simulation: SimulationData) {
     try {
       const id = await SimulationService.instance().createSimulation(simulation);
@@ -84,6 +94,9 @@ const mutations = <MutationTree<StarSystemModuleState>>{
   setUserSimulations(state: StarSystemModuleState, starSystems: StarSystems) {
     state.userSimulations = starSystems;
   },
+  cacheSimulation(state: StarSystemModuleState, simulation: StarSystem | null) {
+    state.cachedSimulation = simulation;
+  }
 };
 
 export const starSystem = {
