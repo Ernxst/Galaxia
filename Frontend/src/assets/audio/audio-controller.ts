@@ -11,10 +11,10 @@ function getSound(url: string, bg: boolean): Howl {
   });
 }
 
+const bgSound = getSound("https://storage.googleapis.com/galaxia-js.appspot.com/media/audio/app.mp3", true);
 const clickSound = getSound("https://storage.googleapis.com/galaxia-js.appspot.com/media/audio/button-click.mp3", false);
 const hoverSound = getSound("https://storage.googleapis.com/galaxia-js.appspot.com/media/audio/button-enter.mp3", false);
 const loadingSound = getSound("https://storage.googleapis.com/galaxia-js.appspot.com/media/audio/load.mp3", false);
-const bgSound = getSound("https://storage.googleapis.com/galaxia-js.appspot.com/media/audio/app.mp3", true);
 
 const soundOn = ref<boolean>(true);
 const playingAudio = ref<boolean>(false);
