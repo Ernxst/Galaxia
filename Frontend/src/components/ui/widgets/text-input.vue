@@ -89,7 +89,7 @@ export default defineComponent({
   grid-row-gap: 6px;
 }
 
-.text-input[disabled] {
+.text-input[data-disabled="true"] {
   pointer-events: none;
   filter: brightness(0.5);
 }
@@ -139,6 +139,7 @@ input, textarea {
   letter-spacing: 1px;
   color: var(--text-colour);
   width: 100%;
+  font-size: 16px;
 }
 
 .icon-container {

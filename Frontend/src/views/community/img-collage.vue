@@ -41,8 +41,6 @@ export default defineComponent({
 
 <style scoped>
 .image-collage {
-  /*display: grid;*/
-  /*grid-template-columns: repeat(auto-fit, 48px);*/
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -50,7 +48,7 @@ export default defineComponent({
 
 .column {
   flex: calc(50% - 8px);
-  max-width: calc(50% - 8px);
+  max-width: 50%;
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
@@ -59,13 +57,5 @@ export default defineComponent({
 img {
   vertical-align: middle;
   width: 100%;
-}
-
-[data-left="true"] img:last-child {
-  transform: scaleY(1.33);
-}
-
-[data-left="false"] img {
-  transform: scaleY(1.6);
 }
 </style>

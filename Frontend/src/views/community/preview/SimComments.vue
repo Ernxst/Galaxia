@@ -1,6 +1,7 @@
 <template>
   <section class="comments-container">
     <h2>Comments</h2>
+    <p v-if="comments.length ===0">It's a little lonely here ...</p>
     <ul class="comments">
       <li v-for="comment in comments"
           :key="comment.createdAt">
@@ -18,10 +19,11 @@
                id="comment-input"
                placeholder="Share your thoughts"
                v-model="newComment"
-               :disabled="!canComment"
+               :data-disabled="!canComment"
+               :no-spaces="false"
                :maxlength="128" />
     <FlatButton class="submit"
-                :data-disabled="newComment === '' && !canComment"
+                :data-disabled="!newComment || !canComment"
                 @click="postComment"
                 text="Post"
                 bg="var(--green)">
@@ -133,7 +135,7 @@ hr {
     grid-template-columns: 1fr auto;
   }
 
-  .inputs h2, .inputs p {
+  .inputs h2, .inputs p, .comments-container p {
     grid-column: span 3;
   }
 
