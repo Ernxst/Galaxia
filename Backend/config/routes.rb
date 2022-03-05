@@ -69,8 +69,17 @@ Rails.application.routes.draw do
         delete '/:id/stars/:star_id', to: 'simulations/simulations_update#remove_star'
         delete '/:id/asteroid_belts/:asteroid_belt_id', to: 'simulations/simulations_update#delete_asteroid_belt'
         delete '/:id/planets/:planet_id/moons/:moon_id', to: 'simulations/simulations_update#delete_moon'
-      end
 
+
+        get '/:id/likes', to: 'simulations/social#get_likes'
+        get '/:id/comments', to: 'simulations/social#get_comments'
+
+        post '/:id/likes', to: 'simulations/social#like'
+        post '/:id/comments', to: 'simulations/social#comment'
+
+        delete '/:id/likes/:username', to: 'simulations/social#delete_like'
+        delete '/:id/comments/:comment_id', to: 'simulations/social#delete_comment'
+      end
     end
   end
 end

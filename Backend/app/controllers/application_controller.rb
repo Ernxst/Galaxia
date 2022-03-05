@@ -2,6 +2,8 @@
 
 # Super class for all controllers.
 class ApplicationController < ActionController::API
+  include ActionController::Serialization
+
   prepend_before_action :underscore_params!
   # Before any endpoint, authenticate the user, throwing an error if it fails.
   prepend_before_action :authenticate_user

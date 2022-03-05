@@ -10,6 +10,8 @@ class User < ApplicationRecord
   validates :username, length: { minimum: 3, maximum: 50 }, allow_blank: true
 
   has_many :simulations
+  has_many :likes
+  has_many :comments
 
   def email_required?
     false

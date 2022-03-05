@@ -1,4 +1,12 @@
 FactoryBot.define do
+  factory :comment do
+    
+  end
+
+  factory :like do
+    
+  end
+
   factory :simulation_asteroid_belt, class: 'Sim::SimulationAsteroidBelt' do
     asteroid_belt
   end
