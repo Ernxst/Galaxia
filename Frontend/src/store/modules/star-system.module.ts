@@ -31,12 +31,12 @@ const getters = <GetterTree<StarSystemModuleState, any>>{
     };
   },
   cachedSimulation: (state: StarSystemModuleState): StarSystem | null => {
-    return state.cachedSimulation
+    return state.cachedSimulation;
   }
 };
 
 const fetchSimulations = async (commit: Commit, action: string,
-                                simPromise: Promise<StarSystem[]>) => {
+  simPromise: Promise<StarSystem[]>) => {
   try {
     const simulations = await simPromise;
     const map: StarSystems = {};

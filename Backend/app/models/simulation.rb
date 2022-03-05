@@ -19,8 +19,12 @@ class Simulation < ApplicationRecord
   has_many :simulation_asteroid_belts, class_name: 'Sim::SimulationAsteroidBelt', dependent: :destroy
   has_many :asteroid_belts, class_name: 'Space::AsteroidBelt', through: :simulation_asteroid_belts
 
+  has_many :likes
+  has_many :comments
+
   scope :preset, -> { where(user_id: nil) }
-  scope :user_created, -> { where.not('user_id=? OR user_id=?', nil, 1) } # TODO: also add username != "guest"
+  scope :user_created, -> { where.not(user_id: 1).or(where.not(user_id: nil)) } # TODO: also add username != "guest"
+
   def editable?
     !user.nil?
   end

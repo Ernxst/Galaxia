@@ -2,6 +2,7 @@ import { auth, AuthState } from "@/store/modules/auth.module";
 import { builder, BuilderModuleState } from "@/store/modules/builder.module";
 import { media, MediaModuleState } from "@/store/modules/media.module";
 import { simulation } from "@/store/modules/simulation.module";
+import { social } from "@/store/modules/social.module";
 import { starSystem, StarSystemModuleState } from "@/store/modules/star-system.module";
 import { InjectionKey } from "vue";
 import { createStore, Store, useStore as baseUseStore, } from "vuex";
@@ -28,6 +29,7 @@ export const store = createStore<State>({
     media,
     builder,
     simulation,
+    social,
   },
 });
 

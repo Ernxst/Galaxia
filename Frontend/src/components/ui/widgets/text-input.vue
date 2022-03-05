@@ -89,6 +89,11 @@ export default defineComponent({
   grid-row-gap: 6px;
 }
 
+.text-input[disabled] {
+  pointer-events: none;
+  filter: brightness(0.5);
+}
+
 label, input, textarea {
   font-size: 13px;
 }

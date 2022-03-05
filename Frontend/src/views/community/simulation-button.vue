@@ -84,6 +84,7 @@ export default defineComponent({
   cursor: pointer;
   transition: .2s ease-in-out;
   transition-property: filter, transform;
+  height: 100%;
 }
 
 .sim-container:hover {

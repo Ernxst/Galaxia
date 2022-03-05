@@ -13,7 +13,8 @@
                   });" />
       </section>
       <section class="social">
-        <!--      TODO: Add likes, comments etc. -->
+        <SimSocial :id="id"
+                   :username="username" />
       </section>
     </template>
     <loading-popup text="Fetching Simulation"
@@ -26,13 +27,14 @@ import { StarSystem } from "@/@types/celestial/containers/star-system";
 import Page from "@/components/ui/layout/page.vue";
 import Carousel from "@/components/ui/widgets/carousel/carousel.vue";
 import { useStore } from "@/store/store";
+import SimSocial from "@/views/community/preview/SimSocial.vue";
 import LoadingPopup from "@/views/sign-in/loading-popup.vue";
 import { computed, defineComponent, onBeforeUnmount, ref, toRefs } from "vue";
 
 
 export default defineComponent({
   name: "SimPreview",
-  components: { LoadingPopup, Carousel, Page },
+  components: { SimSocial, LoadingPopup, Carousel, Page },
   props: {
     id: { type: Number, required: true },
     username: { type: String, required: true, },
@@ -72,6 +74,10 @@ export default defineComponent({
 .carousel-container {
   height: stretch;
   padding: 4px;
+}
+
+.social {
+  margin-top: 36px;
 }
 
 @media (min-width: 768px) {

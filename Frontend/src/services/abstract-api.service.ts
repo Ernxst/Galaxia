@@ -36,9 +36,9 @@ export abstract class AbstractApiService {
   }
 
   protected makeRequest<Success, Failure>({
-                                            endpoint, method, params = {},
-                                            body = {}, auth = true,
-                                          }: fnParams): Promise<Success | Failure | GenericApiErrorResponse> {
+    endpoint, method, params = {},
+    body = {}, auth = true,
+  }: fnParams): Promise<Success | Failure | GenericApiErrorResponse> {
     const config: AxiosRequestConfig = {
       headers: {},
       method: method,
@@ -58,6 +58,7 @@ export abstract class AbstractApiService {
 
   protected handleError<T>(error: AxiosError<T>): T | GenericApiErrorResponse {
     if (error.response) return error.response.data;
+    console.error(error);
     return { error: "A network error occurred. Please try again." };
   }
 }

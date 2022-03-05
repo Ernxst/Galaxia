@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_14_162123) do
+ActiveRecord::Schema.define(version: 2022_03_04_230949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,25 @@ ActiveRecord::Schema.define(version: 2021_12_14_162123) do
     t.integer "for", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "comment", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "simulation_id"
+    t.bigint "user_id"
+    t.index ["simulation_id"], name: "index_comments_on_simulation_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "simulation_id"
+    t.bigint "user_id"
+    t.index ["simulation_id"], name: "index_likes_on_simulation_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "moons", force: :cascade do |t|
@@ -207,6 +226,10 @@ ActiveRecord::Schema.define(version: 2021_12_14_162123) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "comments", "simulations"
+  add_foreign_key "comments", "users"
+  add_foreign_key "likes", "simulations"
+  add_foreign_key "likes", "users"
   add_foreign_key "moons", "atmosphere_textures"
   add_foreign_key "moons", "bump_maps"
   add_foreign_key "moons", "specular_maps"

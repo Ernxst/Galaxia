@@ -47,9 +47,8 @@ class SimulationService extends AbstractApiService {
     });
     if (Array.isArray(response)) {
       const simulations: StarSystem[] = [];
-      for (const snakeSim of response) {
+      for (const snakeSim of response)
         simulations.push(<StarSystem>cameliseKeys(snakeSim));
-      }
       return simulations;
     }
     return Promise.reject(response.error);
