@@ -1,11 +1,14 @@
 <template>
   <div class="content">
     <button class="ribbon centred noselect"
+            :data-active="canLike"
+            :data-liked="hasLikedThisSim"
             type="button"
-            @click="toggleLike"
-            v-if="canLike">
+            @click="canLike && toggleLike">
       <span class="material-icons icon centred">{{ hasLikedThisSim ? "favorite" : "favorite_border" }}</span>
       <span><strong>{{ likes.length }}</strong></span>
+      <VTooltip text="Please sign in to leave like"
+                v-if="!canLike" />
     </button>
     <hr />
     <SimComments :id="id"
@@ -14,6 +17,7 @@
 </template>
 
 <script lang="ts">
+import VTooltip from "@/components/ui/widgets/v-tooltip.vue";
 import { useStore } from "@/store/store";
 import SimComments from "@/views/community/preview/SimComments.vue";
 import { computed, defineComponent, ref, toRefs } from "vue";
@@ -21,7 +25,7 @@ import { computed, defineComponent, ref, toRefs } from "vue";
 
 export default defineComponent({
   name: "SimSocial",
-  components: { SimComments },
+  components: { VTooltip, SimComments },
   props: {
     id: { type: Number, required: true },
     username: { type: String, required: true }
@@ -85,6 +89,11 @@ export default defineComponent({
   padding: 4px;
 }
 
+.ribbon[data-active="false"] {
+  filter: brightness(0.75);
+  cursor: default;
+}
+
 .ribbon, .ribbon:hover {
   background: none;
   outline: none;
@@ -93,6 +102,10 @@ export default defineComponent({
 
 .ribbon span {
   font-size: 16px;
+}
+
+.ribbon[data-liked="true"] {
+  color: var(--main);
 }
 
 hr {
