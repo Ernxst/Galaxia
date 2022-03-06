@@ -10,7 +10,8 @@
       <ul class="simulations">
         <li v-for="simulation in simulations"
             :key="simulation.id">
-          <SimulationButton v-bind="simulation" />
+          <SimulationButton v-bind="simulation"
+                            @click="go(simulation)" />
         </li>
       </ul>
     </section>
@@ -27,6 +28,7 @@ import { useStore } from "@/store/store";
 import SimulationButton from "@/views/community/simulation-button.vue";
 import LoadingPopup from "@/views/sign-in/loading-popup.vue";
 import { defineComponent, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 
 export default defineComponent({
@@ -47,7 +49,21 @@ export default defineComponent({
       simulations.value = r;
     }).catch(e => alert(e));
 
-    return { simulations, visible };
+    const router = useRouter();
+    const route = useRoute();
+
+    const go = async (simulation: StarSystem) => {
+      store.commit("starSystem/cacheSimulation", simulation);
+      await router.push({
+        name: "preview",
+        params: {
+          username: route.params.username,
+          id: simulation.id,
+        }
+      });
+    };
+
+    return { simulations, visible, go };
   }
 });
 </script>

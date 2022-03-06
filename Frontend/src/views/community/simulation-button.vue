@@ -1,6 +1,6 @@
 <template>
   <a class="sim-container"
-     @click="go">
+     @click="$emit('click')">
     <div class="main">
       <ImgCollage :images="textures"
                   :name="name" />
@@ -19,14 +19,13 @@ import { AsteroidBelt } from "@/@types/celestial/containers/asteroid-belt";
 import { Planet } from "@/@types/celestial/planet";
 import { RingedPlanet } from "@/@types/celestial/ringed-planet";
 import { Star } from "@/@types/celestial/star";
-import { useStore } from "@/store/store";
 import ImgCollage from "@/views/community/img-collage.vue";
 import { computed, defineComponent, PropType, toRefs } from "vue";
-import { useRoute, useRouter } from "vue-router";
 
 
 export default defineComponent({
   name: "simulation-button",
+  emits: ["click"],
   components: { ImgCollage },
   props: {
     id: Number,
@@ -45,21 +44,7 @@ export default defineComponent({
     asteroidBelts: Object as PropType<AsteroidBelt[]>,
   },
   setup(props) {
-    const reactiveProps = toRefs(props);
-    const { id, star, planets } = reactiveProps;
-    const router = useRouter();
-    const route = useRoute();
-    const store = useStore();
-    const go = async () => {
-      store.commit("starSystem/cacheSimulation", reactiveProps);
-      await router.push({
-        name: "preview",
-        params: {
-          username: route.params.username,
-          id: id.value,
-        }
-      });
-    };
+    const { star, planets } = toRefs(props);
 
     // Get all textures to make a collage
     const textures = computed(() => {
@@ -71,7 +56,7 @@ export default defineComponent({
       return textures;
     });
 
-    return { go, textures };
+    return { textures };
   }
 });
 </script>

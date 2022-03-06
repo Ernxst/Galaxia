@@ -21,7 +21,8 @@
                v-model="newComment"
                :data-disabled="!canComment"
                :no-spaces="false"
-               :maxlength="128" />
+               :maxlength="128"
+               @submit="postComment" />
     <FlatButton class="submit"
                 :data-disabled="!newComment || !canComment"
                 @click="postComment"
@@ -37,7 +38,7 @@ import FlatButton from "@/components/ui/widgets/buttons/flat-button.vue";
 import TextInput from "@/components/ui/widgets/text-input.vue";
 import { useStore } from "@/store/store";
 import SimComment from "@/views/community/preview/SimComment.vue";
-import { computed, defineComponent, ref, toRefs } from "vue";
+import { computed, defineComponent, onBeforeUnmount, onMounted, ref, toRefs } from "vue";
 
 
 export default defineComponent({
@@ -59,13 +60,7 @@ export default defineComponent({
         simulationID: id.value,
       };
       try {
-        const { id, createdAt }: { id: number, createdAt: string } = await store.dispatch("social/newComment", payload);
-        comments.value.push({
-          id,
-          username: username.value,
-          comment: newComment.value,
-          createdAt
-        });
+        await store.dispatch("social/newComment", payload);
         newComment.value = "";
       } catch (e) {
         alert(e);
@@ -75,16 +70,24 @@ export default defineComponent({
     const deleteComment = async (commentID: number) => {
       try {
         await store.dispatch("social/deleteComment", { commentID, simulationID: id.value });
-        comments.value = comments.value.filter(({ id }) => id !== commentID);
       } catch (e) {
         alert(e);
       }
     };
 
     const store = useStore();
-    store.dispatch("social/fetchComments", id.value)
-      .then((r: SimulationComment[]) => comments.value = r)
-      .catch(e => alert(e));
+    const fetchComments = () => {
+      store.dispatch("social/fetchComments", id.value)
+        .then((r: SimulationComment[]) => comments.value = r)
+        .catch(() => {
+        });
+    };
+
+    fetchComments();
+    const interval = ref<number>();
+    onMounted(() => interval.value = setInterval(fetchComments, 1500));
+    onBeforeUnmount(() => clearInterval(interval.value));
+
     const guestUsername = store.getters["auth/guestUsername"];
     const canComment = computed(() => username.value !== guestUsername);
 

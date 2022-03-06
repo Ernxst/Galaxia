@@ -4,7 +4,7 @@
             :data-active="canLike"
             :data-liked="hasLikedThisSim"
             type="button"
-            @click="canLike && toggleLike">
+            @click="toggleLike">
       <span class="material-icons icon centred">{{ hasLikedThisSim ? "favorite" : "favorite_border" }}</span>
       <span><strong>{{ likes.length }}</strong></span>
       <VTooltip text="Please sign in to leave like"
@@ -20,7 +20,7 @@
 import VTooltip from "@/components/ui/widgets/v-tooltip.vue";
 import { useStore } from "@/store/store";
 import SimComments from "@/views/community/preview/SimComments.vue";
-import { computed, defineComponent, ref, toRefs } from "vue";
+import { computed, defineComponent, onBeforeUnmount, onMounted, ref, toRefs } from "vue";
 
 
 export default defineComponent({
@@ -37,13 +37,13 @@ export default defineComponent({
     const hasLikedThisSim = computed(() => likes.value.includes(username.value));
     const toggleLike = () => hasLikedThisSim.value ? unlike() : like();
     const like = async () => {
+      if (!canLike) return;
       const payload = {
         username: username.value,
         simulationID: id.value,
       };
       try {
         await store.dispatch("social/like", payload);
-        likes.value.push(username.value);
       } catch (e) {
         alert(e);
       }
@@ -56,16 +56,24 @@ export default defineComponent({
       };
       try {
         await store.dispatch("social/unlike", payload);
-        likes.value = likes.value.filter(item => item !== username.value);
       } catch (e) {
         alert(e);
       }
     };
 
     const store = useStore();
-    store.dispatch("social/fetchLikes", id.value)
-      .then((r: string[]) => likes.value = r)
-      .catch(e => alert(e));
+    const fetchLikes = () => {
+      store.dispatch("social/fetchLikes", id.value)
+        .then((r: string[]) => likes.value = r)
+        .catch(() => {
+        });
+    };
+
+    fetchLikes();
+    const interval = ref<number>();
+    onMounted(() => interval.value = setInterval(fetchLikes, 1500));
+    onBeforeUnmount(() => clearInterval(interval.value));
+
     const guestUsername = store.getters["auth/guestUsername"];
     const canLike = computed(() => username.value !== guestUsername);
 
