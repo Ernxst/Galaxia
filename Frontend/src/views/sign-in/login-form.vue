@@ -8,7 +8,7 @@
                 :required="true"
                 autocomplete="username"
                 label="username"
-                placeholder="USERNAME" />
+                placeholder="Username" />
     <text-input id="password"
                 v-model="password"
                 :no-spaces="true"
@@ -16,7 +16,7 @@
                 :type="showPassword ? 'text': 'password'"
                 autocomplete="current-password"
                 label="password"
-                placeholder="PASSWORD" />
+                placeholder="Password" />
     <checkbox id="show-password"
               v-model="showPassword"
               label="Show Password?" />
