@@ -12,7 +12,6 @@
     // Add the IDs of extensions you want installed when the container is created.
     "extensions": [
     "aaron-bond.better-comments",
-    "alexdima.copy-relative-path",
     "mikestead.dotenv",
     "donjayamanne.githistory",
     "github.github-vscode-theme",
@@ -49,8 +48,6 @@
     "mtxr.sqltools-driver-pg",
     "kaiwood.endwise",
     "usernamehw.errorlens",
-    "miguelsolorio.fluent-icons",
-    "cantonios.project-templates",
     "jerrygoyal.shortcut-menu-bar",
     "sianglim.slim",
     "bung87.vscode-gemfile"

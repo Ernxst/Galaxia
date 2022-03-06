@@ -1,7 +1,6 @@
 {
     "recommendations": [
         "aaron-bond.better-comments",
-        "alexdima.copy-relative-path",
         "mikestead.dotenv",
         "donjayamanne.githistory",
         "github.github-vscode-theme",
@@ -38,11 +37,10 @@
         "mtxr.sqltools-driver-pg",
         "kaiwood.endwise",
         "usernamehw.errorlens",
-        "miguelsolorio.fluent-icons",
-        "cantonios.project-templates",
         "jerrygoyal.shortcut-menu-bar",
         "sianglim.slim",
-        "bung87.vscode-gemfile"
+        "bung87.vscode-gemfile",
+        "Rubymaniac.vscode-paste-and-indent"
     ],
     "unwantedRecommendations": [
         "ecmel.vscode-html-css",
