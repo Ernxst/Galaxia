@@ -33,6 +33,7 @@
 </template>
 
 <script lang="ts">
+import { TextureMap } from "@/@types/app/texture-maps";
 import { NEAR } from "@/assets/three/camera/camera.constants";
 import { dispatchLoadedEvent } from "@/assets/three/loaders";
 import { BLOOM_LAYER } from "@/assets/three/three.constants";
@@ -45,7 +46,7 @@ import { MeshBasicMaterial } from "three/src/materials/MeshBasicMaterial";
 import { Vector2 } from "three/src/math/Vector2";
 import { Mesh } from "three/src/objects/Mesh";
 import { Group, PointLight } from "troisjs";
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import Sphere, { SphereProps } from "../util/Sphere.vue";
 import OrbittingBody from "./base/orbitting-body.vue";
 
@@ -59,7 +60,7 @@ export default defineComponent({
     ...SphereProps,
     starLightColour: { type: String, default: "#FFFFFF" },
     luminosity: { type: Number, default: 3e27 },
-    atmosphereTexture: String,
+    atmosphereTexture: Object as PropType<TextureMap>,
     receiveShadow: { type: Boolean, default: false },
   },
   data() {

@@ -15,8 +15,9 @@
 </template>
 
 <script lang="ts">
+import { TextureMap } from "@/@types/app/texture-maps";
 import { useStore } from "@/store/store";
-import { computed, defineComponent, toRefs } from "vue";
+import { computed, defineComponent, PropType, toRefs } from "vue";
 
 
 export default defineComponent({
@@ -24,15 +25,15 @@ export default defineComponent({
   emits: ['click'],
   props: {
     name: String,
-    textureId: Number,
+    texture: { type: Object as PropType<TextureMap | undefined>, required: true },
     type: String,
     expandable: { type: Boolean, default: true },
   },
   setup(props) {
-    const { textureId } = toRefs(props);
+    const { texture } = toRefs(props);
     const store = useStore();
     const image = computed(() => {
-      const id = textureId.value;
+      const id = texture.value.id;
       if (id) {
         const texture = store.getters["media/texture"](id);
         return texture.url;

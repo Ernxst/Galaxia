@@ -16,10 +16,8 @@
       v-if="hasAtmosphere"
       ref="atmosphere"
       :name="`${name}-atmosphere`"
-      :opacity="atmosphere.opacity"
       :parent-radius="scaledRadius"
-      :scale="atmosphere.scale"
-      :texture="atmosphere.texture"
+      :texture="atmosphereTexture"
       @atmosphere-loaded="assetsLoaded++"
     />
     <slot></slot>

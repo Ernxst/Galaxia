@@ -53,6 +53,7 @@
 </template>
 
 <script lang="ts">
+import { TextureMap } from "@/@types/app/texture-maps";
 import { Moon as MoonInterface } from "@/@types/celestial/moon";
 import { dispatchLoadedEvent } from "@/assets/three/loaders";
 import { ATMOSPHERE_SCALE, RADIUS_SCALE } from "@/assets/util/sim.constants";
@@ -69,7 +70,7 @@ import Moon from "./moon.vue";
 export const PlanetProps = {
   ...SphereProps,
   moons: { type: Array as PropType<MoonInterface[]>, default: [] },
-  atmosphereTexture: String,
+  atmosphereTexture: Object as PropType<TextureMap>,
   showTrail: { type: Boolean, default: true },
 };
 

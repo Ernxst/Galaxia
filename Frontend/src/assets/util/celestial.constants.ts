@@ -6,7 +6,7 @@ export const SOLAR_MASS = 1.98847e30;
 export const EARTH_MASS = 5.9722e24;
 export const MOON_MASS = 7.34767309e22;
 
-export const SOLAR_RADIUS = 695_508; // in km
+export const SOLAR_RADIUS = 696340; // in km
 export const EARTH_RADIUS = 6371;
 export const MOON_RADIUS = 1737.4;
 

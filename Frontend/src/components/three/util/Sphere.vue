@@ -22,21 +22,22 @@
 </template>
 
 <script lang="ts">
+import { TextureMap } from "@/@types/app/texture-maps";
 import { getTexture } from "@/assets/three/loaders";
 import { SPHERE_SLICES } from "@/assets/three/three.constants";
 import { BUMP_SCALE } from "@/assets/util/sim.constants";
 import { MeshPhongMaterial } from "three/src/materials/MeshPhongMaterial";
 import { PhongMaterial, Sphere as TroisSphere } from "troisjs";
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import BaseObject from "./BaseObject.vue";
 
 
 export const SphereProps = {
   radius: { type: Number, default: 1 },
   slices: { type: Number, default: SPHERE_SLICES },
-  texture: { type: String, default: "" },
-  bumpMap: { type: String, default: "" },
-  specularMap: { type: String, default: "" },
+  texture: { type: Object as PropType<TextureMap>, default: null },
+  bumpMap: { type: Object as PropType<TextureMap>, default: null },
+  specularMap: { type: Object as PropType<TextureMap>, default: null },
   castShadow: { type: Boolean, default: false },
   receiveShadow: { type: Boolean, default: true },
   materialProps: Object,
@@ -69,11 +70,11 @@ export default defineComponent({
       return this.mesh().material;
     },
     async setTextures(material: MeshPhongMaterial) {
-      if (this.texture) material.map = await getTexture(this.texture);
+      if (this.texture) material.map = await getTexture(this.texture.url);
       else (material.map) = null;
-      if (this.bumpMap) material.bumpMap = await getTexture(this.bumpMap);
+      if (this.bumpMap) material.bumpMap = await getTexture(this.bumpMap.url);
       else (material.bumpMap = null);
-      if (this.specularMap) material.specularMap = await getTexture(this.specularMap);
+      if (this.specularMap) material.specularMap = await getTexture(this.specularMap.url);
       else (material.specularMap) = null;
       material.needsUpdate = true;
     },

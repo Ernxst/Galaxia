@@ -1,6 +1,7 @@
 import { StarSystem } from "@/@types/celestial/containers/star-system";
 import { cameliseKeys } from "@/assets/util/app.util";
 import { AbstractApiService, ApiErrorResponse, GenericApiErrorResponse } from "@/services/abstract-api.service";
+import AuthService from "@/services/auth.service";
 import { SimulationData } from "@/views/create/util/types";
 import { isString, sample } from "lodash-es";
 
@@ -22,11 +23,16 @@ class SimulationService extends AbstractApiService {
   }
 
   public presetSimulations(): Promise<StarSystem[]> {
-    return this.fetchSimulations("preset");
+    return this.fetchSimulations("all/preset");
   }
 
   public userSimulations(): Promise<StarSystem[]> {
-    return this.fetchSimulations("user");
+    return this.fetchSimulations("all/user");
+  }
+
+  public async simulationsByUser(username: string): Promise<StarSystem[]> {
+    const userId = await AuthService.userId(username);
+    return await this.fetchSimulations(`by/${userId}`);
   }
 
   public async fetchSimulation(id: number): Promise<StarSystem> {
@@ -41,7 +47,7 @@ class SimulationService extends AbstractApiService {
 
   private async fetchSimulations(endpoint: string): Promise<StarSystem[]> {
     const response = await this.makeRequest<StarSystem[], GenericApiErrorResponse>({
-      endpoint: `all/${endpoint}`,
+      endpoint: endpoint,
       method: "GET",
       auth: true,
     });

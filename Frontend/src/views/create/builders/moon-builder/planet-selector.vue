@@ -2,14 +2,14 @@
   <div class="dropdown">
     <group-button :data-open="visible"
                   :name="!id ? `Select Parent` : `${parent.name}`"
-                  :texture-id="!id ? undefined : parent.textureId"
+                  :texture="!id ? undefined : parent.texture"
                   @click="visible = !visible" />
     <ul v-show="visible">
       <li v-for="planet in planets"
           :data-active="id === planet.id">
         <group-button :expandable="false"
                       :name="planet.name"
-                      :texture-id="planet.textureId"
+                      :texture="planet.texture"
                       type="planet"
                       @click="id = planet.id; visible = false" />
       </li>

@@ -63,7 +63,7 @@ function validateCelestialBody(data: CelestialBodyData, type: CelestialType): st
   // @ts-ignore
   if (type === "moon" && data.parentId === null) return `Please select a parent planet for the moon "${data.name}"`;
   // @ts-ignore
-  if (data.textureId === null) {
+  if (data.texture.id === null) {
     if (type === "star") return "Please select a texture for the star";
     return `Please select a texture for the ${type} "${data.name}"`;
   }

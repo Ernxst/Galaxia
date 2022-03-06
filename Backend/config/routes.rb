@@ -18,6 +18,7 @@ Rails.application.routes.draw do
                    sessions: 'users/sessions'
                  }
 
+      get '/users/:username', to: 'application#user'
       get '/users/guest_username', to: 'application#guest_username'
 
       scope :media do

@@ -41,7 +41,7 @@ const fetchSimulations = async (commit: Commit, action: string,
     const simulations = await simPromise;
     const map: StarSystems = {};
     for (const sim of simulations) map[sim.id] = sim;
-    commit(action, map);
+    if (action) commit(action, map);
     return Promise.resolve(simulations);
   } catch (e) {
     return Promise.reject(e);
@@ -56,6 +56,11 @@ const actions = <ActionTree<StarSystemModuleState, any>>{
     } catch (e) {
       return Promise.reject(e);
     }
+  },
+
+  async fetchSimulationsByUser({ commit }, username: string) {
+    const systems = SimulationService.instance().simulationsByUser(username);
+    return fetchSimulations(commit, "", systems);
   },
 
   async fetchPresetSimulations({ commit }) {

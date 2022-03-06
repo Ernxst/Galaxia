@@ -8,7 +8,7 @@
       >
         <div class="image pseudo-after centred">
           <img :alt="name"
-               :src="icon"
+               :src="icon.url"
                height="32"
                width="32" />
         </div>
@@ -45,6 +45,7 @@
 </template>
 
 <script lang="ts">
+import { TextureMap } from "@/@types/app/texture-maps";
 import { Moon } from "@/@types/celestial/moon";
 import { defineComponent, PropType } from "vue";
 
@@ -56,7 +57,7 @@ export default defineComponent({
     isStar: Boolean,
     isMoon: { type: Boolean, default: false },
     distance: { type: Number, default: 0 },
-    icon: { type: String, default: "" },
+    icon: { type: Object as PropType<TextureMap>, required: true },
     moons: {
       type: Object as PropType<{ [key: string]: Moon }>,
       default: {},

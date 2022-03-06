@@ -114,6 +114,36 @@ export const routes = [
     },
   },
   {
+    path: "/:username/edit",
+    component: () => import("@/views/edit/MySimulations.vue"),
+    name: "edit",
+    props: true,
+    meta: {
+      title: (route: RouteLocationNormalized) => {
+        return "Edit";
+      },
+      description: (route: RouteLocationNormalized) => {
+        return "Edit and customise your existing simulations.";
+      },
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/:username/edit/:id",
+    component: () => import("@/views/edit/Edit.vue"),
+    name: "edit-sim",
+    props: true,
+    meta: {
+      title: (route: RouteLocationNormalized) => {
+        return "Editing Simulation";
+      },
+      description: (route: RouteLocationNormalized) => {
+        return "Reshape your simulation the way you want it.";
+      },
+      requiresAuth: true,
+    },
+  },
+  {
     path: "/:username/community",
     component: () => import("@/views/community/Community.vue"),
     name: "community",

@@ -2,7 +2,7 @@
   <div class="group-container noselect">
     <group-button :data-open="active"
                   :name="body.name"
-                  :texture-id="body.textureId"
+                  :texture="body.texture"
                   :type="type"
                   @click="$emit('click')" />
     <template v-if="active || animating">

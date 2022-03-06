@@ -25,6 +25,7 @@
 
 <script lang="ts">
 // TODO: Cannot see underside of ring - works if using MeshBasicMaterial and DoubleSide tex (no shadows)
+import { TextureMap } from "@/@types/app/texture-maps";
 import { getTexture } from "@/assets/three/loaders";
 import { SPHERE_SLICES } from "@/assets/three/three.constants";
 import { RADIUS_SCALE } from "@/assets/util/sim.constants";
@@ -34,7 +35,7 @@ import { Matrix4 } from "three/src/math/Matrix4";
 import { Vector3 } from "three/src/math/Vector3";
 import { Mesh } from "three/src/objects/Mesh";
 import { BasicMaterial, Group, LambertMaterial, Ring as TroisRing } from "troisjs";
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import BaseObject from "./BaseObject.vue";
 
 
@@ -45,7 +46,7 @@ export default defineComponent({
   components: { Group, TroisRing, LambertMaterial, BasicMaterial },
   props: {
     tilt: Number,
-    texture: { type: String, default: "" },
+    texture: { type: Object as PropType<TextureMap>, default: "" },
     innerRadius: { type: Number, default: 1 },
     outerRadius: { type: Number, default: 2 },
     circular: Boolean,
@@ -78,7 +79,7 @@ export default defineComponent({
       }
     },
     async setTextures(material: MeshLambertMaterial) {
-      if (this.texture) material.map = await getTexture(this.texture);
+      if (this.texture) material.map = await getTexture(this.texture.url);
       material.transparent = true;
       material.needsUpdate = true;
     },

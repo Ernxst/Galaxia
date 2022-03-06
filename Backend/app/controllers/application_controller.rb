@@ -90,6 +90,11 @@ class ApplicationController < ActionController::API
     @current_user.present?
   end
 
+  def user
+    user = User.find_by(username: params[:username])
+    render json: { user_id: user.id }, status: :ok
+  end
+
   # GET /users/guest_username
   def guest_username
     render json: { username: ENV['GUEST_USERNAME'] }, status: :ok

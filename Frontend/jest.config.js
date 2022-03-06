@@ -12,6 +12,11 @@ module.exports = {
     "<rootDir>/src/views/welcome/welcome-scene.vue",
     "<rootDir>/src/views/create/builder/preview/preview-3d.vue"
   ],
+  globals: {
+    'ts-jest': {
+      diagnostics: false
+    }
+  },
   moduleFileExtensions: [
     "js",
     "ts",

@@ -65,7 +65,9 @@ export default defineComponent({
         axialTilt: 7.25,
         dayLength: 0,
         luminosity: 3e27,
-        texture: "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/sun%2Fsun.webp?alt=media&token=addfe03f-ecd7-4d25-b30f-2b0dceefd61c",
+        texture: {
+          url: "https://firebasestorage.googleapis.com/v0/b/farpoint-js.appspot.com/o/sun%2Fsun.webp?alt=media&token=addfe03f-ecd7-4d25-b30f-2b0dceefd61c",
+        },
         atmosphereTexture: null,
       };
     },

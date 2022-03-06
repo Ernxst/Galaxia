@@ -41,7 +41,7 @@ export default defineComponent({
   emits: ["atmosphereLoaded"],
   methods: {
     async setTextures(material: MeshPhongMaterial) {
-      if (this.texture) material.map = await getTexture(this.texture);
+      if (this.texture) material.map = await getTexture(this.texture.url);
       material.userData.isAtmosphere = true;
       material.needsUpdate = true;
     },

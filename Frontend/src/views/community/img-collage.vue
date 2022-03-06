@@ -5,15 +5,16 @@
          class="column centred"
          :data-left="index === 0">
       <img v-for="image in urls"
-           :key="image"
-           :alt="name"
-           :src="image"
+           :key="image.id"
+           :alt="image.name"
+           :src="image.url"
            loading="lazy" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { TextureMap } from "@/@types/app/texture-maps";
 import { computed, defineComponent, PropType, toRefs } from "vue";
 
 
@@ -22,7 +23,7 @@ export default defineComponent({
   props: {
     name: String,
     images: {
-      type: Object as PropType<string[]>,
+      type: Object as PropType<TextureMap[]>,
       required: true,
     }
   },

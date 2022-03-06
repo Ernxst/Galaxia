@@ -18,13 +18,13 @@
                      image="https://images.newscientist.com/wp-content/uploads/2020/08/28214732/28-aug_traversable-wormholes.jpg?width=800"
                      subtitle="Start a new journey"
                      text="Explore"
-                     @click="go('explore' )"
-        />
-        <menu-button :disabled="true"
-                     description="View, run, share and edit your previously created Galaxia simulations."
+                     @click="go('explore')" />
+        <menu-button description="View, run, share and edit your previously created Galaxia simulations."
                      image="https://images.newscientist.com/wp-content/uploads/2020/10/28124436/f0254420-black_hole_web.jpg?width=800"
                      subtitle="View your work"
-                     text="My Simulations" />
+                     text="My Simulations"
+                     :disabled="isGuest"
+                     @click="go('edit')" />
         <menu-button description="View community-shared simulations to see variety of Galaxia, or find inspiration for your next creation."
                      image="https://scitechdaily.com/images/TRAPPIST-1-System-1-2048x2048.jpg"
                      subtitle="Interact with the community"

@@ -70,7 +70,14 @@ export default defineComponent({
     const simulationID = ref<number | null>(editing.value ? simulation.value.id : null);
     const store = useStore();
 
-    const getMoons = (planets: Planet[]): MoonData[] => [].concat.apply([], planets.map(planet => planet.moons));
+    const getMoons = (planets: Planet[]): MoonData[] => {
+      let simMoons: MoonData[] = [];
+      for (const { id, moons } of planets) {
+        if (moons)
+          simMoons = simMoons.concat(moons.map(moon => ({ ...moon, parentId: id })));
+      }
+      return simMoons;
+    };
     const moons = ref<MoonData[]>(editing.value ? getMoons(simulation.value.planets) : []);
     store.commit("simulation/setMoons", moons.value);
     watch(moons, (newVal: MoonData[]) => store.commit("simulation/setMoons", newVal), { deep: true });

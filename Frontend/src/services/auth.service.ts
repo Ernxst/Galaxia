@@ -3,7 +3,7 @@ import { AbstractApiService, GenericApiErrorResponse } from "@/services/abstract
 
 export interface AuthRequest {
   username: string;
-  password: string
+  password: string;
 }
 
 export interface AuthSuccessResponse {
@@ -17,7 +17,7 @@ export type AuthFailureResponse = {
 } | GenericApiErrorResponse
 
 interface GuestUsernameSuccessResponse {
-  username: string
+  username: string;
 }
 
 class AuthService extends AbstractApiService {
@@ -33,6 +33,16 @@ class AuthService extends AbstractApiService {
     });
     if ("username" in response) return response.username;
     return Promise.reject(response.error);
+  }
+
+  public async userId(username: string): Promise<number> {
+    const response = await this.makeRequest<{ user_id: number }, GenericApiErrorResponse>({
+      endpoint: username,
+      method: "GET",
+      auth: true,
+    });
+    if ("error" in response) return Promise.reject(response.error);
+    return response.user_id;
   }
 
   public guestLogin(guestUsername: string): Promise<string> {
@@ -56,7 +66,7 @@ class AuthService extends AbstractApiService {
   }
 
   protected async authenticate(endpoint: "login" | "register",
-                               user: AuthRequest): Promise<string> {
+    user: AuthRequest): Promise<string> {
     const response = await this.makeRequest<AuthSuccessResponse, AuthFailureResponse>({
       endpoint,
       method: "POST",

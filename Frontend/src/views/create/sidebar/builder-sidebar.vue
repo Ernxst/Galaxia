@@ -11,6 +11,7 @@
           <builder-stages :simulation="simulation"
                           :step="step"
                           :username="username"
+                          :editing="editing"
                           @back="$emit('back')"
                           @next="$emit('next')"
                           @to="$emit('to')" />
@@ -39,6 +40,7 @@ export default defineComponent({
     title: String,
     subtitle: String,
     username: String,
+    editing: Boolean,
     simulation: Object as PropType<Simulation>,
   },
   setup(props) {

@@ -9,8 +9,7 @@
                      @click="currentAttribute = attribute" />
         <div :set="texture = current[attribute.name]"
              class="texture-container centred">
-          <span v-if="texture === undefined">No {{ attribute.name }} selected</span>
-          <template v-else>
+          <template v-if="texture && texture.url">
             <div class="image">
               <img :alt="`${attribute.name} preview`"
                    :src="texture.url" />
@@ -19,6 +18,7 @@
                     @click="modelValue[attribute.keyName] = null">close</span>
             </div>
           </template>
+          <span v-else>No {{ attribute.name }} selected</span>
         </div>
       </div>
     </template>
@@ -37,13 +37,12 @@
 <script lang="ts">
 import { TextureMap } from "@/@types/app/texture-maps";
 import FlatButton from "@/components/ui/widgets/buttons/flat-button.vue";
-import { VuexTextureType } from "@/services/media.service";
 import { useStore } from "@/store/store";
-import { MoonData, PlanetData, StarData } from "@/views/create/util/types";
 import CelestialFormContainer from "@/views/create/forms/form-container.vue";
 import TextureSelectorPopup from "@/views/create/popup/texture-selector-popup.vue";
+import { MoonData, PlanetData, StarData } from "@/views/create/util/types";
 import LoadingPopup from "@/views/sign-in/loading-popup.vue";
-import { computed, defineComponent, PropType, ref } from "vue";
+import { computed, defineComponent, PropType, ref, toRefs } from "vue";
 
 
 export default defineComponent({
@@ -51,10 +50,14 @@ export default defineComponent({
   emits: ["update:modelValue"],
   components: { TextureSelectorPopup, FlatButton, LoadingPopup, CelestialFormContainer },
   props: {
-    modelValue: Object as PropType<StarData | PlanetData | MoonData>,
+    modelValue: {
+      type: Object as PropType<StarData | PlanetData | MoonData>,
+      required: true,
+    },
     type: String as PropType<"star" | "moon" | "planet">
   },
   setup(props) {
+    const { modelValue } = toRefs(props);
     const store = useStore();
     const textures = ref<TextureMap[]>([]);
     const atmosphereTextures = ref<TextureMap[]>([]);
@@ -73,27 +76,22 @@ export default defineComponent({
     });
     const visible = computed(() => (currentTextures.value === []));
 
-    function getTexture(type: VuexTextureType): TextureMap | undefined {
-      const id = props.modelValue[`${type}Id`];
-      return store.getters[`media/${type}`](id);
-    }
-
     const current = computed(() => ({
-      "Texture": getTexture("texture"),
-      "Atmosphere Texture": getTexture("atmosphereTexture"),
-      "Bump Map": getTexture("bumpMap"),
-      "Specular Map": getTexture("specularMap"),
+      "Texture": modelValue.value.texture,
+      "Atmosphere Texture": modelValue.value.atmosphereTexture,
+      "Bump Map": modelValue.value.bumpMap,
+      "Specular Map": modelValue.value.specularMap,
     }));
 
-    const attributes = [{ name: "Texture", array: textures, keyName: "textureId", show: true, },
+    const attributes = [{ name: "Texture", array: textures, keyName: "texture", show: true, },
       {
         name: "Atmosphere Texture",
         array: atmosphereTextures,
-        keyName: "atmosphereTextureId",
+        keyName: "atmosphereTexture",
         show: atmosphereTextures.value.filter(e => e.for === `${props.type}s`).length > 0,
       },
-      { name: "Bump Map", array: bumpMaps, keyName: "bumpMapId", show: props.type !== "star", },
-      { name: "Specular Map", array: specularMaps, keyName: "specularMapId", show: props.type !== "star", },
+      { name: "Bump Map", array: bumpMaps, keyName: "bumpMap", show: props.type !== "star", },
+      { name: "Specular Map", array: specularMaps, keyName: "specularMap", show: props.type !== "star", },
     ];
 
     return { description, attributes, currentAttribute, currentTextures, current, visible };

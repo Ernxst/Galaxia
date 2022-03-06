@@ -9,30 +9,21 @@ interface Base {
   id?: number;
 }
 
-interface Textured {
-  textureId: number | null;
-  atmosphereTextureId: number | null;
-  specularMapId: number | null;
-  bumpMapId: number | null;
-}
-
 export interface SimulationData {
   name: string;
   description: string;
 }
 
-export interface StarData extends Base, Omit<Star, "id" | "createdAt" | "updatedAt" | "texture" | "atmosphereTexture" | "specularMap" | "bumpMap"> {
-  textureId: number | null;
-  atmosphereTextureId: number | null;
+export interface StarData extends Base, Omit<Star, "id"| "createdAt" | "updatedAt" | "bumpMap" | "specularMap"> {
 }
 
-export interface PlanetData extends Base, Omit<Planet, "id" | "createdAt" | "updatedAt" | "texture" | "atmosphereTexture" | "specularMap" | "bumpMap">, Textured {
+export interface PlanetData extends Base, Omit<Planet, "id" | "createdAt" | "updatedAt"> {
 }
 
-export interface RingedPlanetData extends Base, Omit<RingedPlanet, "id" | "createdAt" | "updatedAt" | "texture" | "atmosphereTexture" | "specularMap" | "bumpMap">, Textured {
+export interface RingedPlanetData extends Base, Omit<RingedPlanet, "id" | "createdAt" | "updatedAt"> {
 }
 
-export interface MoonData extends Base, Omit<Moon, "id" | "createdAt" | "updatedAt" | "texture" | "atmosphereTexture" | "specularMap" | "bumpMap">, Textured {
+export interface MoonData extends Base, Omit<Moon, "id" | "createdAt" | "updatedAt"> {
   parentId: number | null;
 }
 

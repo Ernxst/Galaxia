@@ -20,7 +20,6 @@
 </template>
 
 <script lang="ts">
-import { TextureMap } from "@/@types/app/texture-maps";
 import { computeCentreAndSize } from "@/assets/three";
 import { BLOOM_LAYER } from "@/assets/three/three.constants";
 import { objectWithoutKeys } from "@/assets/util/app.util";
@@ -30,14 +29,12 @@ import AsteroidBelt from "@/components/three/celestial/containers/asteroid-belt.
 import Moon from "@/components/three/celestial/moon.vue";
 import Planet from "@/components/three/celestial/planet.vue";
 import Star from "@/components/three/celestial/star.vue";
-import { VuexTextureType } from "@/services/media.service";
-import { useStore } from "@/store/store";
 import { CelestialBodyData, CelestialType } from "@/views/create/util/types";
 import { defaultAsteroidBelt, defaultStar, scaleParams } from "@/views/create/util/util";
-import { Color } from "three/src/math/Color";
 import { Object3D } from "three/src/core/Object3D";
 import { MeshBasicMaterial } from "three/src/materials/MeshBasicMaterial";
 import { MeshPhongMaterial } from "three/src/materials/MeshPhongMaterial";
+import { Color } from "three/src/math/Color";
 import { Vector3 } from "three/src/math/Vector3";
 import { Mesh } from "three/src/objects/Mesh";
 import { Group, PointLight } from "troisjs";
@@ -53,7 +50,6 @@ export default defineComponent({
     data: Object as PropType<CelestialBodyData>,
   },
   setup(props, { emit }) {
-    const store = useStore();
     const assetsToLoad = ref<number>(1);
     const assetsLoaded = ref<number>(0);
     watch(assetsLoaded, () => {
@@ -62,24 +58,16 @@ export default defineComponent({
       if (isAsteroid.value) {
         camPos = new Vector3(2500, 2500, 2500);
       } else {
-        const { centre, size } = computeCentreAndSize(body.value.mesh());
+        const { size } = computeCentreAndSize(body.value.mesh());
         const z = size.length();
         camPos = new Vector3(z, z, z * 9.5);
       }
-
       emit("loaded", { camPos, models: [] });
     });
 
     function animate(speed: number) {
       body.value?.spinOnAxis(speed);
       belt.value?.spinOnAxis(speed);
-    }
-
-    function getTexture(type: VuexTextureType): TextureMap | undefined {
-      const id = props.data[`${type}Id`];
-      const texture: TextureMap = store.getters[`media/${type}`](id);
-      if (texture) return texture.url;
-      return;
     }
 
     onMounted(() => (emit("dataLoaded", assetsToLoad.value)));
@@ -89,18 +77,12 @@ export default defineComponent({
     const belt = ref(null);
     const { data, type } = toRefs(props);
 
-    const textures = computed(() => ({
-      texture: getTexture("texture"),
-      atmosphereTexture: getTexture("atmosphereTexture"),
-      bumpMap: getTexture("bumpMap"),
-      specularMap: getTexture("specularMap"),
-    }));
-
     const isAsteroid = computed(() => type.value === 'asteroid belt');
 
     const bodyProps = computed(() => {
-      let keys = ['textureId', 'atmosphereTextureId', 'specularMapId', 'bumpMapId', 'parentId'];
-      if (isAsteroid.value) keys = keys.concat("radius", "luminosity");
+      let keys = ['parentId'];
+      if (isAsteroid.value) keys = keys.concat("radius", "luminosity", "texture", "atmosphereTexture",
+        "bumpMap", "specularMap", "semiMajor", "semiMinor", "eccentricity", "orbitalPeriod");
       const object = objectWithoutKeys(data.value, ...keys);
       const scaled = scaleParams<typeof props.data>(object, type.value);
       // Little hack because this component does not have access to the scene
@@ -120,20 +102,9 @@ export default defineComponent({
       return scaled;
     });
 
-    const attributes = computed(() => ({
-      ...bodyProps.value,
-      ...textures.value,
-    }));
-
-    const bodyAttributes = computed(() => {
-      if (isAsteroid.value) {
-        const data = { ...defaultStar };
-        return objectWithoutKeys(data, 'textureId', 'atmosphereTextureId', 'specularMapId', 'bumpMapId');
-      }
-      return attributes.value;
-    });
-
-    const beltAttributes = computed(() => (isAsteroid.value ? attributes.value : defaultAsteroidBelt));
+    const bodyAttributes = computed(() =>
+      isAsteroid.value ? { ...defaultStar } : bodyProps.value);
+    const beltAttributes = computed(() => (isAsteroid.value ? bodyProps.value : defaultAsteroidBelt));
 
     // Use a star component and disable the bloom effect if we're not actually previewing a star
     // Using different components has issues, so just use the same one
@@ -177,7 +148,7 @@ export default defineComponent({
       mesh.material.needsUpdate = true;
     }
 
-    watch(attributes, () => update(), { deep: true });
+    watch(bodyProps, () => update(), { deep: true });
 
     const scaler = type.value === 'moon' ? 1 : 1e3;
     const intensity = SOLAR_LUMINOSITY * LIGHTING_SCALE * scaler;

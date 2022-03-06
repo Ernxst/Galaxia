@@ -63,9 +63,9 @@ class BuilderService extends AbstractApiService {
     return await this.deleteCelestialBody(simulationID, asteroidBeltID, "asteroid_belts");
   }
 
-  private getEndpoint(simulationID: number,
-                      payload: StarData | PlanetData | MoonData | AsteroidBeltData,
-                      type: "star" | "planet" | "moon" | "asteroid_belt") {
+  private static getEndpoint(simulationID: number,
+    payload: StarData | PlanetData | MoonData | AsteroidBeltData,
+    type: "star" | "planet" | "moon" | "asteroid_belt") {
     let endpoint;
     if (type === "moon") {
       // @ts-ignore
@@ -75,13 +75,30 @@ class BuilderService extends AbstractApiService {
     } else {
       endpoint = `simulations/${simulationID}/${type}s`;
     }
-    return { payload, endpoint };
+
+    if (type !== "asteroid_belt") {
+      const {
+        texture,
+        bumpMap,
+        specularMap,
+        atmosphereTexture
+      } = payload;
+      payload.textureId = texture.id;
+      if (bumpMap) payload.bumpMapId = bumpMap.id;
+      if (specularMap) payload.specularMapId = specularMap.id;
+      if (atmosphereTexture) payload.atmosphereTextureId = atmosphereTexture.id;
+    }
+
+    return {
+      payload: objectWithoutKeys(payload, "atmosphereTexture", "bumpMap", "specularMap", "texture"),
+      endpoint
+    };
   }
 
   private async createCelestialBodyForSimulation(simulationID: number,
-                                                 data: StarData | PlanetData | MoonData | AsteroidBeltData,
-                                                 type: "star" | "planet" | "moon" | "asteroid_belt"): Promise<number> {
-    const { endpoint, payload } = this.getEndpoint(simulationID, data, type);
+    data: StarData | PlanetData | MoonData | AsteroidBeltData,
+    type: "star" | "planet" | "moon" | "asteroid_belt"): Promise<number> {
+    const { endpoint, payload } = BuilderService.getEndpoint(simulationID, data, type);
     const id = await this.createCelestialBody(data, type);
     const body: CelestialRequestBody = {};
     body[type] = payload;
@@ -101,7 +118,7 @@ class BuilderService extends AbstractApiService {
   }
 
   public async createCelestialBody(data: StarData | PlanetData | MoonData | AsteroidBeltData,
-                                   type: "star" | "planet" | "moon" | "asteroid_belt"): Promise<number> {
+    type: "star" | "planet" | "moon" | "asteroid_belt"): Promise<number> {
     const body: CelestialRequestBody = {};
     body[type] = data;
 
@@ -120,9 +137,9 @@ class BuilderService extends AbstractApiService {
   }
 
   public async updateCelestialBody(simulationID: number, id: number,
-                                   data: StarData | PlanetData | MoonData | AsteroidBeltData,
-                                   type: "star" | "planet" | "moon" | "asteroid_belt") {
-    const { endpoint, payload } = this.getEndpoint(simulationID, data, type);
+    data: StarData | PlanetData | MoonData | AsteroidBeltData,
+    type: "star" | "planet" | "moon" | "asteroid_belt") {
+    const { endpoint, payload } = BuilderService.getEndpoint(simulationID, data, type);
     const body: CelestialRequestBody = {};
     body[type] = payload;
 
