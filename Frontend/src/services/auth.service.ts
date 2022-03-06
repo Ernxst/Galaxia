@@ -27,7 +27,7 @@ class AuthService extends AbstractApiService {
 
   public async guestUsername(): Promise<string> {
     const response = await this.makeRequest<GuestUsernameSuccessResponse, GenericApiErrorResponse>({
-      endpoint: "guest_username",
+      endpoint: "env/guest_username",
       method: "GET",
       auth: false,
     });

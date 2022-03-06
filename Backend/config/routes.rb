@@ -19,7 +19,7 @@ Rails.application.routes.draw do
                  }
 
       get '/users/:username', to: 'application#user'
-      get '/users/guest_username', to: 'application#guest_username'
+      get '/users/env/guest_username', to: 'application#guest_username'
 
       scope :media do
         [:textures, :bump_maps, :specular_maps, :atmosphere_textures].each do |type|

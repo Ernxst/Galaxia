@@ -96,7 +96,7 @@ const setupAuthServiceMock = () => {
     .calledWith({
       headers: {},
       method: "GET",
-      url: "guest_username",
+      url: "env/guest_username",
       params: {},
       data: {}
     })
