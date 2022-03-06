@@ -3,6 +3,7 @@
      :activating="mouseDown"
      :ready="ready"
      class="menu-button pseudo-before pseudo-after centred noselect"
+     @mouseenter="buttonHover"
      @mousedown="mouseDown = true"
      @mouseup="mouseDown = false">
     <div class="img-container pseudo-after abs">
@@ -23,7 +24,7 @@ import useAudio from "@/assets/audio/audio-controller";
 import { defineComponent } from "vue";
 
 
-const { buttonHover, buttonClick } = useAudio();
+const { buttonHover, buttonClick, stopButtonHover, stopButtonClick } = useAudio();
 
 export default defineComponent({
   name: "menu-button",
@@ -45,8 +46,10 @@ export default defineComponent({
     // click and hold for 1.2s before emitting click;
     mouseDown() {
       if (this.mouseDown) {
-        if (this.isTouchDevice) this.$emit("click");
-        else {
+        if (this.isTouchDevice) {
+          buttonClick();
+          this.$emit("click");
+        } else {
           buttonHover();
           this.idTimeout = setTimeout(() => {
             if (this.mouseDown) {
@@ -59,7 +62,8 @@ export default defineComponent({
           }, 1150);
         }
       } else {
-        // TODO: Stop sound
+        stopButtonHover();
+        stopButtonClick();
         clearTimeout(this.idTimeout);
         this.ready = false;
       }
@@ -75,6 +79,11 @@ export default defineComponent({
       if (this.isTouchDevice) return `Click to continue to ${this.text}`;
       if (this.ready) return "Release to continue to " + this.text;
       return this.mouseDown ? "Keep Holding" : "Click and hold to activate";
+    }
+  },
+  methods: {
+    buttonHover() {
+      buttonHover();
     }
   }
 });
