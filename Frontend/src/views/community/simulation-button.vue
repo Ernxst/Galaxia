@@ -65,7 +65,7 @@ export default defineComponent({
 .sim-container {
   display: grid;
   border: 1px solid var(--main);
-  padding: 2px;
+  padding: 4px;
   cursor: pointer;
   transition: .2s ease-in-out;
   transition-property: filter, transform;
@@ -98,7 +98,10 @@ export default defineComponent({
   font-size: 18px;
   white-space: pre-wrap;
   width: 100%;
-  text-align: center;
+  background: var(--page-bg);
+  padding: 4px 12px;
+  border: 1px solid var(--orange);
+  border-left: 8px solid var(--orange);
 }
 
 .creator {
@@ -111,5 +114,9 @@ export default defineComponent({
 
 .planets, .belts {
   font-size: 10px;
+}
+
+.belts {
+  text-align: right;
 }
 </style>

@@ -58,5 +58,6 @@ export default defineComponent({
 img {
   vertical-align: middle;
   width: 100%;
+  border: 2px solid var(--orange);
 }
 </style>
