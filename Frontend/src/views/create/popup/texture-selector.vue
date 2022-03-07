@@ -11,7 +11,7 @@
           <texture-cell v-for="texture in textures"
                         :key="texture.id"
                         v-bind="texture"
-                        :active="modelValue[keyName] === texture.id"
+                        :active="modelValue[keyName] && modelValue[keyName].id === texture.id"
                         @click="$emit('click', $event)" />
         </div>
         <slot></slot>

@@ -47,15 +47,15 @@ export default defineComponent({
   emits: ["click", "removeBody", "update:body", "update:id", "update:saved"],
   props: {
     active: Boolean,
-    type: String as PropType<CelestialType>,
-    simulationId: Number,
-    body: Object as PropType<CelestialBodyData>,
-    id: Number,
+    type: { type: String as PropType<CelestialType>, required: true },
+    simulationId: { type: Number, required: true },
+    body: { type: Object as PropType<CelestialBodyData>, required: true },
+    id: { type: Number, required: true },
     saved: Boolean,
   },
   setup(props, { emit }) {
     const { active, body, id, simulationId } = toRefs(props);
-    const menu = ref<HTMLDivElement>(null);
+    const menu = ref<HTMLDivElement | null>(null);
     const animating = ref<boolean>(false);
     watch(active, (newVal) => (animate(newVal)));
 

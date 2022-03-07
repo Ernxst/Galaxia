@@ -25,7 +25,7 @@ export default defineComponent({
   emits: ['click'],
   props: {
     name: String,
-    texture: { type: Object as PropType<TextureMap | undefined>, required: true },
+    texture: { type: Object as PropType<TextureMap | null> },
     type: String,
     expandable: { type: Boolean, default: true },
   },
@@ -33,6 +33,7 @@ export default defineComponent({
     const { texture } = toRefs(props);
     const store = useStore();
     const image = computed(() => {
+      if (!texture.value) return;
       const id = texture.value.id;
       if (id) {
         const texture = store.getters["media/texture"](id);
