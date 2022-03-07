@@ -1,7 +1,7 @@
 <template>
   <div :data-active="active"
        class="cell noselect"
-       @click="$emit('click', id)">
+       @click="$emit('click', $props)">
     <div class="image">
       <img :alt="name"
            :src="url" />
