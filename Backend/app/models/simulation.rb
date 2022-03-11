@@ -23,7 +23,18 @@ class Simulation < ApplicationRecord
   has_many :comments
 
   scope :preset, -> { where(user_id: nil) }
-  scope :user_created, -> { where.not(user_id: 1).or(where.not(user_id: nil)) } # TODO: also add username != "guest"
+  # Where the simulation has a star and is not made by a guest
+  scope :user_created, -> { 
+    where
+    .not(user_id: nil)
+    .joins(:user)
+    .where.not(user: { username: ENV["guest_username"] })
+    .where.not(user_id: 1)
+    .where.not(star_id: nil)
+    .left_joins(:likes)
+    .group(:id)
+    .order('COUNT(likes.id) DESC')
+  }
 
   def editable?
     !user.nil?
