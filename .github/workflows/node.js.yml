@@ -11,15 +11,10 @@ on:
 
 jobs:
   build_and_test_frontend:
-
     runs-on: ubuntu-latest
-
     strategy:
-      max-parallel: 1
-      fail-fast: false
       matrix:
         node-version: [17]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - uses: actions/checkout@v2
@@ -30,9 +25,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
           cache-dependency-path: Frontend/yarn.lock
+
       - name: Install dependencies
         run: yarn install
         working-directory: "./Frontend"
+
       - name: Run Tests
         run: yarn test
         working-directory: "./Frontend"
