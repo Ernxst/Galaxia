@@ -54,7 +54,7 @@ export default defineComponent({
   methods: {
     onMouseMove(event: MouseEvent) {
       const container: HTMLDivElement = this.$refs.container;
-      this.$refs.cursor.update(event, container.getBoundingClientRect());
+      this.$refs.cursor?.update(event, container.getBoundingClientRect());
     },
     async onClick() {
       if (this.clicked || this.animating) return;

@@ -37,7 +37,7 @@ export default defineComponent({
     const hasLikedThisSim = computed(() => likes.value.includes(username.value));
     const toggleLike = () => hasLikedThisSim.value ? unlike() : like();
     const like = async () => {
-      if (!canLike) return;
+      if (!canLike.value) return;
       const payload = {
         username: username.value,
         simulationID: id.value,
