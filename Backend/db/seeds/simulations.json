@@ -73,32 +73,32 @@
       ],
       "asteroid_belts": []
     },
-      {
-        "name": "Another Test Simulation",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Suscipit adipiscing bibendum est ultricies. Tempus urna et pharetra pharetra massa massa. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Tristique risus nec feugiat in fermentum posuere urna nec. Nisl condimentum id venenatis a condimentum. Sed euismod nisi porta lorem. Amet justo donec enim diam vulputate ut pharetra sit amet. Morbi blandit cursus risus at ultrices. Augue ut lectus arcu bibendum at varius vel pharetra vel.\n\nSenectus et netus et malesuada fames. Sit amet porttitor eget dolor. Eleifend donec pretium vulputate sapien. Orci nulla pellentesque dignissim enim sit amet venenatis urna. Libero id faucibus nisl tincidunt eget nullam non nisi. Nibh sit amet commodo nulla facilisi. Eros in cursus turpis massa tincidunt. Mattis enim ut tellus elementum sagittis vitae. Nibh ipsum consequat nisl vel pretium lectus quam id leo. Nibh ipsum consequat nisl vel pretium lectus. Sed arcu non odio euismod lacinia at quis risus. Viverra nam libero justo laoreet sit amet cursus sit. Proin sed libero enim sed faucibus turpis in. Eget sit amet tellus cras adipiscing enim eu. Ridiculus mus mauris vitae ultricies leo. Eget mauris pharetra et ultrices neque ornare aenean euismod. Ut sem viverra aliquet eget sit amet tellus cras.",
-        "star": "Sun",
-        "preset": false,
-        "planets": [
-          {
-            "name": "Mercury",
-            "moons": []
-          },
-          {
-            "name": "Venus",
-            "moons": []
-          },
-          {
-            "name": "Earth",
-            "moons": [
-              "Moon"
-            ]
-          },
-          {
-            "name": "Mars",
-            "moons": []
-          }
-        ],
-        "asteroid_belts": []
-      }
+    {
+      "name": "Another Test Simulation",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Suscipit adipiscing bibendum est ultricies. Tempus urna et pharetra pharetra massa massa. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Tristique risus nec feugiat in fermentum posuere urna nec. Nisl condimentum id venenatis a condimentum. Sed euismod nisi porta lorem. Amet justo donec enim diam vulputate ut pharetra sit amet. Morbi blandit cursus risus at ultrices. Augue ut lectus arcu bibendum at varius vel pharetra vel.\n\nSenectus et netus et malesuada fames. Sit amet porttitor eget dolor. Eleifend donec pretium vulputate sapien. Orci nulla pellentesque dignissim enim sit amet venenatis urna. Libero id faucibus nisl tincidunt eget nullam non nisi. Nibh sit amet commodo nulla facilisi. Eros in cursus turpis massa tincidunt. Mattis enim ut tellus elementum sagittis vitae. Nibh ipsum consequat nisl vel pretium lectus quam id leo. Nibh ipsum consequat nisl vel pretium lectus. Sed arcu non odio euismod lacinia at quis risus. Viverra nam libero justo laoreet sit amet cursus sit. Proin sed libero enim sed faucibus turpis in. Eget sit amet tellus cras adipiscing enim eu. Ridiculus mus mauris vitae ultricies leo. Eget mauris pharetra et ultrices neque ornare aenean euismod. Ut sem viverra aliquet eget sit amet tellus cras.",
+      "star": "Sun",
+      "preset": false,
+      "planets": [
+        {
+          "name": "Mercury",
+          "moons": []
+        },
+        {
+          "name": "Venus",
+          "moons": []
+        },
+        {
+          "name": "Earth",
+          "moons": [
+            "Moon"
+          ]
+        },
+        {
+          "name": "Mars",
+          "moons": []
+        }
+      ],
+      "asteroid_belts": []
+    }
   ]
 }
