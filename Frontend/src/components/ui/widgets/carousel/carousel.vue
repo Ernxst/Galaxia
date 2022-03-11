@@ -6,7 +6,12 @@
                        left />
       <carousel-item v-bind="currentSimulation">
         <flat-button @click="$emit('click', currentSimulation.id)"
+                     bg="var(--green)"
                      text="Select" />
+        <FlatButton @click="remix"
+                    text="Remix">
+          <VTooltip text="Add your own unique spin on this simulation!" />
+        </FlatButton>
         <template v-slot:media>
           <RendererController :scene-component="sceneComponent"
                               :scene-props="sceneProps"
@@ -35,13 +40,14 @@ import CarouselButton from "@/components/ui/widgets/carousel/carousel-button.vue
 import CarouselIndicators from "@/components/ui/widgets/carousel/carousel-indicators.vue";
 import CarouselItem from "@/components/ui/widgets/carousel/carousel-item.vue";
 import CarouselScene from "@/components/ui/widgets/carousel/carousel-scene.vue";
+import VTooltip from "@/components/ui/widgets/v-tooltip.vue";
 import { defineComponent, PropType } from "vue";
 
 
 export default defineComponent({
   name: "carousel",
-  components: { FlatButton, RendererController, CarouselButton, CarouselIndicators, CarouselItem },
-  emits: ["click"],
+  components: { VTooltip, FlatButton, RendererController, CarouselButton, CarouselIndicators, CarouselItem },
+  emits: ["click", "remix"],
   props: {
     simulations: {
       type: Object as PropType<StarSystem[]>,
@@ -82,6 +88,23 @@ export default defineComponent({
         const num = Number(key);
         if (num > 0 && num <= this.items) this.index = num - 1;
       }
+    },
+    remix() {
+      this.$store.commit("starSystem/cacheSimulation", this.currentSimulation);
+      const id = this.currentSimulation.id;
+
+      this.$router.push({
+        name: "Build",
+        query: {
+          id: id,
+          remix: "true",
+        },
+        params: {
+          username: this.$route.params.username,
+        }
+      });
+
+      this.$emit("remix", id);
     }
   },
   mounted() {

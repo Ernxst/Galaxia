@@ -80,7 +80,11 @@ export const routes = [
     path: "/:username/explore/build",
     component: () => import("@/views/create/BuildSimulation.vue"),
     name: "Build",
-    props: true,
+    props: (route: RouteLocationNormalized) => ({
+      username: route.params.username,
+      remix: route.query.remix,
+      id: route.query.id,
+    }),
     meta: {
       title: (route: RouteLocationNormalized) => {
         return "Build Your Universe";

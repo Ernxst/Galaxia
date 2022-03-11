@@ -8,12 +8,13 @@
     <template v-if="simLoaded">
       <section class="carousel-container centred">
         <carousel :simulations="[simulation]"
+                  @remix="uncache = false"
                   @click="$router.push({ name: 'simulate',
                    params: { username, simulationID: id, }
                   });" />
       </section>
       <section class="social">
-        <SimSocial :id="id"
+        <SimSocial :id="parseInt(id)"
                    :username="username" />
       </section>
     </template>
@@ -36,15 +37,14 @@ export default defineComponent({
   name: "SimPreview",
   components: { SimSocial, LoadingPopup, Carousel, Page },
   props: {
-    id: { type: Number, required: true },
+    id: { type: String, required: true },
     username: { type: String, required: true, },
   },
   setup(props) {
-    const { id } = toRefs(props);
     const store = useStore();
-    const simulation = ref<StarSystem>();
-    simulation.value = store.getters["starSystem/cachedSimulation"];
+    const simulation = ref<StarSystem>(store.getters["starSystem/cachedSimulation"]);
     const loading = ref<boolean>(false);
+    const { id } = toRefs(props);
     const simLoaded = computed(() => simulation.value && simulation.value.id === parseInt(id.value));
     const simName = computed(() => simLoaded.value ? simulation.value?.name : "Loading");
 
@@ -63,9 +63,10 @@ export default defineComponent({
       }
     }
 
-    onBeforeUnmount(() => store.commit("starSystem/cacheSimulation", null));
+    const uncache = ref(false);
+    onBeforeUnmount(() => uncache.value ? store.commit("starSystem/cacheSimulation", null) : null);
 
-    return { simulation, loading, simName, simLoaded };
+    return { simulation, loading, simName, simLoaded, uncache };
   }
 });
 </script>

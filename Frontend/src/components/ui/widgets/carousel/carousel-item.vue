@@ -144,6 +144,8 @@ p > strong {
 .slot-container {
   padding: 24px;
   width: 100%;
+  display: grid;
+  grid-gap: 16px;
 }
 
 @media (max-width: 768px) {
