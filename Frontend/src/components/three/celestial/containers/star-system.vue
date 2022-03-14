@@ -4,8 +4,7 @@
           v-bind="systemData.star"
           @click="$emit('focusOnBody', $event)"
           @star-loaded="assetsLoaded++" />
-    <component
-      :is="planetComponent(planet)"
+    <Planet
       v-for="(planet, index) in systemData.planets"
       :ref="addPlanet"
       key="planet"
@@ -42,8 +41,6 @@
 
 <script lang="ts">
 import { StarSystem as StarSystemInterface } from "@/@types/celestial/containers/star-system";
-import { Planet as PlanetInterface } from "@/@types/celestial/planet";
-import { RingedPlanet as RingedPlanetInterface } from "@/@types/celestial/ringed-planet";
 import { computeCentreAndSize } from "@/assets/three";
 import { TIME_STEP } from "@/assets/util/sim.constants";
 import CelestialBody from "@/components/three/celestial/base/celestial-body.vue";
@@ -51,14 +48,13 @@ import { Vector3 } from "three/src/math/Vector3";
 import { Group } from "troisjs";
 import { defineComponent, PropType } from "vue";
 import Planet from "../planet.vue";
-import RingedPlanet from "../ringed-planet.vue";
 import Star from "../star.vue";
 import AsteroidBelt from "./asteroid-belt.vue";
 
 
 export default defineComponent({
   name: "star-system",
-  components: { Group, Star, AsteroidBelt },
+  components: { Group, Star, AsteroidBelt, Planet },
   emits: ["starSystemLoaded", "focusOnBody"],
   props: { systemData: Object as PropType<StarSystemInterface> },
   watch: {
@@ -82,7 +78,7 @@ export default defineComponent({
   data() {
     return {
       planets: [],
-      planetComponents: {} as { [key: string]: typeof Planet | typeof RingedPlanet },
+      planetComponents: {} as { [key: string]: typeof Planet },
       asteroidBelts: [],
       assetsLoaded: 0,
     };
@@ -92,13 +88,9 @@ export default defineComponent({
     this.asteroidBelts = [];
   },
   methods: {
-    addPlanet(el: typeof Planet | typeof RingedPlanet) {
+    addPlanet(el: typeof Planet) {
       this.planetComponents[el.name] = el;
       this.planets.push(el);
-    },
-    planetComponent(props: PlanetInterface | RingedPlanetInterface):
-      typeof Planet | typeof RingedPlanet {
-      return props.ring === undefined ? Planet : RingedPlanet;
     },
     evolve(speed: number) {
       const dt = speed * TIME_STEP;

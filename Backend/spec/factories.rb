@@ -1,4 +1,8 @@
 FactoryBot.define do
+  factory :ring_texture do
+    
+  end
+
   factory :comment do
     
   end

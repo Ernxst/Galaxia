@@ -32,7 +32,6 @@
       "width": 2048,
       "height": 1024
     },
-
     {
       "name": "Mercury Texture Map (8k)",
       "filename": "8k_mercury.webp",
@@ -81,8 +80,6 @@
       "width": 8192,
       "height": 4096
     },
-
-
     {
       "name": "Mercury Texture Map (2k)",
       "filename": "2k_mercury.webp",
@@ -226,5 +223,25 @@
       "height": 1024
     }
   ],
-  "ring_textures": []
+  "ring_textures": [
+    {
+      "name": "Saturn Ring (2k)",
+      "filename": "2k_saturn_ring_alpha.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/2k_saturn_ring_alpha.png",
+      "width": 2048,
+      "height": 125,
+      "circular": false,
+      "for": "planets"
+    },
+    {
+      "name": "Saturn Ring (8k)",
+      "filename": "8k_saturn_ring_alpha.webp",
+      "original_url": "https://www.solarsystemscope.com/textures/download/8k_saturn_ring_alpha.png",
+      "width": 8192,
+      "height": 500,
+      "circular": false,
+      "for": "planets"
+
+    }
+  ]
 }

@@ -106,7 +106,11 @@
       "mean_velocity": 9.68,
       "axial_tilt": 26.73,
       "day_length": 38517,
-      "texture": "2k_saturn.webp"
+      "texture": "2k_saturn.webp",
+      "ring_texture": "8k_saturn_ring_alpha.webp",
+      "tilt": 0,
+      "inner_radius": 66900,
+      "outer_radius": 136775
     },
     {
       "name": "Uranus",

@@ -46,7 +46,7 @@ export default defineComponent({
   components: { Group, TroisRing, LambertMaterial, BasicMaterial },
   props: {
     tilt: Number,
-    texture: { type: Object as PropType<TextureMap>, default: "" },
+    texture: { type: Object as PropType<TextureMap> },
     innerRadius: { type: Number, default: 1 },
     outerRadius: { type: Number, default: 2 },
     circular: Boolean,
@@ -89,6 +89,7 @@ export default defineComponent({
     }
   },
   mounted() {
+    console.log(this.texture)
     const lower: Mesh = this.$refs.lower.mesh;
     const upper: Mesh = this.$refs.upper.mesh;
     lower.applyMatrix4(new Matrix4().makeScale(1, 1, -1)); // Flip lower upside down

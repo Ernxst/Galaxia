@@ -6,5 +6,6 @@ module Celestial::Textured
     belongs_to :atmosphere_texture, :class_name => 'Media::AtmosphereTexture', required: false
     belongs_to :bump_map, :class_name => 'Media::BumpMap', required: false
     belongs_to :specular_map, :class_name => 'Media::SpecularMap', required: false
+    belongs_to :ring_texture, :class_name => 'Media::RingTexture', required: false
   end
 end

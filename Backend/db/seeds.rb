@@ -19,18 +19,20 @@ seed(tex_data[:textures], Media::Texture)
 seed(tex_data[:bump_maps], Media::BumpMap)
 seed(tex_data[:specular_maps], Media::SpecularMap)
 seed(tex_data[:atmosphere_textures], Media::AtmosphereTexture)
-# seed(tex_data[:ring_textures], Media::RingTexture)
+seed(tex_data[:ring_textures], Media::RingTexture)
 
 @bodies = {}
 
 def seed_celestial_bodies(arr, record)
   arr.each do |data|
-    params = data.except(:texture, :bump_map, :specular_map, :atmosphere)
+    params = data.except(:texture, :bump_map, :specular_map, :atmosphere, :ring_texture)
     params[:texture_id] = Media::Texture.find_by_filename(data[:texture]).id unless data[:texture].nil?
     params[:atmosphere_texture_id] = Media::AtmosphereTexture.find_by_filename(data[:atmosphere]).id unless data[:atmosphere].nil?
     params[:bump_map_id] = Media::BumpMap.find_by_filename(data[:bump_map]).id unless data[:bump_map].nil?
     params[:specular_map_id] = Media::SpecularMap.find_by_filename(data[:specular_map]).id unless data[:specular_map].nil?
-    @bodies[params[:name]] = record.create(params)
+    params[:ring_texture_id] = Media::RingTexture.find_by_filename(data[:ring_texture]).id unless data[:ring_texture].nil?
+    
+    @bodies[params[:name]] = record.create!(params)
   end
 end
 

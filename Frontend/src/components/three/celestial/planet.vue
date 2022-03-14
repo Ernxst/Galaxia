@@ -43,6 +43,15 @@
       @click="$emit('click', $event)"
       @moon-loaded="assetsLoaded++"
     />
+    <ring ref="ring"
+          v-if="hasRing"
+          :circular="ring.circular"
+          :inner-radius="ring.innerRadius"
+          :name="`${name}-ring`"
+          :outer-radius="ring.outerRadius"
+          :texture="ring.texture"
+          :tilt="ring.tilt"
+          @ring-loaded="assetsLoaded++" />
   </Group>
   <Trail
     :inclination="inclinationRad"
@@ -55,9 +64,11 @@
 <script lang="ts">
 import { TextureMap } from "@/@types/app/texture-maps";
 import { Moon as MoonInterface } from "@/@types/celestial/moon";
+import RingProps from "@/@types/celestial/ring-props";
 import { dispatchLoadedEvent } from "@/assets/three/loaders";
 import { ATMOSPHERE_SCALE, RADIUS_SCALE } from "@/assets/util/sim.constants";
 import Atmosphere from "@/components/three/util/Atmosphere.vue";
+import Ring from "@/components/three/util/ring.vue";
 import { Vector3 } from "three/src/math/Vector3";
 import { Group } from "troisjs";
 import { defineComponent, PropType } from "vue";
@@ -72,13 +83,14 @@ export const PlanetProps = {
   moons: { type: Array as PropType<MoonInterface[]>, default: [] },
   atmosphereTexture: Object as PropType<TextureMap>,
   showTrail: { type: Boolean, default: true },
+  ring: Object as PropType<RingProps>,
 };
 
 export default defineComponent({
   name: "planet",
   emits: ["planetLoaded"],
   extends: OrbittingBody,
-  components: { Atmosphere, Group, Sphere, Trail, Moon },
+  components: { Ring, Atmosphere, Group, Sphere, Trail, Moon },
   props: PlanetProps,
   data() {
     return {
@@ -101,6 +113,9 @@ export default defineComponent({
     hasMoons(): boolean {
       return this.moons && this.moons.length > 0;
     },
+    hasRing(): boolean {
+      return this.ring !== undefined && this.ring.texture !== null;
+    },
     hasAtmosphere(): boolean {
       return this.atmosphereTexture !== null && this.atmosphereTexture !== undefined;
     },
@@ -117,7 +132,8 @@ export default defineComponent({
       return this.newPos;
     },
     modelsToLoad(): number {
-      const num = this.moons.length + 1;
+      let num = this.moons.length + 1;
+      if (this.hasRing) num += 1;
       return this.hasAtmosphere ? num + 1 : num;
     },
     loaded(): boolean {

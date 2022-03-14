@@ -1,5 +1,4 @@
 class Simulations::SimulationsUpdateController < Simulations::SimulationsController
-  # TODO: Celestial body name uniqueness check must be done on frontend
   # @note: The (star|moon|planet|asteroid_belt) id parameter is returned from another endpoint (e.g., Space::Planet id)
   # @note: this endpoint returns the *simulation* (star|moon|planet|asteroid_belt) id (e.g., Sim::SimulationPlanet id)
   def initialize

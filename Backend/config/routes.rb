@@ -22,15 +22,17 @@ Rails.application.routes.draw do
       get '/users/env/guest_username', to: 'application#guest_username'
 
       scope :media do
-        [:textures, :bump_maps, :specular_maps, :atmosphere_textures].each do |type|
+        [:textures, :bump_maps, :specular_maps, :atmosphere_textures, :ring_textures].each do |type|
           scope type do
             get '/', to: "media/#{type.to_s}#all"
             get '/:id', to: "media/#{type.to_s}#get"
+            if type != :ring_textures
             scope :all do
               get '/planets', to: "media/#{type.to_s}#planets"
               get '/stars', to: "media/#{type.to_s}#stars"
               get '/moons', to: "media/#{type.to_s}#moons"
             end
+          end
           end
         end
       end

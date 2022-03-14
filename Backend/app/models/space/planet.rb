@@ -1,4 +1,3 @@
-# TODO: Ringed planets should be in same table as planets
 class Space::Planet < ApplicationRecord
   include Celestial
   include Celestial::Spherical

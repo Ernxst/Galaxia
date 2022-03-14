@@ -7,6 +7,7 @@ class Celestial::CelestialBodyController < ApplicationController
     @atmosphere_texture_controller = Media::AtmosphereTexturesController.new
     @specular_map_controller = Media::SpecularMapsController.new
     @bump_map_controller = Media::BumpMapsController.new
+    @ring_texture_controller = Media::RingTexturesController.new
     super
   end
 
@@ -40,6 +41,7 @@ class Celestial::CelestialBodyController < ApplicationController
     data = data.merge(@atmosphere_texture_controller.get_texture(body.atmosphere_texture)) unless body.atmosphere_texture.nil?
     data = data.merge(@bump_map_controller.get_texture(body.bump_map)) unless body.bump_map.nil?
     data = data.merge(@specular_map_controller.get_texture(body.specular_map)) unless body.specular_map.nil?
+    data = data.merge(@ring_texture_controller.get_texture(body.ring_texture)) unless body.ring_texture.nil?
     data
   end
 
@@ -63,8 +65,6 @@ class Celestial::CelestialBodyController < ApplicationController
     params.require(@body.singularize.to_sym).permit(*required_params, **optional_params)
   end
 
-  # TODO: Add support for rings
-  # TODO: Override for Planets (for implementing rings)
   # Can be overridden
   def build(params)
     body = @record.create(params)
