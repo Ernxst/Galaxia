@@ -119,7 +119,7 @@ Rails.application.configure do
 
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.default_url_options = { host: 'galaxia-app.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'galaxia-zoju.onrender.com' }
   config.action_mailer.smtp_settings = {
     user_name: ENV['MAILER_ACCOUNT'],
     password: ENV['MAILER_ACCOUNT_PASSWORD'],

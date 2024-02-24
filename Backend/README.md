@@ -459,7 +459,7 @@ running `make deploy` to prevent Docker trying to use a native M1 version of `no
 The production API is then available at:
 
 ```bash
-https://galaxia-app.herokuapp.com
+https://galaxia-zoju.onrender.com
 ```
 
 With the available endpoints listed in the [Documentation](#documentation) section.

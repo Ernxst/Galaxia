@@ -10,7 +10,7 @@ info:
   license:
     name: MIT
 servers:
-  - url: "https://galaxia-app.herokuapp.com/api/v1"
+  - url: "https://galaxia-zoju.onrender.com/api/v1"
 paths:
   /users/register:
     $ref: "./paths/user/register.yaml"
