@@ -15,10 +15,10 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 17
+      - name: Use Node.js 20
         uses: actions/setup-node@v2
         with:
-          node-version: 17
+          node-version: 20
           cache: 'yarn'
           cache-dependency-path: Frontend/yarn.lock
 
